@@ -20,6 +20,11 @@ import org.eclipse.core.runtime.CoreException;
 
 import com.google.common.collect.Lists;
 
+/**
+ * Project nature of projects that have PMD enabled.
+ * 
+ * @author Philip Graf
+ */
 public class PMDNature implements IProjectNature {
     
     public static final String ID = "ch.acanda.eclipse.pmd.builder.PMDNature";
@@ -83,7 +88,7 @@ public class PMDNature implements IProjectNature {
             natureIds.add(ID);
             description.setNatureIds(natureIds.toArray(new String[natureIds.size()]));
             project.setDescription(description, null);
-            PMDBuilder.removeAllMarkers(project);
+            MarkerUtil.removeAllMarkers(project);
         }
     }
     
@@ -97,7 +102,7 @@ public class PMDNature implements IProjectNature {
             natureIds.remove(ID);
             description.setNatureIds(natureIds.toArray(new String[natureIds.size()]));
             project.setDescription(description, null);
-            PMDBuilder.removeAllMarkers(project);
+            MarkerUtil.removeAllMarkers(project);
         }
     }
     
