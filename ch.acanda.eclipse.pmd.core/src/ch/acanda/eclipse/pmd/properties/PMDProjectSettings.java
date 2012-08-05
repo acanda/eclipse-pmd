@@ -11,29 +11,56 @@
 
 package ch.acanda.eclipse.pmd.properties;
 
+import static com.google.common.base.Strings.nullToEmpty;
+
+import java.util.Set;
+
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
+import net.sourceforge.pmd.RuleSetReferenceId;
 import net.sourceforge.pmd.RuleSets;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.builder.PMDNature;
+import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
+import ch.acanda.eclipse.pmd.preferences.PMDWorkspaceSettings;
 
-import com.google.common.base.Strings;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
- * Convinience class to read and write the PMD settings of a project.
+ * Convenience class for reading and writing the PMD settings of a project. See {@link PMDWorkspaceSettings} for
+ * settings that do not depend on a specific project.
  * 
  * @author Philip Graf
  */
 public final class PMDProjectSettings {
     
     private static final QualifiedName RULE_SETS = new QualifiedName(PMDPlugin.ID, "rulesets");
-    private static final QualifiedName RULE_SETS_CONFIGURATION = new QualifiedName(PMDPlugin.ID, "rulesets");
+    private static final QualifiedName ACTIVE_RULE_SET_IDS = new QualifiedName(PMDPlugin.ID, "activerulesets");
+    
+    private static final Function<RuleSetConfiguration, RuleSetReferenceId> TO_REFERENCE_ID = new Function<RuleSetConfiguration, RuleSetReferenceId>() {
+        @Override
+        public RuleSetReferenceId apply(final RuleSetConfiguration config) {
+            return new RuleSetReferenceId(config.getLocation());
+        }
+    };
+    
+    private static final Function<RuleSetConfiguration, Integer> TO_RULESETCONFIGURATION_ID = new Function<RuleSetConfiguration, Integer>() {
+        @Override
+        public Integer apply(final RuleSetConfiguration config) {
+            return config.getId();
+        }
+    };
     
     private final IProject project;
     
@@ -42,38 +69,14 @@ public final class PMDProjectSettings {
         this.project = project;
     }
     
-    public void setRuleSetsConfiguration(final String file) {
-        try {
-            final String value = file == null ? null : Path.fromOSString(file).toPortableString();
-            project.setPersistentProperty(RULE_SETS_CONFIGURATION, value);
-            project.setSessionProperty(RULE_SETS, null);
-        } catch (final CoreException e) {
-            PMDPlugin.getDefault().error("Cannot store path to rule sets configuration file.", e);
-        }
-    }
-    
-    public String getRuleSetsConfiguration() {
-        String config = null;
-        try {
-            config = project.getPersistentProperty(RULE_SETS_CONFIGURATION);
-            if (config != null) {
-                config = Path.fromPortableString(config).toOSString();
-            }
-        } catch (final CoreException e) {
-            PMDPlugin.getDefault().warn("Cannot retrieve path to rule sets configuration file.", e);
-        }
-        return config == null ? "" : config;
-    }
-    
     public RuleSets getRuleSets() {
         RuleSets ruleSets = null;
         try {
             ruleSets = (RuleSets) project.getSessionProperty(RULE_SETS);
             if (ruleSets == null) {
-                final String configuration = project.getPersistentProperty(RULE_SETS_CONFIGURATION);
-                if (!Strings.isNullOrEmpty(configuration)) {
-                    ruleSets = new RuleSetFactory().createRuleSets(configuration);
-                }
+                final PMDWorkspaceSettings workspaceSettings = new PMDWorkspaceSettings(PMDPlugin.getDefault().getPreferenceStore());
+                final ImmutableList<RuleSetConfiguration> configs = workspaceSettings.getRuleSetsConfigurations();
+                ruleSets = new RuleSetFactory().createRuleSets(Lists.transform(configs, TO_REFERENCE_ID));
             }
         } catch (final CoreException | RuleSetNotFoundException e) {
             PMDPlugin.getDefault().error("Could not load PMD rule sets.", e);
@@ -110,6 +113,40 @@ public final class PMDProjectSettings {
         } catch (final CoreException e) {
             PMDPlugin.getDefault().error("Cannot change PMD nature of project " + project.getName(), e);
         }
+    }
+    
+    /**
+     * Stores the ids of the active rule set configurations.
+     */
+    public void setActiveRuleSetConfigurations(final Set<RuleSetConfiguration> activeConfigurations) {
+        try {
+            final Iterable<Integer> ids = Iterables.transform(activeConfigurations, TO_RULESETCONFIGURATION_ID);
+            project.setPersistentProperty(ACTIVE_RULE_SET_IDS, Joiner.on(',').join(ids));
+            // reset the cached rule sets
+            project.setSessionProperty(RULE_SETS, null);
+        } catch (final CoreException e) {
+            PMDPlugin.getDefault().error("Cannot store ids of active rule set configurations of project " + project.getName(), e);
+        }
+    }
+    
+    public Set<RuleSetConfiguration> getActiveRuleSetConfigurations(final ImmutableList<RuleSetConfiguration> configs) {
+        final ImmutableSet.Builder<RuleSetConfiguration> activeConfigs = ImmutableSet.builder();
+        try {
+            final ImmutableSet.Builder<Integer> idsBuilder = ImmutableSet.builder();
+            final String activeRuleSetIds = nullToEmpty(project.getPersistentProperty(ACTIVE_RULE_SET_IDS));
+            for (final String id : Splitter.on(',').omitEmptyStrings().split(activeRuleSetIds)) {
+                idsBuilder.add(Integer.parseInt(id));
+            }
+            final ImmutableSet<Integer> ids = idsBuilder.build();
+            for (final RuleSetConfiguration config : configs) {
+                if (ids.contains(config.getId())) {
+                    activeConfigs.add(config);
+                }
+            }
+        } catch (final CoreException e) {
+            PMDPlugin.getDefault().error("Cannot retrieve active rule set configuration ids of project " + project.getName(), e);
+        }
+        return activeConfigs.build();
     }
     
 }

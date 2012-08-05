@@ -46,7 +46,7 @@
             type="org.eclipse.core.resources.problemmarker">
       </super>
       <persistent
-            value="false">
+            value="true">
       </persistent>
    </extension>
    <extension

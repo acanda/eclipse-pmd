@@ -14,7 +14,6 @@ package ch.acanda.eclipse.pmd.swtbot.tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.AfterClass;
@@ -25,6 +24,8 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 import ch.acanda.eclipse.pmd.swtbot.client.JavaProjectClient;
 
 /**
+ * Tests if PMD can be enabled and disabled using the PMD property dialog.
+ * 
  * @author Philip Graf
  */
 public final class EnablePMDTest extends GUITestCase {
@@ -43,28 +44,20 @@ public final class EnablePMDTest extends GUITestCase {
 
     @Test
     public void enablePMD() {
-        SWTBotShell dialog = openPMDProjectPropertyDialog();
-        SWTBotCheckBox enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.PROPERTY_PAGE_ENABLE_PMD.name());
+        SWTBotShell dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME);
+        SWTBotCheckBox enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
         assertFalse("PMD should be disabled by default", enablePMDCheckBox.isChecked());
         
         enablePMDCheckBox.select();
         dialog.bot().button("OK").click();
         bot().waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses(dialog));
         
-        dialog = openPMDProjectPropertyDialog();
-        enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.PROPERTY_PAGE_ENABLE_PMD.name());
+        dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME);
+        enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
         assertTrue("PMD should be enabled", enablePMDCheckBox.isChecked());
         
         dialog.bot().button("OK").click();
         bot().waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses(dialog));
     }
     
-    private SWTBotShell openPMDProjectPropertyDialog() {
-        bot().viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree().getTreeItem(PROJECT_NAME).select();
-        bot().menu("File").menu("Properties").click();
-        final SWTBotShell dialog = bot().shell("Properties for " + PROJECT_NAME);
-        final SWTBot dialogBot = dialog.bot();
-        dialogBot.tree().getTreeItem("PMD").select();
-        return dialog;
-    }
 }

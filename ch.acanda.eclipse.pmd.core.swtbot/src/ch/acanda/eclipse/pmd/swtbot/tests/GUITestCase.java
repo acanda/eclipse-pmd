@@ -14,6 +14,7 @@ package ch.acanda.eclipse.pmd.swtbot.tests;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
@@ -37,6 +38,11 @@ public class GUITestCase {
         closeWelcomeView(workbenchBot);
         // switch to Java perspective
         workbenchBot.perspectiveById("org.eclipse.jdt.ui.JavaPerspective").activate();
+    }
+    
+    @After
+    public void closeAllDialogs() {
+        bot.closeAllShells();
     }
 
     private static void closeWelcomeView(final SWTWorkbenchBot workbenchBot) {
