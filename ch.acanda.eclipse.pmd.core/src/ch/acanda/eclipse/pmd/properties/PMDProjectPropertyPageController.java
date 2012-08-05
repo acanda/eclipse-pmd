@@ -11,11 +11,17 @@
 
 package ch.acanda.eclipse.pmd.properties;
 
-import java.io.File;
+import java.util.HashSet;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
+
+import ch.acanda.eclipse.pmd.PMDPlugin;
+import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
+import ch.acanda.eclipse.pmd.preferences.PMDWorkspaceSettings;
+import ch.acanda.eclipse.pmd.wizard.AddRuleSetConfigurationWizard;
 
 /**
  * Controller for the PMD project property page.
@@ -45,33 +51,31 @@ final class PMDProjectPropertyPageController {
     }
     
     public void save() {
-        final PMDProjectSettings settings = new PMDProjectSettings(project);
-        settings.setRuleSetsConfiguration(model.getRuleSetsConfiguration());
-        settings.setPMDEnabled(model.isPMDEnabled());
+        final PMDWorkspaceSettings workspaceSettings = new PMDWorkspaceSettings(PMDPlugin.getDefault().getPreferenceStore());
+        workspaceSettings.setRuleSetConfigurations(model.getConfigurations());
+        final PMDProjectSettings projectSettings = new PMDProjectSettings(project);
+        projectSettings.setActiveRuleSetConfigurations(model.getActiveConfigurations());
+        projectSettings.setPMDEnabled(model.isPMDEnabled());
     }
     
     public boolean isValid() {
-        final boolean isValid;
-        if (model.isPMDEnabled()) {
-            final String config = model.getRuleSetsConfiguration();
-            if (config != null && config.length() > 0) {
-                final File file = new File(config);
-                isValid = file.exists() && file.canRead();
-            } else {
-                isValid = true;
-            }
-        } else {
-            isValid = true;
-        }
-        return isValid;
+        return true;
     }
     
-    public void browseForRuleSetsConfiguration(final Shell shell) {
-        final FileDialog fileDialog = new FileDialog(shell);
-        final String file = fileDialog.open();
-        if (file != null) {
-            model.setRuleSetsConfiguration(file);
+    public void addRuleSetConfiguration(final Shell shell) {
+        final AddRuleSetConfigurationWizard wizard = new AddRuleSetConfigurationWizard();
+        final WizardDialog dialog = new WizardDialog(shell, wizard);
+        final int result = dialog.open();
+        if (result == Window.OK && wizard.getRuleSetConfiguration() != null) {
+            model.addRuleSetConfiguration(wizard.getRuleSetConfiguration());
+            final HashSet<RuleSetConfiguration> activeConfigs = new HashSet<>(model.getActiveConfigurations());
+            activeConfigs.add(wizard.getRuleSetConfiguration());
+            model.setActiveConfigurations(activeConfigs);
         }
+    }
+    
+    public void removeSelectedConfigurations() {
+        model.removeSelectedConfigurations();
     }
     
 }

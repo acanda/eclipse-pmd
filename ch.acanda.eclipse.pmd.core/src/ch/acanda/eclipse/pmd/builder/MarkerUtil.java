@@ -30,7 +30,7 @@ public final class MarkerUtil {
      * Removes all PMD markers from a file.
      */
     public static void removeAllMarkers(final IFile file) throws CoreException {
-        file.deleteMarkers(MARKER_TYPE, false, IResource.DEPTH_ZERO);
+        file.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ZERO);
     }
     
     /**

@@ -18,7 +18,12 @@ import org.eclipse.swt.widgets.Control;
  */
 public enum SWTBotID {
     
-    PROPERTY_PAGE_ENABLE_PMD;
+    ENABLE_PMD,
+    ADD,
+    NAME,
+    LOCATION,
+    RULES,
+    CONFIGURATIONS;
     
     public static void set(final Control control, final SWTBotID id) {
         control.setData("org.eclipse.swtbot.widget.key", id.name());
