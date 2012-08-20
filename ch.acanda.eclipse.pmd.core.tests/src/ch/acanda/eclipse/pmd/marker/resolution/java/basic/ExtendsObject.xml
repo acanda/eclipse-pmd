@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests>
+
+    <test name="SimpleExtendsObject">
+        <setup>
+            <source>
+class Example extends <marker>Object</marker> {
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class Example {
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove 'extends Object'</label>
+        </expected>
+    </test>
+
+    <test name="InnerClassExtendsObject">
+        <!-- Verifies that only the PMD violation of the inner class is fixed. -->
+        <setup>
+            <source>
+class Outer extends Object {
+    class Inner extends <marker>Object</marker> {
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class Outer extends Object {
+    class Inner {
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove 'extends Object'</label>
+        </expected>
+    </test>
+
+</tests>

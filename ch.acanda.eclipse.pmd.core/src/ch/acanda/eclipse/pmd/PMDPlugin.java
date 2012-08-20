@@ -13,15 +13,18 @@ package ch.acanda.eclipse.pmd;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * @author Philip Graf
  */
 public final class PMDPlugin extends AbstractUIPlugin {
     
-    public static final String ID = "ch.acanda.eclipse.pmd";
+    public static final String ID = "ch.acanda.eclipse.pmd.core";
     
     private static PMDPlugin plugin;
     
@@ -33,6 +36,7 @@ public final class PMDPlugin extends AbstractUIPlugin {
     
     @Override
     public void stop(final BundleContext context) throws Exception {
+        PMDPluginImages.dispose();
         super.stop(context);
         plugin = null;
     }
@@ -75,6 +79,16 @@ public final class PMDPlugin extends AbstractUIPlugin {
         final IStatus status = new Status(severity, ID, message, throwable);
         getLog().log(status);
         return status;
+    }
+    
+    /**
+     * Creates and returns a new image descriptor for an image file located within the PMD plug-in.
+     * 
+     * @param path The relative path of the image file, relative to the root of the plug-in; the path must be legal.
+     * @return The image descriptor, or <code>null</code> if no image could be found.
+     */
+    public static ImageDescriptor getImageDescriptor(final String path) {
+        return imageDescriptorFromPlugin(ID, path);
     }
     
 }
