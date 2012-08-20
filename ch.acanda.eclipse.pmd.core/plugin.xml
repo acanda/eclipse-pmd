@@ -71,5 +71,12 @@
          </enabledWhen>
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="ch.acanda.eclipse.pmd.marker.resolution.PMDMarkerResolutionGenerator"
+            markerType="ch.acanda.eclipse.pmd.core.pmdMarker">
+      </markerResolutionGenerator>
+   </extension>
 
 </plugin>

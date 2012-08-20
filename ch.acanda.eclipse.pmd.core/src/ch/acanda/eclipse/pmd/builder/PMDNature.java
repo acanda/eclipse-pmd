@@ -18,6 +18,8 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 
+import ch.acanda.eclipse.pmd.marker.MarkerUtil;
+
 import com.google.common.collect.Lists;
 
 /**
