@@ -212,7 +212,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     private ASTNode findNode(final TestParameters params, final org.eclipse.jface.text.Document document, final CompilationUnit ast,
             final ASTQuickFix<ASTNode> quickFix) {
         final Class<? extends ASTNode> nodeType = quickFix.getNodeType();
-        final ASTQuickFix.NodeFinder finder = new ASTQuickFix.NodeFinder(new Position(params.offset, params.length), nodeType);
+        final PositionWithinNodeNodeFinder finder = new PositionWithinNodeNodeFinder(new Position(params.offset, params.length), nodeType);
         final ASTNode node = finder.findNode(ast);
         assertNotNull("Couldn't find node of type " + nodeType.getSimpleName() + "."
                 + " Check the position of the marker in test " + params.name + ".", node);
@@ -269,7 +269,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         if (params.expectedDescription == null) {
             assertNotNull("Quick fix description must not be null (test " + params.name + ")", description);
         } else {
-            assertEquals("Quick fix description in test " + params.name, params.expectedLabel, description);
+            assertEquals("Quick fix description in test " + params.name, params.expectedDescription, description);
         }
     }
 

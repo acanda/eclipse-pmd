@@ -9,9 +9,9 @@
 //
 // =====================================================================
 
-package ch.acanda.eclipse.pmd.marker.resolution.java.basic;
+package ch.acanda.eclipse.pmd.marker.resolution.java.naming;
 
-import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Position;
 
@@ -22,30 +22,31 @@ import ch.acanda.eclipse.pmd.marker.resolution.NodeFinder;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/basic.html#ExtendsObject">ExtendsObject</a>. It
- * simply removes the superclass from the type definition.
+ * Quick fix for the rule <a
+ * href="http://pmd.sourceforge.net/pmd-5.0.0/rules/java/naming.html#SuspiciousHashcodeMethodName"
+ * >SuspiciousHashcodeMethodName</a>. It renames the method to {@code hashCode}.
  * 
  * @author Philip Graf
  */
-public class ExtendsObjectQuickFix extends ASTQuickFix<TypeDeclaration> {
+public class SuspiciousHashcodeMethodNameQuickFix extends ASTQuickFix<MethodDeclaration> {
     
-    public ExtendsObjectQuickFix(final PMDMarker marker) {
+    public SuspiciousHashcodeMethodNameQuickFix(final PMDMarker marker) {
         super(marker);
     }
     
     @Override
     protected ImageDescriptor getImageDescriptor() {
-        return PMDPluginImages.QUICKFIX_REMOVE;
+        return PMDPluginImages.QUICKFIX_CHANGE;
     }
     
     @Override
     public String getLabel() {
-        return "Remove 'extends Object'";
+        return "Rename method to 'hashCode'";
     }
     
     @Override
     public String getDescription() {
-        return "Removes <b>extends Object</b> from the type declaration of " + marker.getViolationClassName() + ".";
+        return "Renames the method <b>hashcode()</b> to <b>hashCode()</b>.";
     }
     
     @Override
@@ -54,11 +55,11 @@ public class ExtendsObjectQuickFix extends ASTQuickFix<TypeDeclaration> {
     }
     
     /**
-     * Removes {@code extends Object} from the type declaration.
+     * Sets the name of the method to "hashCode".
      */
     @Override
-    protected boolean apply(final TypeDeclaration node) {
-        node.setSuperclassType(null);
+    protected boolean apply(final MethodDeclaration node) {
+        node.getName().setIdentifier("hashCode");
         return true;
     }
     
