@@ -28,7 +28,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.BadLocationException;
@@ -188,9 +187,8 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
                     final MarkerAnnotation annotation = getMarkerAnnotation(annotationModel, marker);
                     // if the annotation is null it means that is was deleted by a previous quick fix
                     if (annotation != null) {
-                        final NodeFinder finder = new NodeFinder(annotationModel.getPosition(annotation), getNodeType());
                         @SuppressWarnings("unchecked")
-                        final T node = (T) finder.findNode(ast);
+                        final T node = (T) getNodeFinder(annotationModel.getPosition(annotation)).findNode(ast);
                         final boolean successful = apply(node);
                         if (successful) {
                             marker.delete();
@@ -227,6 +225,12 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
             }
         }
     }
+    
+    /**
+     * @param position The position of the marker.
+     * @return The node finder that will be used to search for the node which will be passed to the quick fix.
+     */
+    abstract protected NodeFinder getNodeFinder(final Position position);
     
     /**
      * Returns the type of the AST node that will be used to find the node that will be used as an argument when
@@ -291,44 +295,6 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
             }
         }
         return false;
-    }
-    
-    /**
-     * Searches an AST for a node that has the provided type and includes the provided position. If more than one node
-     * fit the criteria, the one with the largest distance to the root is returned.
-     */
-    protected static class NodeFinder extends ASTVisitor {
-        
-        private final int start;
-        private final int end;
-        private final Class<? extends ASTNode> nodeType;
-        private ASTNode node;
-        
-        public NodeFinder(final Position position, final Class<? extends ASTNode> nodeType) {
-            start = position.getOffset();
-            end = start + position.getLength();
-            this.nodeType = nodeType;
-        }
-        
-        @Override
-        public boolean preVisit2(final ASTNode node) {
-            final int nodeStart = node.getStartPosition();
-            final int nodeEnd = nodeStart + node.getLength();
-            if (nodeStart <= start && nodeEnd >= end) {
-                if (nodeType.isAssignableFrom(node.getClass())) {
-                    this.node = node;
-                }
-                return true;
-            }
-            return false;
-        }
-        
-        public ASTNode findNode(final CompilationUnit ast) {
-            node = null;
-            ast.accept(this);
-            return node;
-        }
-        
     }
     
 }
