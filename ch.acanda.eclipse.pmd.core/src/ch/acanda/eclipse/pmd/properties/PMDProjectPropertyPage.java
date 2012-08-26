@@ -81,12 +81,12 @@ public class PMDProjectPropertyPage extends PropertyPage {
         lblSelectRulesSets.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
         lblSelectRulesSets.setText("Select rules sets");
         
-        final Composite tableCompüosite = new Composite(composite, SWT.NONE);
-        tableCompüosite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));
+        final Composite tableComposite = new Composite(composite, SWT.NONE);
+        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 2));
         final TableColumnLayout tableColumnLayout = new TableColumnLayout();
-        tableCompüosite.setLayout(tableColumnLayout);
+        tableComposite.setLayout(tableColumnLayout);
         
-        tableViewer = CheckboxTableViewer.newCheckList(tableCompüosite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+        tableViewer = CheckboxTableViewer.newCheckList(tableComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
         table = tableViewer.getTable();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
