@@ -94,7 +94,7 @@ public final class MarkerUtil {
             if (absoluteOffset < content.length()) {
                 final char c = content.charAt(absoluteOffset);
                 if (c == '\t') {
-                    pmdCharCounter += PMD_TAB_SIZE;
+                    pmdCharCounter = (pmdCharCounter / PMD_TAB_SIZE + 1) * PMD_TAB_SIZE;
                 } else {
                     pmdCharCounter++;
                 }

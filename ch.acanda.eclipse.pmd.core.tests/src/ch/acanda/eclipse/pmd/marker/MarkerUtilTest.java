@@ -11,16 +11,20 @@
 
 package ch.acanda.eclipse.pmd.marker;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import net.sourceforge.pmd.Rule;
+import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.lang.Language;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.junit.Test;
-
-import ch.acanda.eclipse.pmd.marker.MarkerUtil;
 
 /**
  * Unit tests for {@link MarkerUtil}.
@@ -51,44 +55,107 @@ public class MarkerUtilTest {
         verify(project).deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_INFINITE);
     }
     
-    // /**
-    // * Verifies that {@link MarkerUtil#addMarker(IFile, String, String, int, int, int)} adds a marker to the provided
-    // file.
-    // */
-    // @Test
-    // public void addMarker() throws CoreException {
-    // final IFile file = mock(IFile.class);
-    // final IMarker marker = mock(IMarker.class);
-    // when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
-    // final IMarker actual = MarkerUtil.addMarker(file, "rule", "message", 1, 2, 3);
-    // assertNotNull("The method must always return a marker", actual);
-    // verify(file).createMarker(MARKER_TYPE);
-    // verify(actual).setAttribute(IMarker.MESSAGE, "message");
-    // verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
-    // verify(actual).setAttribute(IMarker.LINE_NUMBER, 1);
-    // verify(actual).setAttribute(IMarker.CHAR_START, 2);
-    // verify(actual).setAttribute(IMarker.CHAR_END, 3);
-    // verify(actual).setAttribute("ruleName", "rule");
-    // }
-    //
-    // /**
-    // * Verifies that {@link MarkerUtil#addMarker(IFile, String, String, int, int, int)} adds a marker to the provided
-    // file with
-    // * position information set to zero if the respective arguments are negative.
-    // */
-    // @Test
-    // public void addMarkerWithUnknwonPositionInformation() throws CoreException {
-    // final IFile file = mock(IFile.class);
-    // final IMarker marker = mock(IMarker.class);
-    // when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
-    // final IMarker actual = MarkerUtil.addMarker(file, "rule", "message", -1, -2, -3);
-    // assertNotNull("The method must always return a marker", actual);
-    // verify(file).createMarker(MARKER_TYPE);
-    // verify(actual).setAttribute(IMarker.MESSAGE, "message");
-    // verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
-    // verify(actual).setAttribute(IMarker.LINE_NUMBER, 0);
-    // verify(actual).setAttribute(IMarker.CHAR_START, 0);
-    // verify(actual).setAttribute(IMarker.CHAR_END, 0);
-    // }
+    /**
+     * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file.
+     */
+    @Test
+    public void addMarker() throws CoreException {
+        final IFile file = mock(IFile.class);
+        final IMarker marker = mock(IMarker.class);
+        when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
+        final RuleViolation violation = mock(RuleViolation.class);
+        when(violation.getDescription()).thenReturn("message");
+        when(violation.getBeginLine()).thenReturn(1);
+        when(violation.getBeginColumn()).thenReturn(18);
+        when(violation.getEndLine()).thenReturn(1);
+        when(violation.getEndColumn()).thenReturn(24);
+        when(violation.getClassName()).thenReturn("ClassName");
+        final Rule rule = mock(Rule.class);
+        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getRuleSetName()).thenReturn("basic");
+        when(rule.getName()).thenReturn("ExtendsObject");
+        when(violation.getRule()).thenReturn(rule);
+        
+        final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object {}", violation);
 
+        assertNotNull("The method must always return a marker", actual);
+        verify(file).createMarker(MARKER_TYPE);
+        verify(actual).setAttribute(IMarker.MESSAGE, "message");
+        verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+        verify(actual).setAttribute(IMarker.LINE_NUMBER, 1);
+        verify(actual).setAttribute(IMarker.CHAR_START, 17);
+        verify(actual).setAttribute(IMarker.CHAR_END, 24);
+        verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
+        verify(actual).setAttribute("violationClassName", "ClassName");
+    }
+    
+    /**
+     * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
+     * the correct position if the content contains tabs and spaces.
+     */
+    @Test
+    public void addMarkerWithTab() throws CoreException {
+        final IFile file = mock(IFile.class);
+        final IMarker marker = mock(IMarker.class);
+        when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
+        final RuleViolation violation = mock(RuleViolation.class);
+        when(violation.getDescription()).thenReturn("message");
+        when(violation.getBeginLine()).thenReturn(1);
+        when(violation.getBeginColumn()).thenReturn(25);
+        when(violation.getEndLine()).thenReturn(1);
+        when(violation.getEndColumn()).thenReturn(30);
+        when(violation.getClassName()).thenReturn("ClassName");
+        final Rule rule = mock(Rule.class);
+        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getRuleSetName()).thenReturn("basic");
+        when(rule.getName()).thenReturn("ExtendsObject");
+        when(violation.getRule()).thenReturn(rule);
+        
+        final IMarker actual = MarkerUtil.addMarker(file, "class ABC extends\tObject {}", violation);
+        
+        assertNotNull("The method must always return a marker", actual);
+        verify(file).createMarker(MARKER_TYPE);
+        verify(actual).setAttribute(IMarker.MESSAGE, "message");
+        verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+        verify(actual).setAttribute(IMarker.LINE_NUMBER, 1);
+        verify(actual).setAttribute(IMarker.CHAR_START, 18);
+        verify(actual).setAttribute(IMarker.CHAR_END, 24);
+        verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
+        verify(actual).setAttribute("violationClassName", "ClassName");
+    }
+    
+    /**
+     * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
+     * position information set to zero if the respective arguments are negative.
+     */
+    @Test
+    public void addMarkerWithUnknwonPositionInformation() throws CoreException {
+        final IFile file = mock(IFile.class);
+        final IMarker marker = mock(IMarker.class);
+        when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
+        final RuleViolation violation = mock(RuleViolation.class);
+        when(violation.getDescription()).thenReturn("message");
+        when(violation.getBeginLine()).thenReturn(-1);
+        when(violation.getBeginColumn()).thenReturn(-18);
+        when(violation.getEndLine()).thenReturn(-2);
+        when(violation.getEndColumn()).thenReturn(-24);
+        when(violation.getClassName()).thenReturn("ClassName");
+        final Rule rule = mock(Rule.class);
+        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getRuleSetName()).thenReturn("basic");
+        when(rule.getName()).thenReturn("ExtendsObject");
+        when(violation.getRule()).thenReturn(rule);
+        
+        final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object {}", violation);
+        
+        assertNotNull("The method must always return a marker", actual);
+        verify(file).createMarker(MARKER_TYPE);
+        verify(actual).setAttribute(IMarker.MESSAGE, "message");
+        verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+        verify(actual).setAttribute(IMarker.LINE_NUMBER, 0);
+        verify(actual).setAttribute(IMarker.CHAR_START, 0);
+        verify(actual).setAttribute(IMarker.CHAR_END, 0);
+        verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
+        verify(actual).setAttribute("violationClassName", "ClassName");
+    }
 }
