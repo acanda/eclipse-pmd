@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -56,8 +57,24 @@ public final class AddRuleSetConfigurationWizardBot extends SWTBotShell {
         return names;
     }
 
+    public SWTBotButton next() {
+        return bot().button("Next >");
+    }
+
     public SWTBotButton finish() {
         return bot().button("Finish");
+    }
+
+    public SWTBotRadio filesystem() {
+        return bot().radioWithId(SWTBotID.FILE_SYSTEM.name());
+    }
+
+    public SWTBotRadio workspace() {
+        return bot().radioWithId(SWTBotID.WORKSPACE.name());
+    }
+
+    public SWTBotRadio project() {
+        return bot().radioWithId(SWTBotID.PROJECT.name());
     }
 
 }

@@ -16,22 +16,22 @@ import java.nio.file.Path;
 import org.eclipse.core.resources.IProject;
 
 /**
- * A rule set configuration stored in the file system.
+ * A rule set configuration stored relative to the workspace.
  * 
  * @author Philip Graf
  */
-public class FileSystemRuleSetConfiguration extends RuleSetConfiguration {
+public class WorkspaceRuleSetConfiguration extends RuleSetConfiguration {
     
     private final Path location;
     
-    public FileSystemRuleSetConfiguration(final int id, final String name, final Path location) {
+    public WorkspaceRuleSetConfiguration(final int id, final String name, final Path relativeLocation) {
         super(id, name);
-        this.location = location.toAbsolutePath().normalize();
+        location = relativeLocation.normalize();
     }
     
     @Override
     public String getType() {
-        return "File System";
+        return "Workspace";
     }
     
     @Override
@@ -41,7 +41,8 @@ public class FileSystemRuleSetConfiguration extends RuleSetConfiguration {
     
     @Override
     public Path getConfiguration(final IProject project) {
-        return location;
+        final Path workspace = project.getWorkspace().getRoot().getLocation().toFile().toPath();
+        return workspace.resolve(location);
     }
     
 }

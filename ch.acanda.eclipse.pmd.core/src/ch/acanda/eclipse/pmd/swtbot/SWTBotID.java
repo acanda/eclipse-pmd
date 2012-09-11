@@ -23,7 +23,10 @@ public enum SWTBotID {
     NAME,
     LOCATION,
     RULES,
-    CONFIGURATIONS;
+    CONFIGURATIONS,
+    FILE_SYSTEM,
+    WORKSPACE,
+    PROJECT;
     
     public static void set(final Control control, final SWTBotID id) {
         control.setData("org.eclipse.swtbot.widget.key", id.name());
