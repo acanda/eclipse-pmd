@@ -48,15 +48,16 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.util.SelectionAdapter;
 
-public class AddFileSystemRuleSetConfigurationWizardPage extends WizardPage implements RuleSetConfigurationWizardPage {
-    private final AddFileSystemRuleSetConfigurationWizardPageController controller = new AddFileSystemRuleSetConfigurationWizardPageController();
+public class AddRuleSetConfigurationWizardPage extends WizardPage implements RuleSetConfigurationWizardPage {
+    private final AddRuleSetConfigurationController controller;
     
     private Text location;
     private TableViewer tableViewer;
     private Text name;
     
-    public AddFileSystemRuleSetConfigurationWizardPage() {
+    public AddRuleSetConfigurationWizardPage(final AddRuleSetConfigurationController controller) {
         super("addFileSystemRuleSetConfigurationWizardPage");
+        this.controller = controller;
         setTitle("Add Rule Set Configuration");
         setDescription("Click 'Finish' to add the rule set configuration");
         setPageComplete(false);
@@ -98,7 +99,7 @@ public class AddFileSystemRuleSetConfigurationWizardPage extends WizardPage impl
         browse.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                controller.browseFileSystem(((Control) e.widget).getShell());
+                controller.browse(((Control) e.widget).getShell());
             }
         });
         
@@ -131,7 +132,7 @@ public class AddFileSystemRuleSetConfigurationWizardPage extends WizardPage impl
     public RuleSetConfiguration getRuleSetConfiguration() {
         return controller.createRuleSetConfiguration();
     }
-    
+
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //

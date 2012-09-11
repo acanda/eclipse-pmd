@@ -15,6 +15,8 @@ import java.nio.file.Path;
 
 import net.sourceforge.pmd.RuleSetFactory;
 
+import org.eclipse.core.resources.IProject;
+
 /**
  * @author Philip Graf
  */
@@ -47,8 +49,10 @@ public abstract class RuleSetConfiguration {
     public abstract String getLocation();
     
     /**
-     * @return The path to the rule set configuration. This will be used as input for the {@link RuleSetFactory}.
+     * @param project The project for which the configuration will be used.
+     * @return The absolute path to the rule set configuration. This will be used as input for the
+     *         {@link RuleSetFactory}.
      */
-    public abstract Path getConfiguration();
+    public abstract Path getConfiguration(IProject project);
     
 }

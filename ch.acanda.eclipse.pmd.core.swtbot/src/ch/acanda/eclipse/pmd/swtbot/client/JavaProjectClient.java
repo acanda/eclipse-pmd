@@ -11,7 +11,10 @@
 
 package ch.acanda.eclipse.pmd.swtbot.client;
 
+import java.nio.file.Path;
+
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -72,4 +75,26 @@ public class JavaProjectClient {
         return dialog;
     }
 
+    /**
+     * Creates a text file in a project.
+     * 
+     * @param projectName The name of the existing project.
+     * @param relativePath The path of the file including the file name, relative to the project.
+     * @param content The content of the file.
+     */
+    public static void createFileInProject(final String projectName, final Path relativePath, final String content) {
+        final SWTWorkbenchBot bot = new SWTWorkbenchBot();
+        bot.menu("File").menu("New").menu("File").click();
+        final SWTBotShell dialog = bot.shell("New File");
+        if (relativePath.getParent() != null) {
+            dialog.bot().text(0).setText(projectName + "/" + relativePath.getParent().toString());
+        } else {
+            dialog.bot().text(0).setText(projectName);
+        }
+        dialog.bot().text(1).setText(relativePath.getFileName().toString());
+        dialog.bot().button("Finish").click();
+        final SWTBotEditor editor = bot.editorByTitle(relativePath.getFileName().toString());
+        editor.toTextEditor().setText(content);
+        editor.saveAndClose();
+    }
 }

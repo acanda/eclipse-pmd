@@ -16,6 +16,7 @@ import java.util.HashSet;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
@@ -63,8 +64,9 @@ final class PMDProjectPropertyPageController {
     }
     
     public void addRuleSetConfiguration(final Shell shell) {
-        final AddRuleSetConfigurationWizard wizard = new AddRuleSetConfigurationWizard();
+        final AddRuleSetConfigurationWizard wizard = new AddRuleSetConfigurationWizard(project);
         final WizardDialog dialog = new WizardDialog(shell, wizard);
+        dialog.setPageSize(300, SWT.DEFAULT);
         final int result = dialog.open();
         if (result == Window.OK && wizard.getRuleSetConfiguration() != null) {
             model.addRuleSetConfiguration(wizard.getRuleSetConfiguration());
