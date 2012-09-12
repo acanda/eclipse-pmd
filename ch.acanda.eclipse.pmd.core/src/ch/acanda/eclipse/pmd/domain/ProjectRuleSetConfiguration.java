@@ -41,8 +41,8 @@ public class ProjectRuleSetConfiguration extends RuleSetConfiguration {
     
     @Override
     public Path getConfiguration(final IProject project) {
-        final Path workspace = project.getWorkspace().getRoot().getLocation().toFile().toPath();
-        return workspace.resolve(location);
+        final Path projectPath = project.getLocation().toFile().toPath();
+        return projectPath.resolve(location);
     }
     
 }
