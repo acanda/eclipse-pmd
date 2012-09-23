@@ -30,14 +30,27 @@ public class PMDPluginImages {
     public static final ImageDescriptor QUICKFIX_REMOVE = PMDPlugin.getImageDescriptor("icons/quickfix_remove.gif");
     public static final ImageDescriptor QUICKFIX_CHANGE = PMDPlugin.getImageDescriptor("icons/quickfix_change.gif");
     
-    private static final ResourceManager manager = new LocalResourceManager(JFaceResources.getResources());
+    private static ResourceManager manager;
     
     public static Image get(final ImageDescriptor descriptor) {
-        return (Image) manager.get(descriptor);
+        return (Image) getResourceManager().get(descriptor);
     }
     
     public static void dispose() {
-        manager.dispose();
+        if (manager != null) {
+            manager.dispose();
+        }
+    }
+
+    private static ResourceManager getResourceManager() {
+        if (manager == null) {
+            manager = SingletonHolder.INSTANCE;
+        }
+        return manager;
+    }
+    
+    private static final class SingletonHolder {
+        static final ResourceManager INSTANCE = new LocalResourceManager(JFaceResources.getResources());
     }
     
 }
