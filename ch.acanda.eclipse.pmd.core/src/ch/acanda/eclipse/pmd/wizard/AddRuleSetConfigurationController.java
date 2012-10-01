@@ -84,7 +84,7 @@ final class AddRuleSetConfigurationController {
                     final String configuration = resource.getLocation().toOSString();
                     try {
                         new RuleSetFactory().createRuleSet(configuration);
-                    } catch (final RuleSetNotFoundException e) {
+                    } catch (final RuleSetNotFoundException | IllegalArgumentException e) {
                         // the rule set location is invalid
                         result = new Status(IStatus.WARNING, PMDPlugin.ID, resource.getName()
                                 + " is not a valid PMD rule set configuration");
