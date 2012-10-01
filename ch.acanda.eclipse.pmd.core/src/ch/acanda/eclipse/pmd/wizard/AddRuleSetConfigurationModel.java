@@ -151,7 +151,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
                     ruleSet = new RuleSetFactory().createRuleSet(absoluteLocation.toString());
                     rules.addAll(ruleSet.getRules());
                 }
-            } catch (final RuleSetNotFoundException e) {
+            } catch (final RuleSetNotFoundException | IllegalArgumentException e) {
                 // the rule set location is invalid - the validation problem will be added below
             }
             if (ruleSet == null || ruleSet.getRules().isEmpty()) {
