@@ -27,33 +27,59 @@
 				</ul>
 			</div>
 		</div>
-		
+
 		<div class="container">
 			<h2>Install</h2>
-			<p>The recommeded way to install the plugin on Eclipse 3.7 (and later) is via the plugin update site <a href="http://www.acanda.ch/eclipse-pmd/release/latest">http://www.acanda.ch/eclipse-pmd/release/latest</a>.</p>
+			<p>
+				The recommeded way to install the plugin on Eclipse 3.7 (and later) is via the plugin update site <a href="http://www.acanda.ch/eclipse-pmd/release/latest">http://www.acanda.ch/eclipse-pmd/release/latest</a>.
+			</p>
 			<p>
 				<ol>
-					<li>In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong></li>
-					<li>Add a new installation site and use <strong>http://www.acanda.ch/eclipse-pmd/release/latest</strong> as the location.</li>
-					<li>Select the plugin <strong>Eclipse PMD</strong>.</li>
-					<li>Finish the installation by accepting the license and restarting Eclipse.</li>
+					<li>
+						In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong>
+					</li>
+					<li>
+						Add a new installation site and use <strong>http://www.acanda.ch/eclipse-pmd/release/latest</strong> as the location.
+					</li>
+					<li>
+						Select the plugin <strong>Eclipse PMD</strong>.
+					</li>
+					<li>
+						Finish the installation by accepting the license and restarting Eclipse.
+					</li>
 				</ol>
 			</p>
 			<h2>Activate</h2>
-			<p>Use the property dialog of your project(s) to activate eclipse-pmd.</p>
+			<p>
+				Use the property dialog of your project(s) to activate eclipse-pmd.
+			</p>
 			<p>
 				<ol>
-					<li>If you don't already have a PMD rule set then <a href="http://pmd.sourceforge.net/pmd-5.0.0/howtomakearuleset.html">create a new one</a>.</li>
-					<li>Open the property dialog of your project.</li>
-					<li>Select the <strong>PMD</strong> property page.</li>
-					<li>Check the <strong>Enable PMD for this project</strong> checkbox.</li>
-					<li>Add one or more rule sets by clicking the <strong>Add...</strong> button.</li>
-					<li>Close the property dialog. Your project will now be analysed by PMD.</li>
-					<li>If you have another project where you want to activate eclipse-pmd, continue with step 2.</li>
+					<li>
+						If you don't already have a PMD rule set then <a href="http://pmd.sourceforge.net/pmd-5.0.0/howtomakearuleset.html">create a new one</a>.
+					</li>
+					<li>
+						Open the property dialog of your project.
+					</li>
+					<li>
+						Select the <strong>PMD</strong> property page.
+					</li>
+					<li>
+						Check the <strong>Enable PMD for this project</strong> checkbox.
+					</li>
+					<li>
+						Add one or more rule sets by clicking the <strong>Add...</strong> button.
+					</li>
+					<li>
+						Close the property dialog. Your project will now be analysed by PMD.
+					</li>
+					<li>
+						If you have another project where you want to activate eclipse-pmd, continue with step 2.
+					</li>
 				</ol>
 			</p>
 		</div>
-		
+
 		<footer class="footer">
 			<div class="container">
 				<div class="row">
@@ -84,6 +110,20 @@
 			$(function() {
 				$('a.thumbnail').lightBox();
 			});
+		</script>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-37305934-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
 		</script>
 	</body>
 </html>
