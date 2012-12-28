@@ -23,7 +23,7 @@ Bundle-ClassPath: .,
  lib/pmd-5.0.1.jar,
  lib/jaxen-1.1.1.jar,
  lib/asm-3.2.jar,
- lib/guava-12.0.jar,
+ lib/guava-14.0-rc1.jar,
  lib/rhino-1.7R3.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
