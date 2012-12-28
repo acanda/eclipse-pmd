@@ -30,12 +30,19 @@ public class PMDMarkerResolutionGenerator implements IMarkerResolutionGenerator 
         final PMDMarker pmdMarker = new PMDMarker(marker);
         final String ruleId = pmdMarker.getRuleId();
         if(ruleId != null) {
-            final String className = PMDMarkerResolutionGenerator.class.getPackage().getName() + "." + ruleId + "QuickFix";
+            final String className = PMDMarkerResolutionGenerator.class.getPackage().getName() + "." + clean(ruleId) + "QuickFix";
             resolutions = loadQuickFix(marker, className);
         } else {
             resolutions = new IMarkerResolution[0];
         }
         return resolutions;
+    }
+    
+    /**
+     * Cleans the rule id by removing characters not suitable for a package or class name.
+     */
+    private String clean(final String ruleId) {
+        return ruleId.replace(" ", "");
     }
     
     private IMarkerResolution[] loadQuickFix(final IMarker marker, final String className) {
