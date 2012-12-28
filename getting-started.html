@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Eclipse PMD - Getting started</title>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="css/layout.css" rel="stylesheet">
+		<link href="css/jquery.lightbox.css" rel="stylesheet">
+
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="index.html">eclipse-pmd</a>
+				<ul class="nav">
+					<li class="active">
+						<a href="getting-started.html">Get started</a>
+					</li>
+					<li>
+						<a href="changelog.html">Changelog</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="container">
+			<h2>Install</h2>
+			<p>The recommeded way to install the plugin on Eclipse 3.7 (and later) is via the plugin update site <a href="http://www.acanda.ch/eclipse-pmd/release/latest">http://www.acanda.ch/eclipse-pmd/release/latest</a>.</p>
+			<p>
+				<ol>
+					<li>In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong></li>
+					<li>Add a new installation site and use <strong>http://www.acanda.ch/eclipse-pmd/release/latest</strong> as the location.</li>
+					<li>Select the plugin <strong>Eclipse PMD</strong>.</li>
+					<li>Finish the installation by accepting the license and restarting Eclipse.</li>
+				</ol>
+			</p>
+			<h2>Activate</h2>
+			<p>Use the property dialog of your project(s) to activate eclipse-pmd.</p>
+			<p>
+				<ol>
+					<li>If you don't already have a PMD rule set then <a href="http://pmd.sourceforge.net/pmd-5.0.0/howtomakearuleset.html">create a new one</a>.</li>
+					<li>Open the property dialog of your project.</li>
+					<li>Select the <strong>PMD</strong> property page.</li>
+					<li>Check the <strong>Enable PMD for this project</strong> checkbox.</li>
+					<li>Add one or more rule sets by clicking the <strong>Add...</strong> button.</li>
+					<li>Close the property dialog. Your project will now be analysed by PMD.</li>
+					<li>If you have another project where you want to activate eclipse-pmd, continue with step 2.</li>
+				</ol>
+			</p>
+		</div>
+		
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="span4">
+						<p>
+							&copy; 2012 &ndash; 2013 Philip Graf. All Rights Reserved.
+							<br />
+							eclipse-pmd uses <a href="http://pmd.sourceforge.net/">PMD</a>.
+						</p>
+					</div>
+					<div class="span4 offset4">
+						<p>
+							Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a>
+							<br />
+							Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div id="forkme">
+			<a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
+		</div>
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.lightbox.pack.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$('a.thumbnail').lightBox();
+			});
+		</script>
+	</body>
+</html>

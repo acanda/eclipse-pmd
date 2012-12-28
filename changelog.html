@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Eclipse PMD - Changelog</title>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="css/layout.css" rel="stylesheet">
+		<link href="css/jquery.lightbox.css" rel="stylesheet">
+
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="index.html">eclipse-pmd</a>
+				<ul class="nav">
+					<li>
+						<a href="getting-started.html">Get started</a>
+					</li>
+					<li class="active">
+						<a href="changelog.html">Changelog</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="container">
+			<h2>Version 0.1 <small>Released: 29.12.2012</small></h2>
+			
+			<h3>Quick fixes</h3>
+			<div class="row">
+				<div class="span8">
+					<p>
+						eclipse-pmd provides quick fixes for a couple of PMD rules that can be fixed automatically.
+					</p>
+					<p>
+						Quick fixes are available for the following rules: ExtendsObject, SuspiciousHashcodeMethodName, LocalVariableCouldBeFinal, MethodArgumentCouldBeFinal.
+					</p>
+				</div>
+				<ul class="thumbnails">
+					<li class="span4">
+						<a href="img/quickfix.png" class="thumbnail" title="Quick fixes"> <img src="img/quickfix.png" alt=""> </a>
+					</li>
+				</ul>
+			</div>
+			<div class="row">
+				<div class="span8">
+					<p>
+						You can apply a quick fix to multiple violations of the same type at once if you use the context menu on a PMD problem in the Problems view and select the item "Quick Fix".
+					</p>
+				</div>
+					<ul class="thumbnails">
+						<li class="span4">
+							<a href="img/quickfix-problemsview.png" class="thumbnail" title="Apply a quick fix to multiple violations"> <img src="img/quickfix-problemsview.png" alt=""> </a>
+						</li>
+					</ul>
+			</div>
+			
+			<h3>Multiple PMD ruleset configurations</h3>
+			<div class="row">
+				<div class="span8">
+					<p>
+						This feature lets you use multiple PMD ruleset configurations. Once a configuration is created it is available to all projects in the workspace and can be activated for each project individually.
+					</p>
+				</div>
+				<ul class="thumbnails">
+					<li class="span4">
+						<a href="img/multiple-configurations.png" class="thumbnail" title="Multiple PMD ruleset configurations"> <img src="img/multiple-configurations.png" alt=""> </a>
+					</li>
+				</ul>
+			</div>
+			
+			<h3>Workspace and project PMD rule set configurations</h3>
+			<div class="row">
+				<div class="span8">
+					<p>
+						Besides the PMD rule set configurations stored at an absolute path in the file system, eclipse-pmd also supports PMD rule set configurations stored relative to the workspace or project. The workspace type is used when you want to use the same PMD rule set configuration for several projects in the workspace. If you want to use a different PMD ruleset configuration for each project, you can use the project type. And as long as those PMD ruleset configurations are at the same place within the projects, you need to set up the configuration only once.
+					</p>
+				</div>
+				<ul class="thumbnails">
+					<li class="span4">
+						<a href="img/relative-configurations.png" class="thumbnail" title="Workspace and project PMD rule set configurations"> <img src="img/relative-configurations.png" alt=""> </a>
+					</li>
+				</ul>
+			</div>
+			
+			<h3>Support for additional languages</h3>
+			<div class="row">
+				<div class="span8">
+					<p>
+						Besides Java, eclipse-pmd now also supports the additional languages that came with PMD 5.0. Supported are JavaScript, XML, XSL and JSP/JSF.
+					</p>
+				</div>
+				<ul class="thumbnails">
+					<li class="span4">
+						<a href="img/analyze-xml.png" class="thumbnail" title="Support for additional languages"> <img src="img/analyze-xml.png" alt=""> </a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="span4">
+						<p>
+							&copy; 2012 &ndash; 2013 Philip Graf. All Rights Reserved.
+							<br />
+							eclipse-pmd uses <a href="http://pmd.sourceforge.net/">PMD</a>.
+						</p>
+					</div>
+					<div class="span4 offset4">
+						<p>
+							Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a>
+							<br />
+							Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div id="forkme">
+			<a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
+		</div>
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.lightbox.pack.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$('a.thumbnail').lightBox();
+			});
+		</script>
+	</body>
+</html>
