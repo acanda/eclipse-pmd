@@ -25,6 +25,7 @@ public class PMDMarker {
     
     private static final String RULE_ID = "ruleId";
     private static final String VIOLATION_CLASS_NAME = "violationClassName";
+    private static final String MARKER_TEXT = "markerText";
     
     private final IMarker marker;
     
@@ -49,7 +50,16 @@ public class PMDMarker {
         return marker.getAttribute(VIOLATION_CLASS_NAME, "");
     }
     
+    public void setMarkerText(final String markerText) throws CoreException {
+        marker.setAttribute(MARKER_TEXT, markerText);
+    }
+    
+    public String getMarkerText() {
+        return marker.getAttribute(MARKER_TEXT, "");
+    }
+    
     public boolean isOtherWithSameRuleId(final IMarker other) {
         return other != marker && marker.getAttribute(RULE_ID, "").equals(other.getAttribute(RULE_ID, ""));
     }
+
 }
