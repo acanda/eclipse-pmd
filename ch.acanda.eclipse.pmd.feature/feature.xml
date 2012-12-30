@@ -13,8 +13,8 @@
       version="0.2.0.qualifier"
       provider-name="Philip Graf">
 
-   <description url="">
-      The eclipse-pmd plug-in integrates PMD 5.0.0 into the Eclipse IDE.
+   <description url="http://acanda.github.com/eclipse-pmd/">
+      The eclipse-pmd plug-in integrates PMD 5.0.1 into the Eclipse IDE.
    </description>
 
    <copyright url="">
