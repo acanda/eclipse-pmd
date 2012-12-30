@@ -30,7 +30,7 @@ public class MethodArgumentCouldBeFinalQuickFixTest extends ASTQuickFixTestCase<
 
     @Parameters
     public static Collection<Object[]> getTestData() {
-        return createTestData(MethodArgumentCouldBeFinalQuickFixTest.class.getResourceAsStream("MethodArgumentCouldBeFinalQuickFix.xml"));
+        return createTestData(MethodArgumentCouldBeFinalQuickFixTest.class.getResourceAsStream("MethodArgumentCouldBeFinal.xml"));
     }
 
 }
