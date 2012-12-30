@@ -22,7 +22,7 @@
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
-Eclipse Public License - v 1.0
+      Eclipse Public License - v 1.0
 
 THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC LICENSE (&quot;AGREEMENT&quot;). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES RECIPIENT&apos;S ACCEPTANCE OF THIS AGREEMENT.
 
@@ -112,9 +112,20 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </license>
 
    <requires>
-      <import plugin="org.eclipse.core.resources"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.resources" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.xerces" version="2.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jface.text" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.databinding" version="1.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.databinding.beans" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.databinding.observable" version="1.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.databinding.property" version="1.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jface.databinding" version="1.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.filebuffers" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.7.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
