@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+
+    <test name="SimplifyStartsWithNormalCharacter">
+        <setup>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return <marker>s.startsWith("a")</marker>;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return s.charAt(0) == 'a';
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Rewrite expression</label>
+            <description>Rewrite the call to String.startsWith() using String.charAt(0).</description>
+        </expected>
+    </test>
+
+    <test name="SimplifyStartsWithEscapedCharacter">
+        <setup>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return <marker>s.startsWith("\n")</marker>;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return s.charAt(0) == '\n';
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Rewrite expression</label>
+            <description>Rewrite the call to String.startsWith() using String.charAt(0).</description>
+        </expected>
+    </test>
+
+    <test name="SimplifyStartsWithOctalCharacter">
+        <setup>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return <marker>s.startsWith("\013")</marker>;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return s.charAt(0) == '\013';
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Rewrite expression</label>
+            <description>Rewrite the call to String.startsWith() using String.charAt(0).</description>
+        </expected>
+    </test>
+
+    <test name="SimplifyStartsWithUnicodeCharacter">
+        <setup>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return <marker>s.startsWith("\u2026")</marker>;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return s.charAt(0) == '\u2026';
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Rewrite expression</label>
+            <description>Rewrite the call to String.startsWith() using String.charAt(0).</description>
+        </expected>
+    </test>
+
+    <test name="SimplifyStartsWithStringExpression">
+        <setup>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return <marker>(s + s).startsWith("a")</marker>;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class SimplifyStartsWith {
+    public boolean foo(String s) {
+        return (s + s).charAt(0) == 'a';
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Rewrite expression</label>
+            <description>Rewrite the call to String.startsWith() using String.charAt(0).</description>
+        </expected>
+    </test>
+
+</tests>
