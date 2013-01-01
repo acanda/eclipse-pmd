@@ -60,7 +60,7 @@ public class Analyzer {
      */
     public void analyze(final IFile file, final RuleSets ruleSets, final ViolationProcessor violationProcessor) {
         try {
-            if (!file.isDerived() && file.isAccessible()) {
+            if (!file.isDerived() && file.isAccessible() && file.getFileExtension() != null) {
                 final Language language = LANGUAGES.get(file.getFileExtension().toLowerCase());
                 if (language != null && ruleSets.applies(file.getRawLocation().toFile())) {
                     final PMDConfiguration configuration = new PMDConfiguration();
