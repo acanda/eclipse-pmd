@@ -92,6 +92,15 @@ public class AnalyzerTest {
     }
 
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't throw a NullPointerException
+     * when the file to analyze does not have a file extension.
+     */
+    @Test
+    public void analyzeFileWithoutExtension() {
+        analyze("Hello World", "UTF-8", null, "rulesets/java/basic.xml/ExtendsObject");
+    }
+    
+    /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
      * invokes {@link ViolationProcessor#annotate(IFile, Iterator) with the correct rule violations.
      */
@@ -111,7 +120,8 @@ public class AnalyzerTest {
             final RuleSets ruleSets = new RuleSetFactory().createRuleSets(ruleSetRefId);
             new Analyzer().analyze(file, ruleSets, violationProcessor);
             
-            verify(violationProcessor, times(1)).annotate(same(file), violations(violatedRules));
+            final int invokations = violatedRules.length > 0 ? 1 : 0;
+            verify(violationProcessor, times(invokations)).annotate(same(file), violations(violatedRules));
         } catch (CoreException | IOException | RuleSetNotFoundException e) {
             throw new RuntimeException(e);
         }
