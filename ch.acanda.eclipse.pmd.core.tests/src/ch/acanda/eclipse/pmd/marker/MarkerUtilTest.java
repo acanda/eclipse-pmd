@@ -66,9 +66,9 @@ public class MarkerUtilTest {
         final RuleViolation violation = mock(RuleViolation.class);
         when(violation.getDescription()).thenReturn("message");
         when(violation.getBeginLine()).thenReturn(1);
-        when(violation.getBeginColumn()).thenReturn(18);
+        when(violation.getBeginColumn()).thenReturn(17);
         when(violation.getEndLine()).thenReturn(1);
-        when(violation.getEndColumn()).thenReturn(24);
+        when(violation.getEndColumn()).thenReturn(22);
         when(violation.getClassName()).thenReturn("ClassName");
         final Rule rule = mock(Rule.class);
         when(rule.getLanguage()).thenReturn(Language.JAVA);
@@ -83,10 +83,11 @@ public class MarkerUtilTest {
         verify(actual).setAttribute(IMarker.MESSAGE, "message");
         verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
         verify(actual).setAttribute(IMarker.LINE_NUMBER, 1);
-        verify(actual).setAttribute(IMarker.CHAR_START, 17);
-        verify(actual).setAttribute(IMarker.CHAR_END, 24);
+        verify(actual).setAttribute(IMarker.CHAR_START, 16);
+        verify(actual).setAttribute(IMarker.CHAR_END, 22);
         verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
         verify(actual).setAttribute("violationClassName", "ClassName");
+        verify(actual).setAttribute("markerText", "Object");
     }
     
     /**
@@ -122,6 +123,7 @@ public class MarkerUtilTest {
         verify(actual).setAttribute(IMarker.CHAR_END, 24);
         verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
         verify(actual).setAttribute("violationClassName", "ClassName");
+        verify(actual).setAttribute("markerText", "Object");
     }
     
     /**
@@ -157,5 +159,6 @@ public class MarkerUtilTest {
         verify(actual).setAttribute(IMarker.CHAR_END, 0);
         verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
         verify(actual).setAttribute("violationClassName", "ClassName");
+        verify(actual).setAttribute("markerText", "");
     }
 }

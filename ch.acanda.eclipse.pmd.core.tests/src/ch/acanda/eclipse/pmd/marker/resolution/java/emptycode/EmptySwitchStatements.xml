@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+
+    <test name="EmptySwitchStatements">
+        <setup>
+            <source>
+class Example {
+    void foo() {
+        <marker>switch (1) {
+        }</marker>
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class Example {
+    void foo() {
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove the switch statement</label>
+            <description>Removes the empty switch statement.</description>
+        </expected>
+    </test>
+
+</tests>

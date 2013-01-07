@@ -30,7 +30,7 @@ public class LocalVariableCouldBeFinalQuickFixTest extends ASTQuickFixTestCase<L
 
     @Parameters
     public static Collection<Object[]> getTestData() {
-        return createTestData(LocalVariableCouldBeFinalQuickFixTest.class.getResourceAsStream("LocalVariableCouldBeFinalQuickFix.xml"));
+        return createTestData(LocalVariableCouldBeFinalQuickFixTest.class.getResourceAsStream("LocalVariableCouldBeFinal.xml"));
     }
 
 }

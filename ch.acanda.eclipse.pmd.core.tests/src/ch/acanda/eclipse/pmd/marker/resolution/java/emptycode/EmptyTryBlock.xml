@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+
+    <test name="EmptyTryBlockWithCatch">
+        <setup>
+            <source>
+class Example {
+    void foo() {
+        try <marker>{
+        }</marker> catch (Exception e) {
+            log(e);
+        }
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class Example {
+    void foo() {
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove the try block</label>
+            <description>Removes the empty try block including the catch and finally blocks.</description>
+        </expected>
+    </test>
+
+    <test name="EmptyTryBlockWithFinally">
+        <setup>
+            <source>
+class Example {
+    void foo() {
+        try <marker>{
+        }</marker> finally {
+            int a = 1;
+        }
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class Example {
+    void foo() {
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove the try block</label>
+            <description>Removes the empty try block including the catch and finally blocks.</description>
+        </expected>
+    </test>
+
+    <test name="EmptyTryBlockWithCatchAndFinally">
+        <setup>
+            <source>
+class Example {
+    void foo() {
+        try <marker>{
+        }</marker> catch (Exception e) {
+            log(e);
+        } finally {
+            int a = 1;
+        }
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class Example {
+    void foo() {
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove the try block</label>
+            <description>Removes the empty try block including the catch and finally blocks.</description>
+        </expected>
+    </test>
+
+</tests>
