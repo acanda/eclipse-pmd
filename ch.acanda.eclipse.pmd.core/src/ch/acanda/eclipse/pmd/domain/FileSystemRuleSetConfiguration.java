@@ -13,6 +13,8 @@ package ch.acanda.eclipse.pmd.domain;
 
 import java.nio.file.Path;
 
+import org.eclipse.core.resources.IProject;
+
 /**
  * A rule set configuration stored in the file system.
  * 
@@ -20,11 +22,11 @@ import java.nio.file.Path;
  */
 public class FileSystemRuleSetConfiguration extends RuleSetConfiguration {
     
-    private final Path configuration;
+    private final Path location;
     
-    public FileSystemRuleSetConfiguration(final int id, final String name, final Path configuration) {
+    public FileSystemRuleSetConfiguration(final int id, final String name, final Path location) {
         super(id, name);
-        this.configuration = configuration.toAbsolutePath().normalize();
+        this.location = location.toAbsolutePath().normalize();
     }
     
     @Override
@@ -34,12 +36,12 @@ public class FileSystemRuleSetConfiguration extends RuleSetConfiguration {
     
     @Override
     public String getLocation() {
-        return configuration.toString();
+        return location.toString();
     }
     
     @Override
-    public Path getConfiguration() {
-        return configuration;
+    public Path getConfiguration(final IProject project) {
+        return location;
     }
     
 }

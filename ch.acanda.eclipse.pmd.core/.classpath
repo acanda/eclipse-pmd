@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-5.0.1.jar" sourcepath="lib/pmd-src-5.0.1.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/rhino-1.7R3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/guava-12.0.jar" sourcepath="lib/guava-12.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/guava-14.0-rc1.jar" sourcepath="lib/guava-14.0-rc1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jaxen-1.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-5.0.0.jar" sourcepath="lib/pmd-src-5.0.0.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>

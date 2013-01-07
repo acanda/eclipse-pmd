@@ -48,10 +48,10 @@ public final class PMDProjectSettings {
     private static final QualifiedName RULE_SETS = new QualifiedName(PMDPlugin.ID, "rulesets");
     private static final QualifiedName ACTIVE_RULE_SET_IDS = new QualifiedName(PMDPlugin.ID, "activerulesets");
     
-    private static final Function<RuleSetConfiguration, RuleSetReferenceId> TO_REFERENCE_ID = new Function<RuleSetConfiguration, RuleSetReferenceId>() {
+    private final Function<RuleSetConfiguration, RuleSetReferenceId> TO_REFERENCE_ID = new Function<RuleSetConfiguration, RuleSetReferenceId>() {
         @Override
         public RuleSetReferenceId apply(final RuleSetConfiguration config) {
-            return new RuleSetReferenceId(config.getLocation());
+            return new RuleSetReferenceId(config.getConfiguration(project).toString());
         }
     };
     

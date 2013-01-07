@@ -13,7 +13,10 @@ package ch.acanda.eclipse.pmd.marker.resolution;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -131,9 +134,11 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     @SuppressWarnings("unchecked")
     private ASTQuickFix<ASTNode> getQuickFix() {
         try {
-            final IMarker marker = mock(IMarker.class);
             final Type typeArgument = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             final Class<T> quickFixClass = (Class<T>) typeArgument;
+            final IMarker marker = mock(IMarker.class);
+            final String markerText = params.source.substring(params.offset, params.offset + params.length);
+            when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
             return (ASTQuickFix<ASTNode>) quickFixClass.getConstructor(PMDMarker.class).newInstance(new PMDMarker(marker));
         } catch (SecurityException | ReflectiveOperationException e) {
             throw new IllegalArgumentException(e);
