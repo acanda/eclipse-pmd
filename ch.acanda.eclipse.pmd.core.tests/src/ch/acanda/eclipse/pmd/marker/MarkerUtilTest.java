@@ -12,7 +12,12 @@
 package ch.acanda.eclipse.pmd.marker;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import net.sourceforge.pmd.Rule;
@@ -160,5 +165,42 @@ public class MarkerUtilTest {
         verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
         verify(actual).setAttribute("violationClassName", "ClassName");
         verify(actual).setAttribute("markerText", "");
+    }
+    
+    /**
+     * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
+     * position information containing only the line and not the character start and end position if the marker would
+     * span more than 5 lines.
+     */
+    @Test
+    public void addMarkerSpanningMoreThanFiveLines() throws CoreException {
+        final IFile file = mock(IFile.class);
+        final IMarker marker = mock(IMarker.class);
+        when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
+        final RuleViolation violation = mock(RuleViolation.class);
+        when(violation.getDescription()).thenReturn("message");
+        when(violation.getBeginLine()).thenReturn(1);
+        when(violation.getBeginColumn()).thenReturn(17);
+        when(violation.getEndLine()).thenReturn(6);
+        when(violation.getEndColumn()).thenReturn(22);
+        when(violation.getClassName()).thenReturn("ClassName");
+        final Rule rule = mock(Rule.class);
+        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getRuleSetName()).thenReturn("basic");
+        when(rule.getName()).thenReturn("ExtendsObject");
+        when(violation.getRule()).thenReturn(rule);
+        
+        final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object {}", violation);
+        
+        assertNotNull("The method must always return a marker", actual);
+        verify(file).createMarker(MARKER_TYPE);
+        verify(actual).setAttribute(IMarker.MESSAGE, "message");
+        verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+        verify(actual).setAttribute(IMarker.LINE_NUMBER, 1);
+        verify(actual, never()).setAttribute(same(IMarker.CHAR_START), anyInt());
+        verify(actual, never()).setAttribute(same(IMarker.CHAR_END), anyInt());
+        verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
+        verify(actual).setAttribute("violationClassName", "ClassName");
+        verify(actual, never()).setAttribute(eq("markerText"), anyString());
     }
 }
