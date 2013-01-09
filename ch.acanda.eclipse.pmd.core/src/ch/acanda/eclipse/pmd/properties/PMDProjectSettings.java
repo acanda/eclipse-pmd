@@ -45,7 +45,7 @@ import com.google.common.collect.Lists;
  */
 public final class PMDProjectSettings {
     
-    private static final QualifiedName RULE_SETS = new QualifiedName(PMDPlugin.ID, "rulesets");
+    private static final QualifiedName ACTIVE_RULE_SETS = new QualifiedName(PMDPlugin.ID, "rulesets");
     private static final QualifiedName ACTIVE_RULE_SET_IDS = new QualifiedName(PMDPlugin.ID, "activerulesets");
     
     private final Function<RuleSetConfiguration, RuleSetReferenceId> TO_REFERENCE_ID = new Function<RuleSetConfiguration, RuleSetReferenceId>() {
@@ -69,14 +69,15 @@ public final class PMDProjectSettings {
         this.project = project;
     }
     
-    public RuleSets getRuleSets() {
+    public RuleSets getActiveRuleSets() {
         RuleSets ruleSets = null;
         try {
-            ruleSets = (RuleSets) project.getSessionProperty(RULE_SETS);
+            ruleSets = (RuleSets) project.getSessionProperty(ACTIVE_RULE_SETS);
             if (ruleSets == null) {
                 final PMDWorkspaceSettings workspaceSettings = new PMDWorkspaceSettings(PMDPlugin.getDefault().getPreferenceStore());
                 final ImmutableList<RuleSetConfiguration> configs = workspaceSettings.getRuleSetsConfigurations();
-                ruleSets = new RuleSetFactory().createRuleSets(Lists.transform(configs, TO_REFERENCE_ID));
+                final ImmutableList<RuleSetConfiguration> activeConfigs = ImmutableList.copyOf(getActiveRuleSetConfigurations(configs));
+                ruleSets = new RuleSetFactory().createRuleSets(Lists.transform(activeConfigs, TO_REFERENCE_ID));
             }
         } catch (final CoreException | RuleSetNotFoundException e) {
             PMDPlugin.getDefault().error("Could not load PMD rule sets.", e);
@@ -123,7 +124,7 @@ public final class PMDProjectSettings {
             final Iterable<Integer> ids = Iterables.transform(activeConfigurations, TO_RULESETCONFIGURATION_ID);
             project.setPersistentProperty(ACTIVE_RULE_SET_IDS, Joiner.on(',').join(ids));
             // reset the cached rule sets
-            project.setSessionProperty(RULE_SETS, null);
+            project.setSessionProperty(ACTIVE_RULE_SETS, null);
         } catch (final CoreException e) {
             PMDPlugin.getDefault().error("Cannot store ids of active rule set configurations of project " + project.getName(), e);
         }

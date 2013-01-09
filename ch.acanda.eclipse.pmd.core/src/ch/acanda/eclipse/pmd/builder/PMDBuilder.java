@@ -66,7 +66,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
     
     void analyze(final IResource resource) {
         if (resource instanceof IFile) {
-            final RuleSets ruleSets = new PMDProjectSettings(resource.getProject()).getRuleSets();
+            final RuleSets ruleSets = new PMDProjectSettings(resource.getProject()).getActiveRuleSets();
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
         }
     }
