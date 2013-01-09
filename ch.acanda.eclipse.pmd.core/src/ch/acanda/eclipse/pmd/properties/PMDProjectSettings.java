@@ -72,21 +72,47 @@ public final class PMDProjectSettings {
     public RuleSets getActiveRuleSets() {
         RuleSets ruleSets = null;
         try {
-            ruleSets = (RuleSets) project.getSessionProperty(ACTIVE_RULE_SETS);
+            ruleSets = getActiveRuleSetsFromCache();
             if (ruleSets == null) {
                 final PMDWorkspaceSettings workspaceSettings = new PMDWorkspaceSettings(PMDPlugin.getDefault().getPreferenceStore());
                 final ImmutableList<RuleSetConfiguration> configs = workspaceSettings.getRuleSetsConfigurations();
                 final ImmutableList<RuleSetConfiguration> activeConfigs = ImmutableList.copyOf(getActiveRuleSetConfigurations(configs));
                 ruleSets = new RuleSetFactory().createRuleSets(Lists.transform(activeConfigs, TO_REFERENCE_ID));
+                putActiveRuleSetsIntoCache(ruleSets);
             }
-        } catch (final CoreException | RuleSetNotFoundException e) {
+        } catch (final RuleSetNotFoundException e) {
             PMDPlugin.getDefault().error("Could not load PMD rule sets.", e);
         }
         if (ruleSets == null) {
-            PMDPlugin.getDefault().error("Could not load PMD rule sets.", null);
             ruleSets = new RuleSets();
+            putActiveRuleSetsIntoCache(ruleSets);
         }
         return ruleSets;
+    }
+    
+    private RuleSets getActiveRuleSetsFromCache() {
+        try {
+            return (RuleSets) project.getSessionProperty(ACTIVE_RULE_SETS);
+        } catch (final CoreException e) {
+            PMDPlugin.getDefault().warn("Cannot read active rule sets from session properties of project " + project.getName(), e);
+        }
+        return null;
+    }
+    
+    private void putActiveRuleSetsIntoCache(final RuleSets ruleSets) {
+        try {
+            project.setSessionProperty(ACTIVE_RULE_SETS, ruleSets);
+        } catch (final CoreException e) {
+            PMDPlugin.getDefault().warn("Could not store active rule sets in session properties of project " + project.getName(), e);
+        }
+    }
+    
+    /**
+     * Resets the active rule sets cache, i.e. the next time {@link #getActiveRuleSets()} is called, the rule sets are
+     * rebuilt from their configuration.
+     */
+    public void resetActiveRuleSetsCache() {
+        putActiveRuleSetsIntoCache(null);
     }
     
     /**
@@ -123,8 +149,7 @@ public final class PMDProjectSettings {
         try {
             final Iterable<Integer> ids = Iterables.transform(activeConfigurations, TO_RULESETCONFIGURATION_ID);
             project.setPersistentProperty(ACTIVE_RULE_SET_IDS, Joiner.on(',').join(ids));
-            // reset the cached rule sets
-            project.setSessionProperty(ACTIVE_RULE_SETS, null);
+            resetActiveRuleSetsCache();
         } catch (final CoreException e) {
             PMDPlugin.getDefault().error("Cannot store ids of active rule set configurations of project " + project.getName(), e);
         }
