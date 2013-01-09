@@ -39,6 +39,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
     @Override
     protected IProject[] build(final int kind, @SuppressWarnings("rawtypes") final Map args, final IProgressMonitor monitor)
             throws CoreException {
+        new PMDProjectSettings(getProject()).resetActiveRuleSetsCache();
         if (kind == FULL_BUILD) {
             fullBuild(monitor);
         } else {
