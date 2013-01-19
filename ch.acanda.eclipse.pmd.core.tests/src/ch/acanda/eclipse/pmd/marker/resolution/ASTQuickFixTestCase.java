@@ -123,6 +123,7 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
  * @param <T> The type of the quick fix.
  */
 @RunWith(value = Parameterized.class)
+@SuppressWarnings({ "PMD.CommentSize", "PMD.AbstractClassWithoutAbstractMethod" })
 public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNode>> {
     
     private final TestParameters params;
@@ -205,7 +206,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         final ASTQuickFix<ASTNode> quickFix = getQuickFix();
         final org.eclipse.jface.text.Document document = new org.eclipse.jface.text.Document(params.source);
         final CompilationUnit ast = createAST(document);
-        final ASTNode node = findNode(params, document, ast, quickFix);
+        final ASTNode node = findNode(params, ast, quickFix);
         
         quickFix.apply(node);
         
@@ -214,8 +215,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
                 params.expectedSource, actual);
     }
 
-    private ASTNode findNode(final TestParameters params, final org.eclipse.jface.text.Document document, final CompilationUnit ast,
-            final ASTQuickFix<ASTNode> quickFix) {
+    private ASTNode findNode(final TestParameters params, final CompilationUnit ast, final ASTQuickFix<ASTNode> quickFix) {
         final Class<? extends ASTNode> nodeType = quickFix.getNodeType();
         final PositionWithinNodeNodeFinder finder = new PositionWithinNodeNodeFinder(new Position(params.offset, params.length), nodeType);
         final ASTNode node = finder.findNode(ast);
@@ -236,8 +236,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     private String rewriteAST(final org.eclipse.jface.text.Document document, final CompilationUnit ast) throws BadLocationException {
         final TextEdit edit = ast.rewrite(document, getOptions());
         edit.apply(document);
-        final String actual = document.get();
-        return actual;
+        return document.get();
     }
 
     private Map<String, String> getOptions() {

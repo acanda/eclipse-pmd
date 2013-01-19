@@ -129,7 +129,4 @@ final class PMDProjectPropertyPageModel extends ViewModel {
         return isPMDEnabled() && !selectedConfigurations.isEmpty();
     }
     
-    public void setRemoveEnabled(final boolean b) {
-        
-    }
 }

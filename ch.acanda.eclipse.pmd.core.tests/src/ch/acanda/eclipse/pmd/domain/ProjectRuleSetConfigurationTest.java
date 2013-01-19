@@ -29,7 +29,7 @@ import org.junit.Test;
  * 
  * @author Philip Graf
  */
-public class ProjectRuleSetConfigurationTest extends Object {
+public class ProjectRuleSetConfigurationTest {
     
     private static final int ID = 7;
     private static final String NAME = "Rule Set Name";

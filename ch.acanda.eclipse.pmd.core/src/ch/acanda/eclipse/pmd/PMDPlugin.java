@@ -29,12 +29,14 @@ public final class PMDPlugin extends AbstractUIPlugin {
     private static PMDPlugin plugin;
     
     @Override
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void start(final BundleContext context) throws Exception {
         plugin = this;
         super.start(context);
     }
     
     @Override
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     public void stop(final BundleContext context) throws Exception {
         PMDPluginImages.dispose();
         super.stop(context);
