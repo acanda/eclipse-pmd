@@ -21,6 +21,10 @@ import org.eclipse.jface.text.Position;
  */
 public final class Finders {
     
+    private Finders() {
+        // hide constructor of utility class
+    }
+    
     /**
      * Creates a {@link NodeFinder} that finds a node depending on its type and a position that encloses the node.
      * 

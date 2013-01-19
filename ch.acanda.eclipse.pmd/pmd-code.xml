@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="pmd" xsi:noNamespaceSchemaLocation="http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
+    <description>Base PMD rules for all projects</description>
+
+    <rule ref="rulesets/java/codesize.xml/TooManyMethods"/>
+
+    <rule ref="rulesets/java/design.xml/UseSingleton" />
+    
+    <rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals">
+        <properties>
+            <property name="skipAnnotations" value="true" />
+        </properties>
+    </rule>
+    
+</ruleset>

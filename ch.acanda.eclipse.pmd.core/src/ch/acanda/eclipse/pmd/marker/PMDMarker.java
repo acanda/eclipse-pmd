@@ -58,8 +58,9 @@ public class PMDMarker {
         return marker.getAttribute(MARKER_TEXT, "");
     }
     
+    @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public boolean isOtherWithSameRuleId(final IMarker other) {
         return other != marker && marker.getAttribute(RULE_ID, "").equals(other.getAttribute(RULE_ID, ""));
     }
-
+    
 }

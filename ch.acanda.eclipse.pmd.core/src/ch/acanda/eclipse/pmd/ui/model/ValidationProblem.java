@@ -16,13 +16,13 @@ package ch.acanda.eclipse.pmd.ui.model;
  */
 public class ValidationProblem {
     
-    public enum Severity {
-        ERROR, WARNING
-    };
-    
     private final String propertyName;
     private final Severity severity;
     private final String message;
+    
+    public enum Severity {
+        ERROR, WARNING
+    };
     
     public ValidationProblem(final String propertyName, final Severity severity, final String message) {
         assert propertyName != null && severity != null && message != null;
@@ -54,6 +54,7 @@ public class ValidationProblem {
     }
     
     @Override
+    @SuppressWarnings("PMD.NPathComplexity")
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
