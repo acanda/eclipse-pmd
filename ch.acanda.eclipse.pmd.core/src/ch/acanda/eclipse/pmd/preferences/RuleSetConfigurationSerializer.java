@@ -29,6 +29,9 @@ import com.google.common.collect.ImmutableList.Builder;
  */
 final class RuleSetConfigurationSerializer {
     
+    private static final char VALUE_SEPARATOR = '\u241F';
+    private static final char CONFIGURATION_SEPARATOR = '\u241E';
+    
     private static enum Identifiers {
         /**
          * Identifier for the {@link WorkspaceRuleSetConfiguration}.
@@ -47,8 +50,9 @@ final class RuleSetConfigurationSerializer {
         
     };
     
-    private static final char VALUE_SEPARATOR = '\u241F';
-    private static final char CONFIGURATION_SEPARATOR = '\u241E';
+    private RuleSetConfigurationSerializer() {
+        // hide constructor of singleton
+    }
     
     /**
      * Serializes a list of {@link RuleSetConfiguration}s to a String.

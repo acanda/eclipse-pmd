@@ -32,6 +32,10 @@ public class PMDPluginImages {
     
     private static ResourceManager manager;
     
+    private PMDPluginImages() {
+        // hide constructor of utility class
+    }
+    
     public static Image get(final ImageDescriptor descriptor) {
         return (Image) getResourceManager().get(descriptor);
     }
@@ -41,7 +45,8 @@ public class PMDPluginImages {
             manager.dispose();
         }
     }
-
+    
+    @SuppressWarnings("PMD.NonThreadSafeSingleton")
     private static ResourceManager getResourceManager() {
         if (manager == null) {
             manager = SingletonHolder.INSTANCE;

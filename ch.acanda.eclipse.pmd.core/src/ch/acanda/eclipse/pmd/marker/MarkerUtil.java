@@ -36,6 +36,10 @@ public final class MarkerUtil {
     
     private static final String MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdMarker";
     
+    private MarkerUtil() {
+        // hide constructor of utility class
+    }
+    
     /**
      * Removes all PMD markers from a file.
      */

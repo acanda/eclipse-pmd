@@ -1,7 +1,6 @@
 package ch.acanda.eclipse.pmd.marker.resolution;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -66,7 +65,6 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
     public ASTQuickFix(final PMDMarker marker) {
         this.marker = marker;
     }
-    
     
     @Override
     public final Image getImage() {
@@ -241,8 +239,8 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
     @SuppressWarnings("unchecked")
     protected Class<? extends ASTNode> getNodeType() {
         // This works only if 'this' is a direct subclass of ASTQuickFix.
-        final Type typeArgument = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        return (Class<? extends ASTNode>) typeArgument;
+        final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+        return (Class<? extends ASTNode>) genericSuperclass.getActualTypeArguments()[0];
     }
     
     /**
@@ -283,10 +281,8 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
                 for (final IEditorReference reference : page.getEditorReferences()) {
                     try {
                         final IEditorInput input = reference.getEditorInput();
-                        if (input instanceof IFileEditorInput) {
-                            if (file.equals(((IFileEditorInput) input).getFile())) {
-                                return true;
-                            }
+                        if (input instanceof IFileEditorInput && file.equals(((IFileEditorInput) input).getFile())) {
+                            return true;
                         }
                     } catch (final PartInitException e) {
                         // cannot get editor input -> ignore

@@ -51,7 +51,6 @@ import ch.acanda.eclipse.pmd.ui.util.SelectionAdapter;
  * @author Philip Graf
  */
 public class PMDProjectPropertyPage extends PropertyPage {
-    public PMDProjectPropertyPage() {}
     
     private final PMDProjectPropertyPageController controller = new PMDProjectPropertyPageController();
     private Button enablePMDCheckbox;

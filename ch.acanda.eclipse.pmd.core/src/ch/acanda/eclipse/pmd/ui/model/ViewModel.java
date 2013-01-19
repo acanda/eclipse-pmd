@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableSet;
  * 
  * @author Philip Graf
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public abstract class ViewModel {
     
     public static final String DIRTY_PROPERTY = "dirty";
