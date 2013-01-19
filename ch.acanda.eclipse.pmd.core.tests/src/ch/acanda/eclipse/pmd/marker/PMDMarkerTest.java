@@ -32,17 +32,20 @@ import org.junit.Test;
  */
 public class PMDMarkerTest {
     
+    private static final String RULE_ID = "ruleId";
+
     /**
      * Verifies that {@link PMDMarker#isOtherWithSameRuleId(IMarker)} returns true if the argument is not the same
      * instance but has the same rule id.
      */
     @Test
-    public void IsOtherWithSameRuleId() {
+    public void isOtherWithSameRuleId() {
         final IMarker marker = mock(IMarker.class);
-        when(marker.getAttribute(eq("ruleId"), isA(String.class))).thenReturn("Rule 1");
+        final String ruleId = "Rule A";
+        when(marker.getAttribute(eq(RULE_ID), isA(String.class))).thenReturn(ruleId);
         final PMDMarker pmdMarker = new PMDMarker(marker);
         final IMarker other = mock(IMarker.class);
-        when(other.getAttribute(eq("ruleId"), isA(String.class))).thenReturn("Rule 1");
+        when(other.getAttribute(eq(RULE_ID), isA(String.class))).thenReturn(ruleId);
         final boolean actual = pmdMarker.isOtherWithSameRuleId(other);
         assertTrue("The marker must not be the same instance as the other marker", actual);
     }
@@ -52,7 +55,7 @@ public class PMDMarkerTest {
      * instance.
      */
     @Test
-    public void IsOtherWithSameRuleIdSameInstance() {
+    public void isOtherWithSameRuleIdSameInstance() {
         final IMarker marker = mock(IMarker.class);
         final PMDMarker pmdMarker = new PMDMarker(marker);
         final IMarker other = marker;
@@ -65,12 +68,12 @@ public class PMDMarkerTest {
      * rule id.
      */
     @Test
-    public void IsOtherWithSameRuleIdDifferentRuleId() {
+    public void isOtherWithSameRuleIdDifferentRuleId() {
         final IMarker marker = mock(IMarker.class);
-        when(marker.getAttribute(eq("ruleId"), isA(String.class))).thenReturn("Rule 1");
+        when(marker.getAttribute(eq(RULE_ID), isA(String.class))).thenReturn("Rule B");
         final PMDMarker pmdMarker = new PMDMarker(marker);
         final IMarker other = mock(IMarker.class);
-        when(other.getAttribute(eq("ruleId"), isA(String.class))).thenReturn("Rule 2");
+        when(other.getAttribute(eq(RULE_ID), isA(String.class))).thenReturn("Rule C");
         final boolean actual = pmdMarker.isOtherWithSameRuleId(other);
         assertFalse("The marker must not be the same instance as the other marker", actual);
     }
@@ -82,9 +85,9 @@ public class PMDMarkerTest {
     public void setRuleId() throws CoreException {
         final IMarker marker = mock(IMarker.class);
         final PMDMarker pmdMarker = new PMDMarker(marker);
-        final String expected = "Rule 1";
+        final String expected = "Rule D";
         pmdMarker.setRuleId(expected);
-        verify(marker).setAttribute("ruleId", expected);
+        verify(marker).setAttribute(RULE_ID, expected);
     }
 
     /**
@@ -93,8 +96,8 @@ public class PMDMarkerTest {
     @Test
     public void getRuleId() throws CoreException {
         final IMarker marker = mock(IMarker.class);
-        final String expected = "Rule 1";
-        when(marker.getAttribute(eq("ruleId"), anyString())).thenReturn(expected);
+        final String expected = "Rule E";
+        when(marker.getAttribute(eq(RULE_ID), anyString())).thenReturn(expected);
         final PMDMarker pmdMarker = new PMDMarker(marker);
         final String actual = pmdMarker.getRuleId();
         assertEquals("The rule id should be read from the wrapped marker", expected, actual);

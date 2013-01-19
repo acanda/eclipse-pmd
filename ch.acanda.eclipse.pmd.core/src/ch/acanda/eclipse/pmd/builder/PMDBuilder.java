@@ -37,6 +37,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
     public static final String ID = "ch.acanda.eclipse.pmd.builder.PMDBuilder";
     
     @Override
+    @SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
     protected IProject[] build(final int kind, @SuppressWarnings("rawtypes") final Map args, final IProgressMonitor monitor)
             throws CoreException {
         if (kind == FULL_BUILD) {

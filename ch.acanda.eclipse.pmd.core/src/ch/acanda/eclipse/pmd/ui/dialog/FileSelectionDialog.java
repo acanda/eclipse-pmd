@@ -44,6 +44,7 @@ public class FileSelectionDialog extends ElementTreeSelectionDialog {
         private static final Object[] NO_CHILDREN = new Object[0];
         
         @Override
+        @SuppressWarnings("PMD.MethodReturnsInternalArray")
         public Object[] getChildren(final Object parentElement) {
             if (parentElement instanceof IContainer) {
                 try {
@@ -74,10 +75,14 @@ public class FileSelectionDialog extends ElementTreeSelectionDialog {
         }
         
         @Override
-        public void dispose() {}
+        public void dispose() {
+            // nothing to dispose
+        }
         
         @Override
-        public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {}
+        public void inputChanged(final Viewer viewer, final Object oldInput, final Object newInput) {
+            // nothing to do; the content is created on demand
+        }
     }
     
     /**

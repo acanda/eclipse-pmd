@@ -23,6 +23,10 @@ import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor;
  */
 public final class ASTUtil {
     
+    private ASTUtil() {
+        // hide constructor of utility class
+    }
+
     /**
      * Returns a deep copy of the subtree of AST nodes rooted at the given node. The resulting nodes are owned by the
      * same AST as the given node. Even if the given node has a parent, the result node will be unparented.

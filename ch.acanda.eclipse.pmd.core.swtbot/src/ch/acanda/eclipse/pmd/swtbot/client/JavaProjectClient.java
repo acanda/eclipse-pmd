@@ -25,8 +25,12 @@ import ch.acanda.eclipse.pmd.swtbot.bot.PMDProjectPropertyDialogBot;
 /**
  * @author Philip Graf
  */
-public class JavaProjectClient {
+public final class JavaProjectClient {
     
+    private JavaProjectClient() {
+        // hide contructor of utility class
+    }
+
     /**
      * Creates a Java project with the provided name.
      * 

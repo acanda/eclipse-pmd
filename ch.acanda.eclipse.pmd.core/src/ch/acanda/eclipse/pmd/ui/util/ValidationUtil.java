@@ -19,6 +19,10 @@ import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
  */
 public final class ValidationUtil {
     
+    private ValidationUtil() {
+        // hide constructor of utility class
+    }
+
     /**
      * Adds a validation error to the validation result if {@code value} is {@code null} or a blank string.
      * 
