@@ -23,7 +23,7 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/pmd-5.0.1/rules/java/optimizations.html#RedundantFieldInitializer">
+ * href="http://pmd.sourceforge.net/rules/java/optimizations.html#RedundantFieldInitializer">
  * RedundantFieldInitializer</a>. It removes the redundant field initializer.
  * 
  * @author Philip Graf

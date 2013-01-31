@@ -22,7 +22,7 @@ import ch.acanda.eclipse.pmd.marker.resolution.NodeFinder;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a href="http://pmd.sourceforge.net/pmd-5.0.1/rules/java/empty.html#EmptySwitchStatements"
+ * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptySwitchStatements"
  * >EmptySwitchStatements</a>. It removes the empty switch statement.
  * 
  * @author Philip Graf

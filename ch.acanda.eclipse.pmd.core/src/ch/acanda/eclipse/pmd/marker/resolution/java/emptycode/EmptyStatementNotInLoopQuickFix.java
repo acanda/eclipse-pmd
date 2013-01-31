@@ -22,7 +22,7 @@ import ch.acanda.eclipse.pmd.marker.resolution.NodeFinder;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a href="http://pmd.sourceforge.net/pmd-5.0.1/rules/java/empty.html#EmptyStatementNotInLoop"
+ * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptyStatementNotInLoop"
  * >EmptyStatementNotInLoop</a>. It removes the empty statement.
  * 
  * @author Philip Graf

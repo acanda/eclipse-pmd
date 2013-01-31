@@ -32,7 +32,7 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/pmd-5.0.1/rules/java/optimizations.html#SimplifyStartsWith"> SimplifyStartsWith</a>.
+ * href="http://pmd.sourceforge.net/rules/java/optimizations.html#SimplifyStartsWith"> SimplifyStartsWith</a>.
  * It rewrites <code>x.startsWith("a")</code> as <code>x.charAt(0) == 'a'</code>.
  * 
  * @author Philip Graf

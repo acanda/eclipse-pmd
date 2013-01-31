@@ -22,7 +22,7 @@ import ch.acanda.eclipse.pmd.marker.resolution.NodeFinder;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a href="http://pmd.sourceforge.net/pmd-5.0.1/rules/java/empty.html#EmptyInitializer"
+ * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptyInitializer"
  * >EmptyInitializer</a>. It removes the empty initializer.
  * 
  * @author Philip Graf
