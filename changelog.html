@@ -44,6 +44,28 @@
 		</div>
 
 		<div class="container">
+			<h2>eclipse-pmd 0.3</h2>
+			<p class="muted">
+				<small>Released: upcoming</small>
+				<br />
+				<!--small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.3</small-->
+			</p>
+			<h3>PMD 5.0.2</h3>
+			<div class="row">
+				<div class="span8">
+					<p>
+						The embedded PMD has been updated to version 5.0.2.
+					</p>
+				</div>
+				<ul class="thumbnails">
+					<li class="span4">
+						<a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.2 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.2.txt"> <img src="img/pmd-5.0.2-release-notes.png" alt=""> </a>
+					</li>
+				</ul>
+			</div>
+
+			<hr	/>
+			
 			<h2>eclipse-pmd 0.2</h2>
 			<p class="muted">
 				<small>Released: 29.01.2013</small>
@@ -74,57 +96,9 @@
 				</div>
 				<ul class="thumbnails">
 					<li class="span4">
-						<a href="#pmd-501-release-notes" class="thumbnail" title="PMD 5.0.1 Release Notes" data-toggle="modal"> <img src="img/pmd-5.0.1-release-notes.png" alt=""> </a>
+						<a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.1 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.1.txt"> <img src="img/pmd-5.0.1-release-notes.png" alt=""> </a>
 					</li>
 				</ul>
-				<div id="pmd-501-release-notes" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pmd-501-release-notes-label" aria-hidden="true">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							&times;
-						</button>
-						<h3 id="pmd-501-release-notes-label">PMD 5.0.1 Release Notes</h3>
-					</div>
-					<div class="modal-body">
-						<pre>
-Fixed bug  820: False+ AvoidReassigningParameters
-Fixed bug 1008: pmd-5.0.0: ImmutableField false positive on self-inc/dec
-Fixed bug 1009: pmd-5.0.0: False + UselessParentheses
-Fixed bug 1003: newline characters stripped from CPD data in PMD 5.0.0
-Fixed bug 1001: InsufficientStringBufferDeclaration fails to parse hex
-Fixed bug  522: InefficientStringBuffering bug false +
-Fixed bug  953: String.InefficientStringBuffering false +
-Fixed bug  981: Unable to parse
-Fixed bug 1010: pmd: parsing of generic method call with super fails
-Fixed bug  996: pmd-4.2.6: MissingBreakInSwitch fails to report violation
-Fixed bug  993: Invalid NPath calculation in return statement. Thanks to Prabhjot Singh for the patch.
-Fixed bug 1023: c/c++ \ as a continuation character not supported
-Fixed bug 1033: False+ : SingularField
-Fixed bug 1025: Regression of Crash in PMDTask due to multithreading (Eclipse and Java 1.5)
-Fixed bug 1017: Type resolution very slow for big project. Thanks to Roman for the patch.
-Fixed bug 1036: Documentation: default threshold values removed from v5.0
-Fixed bug 1035: UseObjectForClearerAPI has misspelled message
-Fixed bug 1031: false DontImportJavaLang
-Fixed bug 1034: UseConcurrentHashMap flags calls to methods that return Map
-Fixed bug 1006: Problem with implementation of getPackageNameImage method
-Fixed bug 1014: AvoidLiteralsInIfCondition must NOT consider null
-Fixed bug 1013: jnlp link for CPD is wrong
-
-Improved JSP parser to be less strict with not valid XML documents (like HTML). Thanks to Victor Bucutea.
-Fixed bgastviewer not working. Thanks to Victor Bucutea.
-Improved CPD: Support in CPD for IgnoreAnnotations and SuppressWarnings("CPD-START"). Thanks to Matthew Short.
-Fixed C# support for CPD - thanks to TIOBE Software.
-
-New Ecmascript rules:
-
-	Basic ruleset: AvoidTrailingComma
-						</pre>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
-							Close
-						</button>
-					</div>
-				</div>
 			</div>
 
 			<hr	/>
@@ -228,6 +202,22 @@ New Ecmascript rules:
 				</div>
 			</div>
 		</footer>
+		<div id="pmd-release-notes" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="release-notes-label" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h3 id="pmd-501-release-notes-label">PMD Release Notes</h3>
+			</div>
+			<div class="modal-body" style="white-space: pre-line;">
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
+					Close
+				</button>
+			</div>
+		</div>
+	  
 		<div id="forkme">
 			<a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
 		</div>
