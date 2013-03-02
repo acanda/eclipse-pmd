@@ -81,6 +81,7 @@ public final class MarkerUtil {
         final String ruleId = rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase() + "." + rule.getName();
         pmdMarker.setRuleId(ruleId);
         pmdMarker.setViolationClassName(violation.getClassName());
+        pmdMarker.setRuleName(rule.getName());
         return marker;
     }
     

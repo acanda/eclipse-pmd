@@ -23,7 +23,9 @@ import com.google.common.base.Preconditions;
  */
 public class PMDMarker {
     
+    private static final String DEFAULT_VALUE = "";
     private static final String RULE_ID = "ruleId";
+    private static final String RULE_NAME = "ruleName";
     private static final String VIOLATION_CLASS_NAME = "violationClassName";
     private static final String MARKER_TEXT = "markerText";
     
@@ -42,12 +44,20 @@ public class PMDMarker {
         return marker.getAttribute(RULE_ID, null);
     }
     
+    public void setRuleName(final String name) throws CoreException {
+        marker.setAttribute(RULE_NAME, name);
+    }
+    
+    public String getRuleName() {
+        return marker.getAttribute(RULE_NAME, DEFAULT_VALUE);
+    }
+
     public void setViolationClassName(final String violationClassName) throws CoreException {
         marker.setAttribute(VIOLATION_CLASS_NAME, violationClassName);
     }
     
     public String getViolationClassName() {
-        return marker.getAttribute(VIOLATION_CLASS_NAME, "");
+        return marker.getAttribute(VIOLATION_CLASS_NAME, DEFAULT_VALUE);
     }
     
     public void setMarkerText(final String markerText) throws CoreException {
@@ -55,12 +65,12 @@ public class PMDMarker {
     }
     
     public String getMarkerText() {
-        return marker.getAttribute(MARKER_TEXT, "");
+        return marker.getAttribute(MARKER_TEXT, DEFAULT_VALUE);
     }
     
     @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public boolean isOtherWithSameRuleId(final IMarker other) {
-        return other != marker && marker.getAttribute(RULE_ID, "").equals(other.getAttribute(RULE_ID, ""));
+        return other != marker && marker.getAttribute(RULE_ID, DEFAULT_VALUE).equals(other.getAttribute(RULE_ID, DEFAULT_VALUE));
     }
     
 }

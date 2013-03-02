@@ -138,6 +138,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
             final Type typeArgument = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             final Class<T> quickFixClass = (Class<T>) typeArgument;
             final IMarker marker = mock(IMarker.class);
+            when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename);
             final String markerText = params.source.substring(params.offset, params.offset + params.length);
             when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
             return (ASTQuickFix<ASTNode>) quickFixClass.getConstructor(PMDMarker.class).newInstance(new PMDMarker(marker));
@@ -172,6 +173,8 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         params.source += ((Element) source.item(0)).getElementsByTagName("marker").item(0).getFirstChild().getNodeValue();
         params.length = params.source.length() - params.offset;
         params.source += rtrim(source.item(0).getChildNodes().item(2).getNodeValue());
+        final NodeList rulenames = setup.getElementsByTagName("rulename");
+        params.rulename = rulenames.getLength() == 0 ? null : rulenames.item(0).getFirstChild().getNodeValue();
         final Element expected = (Element) test.getElementsByTagName("expected").item(0);
         params.expectedSource = expected.getElementsByTagName("source").item(0).getFirstChild().getNodeValue().trim();
         final NodeList image = expected.getElementsByTagName("image");
@@ -217,7 +220,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
 
     private ASTNode findNode(final TestParameters params, final CompilationUnit ast, final ASTQuickFix<ASTNode> quickFix) {
         final Class<? extends ASTNode> nodeType = quickFix.getNodeType();
-        final PositionWithinNodeNodeFinder finder = new PositionWithinNodeNodeFinder(new Position(params.offset, params.length), nodeType);
+        final NodeFinder finder = quickFix.getNodeFinder(new Position(params.offset, params.length));
         final ASTNode node = finder.findNode(ast);
         assertNotNull("Couldn't find node of type " + nodeType.getSimpleName() + "."
                 + " Check the position of the marker in test " + params.name + ".", node);
@@ -282,6 +285,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         int offset;
         int length;
         String source;
+        String rulename;
         String expectedSource;
         String expectedImage;
         String expectedLabel;

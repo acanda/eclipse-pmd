@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2013, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+
+    <test name="SuppressWarningsAddAnnotationToVariable">
+        <setup>
+            <source>
+public class LocalVariableCouldBeFinal {
+    public void foo() {
+        <marker>int a = 0</marker>;
+    }
+}
+            </source>
+            <rulename>LocalVariableCouldBeFinal</rulename>
+        </setup>
+        <expected>
+            <source>
+public class LocalVariableCouldBeFinal {
+    public void foo() {
+        @SuppressWarnings("PMD.LocalVariableCouldBeFinal") int a = 0;
+    }
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.LocalVariableCouldBeFinal'</label>
+            <description>Adds @SuppressWarnings("PMD.LocalVariableCouldBeFinal").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddAnnotationToField">
+        <setup>
+            <source>
+public class RedundantFieldInitializer {
+    boolean <marker>b = false</marker>;
+}
+            </source>
+            <rulename>RedundantFieldInitializer</rulename>
+        </setup>
+        <expected>
+            <source>
+public class RedundantFieldInitializer {
+    @SuppressWarnings("PMD.RedundantFieldInitializer") boolean b = false;
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.RedundantFieldInitializer'</label>
+            <description>Adds @SuppressWarnings("PMD.RedundantFieldInitializer").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddAnnotationToMethodInsideMethod">
+        <setup>
+            <source>
+class Example {
+    void foo() {
+        if (1 != 2) <marker>{
+        }</marker>
+    }
+}
+            </source>
+            <rulename>EmptyIfStmt</rulename>
+        </setup>
+        <expected>
+            <source>
+class Example {
+    @SuppressWarnings("PMD.EmptyIfStmt") void foo() {
+        if (1 != 2) {
+        }
+    }
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.EmptyIfStmt'</label>
+            <description>Adds @SuppressWarnings("PMD.EmptyIfStmt").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddAnnotationToMethodAroundMethod">
+        <setup>
+            <source>
+public class SuspiciousHashcodeMethodName {
+	
+    public <marker>int hashcode() {
+		int hashcode = 0;
+		Object o = new Object() {
+			public int hashcode() {
+				return 1;
+			}
+		};
+		return hashcode;
+	}</marker>
+
+}
+            </source>
+            <rulename>SuspiciousHashcodeMethodName</rulename>
+        </setup>
+        <expected>
+            <source>
+public class SuspiciousHashcodeMethodName {
+	
+    @SuppressWarnings("PMD.SuspiciousHashcodeMethodName") public int hashcode() {
+		int hashcode = 0;
+		Object o = new Object() {
+			public int hashcode() {
+				return 1;
+			}
+		};
+		return hashcode;
+	}
+
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.SuspiciousHashcodeMethodName'</label>
+            <description>Adds @SuppressWarnings("PMD.SuspiciousHashcodeMethodName").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddAnnotationToClass">
+        <setup>
+            <source>
+public class SimplifyStartsWith extends <marker>Object</marker> {
+}
+            </source>
+            <rulename>ExtendsObject</rulename>
+        </setup>
+        <expected>
+            <source>
+@SuppressWarnings("PMD.ExtendsObject") public class SimplifyStartsWith extends Object {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExtendsObject'</label>
+            <description>Adds @SuppressWarnings("PMD.ExtendsObject").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddToSingleMemberAnnotationToClass">
+        <setup>
+            <source>
+@SuppressWarnings("Foo")
+public class SimplifyStartsWith extends <marker>Object</marker> {
+}
+            </source>
+            <rulename>ExtendsObject</rulename>
+        </setup>
+        <expected>
+            <source>
+@SuppressWarnings({"Foo","PMD.ExtendsObject"})
+public class SimplifyStartsWith extends Object {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExtendsObject'</label>
+            <description>Adds @SuppressWarnings("PMD.ExtendsObject").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddToSingleArrayMemberAnnotationToClass">
+        <setup>
+            <source>
+@SuppressWarnings({"Foo","Bar"})
+public class SimplifyStartsWith extends <marker>Object</marker> {
+}
+            </source>
+            <rulename>ExtendsObject</rulename>
+        </setup>
+        <expected>
+            <source>
+@SuppressWarnings({"Foo","Bar","PMD.ExtendsObject"})
+public class SimplifyStartsWith extends Object {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExtendsObject'</label>
+            <description>Adds @SuppressWarnings("PMD.ExtendsObject").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddToNormalAnnotationToClass">
+        <setup>
+            <source>
+@SuppressWarnings(value="Foo", foo="bar")
+public class SimplifyStartsWith extends <marker>Object</marker> {
+}
+            </source>
+            <rulename>ExtendsObject</rulename>
+        </setup>
+        <expected>
+            <source>
+@SuppressWarnings(value={"Foo","PMD.ExtendsObject"}, foo="bar")
+public class SimplifyStartsWith extends Object {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExtendsObject'</label>
+            <description>Adds @SuppressWarnings("PMD.ExtendsObject").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddToNormalArrayAnnotationToClass">
+        <setup>
+            <source>
+@SuppressWarnings(value={"Foo","Bar"}, foo="bar")
+public class SimplifyStartsWith extends <marker>Object</marker> {
+}
+            </source>
+            <rulename>ExtendsObject</rulename>
+        </setup>
+        <expected>
+            <source>
+@SuppressWarnings(value={"Foo","Bar","PMD.ExtendsObject"}, foo="bar")
+public class SimplifyStartsWith extends Object {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExtendsObject'</label>
+            <description>Adds @SuppressWarnings("PMD.ExtendsObject").</description>
+        </expected>
+    </test>
+
+
+</tests>

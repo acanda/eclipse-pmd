@@ -44,6 +44,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
     public static final String FILE_SYSTEM_TYPE_SELECTED = "fileSystemTypeSelected";
     public static final String WORKSPACE_TYPE_SELECTED = "workspaceTypeSelected";
     public static final String PROJECT_TYPE_SELECTED = "projectTypeSelected";
+    public static final String LOCATION = "location";
     
     private final IProject project;
     
@@ -90,7 +91,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
     }
     
     public void setLocation(final String location) {
-        setProperty("location", this.location, this.location = location);
+        setProperty(LOCATION, this.location, this.location = location);
     }
     
     public ImmutableList<Rule> getRules() {
@@ -128,7 +129,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
     
     @Override
     protected ImmutableSet<String> createValidatedPropertiesSet() {
-        return ImmutableSet.of("location", "name");
+        return ImmutableSet.of(LOCATION, "name");
     }
     
     @Override
@@ -143,7 +144,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
      */
     private void validateLocation(final String propertyName, final ValidationResult result) {
         final Builder<Rule> rules = ImmutableList.builder();
-        if (!errorIfBlank("location", location, "Please enter the location of the rule set configuration", result)) {
+        if (!errorIfBlank(LOCATION, location, "Please enter the location of the rule set configuration", result)) {
             RuleSet ruleSet = null;
             try {
                 final Path absoluteLocation = getAbsoluteLocation();
@@ -155,10 +156,11 @@ class AddRuleSetConfigurationModel extends ViewModel {
                 // the rule set location is invalid - the validation problem will be added below
             }
             if (ruleSet == null || ruleSet.getRules().isEmpty()) {
-                result.add(new ValidationProblem("location", Severity.ERROR, "The rule set configuration at the given location is invalid"));
+                result.add(new ValidationProblem(LOCATION, Severity.ERROR,
+                        "The rule set configuration at the given location is invalid"));
             }
         }
-        if ("location".equals(propertyName)) {
+        if (LOCATION.equals(propertyName)) {
             setRules(rules.build());
         }
     }
