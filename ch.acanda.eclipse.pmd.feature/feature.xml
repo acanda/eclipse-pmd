@@ -10,7 +10,7 @@
 <feature
       id="ch.acanda.eclipse.pmd.feature"
       label="Eclipse PMD"
-      version="0.3.0.qualifier"
+      version="0.4.0.qualifier"
       provider-name="Philip Graf">
 
    <description url="http://acanda.github.com/eclipse-pmd/">
@@ -136,7 +136,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
          id="ch.acanda.eclipse.pmd.core"
          download-size="0"
          install-size="0"
-         version="0.3.0.qualifier"
+         version="0.4.0.qualifier"
          unpack="false"/>
 
 </feature>
