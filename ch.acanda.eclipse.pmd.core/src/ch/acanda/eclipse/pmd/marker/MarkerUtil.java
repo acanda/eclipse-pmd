@@ -35,6 +35,7 @@ public final class MarkerUtil {
     private static final int PMD_TAB_SIZE = new Tabs().size;
     
     private static final String MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdMarker";
+    private static final String LONG_MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdLongMarker";
     
     private MarkerUtil() {
         // hide constructor of utility class
@@ -64,19 +65,18 @@ public final class MarkerUtil {
      * @throws CoreException Thrown when the file does not exist or its project is closed.
      */
     public static IMarker addMarker(final IFile file, final String content, final RuleViolation violation) throws CoreException {
-        final IMarker marker = file.createMarker(MARKER_TYPE);
+        final boolean isLongMarker = violation.getBeginLine() != violation.getEndLine();
+        final IMarker marker = file.createMarker(isLongMarker ? LONG_MARKER_TYPE : MARKER_TYPE);
         final PMDMarker pmdMarker = new PMDMarker(marker);
         marker.setAttribute(IMarker.MESSAGE, violation.getDescription());
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
         marker.setAttribute(IMarker.LINE_NUMBER, Math.max(violation.getBeginLine(), 0));
-        if (violation.getEndLine() - violation.getBeginLine() < 5) {
-            final Range range = getAbsoluteRange(content, violation);
-            final int start = Math.max(range.getStart(), 0);
-            marker.setAttribute(IMarker.CHAR_START, start);
-            final int end = Math.max(range.getEnd(), 0);
-            marker.setAttribute(IMarker.CHAR_END, end);
-            pmdMarker.setMarkerText(content.substring(start, end));
-        }
+        final Range range = getAbsoluteRange(content, violation);
+        final int start = Math.max(range.getStart(), 0);
+        marker.setAttribute(IMarker.CHAR_START, start);
+        final int end = Math.max(range.getEnd(), 0);
+        marker.setAttribute(IMarker.CHAR_END, end);
+        pmdMarker.setMarkerText(content.substring(start, end));
         final Rule rule = violation.getRule();
         final String ruleId = rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase() + "." + rule.getName();
         pmdMarker.setRuleId(ruleId);

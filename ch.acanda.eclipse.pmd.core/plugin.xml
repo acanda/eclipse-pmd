@@ -50,6 +50,17 @@
       </persistent>
    </extension>
    <extension
+         id="pmdLongMarker"
+         name="PMD Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="ch.acanda.eclipse.pmd.core.pmdMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
          point="org.eclipse.ui.ide.markerImageProviders">
       <imageprovider
             icon="/icons/warning.gif"
@@ -77,12 +88,20 @@
             class="ch.acanda.eclipse.pmd.marker.resolution.PMDMarkerResolutionGenerator"
             markerType="ch.acanda.eclipse.pmd.core.pmdMarker">
       </markerResolutionGenerator>
+      <markerResolutionGenerator
+            class="ch.acanda.eclipse.pmd.marker.resolution.PMDMarkerResolutionGenerator"
+            markerType="ch.acanda.eclipse.pmd.core.pmdLongMarker">
+      </markerResolutionGenerator>
    </extension>
    <extension
          point="org.eclipse.ui.editors.annotationTypes">
       <type
             markerType="ch.acanda.eclipse.pmd.core.pmdMarker"
             name="ch.acanda.eclipse.pmd.core.pmdAnnotation">
+      </type>
+      <type
+            markerType="ch.acanda.eclipse.pmd.core.pmdLongMarker"
+            name="ch.acanda.eclipse.pmd.core.pmdLongAnnotation">
       </type>
    </extension>
    <extension
@@ -107,6 +126,31 @@
             symbolicIcon="warning"
             textPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.text"
             textPreferenceValue="true"
+            textStylePreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.textStyle"
+            textStylePreferenceValue="PROBLEM_UNDERLINE"
+            verticalRulerPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+      <specification
+            annotationType="ch.acanda.eclipse.pmd.core.pmdLongAnnotation"
+            colorPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.color"
+            colorPreferenceValue="244,200,45"
+            contributesToHeader="true"
+            highlightPreferenceKey="ch.acanda.eclipse.pmd.core.pmdLongAnnotation.highlight"
+            highlightPreferenceValue="false"
+            includeOnPreferencePage="false"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.goToNext"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.goToPrev"
+            label="PMD Violations (multiline)"
+            overviewRulerPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.overviewRuler"
+            overviewRulerPreferenceValue="true"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.nextPrevToolbar"
+            symbolicIcon="warning"
+            textPreferenceKey="ch.acanda.eclipse.pmd.core.pmdLongAnnotation.text"
+            textPreferenceValue="false"
             textStylePreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.textStyle"
             textStylePreferenceValue="PROBLEM_UNDERLINE"
             verticalRulerPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.verticalRuler"
