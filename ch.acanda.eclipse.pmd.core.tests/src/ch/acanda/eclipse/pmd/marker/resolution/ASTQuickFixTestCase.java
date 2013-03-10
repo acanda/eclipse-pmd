@@ -246,6 +246,9 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         final Map<String, String> options = new HashMap<>();
         options.put(DefaultCodeFormatterConstants.FORMATTER_TAB_CHAR, JavaCore.SPACE);
         options.put(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE, "4");
+        options.put(DefaultCodeFormatterConstants.FORMATTER_INDENT_SWITCHSTATEMENTS_COMPARE_TO_SWITCH, DefaultCodeFormatterConstants.TRUE);
+        options.put(DefaultCodeFormatterConstants.FORMATTER_INDENT_SWITCHSTATEMENTS_COMPARE_TO_CASES, DefaultCodeFormatterConstants.TRUE);
+        options.put(DefaultCodeFormatterConstants.FORMATTER_INDENT_BREAKS_COMPARE_TO_CASES, DefaultCodeFormatterConstants.TRUE);
         return options;
     }
     
