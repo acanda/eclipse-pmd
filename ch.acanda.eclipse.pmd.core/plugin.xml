@@ -78,5 +78,40 @@
             markerType="ch.acanda.eclipse.pmd.core.pmdMarker">
       </markerResolutionGenerator>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors.annotationTypes">
+      <type
+            markerType="ch.acanda.eclipse.pmd.core.pmdMarker"
+            name="ch.acanda.eclipse.pmd.core.pmdAnnotation">
+      </type>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+      <specification
+            annotationType="ch.acanda.eclipse.pmd.core.pmdAnnotation"
+            colorPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.color"
+            colorPreferenceValue="244,200,45"
+            contributesToHeader="true"
+            highlightPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.highlight"
+            highlightPreferenceValue="false"
+            includeOnPreferencePage="true"
+            isGoToNextNavigationTarget="true"
+            isGoToNextNavigationTargetKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.goToNext"
+            isGoToPreviousNavigationTarget="true"
+            isGoToPreviousNavigationTargetKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.goToPrev"
+            label="PMD Violations"
+            overviewRulerPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.overviewRuler"
+            overviewRulerPreferenceValue="true"
+            showInNextPrevDropdownToolbarAction="true"
+            showInNextPrevDropdownToolbarActionKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.nextPrevToolbar"
+            symbolicIcon="warning"
+            textPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.text"
+            textPreferenceValue="true"
+            textStylePreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.textStyle"
+            textStylePreferenceValue="PROBLEM_UNDERLINE"
+            verticalRulerPreferenceKey="ch.acanda.eclipse.pmd.core.pmdAnnotation.verticalRuler"
+            verticalRulerPreferenceValue="true">
+      </specification>
+   </extension>
 
 </plugin>
