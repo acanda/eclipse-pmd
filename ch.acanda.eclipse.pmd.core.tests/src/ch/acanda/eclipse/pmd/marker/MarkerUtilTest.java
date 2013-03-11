@@ -12,7 +12,10 @@
 package ch.acanda.eclipse.pmd.marker;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import net.sourceforge.pmd.Rule;
@@ -165,8 +168,8 @@ public class MarkerUtilTest {
     
     /**
      * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
-     * position information containing only the line and not the character start and end position if the marker would
-     * span more than 5 lines.
+     * position information containing the line, the character start and end position but not the marker text if the
+     * marker would span more than one line.
      */
     @Test
     public void addMarkerSpanningMoreThanOneLine() throws CoreException {
@@ -197,6 +200,6 @@ public class MarkerUtilTest {
         verify(actual).setAttribute(IMarker.CHAR_END, 26);
         verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
         verify(actual).setAttribute("violationClassName", "ClassName");
-        verify(actual).setAttribute("markerText", "{\n}");
+        verify(actual, never()).setAttribute(eq("markerText"), anyString());
     }
 }

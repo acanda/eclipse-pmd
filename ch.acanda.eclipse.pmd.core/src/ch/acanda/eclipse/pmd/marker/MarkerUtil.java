@@ -76,7 +76,9 @@ public final class MarkerUtil {
         marker.setAttribute(IMarker.CHAR_START, start);
         final int end = Math.max(range.getEnd(), 0);
         marker.setAttribute(IMarker.CHAR_END, end);
-        pmdMarker.setMarkerText(content.substring(start, end));
+        if (!isLongMarker) {
+            pmdMarker.setMarkerText(content.substring(start, end));
+        }
         final Rule rule = violation.getRule();
         final String ruleId = rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase() + "." + rule.getName();
         pmdMarker.setRuleId(ruleId);
