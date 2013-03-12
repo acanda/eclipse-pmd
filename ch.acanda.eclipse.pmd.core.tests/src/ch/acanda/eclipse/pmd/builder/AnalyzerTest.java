@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -101,33 +102,81 @@ public class AnalyzerTest {
     }
     
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't throw a NullPointerException
+     * when trying to analyze a class file.
+     */
+    @Test
+    public void analyzeClassFile() {
+        analyze("", "UTF-8", "class", "rulesets/java/basic.xml/ExtendsObject");
+    }
+    
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't analyze a derived file.
+     */
+    @Test
+    public void analyzeDerivedFile() throws UnsupportedEncodingException, CoreException {
+        final IFile file = mockFile("", "UTF-8", "java", true, true);
+        analyze(file, "rulesets/java/basic.xml/ExtendsObject");
+    }
+    
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't analyze an inaccessible file.
+     */
+    @Test
+    public void analyzeInaccessibleFile() throws UnsupportedEncodingException, CoreException {
+        final IFile file = mockFile("", "UTF-8", "java", false, false);
+        analyze(file, "rulesets/java/basic.xml/ExtendsObject");
+    }
+    
+    /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
      * invokes {@link ViolationProcessor#annotate(IFile, Iterator) with the correct rule violations.
      */
     public void analyze(final String content, final String charset, final String fileExtension, final String ruleSetRefId,
             final String... violatedRules) {
         try {
-            final IFile file = mock(IFile.class);
+            final IFile file = mockFile(content, charset, fileExtension, false, true);
+            analyze(file, ruleSetRefId, violatedRules);
+        } catch (CoreException | IOException e) {
+            throw new AssertionError("Failed to mock file", e);
+        }
+    }
+    
+    /**
+     * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
+     * invokes {@link ViolationProcessor#annotate(IFile, Iterator) with the correct rule violations.
+     */
+    public void analyze(final IFile file, final String ruleSetRefId, final String... violatedRules) {
+        try {
             final ViolationProcessor violationProcessor = mock(ViolationProcessor.class);
-            when(file.isAccessible()).thenReturn(true);
-            when(file.getFileExtension()).thenReturn(fileExtension);
-            when(file.getCharset()).thenReturn(charset);
-            when(file.getContents()).thenReturn(new ByteArrayInputStream(content.getBytes(charset)));
-            final IPath path = mock(IPath.class);
-            when(file.getRawLocation()).thenReturn(path);
-            when(path.toFile()).thenReturn(new File("test." + fileExtension));
-            
             final RuleSets ruleSets = new RuleSetFactory().createRuleSets(ruleSetRefId);
             new Analyzer().analyze(file, ruleSets, violationProcessor);
             
             final int invokations = violatedRules.length > 0 ? 1 : 0;
             verify(violationProcessor, times(invokations)).annotate(same(file), violations(violatedRules));
-        } catch (CoreException | IOException | RuleSetNotFoundException e) {
-            throw new RuntimeException(e);
+
+        } catch (final RuleSetNotFoundException e) {
+            throw new AssertionError("Failed to create rule sets", e);
+
+        } catch (CoreException | IOException e) {
+            throw new AssertionError("Failed to annotate file", e);
         }
-        
     }
     
+    private IFile mockFile(final String content, final String charset, final String fileExtension, final boolean isDerived,
+            final boolean isAccessible) throws CoreException, UnsupportedEncodingException {
+        final IFile file = mock(IFile.class);
+        when(file.isDerived()).thenReturn(isDerived);
+        when(file.isAccessible()).thenReturn(isAccessible);
+        when(file.getFileExtension()).thenReturn(fileExtension);
+        when(file.getCharset()).thenReturn(charset);
+        when(file.getContents()).thenReturn(new ByteArrayInputStream(content.getBytes(charset)));
+        final IPath path = mock(IPath.class);
+        when(file.getRawLocation()).thenReturn(path);
+        when(path.toFile()).thenReturn(new File("test." + fileExtension));
+        return file;
+    }
+
     private Iterator<RuleViolation> violations(final String... ruleNames) {
         return argThat(new RuleViolationIteratorMatcher(ruleNames));
     }

@@ -38,13 +38,13 @@ import com.google.common.collect.ImmutableMap;
  * 
  * @author Philip Graf
  */
-public class Analyzer {
+public final class Analyzer {
     
     private static final ImmutableMap<String, Language> LANGUAGES;
     static {
         final Map<String, Language> languages = new HashMap<>();
-        for(final Language language : Language.values()) {
-            for(final String extension : language.getExtensions()) {
+        for (final Language language : Language.values()) {
+            for (final String extension : language.getExtensions()) {
                 languages.put(extension, language);
             }
         }
@@ -60,9 +60,9 @@ public class Analyzer {
      */
     public void analyze(final IFile file, final RuleSets ruleSets, final ViolationProcessor violationProcessor) {
         try {
-            if (!file.isDerived() && file.isAccessible() && file.getFileExtension() != null) {
+            if (isValidFile(file, ruleSets)) {
                 final Language language = LANGUAGES.get(file.getFileExtension().toLowerCase());
-                if (language != null && ruleSets.applies(file.getRawLocation().toFile())) {
+                if (isValidLanguage(language)) {
                     final PMDConfiguration configuration = new PMDConfiguration();
                     final InputStreamReader reader = new InputStreamReader(file.getContents(), file.getCharset());
                     final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
@@ -75,6 +75,23 @@ public class Analyzer {
         } catch (CoreException | PMDException | IOException e) {
             PMDPlugin.getDefault().error("Could not run PMD on file " + file.getRawLocation(), e);
         }
+    }
+    
+    private boolean isValidFile(final IFile file, final RuleSets ruleSets) {
+        // derived (i.e. generated or compiled) files are not analyzed
+        return !file.isDerived()
+                // the file must exist
+                && file.isAccessible()
+                // the file must have an extension so we can determine the language
+                && file.getFileExtension() != null
+                // the file must not be excluded in the pmd configuration
+                && ruleSets.applies(file.getRawLocation().toFile());
+    }
+    
+    private boolean isValidLanguage(final Language language) {
+        return language != null
+                && language.getDefaultVersion() != null
+                && language.getDefaultVersion().getLanguageVersionHandler() != null;
     }
     
 }
