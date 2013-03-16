@@ -14,7 +14,6 @@ package ch.acanda.eclipse.pmd.marker.resolution.java.design;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Position;
@@ -78,7 +77,6 @@ public class UseNotifyAllInsteadOfNotifyQuickFix extends ASTQuickFix<MethodInvoc
      */
     @Override
     protected boolean apply(final MethodInvocation node) {
-        final AST ast = node.getAST();
         node.getName().setIdentifier("notifyAll");
         return true;
     }
