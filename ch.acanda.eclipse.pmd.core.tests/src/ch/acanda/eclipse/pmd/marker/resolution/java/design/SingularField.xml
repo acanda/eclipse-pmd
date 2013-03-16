@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2013, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+
+    <test name="SingularFieldFinal">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i;</marker>
+    void foo() {
+        i = 1;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    void foo() {
+        final int i = 1;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+    <test name="SingularFieldFinalThis">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i;</marker>
+    void foo() {
+        this.i = 1;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    void foo() {
+        final int i = 1;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+    <test name="SingularFieldNotFinal">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i;</marker>
+    void foo() {
+        i = 1;
+        i = 2;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    void foo() {
+        int i = 1;
+        i = 2;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+    <test name="SingularFieldShadowingMethod">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i;</marker>
+    void bar() {
+        int i = 0;
+        i = 1;
+    }
+    void foo() {
+        i = 1;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    void bar() {
+        int i = 0;
+        i = 1;
+    }
+    void foo() {
+        final int i = 1;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+    <test name="SingularFieldShadowingBlock">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i;</marker>
+    void foo() {
+        {
+            int i;
+            i = 0;
+        }
+        i = 1;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    void foo() {
+        {
+            int i;
+            i = 0;
+        }
+        final int i = 1;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+    <test name="SingularFieldMultipleFragments">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i, x = 7, y;</marker>
+    void foo() {
+        i = 1;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    private int x = 7, y;
+    void foo() {
+        final int i = 1;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+    <test name="SingularFieldInitializerBlock">
+        <setup>
+            <source>
+class SingularField {
+    private <marker>int i;</marker>
+    {
+        i = 1;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class SingularField {
+    {
+        final int i = 1;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with a local variable</label>
+            <description>Replaces the field with a local variable.</description>
+        </expected>
+    </test>
+
+</tests>

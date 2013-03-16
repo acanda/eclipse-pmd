@@ -13,7 +13,6 @@ package ch.acanda.eclipse.pmd.marker.resolution;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jface.text.Position;
 
 /**
@@ -51,7 +50,7 @@ class NodeWithinPositionNodeFinder extends ASTVisitor implements NodeFinder {
     }
     
     @Override
-    public ASTNode findNode(final CompilationUnit ast) {
+    public ASTNode findNode(final ASTNode ast) {
         node = null;
         ast.accept(this);
         return node;

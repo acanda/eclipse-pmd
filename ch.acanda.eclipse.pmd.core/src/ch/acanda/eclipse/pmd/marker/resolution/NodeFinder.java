@@ -12,7 +12,6 @@
 package ch.acanda.eclipse.pmd.marker.resolution;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
 
 /**
  * Implementations of this interface are used to find a node of an AST which matches implementation specific criteria.
@@ -24,6 +23,6 @@ public interface NodeFinder {
     /**
      * @return A node from the provided AST or {@null} if a matching node could not be found.
      */
-    ASTNode findNode(final CompilationUnit ast);
+    ASTNode findNode(final ASTNode ast);
     
 }
