@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.marker.resolution.java.basic;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Position;
@@ -49,7 +50,7 @@ public class ExtendsObjectQuickFix extends ASTQuickFix<TypeDeclaration> {
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, TypeDeclaration> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

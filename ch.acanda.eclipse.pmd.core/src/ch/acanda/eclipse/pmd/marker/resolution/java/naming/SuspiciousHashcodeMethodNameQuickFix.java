@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.marker.resolution.java.naming;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Position;
@@ -50,7 +51,7 @@ public class SuspiciousHashcodeMethodNameQuickFix extends ASTQuickFix<MethodDecl
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, MethodDeclaration> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

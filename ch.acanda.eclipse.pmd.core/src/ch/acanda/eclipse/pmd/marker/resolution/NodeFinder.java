@@ -17,12 +17,15 @@ import org.eclipse.jdt.core.dom.ASTNode;
  * Implementations of this interface are used to find a node of an AST which matches implementation specific criteria.
  * 
  * @author Philip Graf
+ * 
+ * @param R The type of the root node from which the AST will be traversed.
+ * @param N The type of the node for which this finder is looking.
  */
-public interface NodeFinder {
+public interface NodeFinder<R extends ASTNode, N extends ASTNode> {
     
     /**
      * @return A node from the provided AST or {@null} if a matching node could not be found.
      */
-    ASTNode findNode(final ASTNode ast);
+    N findNode(final R ast);
     
 }

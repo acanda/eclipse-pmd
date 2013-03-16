@@ -12,6 +12,7 @@
 package ch.acanda.eclipse.pmd.marker.resolution.java.design;
 
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
@@ -57,7 +58,7 @@ public class UseCollectionIsEmptyQuickFix extends ASTQuickFix<InfixExpression> {
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, InfixExpression> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

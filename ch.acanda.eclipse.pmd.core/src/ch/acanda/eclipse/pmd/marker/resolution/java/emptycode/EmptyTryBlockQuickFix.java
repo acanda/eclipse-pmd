@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.marker.resolution.java.emptycode;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Position;
@@ -49,7 +50,7 @@ public class EmptyTryBlockQuickFix extends ASTQuickFix<TryStatement> {
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, TryStatement> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

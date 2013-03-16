@@ -16,6 +16,7 @@ import static ch.acanda.eclipse.pmd.marker.resolution.ASTUtil.replace;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -55,7 +56,7 @@ public class EmptyFinallyBlockQuickFix extends ASTQuickFix<TryStatement> {
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, TryStatement> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

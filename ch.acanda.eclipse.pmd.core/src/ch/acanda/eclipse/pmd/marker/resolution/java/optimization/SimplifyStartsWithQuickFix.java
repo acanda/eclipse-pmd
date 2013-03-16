@@ -17,6 +17,7 @@ import static ch.acanda.eclipse.pmd.marker.resolution.ASTUtil.replace;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.CharacterLiteral;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodInvocation;
@@ -59,7 +60,7 @@ public class SimplifyStartsWithQuickFix extends ASTQuickFix<MethodInvocation> {
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, MethodInvocation> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

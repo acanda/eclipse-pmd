@@ -14,6 +14,7 @@ package ch.acanda.eclipse.pmd.marker.resolution.java.design;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SwitchCase;
@@ -60,7 +61,7 @@ public class DefaultLabelNotLastInSwitchStmtQuickFix extends ASTQuickFix<SwitchS
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, SwitchStatement> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

@@ -31,8 +31,9 @@ public final class Finders {
      * @param nodeType The type of the node.
      * @param position The position that encloses the node completely.
      */
-    public static NodeFinder nodeWithinPosition(final Class<? extends ASTNode> nodeType, final Position position) {
-        return new NodeWithinPositionNodeFinder(position, nodeType);
+    public static <R extends ASTNode, N extends ASTNode> NodeFinder<R, N> nodeWithinPosition(final Class<? extends N> nodeType,
+            final Position position) {
+        return new NodeWithinPositionNodeFinder<R, N>(position, nodeType);
     }
     
     /**
@@ -41,8 +42,10 @@ public final class Finders {
      * @param nodeType The type of the node.
      * @param position The position that lies within the node completely.
      */
-    public static NodeFinder positionWithinNode(final Position position, final Class<?>... nodeTypes) {
-        return new PositionWithinNodeNodeFinder(position, nodeTypes);
+    @SafeVarargs
+    public static <R extends ASTNode, N extends ASTNode> NodeFinder<R, N> positionWithinNode(final Position position,
+            final Class<? extends N>... nodeTypes) {
+        return new PositionWithinNodeNodeFinder<R, N>(position, nodeTypes);
     }
     
 }

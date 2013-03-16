@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.marker.resolution.java.optimization;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.Position;
@@ -75,7 +76,7 @@ public class RedundantFieldInitializerQuickFix extends ASTQuickFix<VariableDecla
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, VariableDeclarationFragment> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

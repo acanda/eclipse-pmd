@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.marker.resolution.java.optimization;
 
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
@@ -51,7 +52,7 @@ public class MethodArgumentCouldBeFinalQuickFix extends ASTQuickFix<SingleVariab
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, SingleVariableDeclaration> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
     

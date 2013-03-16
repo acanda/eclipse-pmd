@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.ArrayInitializer;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -67,10 +68,9 @@ public final class SuppressWarningsQuickFix extends ASTQuickFix<ASTNode> {
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, ASTNode> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, AbstractTypeDeclaration.class, AnnotationTypeMemberDeclaration.class,
-                EnumConstantDeclaration.class, FieldDeclaration.class, MethodDeclaration.class,
-                VariableDeclarationStatement.class);
+                EnumConstantDeclaration.class, FieldDeclaration.class, MethodDeclaration.class, VariableDeclarationStatement.class);
     }
     
     @Override
@@ -202,7 +202,7 @@ public final class SuppressWarningsQuickFix extends ASTQuickFix<ASTNode> {
         }
         return array;
     }
-
+    
     /**
      * @return The position after the last existing annotation.
      */

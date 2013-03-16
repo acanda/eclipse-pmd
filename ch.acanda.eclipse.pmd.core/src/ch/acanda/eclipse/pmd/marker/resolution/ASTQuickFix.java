@@ -196,8 +196,7 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
                     final MarkerAnnotation annotation = getMarkerAnnotation(annotationModel, marker);
                     // if the annotation is null it means that is was deleted by a previous quick fix
                     if (annotation != null) {
-                        @SuppressWarnings("unchecked")
-                        final T node = (T) getNodeFinder(annotationModel.getPosition(annotation)).findNode(ast);
+                        final T node = getNodeFinder(annotationModel.getPosition(annotation)).findNode(ast);
                         final boolean successful = apply(node);
                         if (successful) {
                             marker.delete();
@@ -239,7 +238,7 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
      * @param position The position of the marker.
      * @return The node finder that will be used to search for the node which will be passed to the quick fix.
      */
-    abstract protected NodeFinder getNodeFinder(final Position position);
+    abstract protected NodeFinder<CompilationUnit, T> getNodeFinder(final Position position);
     
     /**
      * Returns the type of the AST node that will be used to find the node that will be used as an argument when
@@ -248,10 +247,10 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
      * @return The type of the node that will be used when invoking {@link #apply(ASTNode)}.
      */
     @SuppressWarnings("unchecked")
-    protected Class<? extends ASTNode> getNodeType() {
+    protected Class<T> getNodeType() {
         // This works only if 'this' is a direct subclass of ASTQuickFix.
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-        return (Class<? extends ASTNode>) genericSuperclass.getActualTypeArguments()[0];
+        return (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
     
     /**

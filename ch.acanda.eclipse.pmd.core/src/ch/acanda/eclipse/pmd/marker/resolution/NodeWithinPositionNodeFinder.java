@@ -19,14 +19,14 @@ import org.eclipse.jface.text.Position;
  * Searches an AST for a node that has the provided type and lies within the provided position. If more than one node
  * fit the criteria, the one with the smallest distance to the root is returned.
  */
-class NodeWithinPositionNodeFinder extends ASTVisitor implements NodeFinder {
+class NodeWithinPositionNodeFinder<R extends ASTNode, N extends ASTNode> extends ASTVisitor implements NodeFinder<R, N> {
     
     private final int start;
     private final int end;
-    private final Class<? extends ASTNode> nodeType;
-    private ASTNode node;
+    private final Class<? extends N> nodeType;
+    private N node;
     
-    public NodeWithinPositionNodeFinder(final Position position, final Class<? extends ASTNode> nodeType) {
+    public NodeWithinPositionNodeFinder(final Position position, final Class<? extends N> nodeType) {
         start = position.getOffset();
         end = start + position.getLength();
         this.nodeType = nodeType;
@@ -41,7 +41,7 @@ class NodeWithinPositionNodeFinder extends ASTVisitor implements NodeFinder {
         final int nodeEnd = nodeStart + node.getLength();
         if (start <= nodeStart && nodeEnd <= end) {
             if (nodeType.isAssignableFrom(node.getClass())) {
-                this.node = node;
+                this.node = nodeType.cast(node);
                 return false;
             }
             return true;
@@ -50,7 +50,7 @@ class NodeWithinPositionNodeFinder extends ASTVisitor implements NodeFinder {
     }
     
     @Override
-    public ASTNode findNode(final ASTNode ast) {
+    public N findNode(final R ast) {
         node = null;
         ast.accept(this);
         return node;

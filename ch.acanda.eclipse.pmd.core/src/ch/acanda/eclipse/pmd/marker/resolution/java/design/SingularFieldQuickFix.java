@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -66,7 +67,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
     }
     
     @Override
-    protected NodeFinder getNodeFinder(final Position position) {
+    protected NodeFinder<CompilationUnit, VariableDeclarationFragment> getNodeFinder(final Position position) {
         return Finders.nodeWithinPosition(getNodeType(), position);
     }
     
@@ -77,7 +78,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
     protected boolean apply(final VariableDeclarationFragment node) {
         final String name = node.getName().getIdentifier();
         final AssignmentNodeFinder finder = new AssignmentNodeFinder(name);
-        final Assignment assignment = (Assignment) finder.findNode(node.getParent().getParent());
+        final Assignment assignment = finder.findNode(node.getParent().getParent());
         if (assignment != null) {
             replaceAssignment(node, assignment, !finder.hasMoreThanOneAssignment());
             updateFieldDeclaration(node);
@@ -130,7 +131,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
     /**
      * Finds the assignment that is replaced with a local variable declaration.
      */
-    private final class AssignmentNodeFinder extends ASTVisitor implements NodeFinder {
+    private final class AssignmentNodeFinder extends ASTVisitor implements NodeFinder<ASTNode, Assignment> {
         
         private final String fieldName;
         /**
@@ -149,7 +150,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         }
         
         @Override
-        public ASTNode findNode(final ASTNode node) {
+        public Assignment findNode(final ASTNode node) {
             node.accept(this);
             return searchResult;
         }
