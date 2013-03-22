@@ -54,7 +54,7 @@ public final class Analyzer {
     /**
      * Analyzes a single file.
      * 
-     * @param file The file to analyize.
+     * @param file The file to analyze.
      * @param ruleSets The rule sets against the file will be analyzed.
      * @param violationProcessor The processor that processes the violated rules.
      */
