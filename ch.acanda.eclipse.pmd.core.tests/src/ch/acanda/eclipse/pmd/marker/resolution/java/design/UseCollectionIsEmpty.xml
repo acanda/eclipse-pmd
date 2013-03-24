@@ -8,13 +8,15 @@
     http://www.eclipse.org/legal/epl-v10.html
 -->
 <tests>
+    <pmdReferenceId>rulesets/java/design.xml/UseCollectionIsEmpty</pmdReferenceId>
+    <language>java 1.7</language>
 
     <test name="UseCollectionIsEmpty">
         <setup>
             <source>
 class UseCollectionIsEmpty {
     void foo(Collection c) {
-        if (<marker>c.size() == 0</marker>) {
+        if (<marker>c.size</marker>() == 0) {
         }
     }
 }
@@ -40,7 +42,7 @@ class UseCollectionIsEmpty {
             <source>
 class UseCollectionIsEmpty {
     void foo(Collection c) {
-        if (<marker>0 == c.size()</marker>) {
+        if (0 == <marker>c.size</marker>()) {
         }
     }
 }
@@ -92,7 +94,7 @@ class UseCollectionIsEmpty {
             <source>
 class UseCollectionIsEmpty {
     void foo(Collection c) {
-        if (<marker>c.size() != 0</marker>) {
+        if (<marker>c.size</marker>() != 0) {
         }
     }
 }
@@ -118,7 +120,7 @@ class UseCollectionIsEmpty {
             <source>
 class UseCollectionIsEmpty {
     void foo(Collection c) {
-        if (<marker>0 != c.size()</marker>) {
+        if (0 != <marker>c.size</marker>()) {
         }
     }
 }

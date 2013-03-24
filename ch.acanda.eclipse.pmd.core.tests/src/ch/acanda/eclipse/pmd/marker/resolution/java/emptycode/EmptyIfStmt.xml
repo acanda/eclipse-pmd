@@ -8,6 +8,8 @@
     http://www.eclipse.org/legal/epl-v10.html
 -->
 <tests>
+    <pmdReferenceId>rulesets/java/empty.xml/EmptyIfStmt</pmdReferenceId>
+    <language>java 1.7</language>
 
     <test name="EmptyIfStmt">
         <setup>

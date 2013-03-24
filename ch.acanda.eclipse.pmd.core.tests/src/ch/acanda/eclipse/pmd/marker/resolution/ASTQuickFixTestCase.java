@@ -18,20 +18,13 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.JavaCore;
@@ -49,14 +42,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
+import ch.acanda.eclipse.pmd.marker.resolution.QuickFixTestData.TestParameters;
 import ch.acanda.eclipse.pmd.marker.resolution.java.basic.ExtendsObjectQuickFixTest;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 /**
  * Base class for testing quick fix tests based on {@link ASTQuickFix}. An extending class must provide a static method
@@ -69,53 +62,9 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
  * }
  * </pre>
  * 
- * The easiest way to implement this method is to use {@link #createTestData(InputStream)} and provide an
- * {@code InputStream} to an XML file containing all the test data. The XML file must have the following format:
- * 
- * <pre>
- * &lt;?xml version="1.0" encoding="UTF-8"?>
- * &lt;tests>
- *     &lt;!-- Every test must have a name. It will be shown in assertion messages
- *          so you can identify the failing test. There can be more than one test in a file. -->
- *     &lt;test name="SimpleExtendsObject">
- * 
- *         &lt;!-- The setup contains all the data to set up the test -->
- *         &lt;setup>
- * 
- *             &lt;!-- The source must be a valid Java compilation unit and must contain a marker.
- *                  The marker marks the position where the quick fix should be applied. -->
- *             &lt;source>
- * class Example extends &lt;marker>Object&lt;/marker> {
- * }
- *             &lt;/source>
- * 
- *         &lt;/setup>
- * 
- *         &lt;!-- The 'expected' part contains all the expected values. -->
- *         &lt;expected>
- * 
- *             &lt;!-- The expected source after the quick fix has been applied. -->
- *             &lt;source>
- * class Example {
- * }
- *             &lt;/source>
- * 
- *             &lt;!-- The expected image of the quick fix. This must be the name of a field in {@link PMDPluginImages}.
- *                  The image is optional. If no image is provided the test verifies only that the image is not {@code null}. -->
- *             &lt;image>QUICKFIX_REMOVE&lt;/image>
- * 
- *             &lt;!-- The expected label of the quick fix. The label is optional.
- *                  If no label is provided the test verifies only that the label is not {@code null}. -->
- *             &lt;label>Remove 'extends Object'&lt;/label>
- * 
- *             &lt;!-- The expected description of the quick fix. The description is optional.
- *                  If no description is provided the test verifies only that the description is not {@code null}. -->
- *             &lt;description>Removes &amp;lt;b>extends Object&amp;lt;/b> from the type declaration of Example&lt;/description>
- * 
- *         &lt;/expected>
- *     &lt;/test>
- * &lt;/tests>
- * </pre>
+ * The easiest way to implement this method is to use {@link QuickFixTestData#createTestData(InputStream)} and provide
+ * an {@code InputStream} to an XML file containing all the test data. See {@link QuickFixTestData} for the format of
+ * the XML file.
  * 
  * See {@link ExtendsObjectQuickFixTest} for a complete example.
  * 
@@ -147,61 +96,13 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         }
     }
 
-    public static Collection<Object[]> createTestData(final InputStream testCase) {
-        final List<Object[]> data = new ArrayList<>();
-        try {
-            final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder docBuilder = factory.newDocumentBuilder();
-            final Document doc = docBuilder.parse(testCase);
-            final NodeList tests = doc.getElementsByTagName("test");
-            for (int i = 0, size = tests.getLength(); i < size; i++) {
-                data.add(new Object[] { getParameters((Element) tests.item(i)) });
+    public static List<Object[]> createTestData(final InputStream testCase) {
+        return Lists.transform(QuickFixTestData.createTestData(testCase), new Function<TestParameters, Object[]>() {
+            @Override
+            public Object[] apply(final TestParameters params) {
+                return new Object[] { params };
             }
-        } catch (final ParserConfigurationException | SAXException | IOException e) {
-            throw new IllegalArgumentException("Invalid test case", e);
-        }
-        return data;
-    }
-
-    private static TestParameters getParameters(final Element test) {
-        final TestParameters params = new TestParameters();
-        params.name = test.getAttribute("name");
-        final Element setup = (Element) test.getElementsByTagName("setup").item(0);
-        final NodeList source = setup.getElementsByTagName("source");
-        params.source = ltrim(source.item(0).getFirstChild().getNodeValue());
-        params.offset = params.source.length();
-        params.source += ((Element) source.item(0)).getElementsByTagName("marker").item(0).getFirstChild().getNodeValue();
-        params.length = params.source.length() - params.offset;
-        params.source += rtrim(source.item(0).getChildNodes().item(2).getNodeValue());
-        final NodeList rulenames = setup.getElementsByTagName("rulename");
-        params.rulename = rulenames.getLength() == 0 ? null : rulenames.item(0).getFirstChild().getNodeValue();
-        final Element expected = (Element) test.getElementsByTagName("expected").item(0);
-        params.expectedSource = expected.getElementsByTagName("source").item(0).getFirstChild().getNodeValue().trim();
-        final NodeList image = expected.getElementsByTagName("image");
-        params.expectedImage = image.getLength() == 0 ? null : image.item(0).getFirstChild().getNodeValue().trim();
-        final NodeList label = expected.getElementsByTagName("label");
-        params.expectedLabel = label.getLength() == 0 ? null : label.item(0).getFirstChild().getNodeValue().trim();
-        final NodeList description = expected.getElementsByTagName("description");
-        params.expectedDescription = description.getLength() == 0 ? null : description.item(0).getFirstChild().getNodeValue().trim();
-        return params;
-    }
-    
-    private static String ltrim(final String s) {
-        final int len = s.length();
-        int pos = 0;
-        while (pos < len && s.charAt(pos) <= ' ') {
-            pos++;
-        }
-        return s.substring(pos);
-    }
-    
-    private static String rtrim(final String s) {
-        final int len = s.length();
-        int pos = s.length() - 1;
-        while (pos < len && s.charAt(pos) <= ' ') {
-            pos--;
-        }
-        return s.substring(0, pos + 1);
+        });
     }
 
     @Test
@@ -283,15 +184,4 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         }
     }
 
-    protected static final class TestParameters {
-        String name;
-        int offset;
-        int length;
-        String source;
-        String rulename;
-        String expectedSource;
-        String expectedImage;
-        String expectedLabel;
-        String expectedDescription;
-    }
 }

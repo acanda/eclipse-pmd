@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.junit.runners.Parameterized.Parameters;
 
 import ch.acanda.eclipse.pmd.marker.resolution.ASTQuickFixTestCase;
+import ch.acanda.eclipse.pmd.marker.resolution.QuickFixTestData.TestParameters;
 
 /**
  * Unit plug-in test for {@link EmptySwitchStatementsQuickFix}.

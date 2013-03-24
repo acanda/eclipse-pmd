@@ -87,7 +87,7 @@ public final class MarkerUtil {
         return marker;
     }
     
-    private static Range getAbsoluteRange(final String content, final RuleViolation violation) {
+    public static Range getAbsoluteRange(final String content, final RuleViolation violation) {
         final Document document = new Document(content);
         try {
             // violation line and column start at one, the marker's start and end positions at zero
@@ -118,7 +118,7 @@ public final class MarkerUtil {
         return absoluteOffset;
     }
     
-    private static final class Range {
+    public static final class Range {
         private final int start;
         private final int end;
         
