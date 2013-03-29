@@ -22,8 +22,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
-import java.util.List;
 
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleSetFactory;
@@ -40,7 +38,6 @@ import org.junit.Test;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 /**
@@ -129,8 +126,19 @@ public class AnalyzerTest {
     }
     
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} works around PMD's <a
+     * href="http://sourceforge.net/p/pmd/bugs/1076/">bug #1076</a> and reports two violations instead of only one.
+     */
+    @Test
+    public void analyzePMDBug1076() throws UnsupportedEncodingException, CoreException {
+        final IFile file = mockFile("class Foo { void bar(int a, int b) { } }", "UTF-8", "java", false, true);
+        analyze(file, "rulesets/java/optimizations.xml/MethodArgumentCouldBeFinal",
+                "MethodArgumentCouldBeFinal", "MethodArgumentCouldBeFinal");
+    }
+    
+    /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
-     * invokes {@link ViolationProcessor#annotate(IFile, Iterator) with the correct rule violations.
+     * invokes {@link ViolationProcessor#annotate(IFile, Iterable) with the correct rule violations.
      */
     public void analyze(final String content, final String charset, final String fileExtension, final String ruleSetRefId,
             final String... violatedRules) {
@@ -144,7 +152,7 @@ public class AnalyzerTest {
     
     /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
-     * invokes {@link ViolationProcessor#annotate(IFile, Iterator) with the correct rule violations.
+     * invokes {@link ViolationProcessor#annotate(IFile, Iterable) with the correct rule violations.
      */
     public void analyze(final IFile file, final String ruleSetRefId, final String... violatedRules) {
         try {
@@ -152,8 +160,8 @@ public class AnalyzerTest {
             final RuleSets ruleSets = new RuleSetFactory().createRuleSets(ruleSetRefId);
             new Analyzer().analyze(file, ruleSets, violationProcessor);
             
-            final int invokations = violatedRules.length > 0 ? 1 : 0;
-            verify(violationProcessor, times(invokations)).annotate(same(file), violations(violatedRules));
+            final int invocations = violatedRules.length > 0 ? 1 : 0;
+            verify(violationProcessor, times(invocations)).annotate(same(file), violations(violatedRules));
 
         } catch (final RuleSetNotFoundException e) {
             throw new AssertionError("Failed to create rule sets", e);
@@ -177,13 +185,13 @@ public class AnalyzerTest {
         return file;
     }
 
-    private Iterator<RuleViolation> violations(final String... ruleNames) {
+    private Iterable<RuleViolation> violations(final String... ruleNames) {
         return argThat(new RuleViolationIteratorMatcher(ruleNames));
     }
 
-    private static class RuleViolationIteratorMatcher extends BaseMatcher<Iterator<RuleViolation>> {
+    private static class RuleViolationIteratorMatcher extends BaseMatcher<Iterable<RuleViolation>> {
         
-        private final List<String> expectedRuleNames;
+        private final Iterable<String> expectedRuleNames;
 
         public RuleViolationIteratorMatcher(final String... ruleNames) {
             expectedRuleNames = Lists.newArrayList(ruleNames);
@@ -191,18 +199,18 @@ public class AnalyzerTest {
 
         @Override
         public boolean matches(final Object item) {
-            if (item instanceof Iterator) {
+            if (item instanceof Iterable) {
                 @SuppressWarnings("unchecked")
-                final Iterator<RuleViolation> violations = (Iterator<RuleViolation>) item;
-                final Iterator<String> actualRuleNames = Iterators.transform(violations, new RuleNameExtractor());
-                return Iterators.elementsEqual(expectedRuleNames.iterator(), actualRuleNames);
+                final Iterable<RuleViolation> violations = (Iterable<RuleViolation>) item;
+                final Iterable<String> actualRuleNames = Iterables.transform(violations, new RuleNameExtractor());
+                return Iterables.elementsEqual(expectedRuleNames, actualRuleNames);
             }
             return false;
         }
         
         @Override
         public void describeTo(final Description description) {
-            description.appendText("Iterator returning the following violations " + Iterables.toString(expectedRuleNames));
+            description.appendText("Iterable containing the following violations " + Iterables.toString(expectedRuleNames));
         }
         
         private static class RuleNameExtractor implements Function<RuleViolation, String> {

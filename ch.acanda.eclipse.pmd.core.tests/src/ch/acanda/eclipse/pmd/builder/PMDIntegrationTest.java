@@ -122,9 +122,9 @@ public class PMDIntegrationTest {
 
             // Only verify when PMD actually reports an error. There are a few test cases where the quick fix can
             // handle violations that PMD does not (yet) find.
-            if (!context.getReport().treeIsEmpty()) {
+            if (!context.getReport().isEmpty()) {
                 // PMD might find more than one violation. If there is one with a matching range then the test passes.
-                final boolean hasViolationWithMatchingRange = Iterators.any(context.getReport().getViolationTree().iterator(),
+                final boolean hasViolationWithMatchingRange = Iterators.any(context.getReport().iterator(),
                         new Predicate<RuleViolation>() {
                             @Override
                             public boolean apply(final RuleViolation violation) {

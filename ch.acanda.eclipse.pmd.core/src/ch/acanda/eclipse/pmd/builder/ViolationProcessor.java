@@ -13,7 +13,6 @@ package ch.acanda.eclipse.pmd.builder;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Iterator;
 
 import net.sourceforge.pmd.RuleViolation;
 
@@ -29,11 +28,10 @@ import ch.acanda.eclipse.pmd.marker.MarkerUtil;
  */
 public class ViolationProcessor {
     
-    public void annotate(final IFile file, final Iterator<RuleViolation> violations) throws CoreException, IOException {
+    public void annotate(final IFile file, final Iterable<RuleViolation> violations) throws CoreException, IOException {
         MarkerUtil.removeAllMarkers(file);
         final String content = new String(Files.readAllBytes(file.getRawLocation().toFile().toPath()), file.getCharset());
-        while (violations.hasNext()) {
-            final RuleViolation violation = violations.next();
+        for (final RuleViolation violation : violations) {
             MarkerUtil.addMarker(file, content, violation);
         }
     }

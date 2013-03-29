@@ -14,7 +14,6 @@ package ch.acanda.eclipse.pmd.builder;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import net.sourceforge.pmd.PMD;
@@ -31,6 +30,7 @@ import org.eclipse.core.runtime.CoreException;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -68,7 +68,7 @@ public final class Analyzer {
                     final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
                     context.setLanguageVersion(language.getDefaultVersion());
                     new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
-                    final Iterator<RuleViolation> violations = context.getReport().getViolationTree().iterator();
+                    final ImmutableList<RuleViolation> violations = ImmutableList.copyOf(context.getReport().iterator());
                     violationProcessor.annotate(file, violations);
                 }
             }
