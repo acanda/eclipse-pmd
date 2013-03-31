@@ -8,7 +8,7 @@
     http://www.eclipse.org/legal/epl-v10.html
 -->
 <site>
-   <feature url="features/ch.acanda.eclipse.pmd.feature_0.4.0.qualifier.jar" id="ch.acanda.eclipse.pmd.feature" version="0.4.0.qualifier">
+   <feature url="features/ch.acanda.eclipse.pmd.feature_0.5.0.qualifier.jar" id="ch.acanda.eclipse.pmd.feature" version="0.5.0.qualifier">
       <category name="ch.acanda.eclipse.pmd"/>
    </feature>
    <category-def name="ch.acanda.eclipse.pmd" label="Eclipse PMD"/>
