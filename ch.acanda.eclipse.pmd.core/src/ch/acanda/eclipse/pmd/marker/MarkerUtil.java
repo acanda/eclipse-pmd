@@ -89,14 +89,24 @@ public final class MarkerUtil {
     
     public static Range getAbsoluteRange(final String content, final RuleViolation violation) {
         final Document document = new Document(content);
+        Range range = null;
         try {
+
             // violation line and column start at one, the marker's start and end positions at zero
             final int start = getAbsolutePosition(content, document.getLineOffset(violation.getBeginLine() - 1), violation.getBeginColumn());
             final int end = getAbsolutePosition(content, document.getLineOffset(violation.getEndLine() - 1), violation.getEndColumn());
-            return new Range(start - 1, end);
+
+            // for some rules PMD creates violations with the end position before the start position
+            if (start <= end) {
+                range = new Range(start - 1, end);
+            } else {
+                range = new Range(end - 1, start);
+            }
+
         } catch (final BadLocationException e) {
-            return new Range(0, 0);
+            range = new Range(0, 0);
         }
+        return range;
     }
     
     private static int getAbsolutePosition(final String content, final int lineOffset, final int pmdCharOffset) {
@@ -123,8 +133,13 @@ public final class MarkerUtil {
         private final int end;
         
         public Range(final int start, final int end) {
+            // if (start <= end) {
             this.start = start;
             this.end = end;
+            // } else {
+            // this.start = end;
+            // this.end = start;
+            // }
         }
         
         public int getStart() {

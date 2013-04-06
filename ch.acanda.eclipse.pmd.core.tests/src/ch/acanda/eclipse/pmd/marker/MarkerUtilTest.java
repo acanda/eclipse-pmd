@@ -202,4 +202,41 @@ public class MarkerUtilTest {
         verify(actual).setAttribute("violationClassName", "ClassName");
         verify(actual, never()).setAttribute(eq("markerText"), anyString());
     }
+    
+    /**
+     * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker even when the character
+     * start and end positions are mixed up, i.e. {@code start > end}. For some rules, PMD creates violations where the
+     * start position is greater than the end position.
+     */
+    @Test
+    public void addMarkerEndBeforeStart() throws CoreException {
+        final IFile file = mock(IFile.class);
+        final IMarker marker = mock(IMarker.class);
+        when(file.createMarker(MARKER_TYPE)).thenReturn(marker);
+        final RuleViolation violation = mock(RuleViolation.class);
+        when(violation.getDescription()).thenReturn("message");
+        when(violation.getBeginLine()).thenReturn(1);
+        when(violation.getBeginColumn()).thenReturn(22);
+        when(violation.getEndLine()).thenReturn(1);
+        when(violation.getEndColumn()).thenReturn(17);
+        when(violation.getClassName()).thenReturn("ClassName");
+        final Rule rule = mock(Rule.class);
+        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getRuleSetName()).thenReturn("basic");
+        when(rule.getName()).thenReturn("ExtendsObject");
+        when(violation.getRule()).thenReturn(rule);
+        
+        final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object { }", violation);
+        
+        assertNotNull("The method must always return a marker", actual);
+        verify(file).createMarker(MARKER_TYPE);
+        verify(actual).setAttribute(IMarker.MESSAGE, "message");
+        verify(actual).setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+        verify(actual).setAttribute(IMarker.LINE_NUMBER, 1);
+        verify(actual).setAttribute(IMarker.CHAR_START, 16);
+        verify(actual).setAttribute(IMarker.CHAR_END, 22);
+        verify(actual).setAttribute("ruleId", "java.basic.ExtendsObject");
+        verify(actual).setAttribute("violationClassName", "ClassName");
+        verify(actual).setAttribute("markerText", "Object");
+    }
 }
