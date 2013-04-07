@@ -77,6 +77,16 @@ public final class PMDPlugin extends AbstractUIPlugin {
         return log(IStatus.WARNING, message, throwable);
     }
     
+    /**
+     * Logs an info message and a {@code Throwable} to the platform, i.e. it will be visible in the Error Log view and
+     * distributed to the log listeners.
+     * 
+     * @return A warning status containing the error message and throwable.
+     */
+    public IStatus info(final String message, final Throwable throwable) {
+        return log(IStatus.INFO, message, throwable);
+    }
+    
     private IStatus log(final int severity, final String message, final Throwable throwable) {
         final IStatus status = new Status(severity, ID, message, throwable);
         getLog().log(status);

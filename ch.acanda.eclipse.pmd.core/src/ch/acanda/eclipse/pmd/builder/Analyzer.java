@@ -24,9 +24,11 @@ import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.SourceCodeProcessor;
 import net.sourceforge.pmd.lang.Language;
+import net.sourceforge.pmd.lang.ast.ParseException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
+import org.xml.sax.SAXParseException;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
 
@@ -72,8 +74,14 @@ public final class Analyzer {
                     violationProcessor.annotate(file, violations);
                 }
             }
-        } catch (CoreException | PMDException | IOException e) {
+        } catch (CoreException | IOException e) {
             PMDPlugin.getDefault().error("Could not run PMD on file " + file.getRawLocation(), e);
+        } catch (final PMDException e) {
+            if (isIncorrectSyntaxCause(e)) {
+                PMDPlugin.getDefault().info("Could not run PMD because of incorrect syntax of file " + file.getRawLocation(), e);
+            } else {
+                PMDPlugin.getDefault().warn("Could not run PMD on file " + file.getRawLocation(), e);
+            }
         }
     }
     
@@ -92,6 +100,14 @@ public final class Analyzer {
         return language != null
                 && language.getDefaultVersion() != null
                 && language.getDefaultVersion().getLanguageVersionHandler() != null;
+    }
+    
+    private boolean isIncorrectSyntaxCause(final PMDException e) {
+        final Throwable cause = e.getCause();
+        // syntax of a Java or JSP file is incorrect
+        return cause instanceof ParseException
+                // syntax of an XML file is incorrect
+                || cause instanceof SAXParseException;
     }
     
 }
