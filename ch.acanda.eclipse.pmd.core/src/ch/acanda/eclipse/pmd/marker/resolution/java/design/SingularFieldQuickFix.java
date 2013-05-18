@@ -58,8 +58,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
     
     @Override
     public String getLabel() {
-        final String variable = marker.getVariableName();
-        return "Replace with a local variable " + variable;
+        return "Replace with a local variable";
     }
     
     @Override
