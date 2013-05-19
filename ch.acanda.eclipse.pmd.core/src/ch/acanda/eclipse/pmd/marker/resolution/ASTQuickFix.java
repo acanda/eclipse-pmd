@@ -61,6 +61,8 @@ import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
+import com.google.common.base.Optional;
+
 /**
  * Base class for Java quick fix that modifies the AST.
  * 
@@ -196,8 +198,8 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
                     final MarkerAnnotation annotation = getMarkerAnnotation(annotationModel, marker);
                     // if the annotation is null it means that is was deleted by a previous quick fix
                     if (annotation != null) {
-                        final T node = getNodeFinder(annotationModel.getPosition(annotation)).findNode(ast);
-                        final boolean successful = apply(node);
+                        final Optional<T> node = getNodeFinder(annotationModel.getPosition(annotation)).findNode(ast);
+                        final boolean successful = node.isPresent() && apply(node.get());
                         if (successful) {
                             marker.delete();
                         }

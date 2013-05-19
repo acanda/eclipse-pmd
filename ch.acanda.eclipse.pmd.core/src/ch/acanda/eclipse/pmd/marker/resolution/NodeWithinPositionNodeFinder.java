@@ -15,6 +15,8 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jface.text.Position;
 
+import com.google.common.base.Optional;
+
 /**
  * Searches an AST for a node that has the provided type and lies within the provided position. If more than one node
  * fit the criteria, the one with the smallest distance to the root is returned.
@@ -50,10 +52,10 @@ class NodeWithinPositionNodeFinder<R extends ASTNode, N extends ASTNode> extends
     }
     
     @Override
-    public N findNode(final R ast) {
+    public Optional<N> findNode(final R ast) {
         node = null;
         ast.accept(this);
-        return node;
+        return Optional.fromNullable(node);
     }
     
 }

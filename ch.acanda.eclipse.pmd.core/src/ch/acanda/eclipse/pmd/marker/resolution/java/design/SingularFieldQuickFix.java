@@ -39,6 +39,8 @@ import ch.acanda.eclipse.pmd.marker.resolution.Finders;
 import ch.acanda.eclipse.pmd.marker.resolution.NodeFinder;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
+import com.google.common.base.Optional;
+
 /**
  * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/design.html#SingularField">SingularField</a>.
  * It replaces the field with a local variable.
@@ -78,9 +80,9 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
     protected boolean apply(final VariableDeclarationFragment node) {
         final String name = node.getName().getIdentifier();
         final AssignmentNodeFinder finder = new AssignmentNodeFinder(name);
-        final Assignment assignment = finder.findNode(node.getParent().getParent());
-        if (assignment != null) {
-            replaceAssignment(node, assignment, !finder.hasMoreThanOneAssignment());
+        final Optional<Assignment> assignment = finder.findNode(node.getParent().getParent());
+        if (assignment.isPresent()) {
+            replaceAssignment(node, assignment.get(), !finder.hasMoreThanOneAssignment());
             updateFieldDeclaration(node);
         }
         return assignment != null;
@@ -141,7 +143,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
          * assignments are not valid search results.
          */
         private final Set<Block> shadowingBlocks = new HashSet<>();
-        private Assignment searchResult;
+        private Optional<Assignment> searchResult = Optional.absent();
         private boolean moreThanOneAssignment;
         
         AssignmentNodeFinder(final String fieldName) {
@@ -150,7 +152,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         }
         
         @Override
-        public Assignment findNode(final ASTNode node) {
+        public Optional<Assignment> findNode(final ASTNode node) {
             node.accept(this);
             return searchResult;
         }
@@ -189,7 +191,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         private void checkName(final Assignment assignment, final SimpleName variableName) {
             if (fieldName.equals(variableName.getIdentifier())) {
                 if (searchResult == null) {
-                    searchResult = assignment;
+                    searchResult = Optional.of(assignment);
                 } else {
                     moreThanOneAssignment = true;
                 }

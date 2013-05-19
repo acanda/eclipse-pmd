@@ -13,6 +13,7 @@ package ch.acanda.eclipse.pmd.marker.resolution;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
@@ -49,6 +50,7 @@ import ch.acanda.eclipse.pmd.marker.resolution.java.basic.ExtendsObjectQuickFixT
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 
 /**
@@ -122,10 +124,10 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     private ASTNode findNode(final TestParameters params, final CompilationUnit ast, final ASTQuickFix<ASTNode> quickFix) {
         final Class<? extends ASTNode> nodeType = quickFix.getNodeType();
         final NodeFinder<CompilationUnit, ASTNode> finder = quickFix.getNodeFinder(new Position(params.offset, params.length));
-        final ASTNode node = finder.findNode(ast);
-        assertNotNull("Couldn't find node of type " + nodeType.getSimpleName() + "."
-                + " Check the position of the marker in test " + params.name + ".", node);
-        return node;
+        final Optional<ASTNode> node = finder.findNode(ast);
+        assertTrue("Couldn't find node of type " + nodeType.getSimpleName() + "."
+                + " Check the position of the marker in test " + params.name + ".", node.isPresent());
+        return node.get();
     }
 
     private CompilationUnit createAST(final org.eclipse.jface.text.Document document) {
