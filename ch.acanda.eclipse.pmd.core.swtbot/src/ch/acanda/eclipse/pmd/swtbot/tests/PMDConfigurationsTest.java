@@ -49,6 +49,7 @@ public final class PMDConfigurationsTest extends GUITestCase {
     private static final String FILE_SYSTEM_CONFIGURATION_NAME = "PMD Rules (File System)";
     private static final String WORKSPACE_CONFIGURATION_NAME = "PMD Rules (Workspace)";
     private static final String PROJECT_CONFIGURATION_NAME = "PMD Rules (Project)";
+    private static final String REMOTE_CONFIGURATION_NAME = "PMD Rules (Remote)";
     private static File rules;
     private static final Path PMD_XML = Paths.get("pmd.xml");
 
@@ -74,19 +75,29 @@ public final class PMDConfigurationsTest extends GUITestCase {
 
     @Test
     public void manageRuleSetConfigurations() {
+        enablePMD();
         addFileSystemConfigurationInFirstProject();
         activateTheSameConfigurationInSecondProject();
         addWorkspaceConfigurationInFirstProject();
         addProjectConfigurationInFirstProject();
+        addRemoteConfigurationInFirstProject();
     }
 
-    public void addFileSystemConfigurationInFirstProject() {
+    private void enablePMD() {
         final PMDProjectPropertyDialogBot dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME_1);
         assertFalse("PMD should be disabled by default", dialog.enablePMD().isChecked());
         assertFalse("The button to add a new configuration should be disabled as long as PMD is disabled",
                 dialog.addConfiguration().isEnabled());
-
         dialog.enablePMD().select();
+        dialog.ok().click();
+        dialog.bot().waitUntil(Conditions.shellCloses(dialog));
+    }
+    
+    public void addFileSystemConfigurationInFirstProject() {
+        final PMDProjectPropertyDialogBot dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME_1);
+        assertTrue("PMD should be enabled", dialog.enablePMD().isChecked());
+        assertTrue("The button to add a new configuration should be enabled when PMD is enabled", dialog.addConfiguration().isEnabled());
+
         dialog.addConfiguration().click();
         final AddRuleSetConfigurationWizardBot wizard = AddRuleSetConfigurationWizardBot.getActive();
         assertFalse("The finish button should be disabled as long as the name is missing", wizard.finish().isEnabled());
@@ -145,7 +156,7 @@ public final class PMDConfigurationsTest extends GUITestCase {
     private void addWorkspaceConfigurationInFirstProject() {
         final PMDProjectPropertyDialogBot dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME_1);
         assertTrue("PMD should be enabled", dialog.enablePMD().isChecked());
-        assertTrue("The button to add a new configuration should be enabled when PMD is disabled", dialog.addConfiguration().isEnabled());
+        assertTrue("The button to add a new configuration should be enabled when PMD is enabled", dialog.addConfiguration().isEnabled());
         
         dialog.enablePMD().select();
         dialog.addConfiguration().click();
@@ -183,7 +194,7 @@ public final class PMDConfigurationsTest extends GUITestCase {
     private void addProjectConfigurationInFirstProject() {
         final PMDProjectPropertyDialogBot dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME_1);
         assertTrue("PMD should be enabled", dialog.enablePMD().isChecked());
-        assertTrue("The button to add a new configuration should be enabled when PMD is disabled", dialog.addConfiguration().isEnabled());
+        assertTrue("The button to add a new configuration should be enabled when PMD is enabled", dialog.addConfiguration().isEnabled());
         
         dialog.enablePMD().select();
         dialog.addConfiguration().click();
@@ -213,6 +224,43 @@ public final class PMDConfigurationsTest extends GUITestCase {
         assertEquals("Name of the configuration", PROJECT_CONFIGURATION_NAME, dialog.configurations().cell(2, "Name"));
         assertEquals("Type of the configuration", "Project", dialog.configurations().cell(2, "Type"));
         assertEquals("Location of the configuration", projectRelativePath, dialog.configurations().cell(2, "Location"));
+        
+        dialog.ok().click();
+        dialog.bot().waitUntil(Conditions.shellCloses(dialog));
+    }
+
+    private void addRemoteConfigurationInFirstProject() {
+        final PMDProjectPropertyDialogBot dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME_1);
+        assertTrue("PMD should be enabled", dialog.enablePMD().isChecked());
+        assertTrue("The button to add a new configuration should be enabled when PMD is enabled", dialog.addConfiguration().isEnabled());
+        
+        dialog.addConfiguration().click();
+        final AddRuleSetConfigurationWizardBot wizard = AddRuleSetConfigurationWizardBot.getActive();
+        assertFalse("The finish button should be disabled as long as the name is missing", wizard.finish().isEnabled());
+        
+        wizard.remote().click();
+        wizard.next().click();
+        assertFalse("The finish button should be disabled as long as the name is missing", wizard.finish().isEnabled());
+        
+        wizard.name().setText(REMOTE_CONFIGURATION_NAME);
+        assertFalse("The finish button should be disabled as long as the location is missing", wizard.finish().isEnabled());
+        
+        final String uri = rules.toURI().toString();
+        wizard.location().setText(uri);
+        wizard.bot().waitUntil(Conditions.tableHasRows(wizard.rules(), 2));
+        final String[] expectedNames = new String[] { "ExtendsObject", "BooleanInstantiation" };
+        final String[] actualNames = wizard.ruleNames();
+        assertArrayEquals("Rules of the PMD configuration", expectedNames, actualNames);
+        assertTrue("The finish button should be enabled if bot a name and a location with a valid configuration is available",
+                wizard.finish().isEnabled());
+        
+        wizard.finish().click();
+        wizard.bot().waitUntil(Conditions.shellCloses(wizard));
+        dialog.bot().waitUntil(Conditions.tableHasRows(dialog.configurations(), 4));
+        assertTrue("The added configuration should be activated", dialog.configurations().getTableItem(3).isChecked());
+        assertEquals("Name of the configuration", REMOTE_CONFIGURATION_NAME, dialog.configurations().cell(3, "Name"));
+        assertEquals("Type of the configuration", "Remote", dialog.configurations().cell(3, "Type"));
+        assertEquals("Location of the configuration", uri, dialog.configurations().cell(3, "Location"));
         
         dialog.ok().click();
         dialog.bot().waitUntil(Conditions.shellCloses(dialog));

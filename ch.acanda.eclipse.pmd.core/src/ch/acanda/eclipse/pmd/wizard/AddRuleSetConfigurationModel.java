@@ -13,9 +13,14 @@ package ch.acanda.eclipse.pmd.wizard;
 
 import static ch.acanda.eclipse.pmd.ui.util.ValidationUtil.errorIfBlank;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleSet;
@@ -44,6 +49,8 @@ class AddRuleSetConfigurationModel extends ViewModel {
     public static final String FILE_SYSTEM_TYPE_SELECTED = "fileSystemTypeSelected";
     public static final String WORKSPACE_TYPE_SELECTED = "workspaceTypeSelected";
     public static final String PROJECT_TYPE_SELECTED = "projectTypeSelected";
+    public static final String REMOTE_TYPE_SELECTED = "remoteTypeSelected";
+    public static final String BROWSE_ENABLED = "browseEnabled";
     public static final String LOCATION = "location";
     
     private final IProject project;
@@ -53,6 +60,8 @@ class AddRuleSetConfigurationModel extends ViewModel {
     private boolean isFileSystemTypeSelected;
     private boolean isWorkspaceTypeSelected;
     private boolean isProjectTypeSelected;
+    private boolean isRemoteTypeSelected;
+    private boolean isBrowseEnabled;
     
     /**
      * This property is derived from {@link #location}. If {@link #location} is valid this list contains the rules of
@@ -127,6 +136,23 @@ class AddRuleSetConfigurationModel extends ViewModel {
         setProperty(PROJECT_TYPE_SELECTED, this.isProjectTypeSelected, this.isProjectTypeSelected = isProjectTypeSelected);
     }
     
+    public boolean isRemoteTypeSelected() {
+        return isRemoteTypeSelected;
+    }
+    
+    public void setRemoteTypeSelected(final boolean isRemoteTypeSelected) {
+        setProperty(REMOTE_TYPE_SELECTED, this.isRemoteTypeSelected, this.isRemoteTypeSelected = isRemoteTypeSelected);
+        setBrowseEnabled(!isRemoteTypeSelected);
+    }
+    
+    public boolean isBrowseEnabled() {
+        return isBrowseEnabled;
+    }
+    
+    public void setBrowseEnabled(final boolean isBrowseEnabled) {
+        setProperty(BROWSE_ENABLED, this.isBrowseEnabled, this.isBrowseEnabled = isBrowseEnabled);
+    }
+    
     @Override
     protected ImmutableSet<String> createValidatedPropertiesSet() {
         return ImmutableSet.of(LOCATION, "name");
@@ -142,17 +168,23 @@ class AddRuleSetConfigurationModel extends ViewModel {
      * Validates the location of the rule set configuration and sets or resets the property {@link #rules} depending on
      * whether {@link #location} contains a valid rule set configuration location or not.
      */
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private void validateLocation(final String propertyName, final ValidationResult result) {
         final Builder<Rule> rules = ImmutableList.builder();
         if (!errorIfBlank(LOCATION, location, "Please enter the location of the rule set configuration", result)) {
             RuleSet ruleSet = null;
             try {
-                final Path absoluteLocation = getAbsoluteLocation();
-                if (Files.exists(absoluteLocation)) {
-                    ruleSet = new RuleSetFactory().createRuleSet(absoluteLocation.toString());
+                final String referenceId;
+                if (isRemoteTypeSelected) {
+                    referenceId = validateRemoteLocation(result);
+                } else {
+                    referenceId = validateLocalLocation(result);
+                }
+                if (referenceId != null) {
+                    ruleSet = new RuleSetFactory().createRuleSet(referenceId);
                     rules.addAll(ruleSet.getRules());
                 }
-            } catch (final RuleSetNotFoundException | IllegalArgumentException e) {
+            } catch (final RuleSetNotFoundException | RuntimeException e) {
                 // the rule set location is invalid - the validation problem will be added below
             }
             if (ruleSet == null || ruleSet.getRules().isEmpty()) {
@@ -163,6 +195,35 @@ class AddRuleSetConfigurationModel extends ViewModel {
         if (LOCATION.equals(propertyName)) {
             setRules(rules.build());
         }
+    }
+    
+    private String validateRemoteLocation(final ValidationResult result) {
+        String referenceId = null;
+        try {
+            final URI uri = new URI(location);
+            try (InputStream stream = uri.toURL().openStream()) {
+                final Path tempFile = Files.createTempFile("eclipse-pmd-remote-", ".xml");
+                Files.copy(stream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+                tempFile.toFile().deleteOnExit();
+                referenceId = tempFile.toString();
+            }
+        } catch (final URISyntaxException e) {
+            result.add(new ValidationProblem("location", Severity.ERROR, "The location is not a valid URI"));
+        } catch (final IOException e) {
+            result.add(new ValidationProblem("location", Severity.ERROR, "The resource at the given URI does not exist"));
+        }
+        return referenceId;
+    }
+    
+    private String validateLocalLocation(final ValidationResult result) {
+        String referenceId = null;
+        final Path absoluteLocation = getAbsoluteLocation();
+        if (Files.exists(absoluteLocation)) {
+            referenceId = absoluteLocation.toString();
+        } else {
+            result.add(new ValidationProblem("location", Severity.ERROR, "The location is not a valid URI"));
+        }
+        return referenceId;
     }
     
     private Path getAbsoluteLocation() {

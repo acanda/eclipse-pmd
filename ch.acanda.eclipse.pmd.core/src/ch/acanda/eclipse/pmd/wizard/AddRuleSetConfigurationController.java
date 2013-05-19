@@ -29,6 +29,7 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.domain.FileSystemRuleSetConfiguration;
 import ch.acanda.eclipse.pmd.domain.ProjectRuleSetConfiguration;
+import ch.acanda.eclipse.pmd.domain.RemoteRuleSetConfiguration;
 import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
 import ch.acanda.eclipse.pmd.domain.WorkspaceRuleSetConfiguration;
 import ch.acanda.eclipse.pmd.preferences.PMDWorkspaceSettings;
@@ -116,6 +117,8 @@ final class AddRuleSetConfigurationController {
                 config = new ProjectRuleSetConfiguration(id, model.getName(), Paths.get(model.getLocation()));
             } else if (model.isFileSystemTypeSelected()) {
                 config = new FileSystemRuleSetConfiguration(id, model.getName(), Paths.get(model.getLocation()));
+            } else if (model.isRemoteTypeSelected()) {
+                config = new RemoteRuleSetConfiguration(id, model.getName(), model.getLocation());
             } else {
                 throw new IllegalStateException("Unknown configuration type");
             }

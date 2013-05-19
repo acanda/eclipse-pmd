@@ -77,4 +77,8 @@ public final class AddRuleSetConfigurationWizardBot extends SWTBotShell {
         return bot().radioWithId(SWTBotID.PROJECT.name());
     }
 
+    public SWTBotRadio remote() {
+        return bot().radioWithId(SWTBotID.REMOTE.name());
+    }
+
 }

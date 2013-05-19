@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 
 import ch.acanda.eclipse.pmd.domain.FileSystemRuleSetConfiguration;
 import ch.acanda.eclipse.pmd.domain.ProjectRuleSetConfiguration;
+import ch.acanda.eclipse.pmd.domain.RemoteRuleSetConfiguration;
 import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
 import ch.acanda.eclipse.pmd.domain.WorkspaceRuleSetConfiguration;
 
@@ -46,7 +47,12 @@ final class RuleSetConfigurationSerializer {
         /**
          * Identifier for the {@link FileSystemRuleSetConfiguration}.
          */
-        FS
+        FS,
+        
+        /**
+         * Identifier for the {@link RemoteRuleSetConfiguration}.
+         */
+        RM
         
     };
     
@@ -73,6 +79,8 @@ final class RuleSetConfigurationSerializer {
                 serializePJ(builder, (ProjectRuleSetConfiguration) config);
             } else if (config instanceof FileSystemRuleSetConfiguration) {
                 serializeFS(builder, (FileSystemRuleSetConfiguration) config);
+            } else if (config instanceof RemoteRuleSetConfiguration) {
+                serializeRM(builder, (RemoteRuleSetConfiguration) config);
             } else {
                 throw new IllegalArgumentException("Unexpected rule set configuration: " + config.getClass().getSimpleName());
             }
@@ -122,6 +130,19 @@ final class RuleSetConfigurationSerializer {
     }
     
     /**
+     * Serializes a {@link RemoteRuleSetConfiguration}. The serialized record consists of four values:
+     * <ol>
+     * <li>the rule set configuration type ({@code RM})</li>
+     * <li>the id</li>
+     * <li>the name</li>
+     * <li>the URI to the configuration</li>
+     * </ol>
+     */
+    private static void serializeRM(final StringBuilder builder, final RemoteRuleSetConfiguration config) {
+        append(builder, Identifiers.RM.name(), String.valueOf(config.getId()), config.getName(), config.getLocation());
+    }
+    
+    /**
      * Appends the values to the StringBuilder. The values are separated by {@link #VALUE_SEPARATOR}.
      */
     private static void append(final StringBuilder builder, final String... values) {
@@ -152,6 +173,8 @@ final class RuleSetConfigurationSerializer {
                     configs.add(deserializePJ(values));
                 } else if (isFileSystemRuleSetConfiguration(values)) {
                     configs.add(deserializeFS(values));
+                } else if (isRemoteRuleSetConfiguration(values)) {
+                    configs.add(deserializeRM(values));
                 } else {
                     throw new IllegalArgumentException("Unexpected serialized rule set configuration: " + serializedConfig);
                 }
@@ -170,6 +193,10 @@ final class RuleSetConfigurationSerializer {
     
     private static boolean isFileSystemRuleSetConfiguration(final String[] values) {
         return Identifiers.FS.name().equals(values[0]) && values.length == 4;
+    }
+    
+    private static boolean isRemoteRuleSetConfiguration(final String[] values) {
+        return Identifiers.RM.name().equals(values[0]) && values.length == 4;
     }
     
     /**
@@ -215,6 +242,21 @@ final class RuleSetConfigurationSerializer {
      */
     private static RuleSetConfiguration deserializeFS(final String[] values) {
         return new FileSystemRuleSetConfiguration(Integer.parseInt(values[1]), values[2], Paths.get(values[3]));
+    }
+    
+    /**
+     * Deserializes a {@link RemoteRuleSetConfiguration}. The serialized record consists of four values:
+     * <ol>
+     * <li>the rule set configuration type ({@code RM})</li>
+     * <li>the id</li>
+     * <li>the name</li>
+     * <li>the URI to the configuration</li>
+     * </ol>
+     * 
+     * @param values The values of the serialized configuration. It is guaranteed to have the correct length.
+     */
+    private static RuleSetConfiguration deserializeRM(final String[] values) {
+        return new RemoteRuleSetConfiguration(Integer.parseInt(values[1]), values[2], values[3]);
     }
     
 }

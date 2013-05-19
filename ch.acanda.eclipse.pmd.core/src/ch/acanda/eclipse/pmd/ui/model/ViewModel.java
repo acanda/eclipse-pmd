@@ -57,10 +57,8 @@ public abstract class ViewModel {
             validatedProperties = createValidatedPropertiesSet();
         }
         if (validatedProperties.contains(propertyName)) {
-            final ValidationResult result = new ValidationResult();
-            validate(propertyName, result);
-            isValid = result.isValid();
-            propertyChangeSupport.firePropertyChange(VALID_PROPERTY, validationResult, validationResult = result);
+            final ValidationJob job = new ValidationJob(this, propertyName);
+            job.schedule();
         }
     }
     
@@ -80,8 +78,6 @@ public abstract class ViewModel {
      * 
      * @param propertyName The name of the property that has changed.
      * @param validationResult
-     * 
-     * @return {@code true} if the model is valid, {@code false} if the model is invalid.
      */
     protected abstract void validate(String propertyName, ValidationResult validationResult);
     
@@ -96,6 +92,11 @@ public abstract class ViewModel {
     
     public boolean isValid() {
         return isValid;
+    }
+    
+    void setValidationResult(final ValidationResult result) {
+        isValid = result.isValid();
+        propertyChangeSupport.firePropertyChange(VALID_PROPERTY, validationResult, validationResult = result);
     }
     
     public void addDirtyChangeListener(final PropertyChangeListener listener) {

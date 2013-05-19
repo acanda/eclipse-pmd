@@ -32,6 +32,7 @@ public class SelectConfigurationTypeWizardPage extends WizardPage {
     private Button workspaceRadioButton;
     private Button projectRadioButton;
     private Button fileSystemRadioButton;
+    private Button remoteRadioButton;
     
     public SelectConfigurationTypeWizardPage(final AddRuleSetConfigurationController controller) {
         super("selectConfigurationType");
@@ -97,23 +98,47 @@ public class SelectConfigurationTypeWizardPage extends WizardPage {
         fileSystemDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         fileSystemDescription.setText("The path to the rule set configuration file is stored absolute."
                 + " Use this type if you have a rule set configuration file outside of the workspace that you use for several workspaces.");
+        
+        remoteRadioButton = new Button(container, SWT.RADIO);
+        final GridData remoteRadioButtonGridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        remoteRadioButtonGridData.verticalIndent = 10;
+        remoteRadioButton.setLayoutData(remoteRadioButtonGridData);
+        SWTBotID.set(remoteRadioButton, SWTBotID.REMOTE);
+        
+        final Label remoteLabel = new Label(container, SWT.NONE);
+        remoteLabel.setFont(SWTResourceManager.getBoldFont(remoteLabel.getFont()));
+        final GridData remoteLabelGridData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
+        remoteLabelGridData.verticalIndent = 10;
+        remoteLabel.setLayoutData(remoteLabelGridData);
+        remoteLabel.setText("Remote");
+        new Label(container, SWT.NONE);
+        
+        final Label remoteDescription = new Label(container, SWT.WRAP);
+        remoteDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        remoteDescription.setText("An URI to the rule set configuration is stored."
+                + " Use this type if you have a rule set configuration file that is only available via an URI.");
         initDataBindings();
     }
-    
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
         final IObservableValue workspaceTypeView = WidgetProperties.selection().observe(workspaceRadioButton);
         final IObservableValue workspaceTypeModel = BeanProperties.value("workspaceTypeSelected").observe(controller.getModel());
-        bindingContext.bindValue(workspaceTypeView, workspaceTypeModel);
+        bindingContext.bindValue(workspaceTypeView, workspaceTypeModel, null, null);
         //
         final IObservableValue projectTypeView = WidgetProperties.selection().observe(projectRadioButton);
         final IObservableValue projectTypeModel = BeanProperties.value("projectTypeSelected").observe(controller.getModel());
-        bindingContext.bindValue(projectTypeView, projectTypeModel);
+        bindingContext.bindValue(projectTypeView, projectTypeModel, null, null);
         //
         final IObservableValue fileSystemTypeView = WidgetProperties.selection().observe(fileSystemRadioButton);
         final IObservableValue fileSystemTypeModel = BeanProperties.value("fileSystemTypeSelected").observe(controller.getModel());
-        bindingContext.bindValue(fileSystemTypeView, fileSystemTypeModel);
+        bindingContext.bindValue(fileSystemTypeView, fileSystemTypeModel, null, null);
+        //
+        final IObservableValue observeSelectionRemoteRadioButtonObserveWidget = WidgetProperties.selection().observe(remoteRadioButton);
+        final IObservableValue remoteTypeSelectedControllergetModelObserveValue = BeanProperties.value("remoteTypeSelected").observe(
+                controller.getModel());
+        bindingContext.bindValue(observeSelectionRemoteRadioButtonObserveWidget, remoteTypeSelectedControllergetModelObserveValue, null,
+                null);
         //
         return bindingContext;
     }

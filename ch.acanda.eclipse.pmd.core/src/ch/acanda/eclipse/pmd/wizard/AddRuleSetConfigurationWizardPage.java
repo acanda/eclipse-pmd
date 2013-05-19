@@ -17,6 +17,7 @@ import java.beans.PropertyChangeListener;
 import net.sourceforge.pmd.Rule;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.beans.PojoObservables;
 import org.eclipse.core.databinding.observable.Realm;
@@ -24,6 +25,7 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -54,6 +56,7 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
     private Text location;
     private TableViewer tableViewer;
     private Text name;
+    private Button browse;
     
     public AddRuleSetConfigurationWizardPage(final AddRuleSetConfigurationController controller) {
         super("addFileSystemRuleSetConfigurationWizardPage");
@@ -94,7 +97,7 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
         location.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         SWTBotID.set(location, SWTBotID.LOCATION);
         
-        final Button browse = new Button(container, SWT.NONE);
+        browse = new Button(container, SWT.NONE);
         browse.setText("Browse...");
         browse.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -132,7 +135,6 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
     public RuleSetConfiguration getRuleSetConfiguration() {
         return controller.createRuleSetConfiguration();
     }
-
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
@@ -153,6 +155,11 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
                 SWTObservables.observeText(name, SWT.Modify));
         final IObservableValue controllergetModelNameObserveValue = BeansObservables.observeValue(controller.getModel(), "name");
         bindingContext.bindValue(nameObserveTextObserveWidget, controllergetModelNameObserveValue, null, null);
+        //
+        final IObservableValue observeVisibleBrowseObserveWidget = WidgetProperties.visible().observe(browse);
+        final IObservableValue browseEnabledControllergetModelObserveValue = BeanProperties.value("browseEnabled").observe(
+                controller.getModel());
+        bindingContext.bindValue(observeVisibleBrowseObserveWidget, browseEnabledControllergetModelObserveValue, null, null);
         //
         return bindingContext;
     }
