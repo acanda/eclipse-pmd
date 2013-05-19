@@ -166,12 +166,13 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
     private void fixMarkersInFile(final IFile file, final List<IMarker> markers, final IProgressMonitor monitor) {
         monitor.subTask(file.getFullPath().toOSString());
         
-        final ICompilationUnit compilationUnit = getCompilationUnit(file);
+        final Optional<ICompilationUnit> optionalCompilationUnit = getCompilationUnit(file);
         
-        if (compilationUnit == null) {
+        if (!optionalCompilationUnit.isPresent()) {
             return;
         }
         
+        final ICompilationUnit compilationUnit = optionalCompilationUnit.get();
         ITextFileBufferManager bufferManager = null;
         final IPath path = compilationUnit.getPath();
         
@@ -263,9 +264,9 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
      */
     protected abstract boolean apply(final T node);
     
-    private ICompilationUnit getCompilationUnit(final IFile file) {
+    private Optional<ICompilationUnit> getCompilationUnit(final IFile file) {
         final IJavaElement element = JavaCore.create(file);
-        return element instanceof ICompilationUnit ? (ICompilationUnit) element : null;
+        return element instanceof ICompilationUnit ? Optional.of((ICompilationUnit) element) : Optional.<ICompilationUnit> absent();
     }
     
     private MarkerAnnotation getMarkerAnnotation(final IAnnotationModel annotationModel, final IMarker marker) {
