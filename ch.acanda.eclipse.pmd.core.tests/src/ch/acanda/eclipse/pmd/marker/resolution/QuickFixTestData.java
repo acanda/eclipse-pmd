@@ -11,6 +11,8 @@
 
 package ch.acanda.eclipse.pmd.marker.resolution;
 
+import static org.junit.Assert.assertFalse;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -93,8 +95,8 @@ public class QuickFixTestData {
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             final DocumentBuilder docBuilder = factory.newDocumentBuilder();
             final Document doc = docBuilder.parse(testCase);
-            final Optional<String> pmdReferenceId = getTagValue("pmdReferenceId", doc);
-            final Optional<String> language = getTagValue("language", doc);
+            final Optional<String> pmdReferenceId = getOptionalValue(doc, "pmdReferenceId");
+            final Optional<String> language = getOptionalValue(doc, "language");
             final NodeList tests = doc.getElementsByTagName("test");
             for (int i = 0, size = tests.getLength(); i < size; i++) {
                 data.add(getParameters(pmdReferenceId, language, (Element) tests.item(i)));
@@ -105,21 +107,10 @@ public class QuickFixTestData {
         return data;
     }
 
-    private static Optional<String> getTagValue(final String tagName, final Document doc) {
-        final NodeList referenceIds = doc.getElementsByTagName(tagName);
-        final Optional<String> pmdReferenceId;
-        if(referenceIds.getLength() > 0) {
-            pmdReferenceId = Optional.fromNullable(referenceIds.item(0).getFirstChild().getNodeValue());
-        } else {
-            pmdReferenceId = Optional.absent();
-        }
-        return pmdReferenceId;
-    }
-    
     private static TestParameters getParameters(final Optional<String> pmdReferenceId, final Optional<String> language, final Element test) {
         final TestParameters params = new TestParameters();
-        params.pmdReferenceId = pmdReferenceId.orNull();
-        params.language = language.orNull();
+        params.pmdReferenceId = pmdReferenceId;
+        params.language = language;
         params.name = test.getAttribute("name");
         final Element setup = (Element) test.getElementsByTagName("setup").item(0);
         final NodeList source = setup.getElementsByTagName("source");
@@ -128,19 +119,39 @@ public class QuickFixTestData {
         params.source += ((Element) source.item(0)).getElementsByTagName("marker").item(0).getFirstChild().getNodeValue();
         params.length = params.source.length() - params.offset;
         params.source += rtrim(source.item(0).getChildNodes().item(2).getNodeValue());
-        final NodeList rulenames = setup.getElementsByTagName("rulename");
-        params.rulename = rulenames.getLength() == 0 ? null : rulenames.item(0).getFirstChild().getNodeValue();
+        params.rulename = getOptionalValue(setup, "rulename");
         final Element expected = (Element) test.getElementsByTagName("expected").item(0);
-        params.expectedSource = expected.getElementsByTagName("source").item(0).getFirstChild().getNodeValue().trim();
-        final NodeList image = expected.getElementsByTagName("image");
-        params.expectedImage = image.getLength() == 0 ? null : image.item(0).getFirstChild().getNodeValue().trim();
-        final NodeList label = expected.getElementsByTagName("label");
-        params.expectedLabel = label.getLength() == 0 ? null : label.item(0).getFirstChild().getNodeValue().trim();
-        final NodeList description = expected.getElementsByTagName("description");
-        params.expectedDescription = description.getLength() == 0 ? null : description.item(0).getFirstChild().getNodeValue().trim();
+        params.expectedSource = getValue(expected, "source");
+        params.expectedImage = getOptionalValue(expected, "image");
+        params.expectedLabel = getOptionalValue(expected, "label");
+        params.expectedDescription = getOptionalValue(expected, "description");
         return params;
     }
     
+    private static Optional<String> getOptionalValue(final Element element, final String tagName) {
+        return getOptionalValue(element.getElementsByTagName(tagName));
+    }
+
+    private static Optional<String> getOptionalValue(final NodeList elements) {
+        if (elements.getLength() == 0) {
+            return Optional.absent();
+        }
+        return Optional.of(elements.item(0).getFirstChild().getNodeValue().trim());
+    }
+    
+    private static String getValue(final Element element, final String tagName) {
+        return getValue(element.getElementsByTagName(tagName));
+    }
+
+    private static Optional<String> getOptionalValue(final Document element, final String tagName) {
+        return getOptionalValue(element.getElementsByTagName(tagName));
+    }
+
+    private static String getValue(final NodeList elements) {
+        assertFalse(elements.getLength() == 0);
+        return elements.item(0).getFirstChild().getNodeValue().trim();
+    }
+
     private static String ltrim(final String s) {
         final int len = s.length();
         int pos = 0;
@@ -160,17 +171,17 @@ public class QuickFixTestData {
     }
     
     public static final class TestParameters {
-        public String pmdReferenceId;
-        public String language;
+        public Optional<String> pmdReferenceId;
+        public Optional<String> language;
         public String name;
         public int offset;
         public int length;
         public String source;
-        public String rulename;
+        public Optional<String> rulename;
         public String expectedSource;
-        public String expectedImage;
-        public String expectedLabel;
-        public String expectedDescription;
+        public Optional<String> expectedImage;
+        public Optional<String> expectedLabel;
+        public Optional<String> expectedDescription;
     }
 
 }

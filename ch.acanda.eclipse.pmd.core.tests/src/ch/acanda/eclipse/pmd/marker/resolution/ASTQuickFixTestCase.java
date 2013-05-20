@@ -89,7 +89,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
             final Type typeArgument = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             final Class<T> quickFixClass = (Class<T>) typeArgument;
             final IMarker marker = mock(IMarker.class);
-            when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename);
+            when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename.orNull());
             final String markerText = params.source.substring(params.offset, params.offset + params.length);
             when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
             return (ASTQuickFix<ASTNode>) quickFixClass.getConstructor(PMDMarker.class).newInstance(new PMDMarker(marker));
@@ -158,31 +158,31 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     @Test
     public void getImage() throws IllegalAccessException, NoSuchFieldException, SecurityException {
         final ImageDescriptor imageDescriptor = getQuickFix().getImageDescriptor();
-        if (params.expectedImage == null) {
-            assertNotNull("Quick fix image descriptor must not be null (test " + params.name + ")", imageDescriptor);
-        } else {
-            final Field field = PMDPluginImages.class.getDeclaredField(params.expectedImage);
+        if (params.expectedImage.isPresent()) {
+            final Field field = PMDPluginImages.class.getDeclaredField(params.expectedImage.get());
             assertEquals("Quick fix image descriptor in test " + params.name, field.get(null), imageDescriptor);
+        } else {
+            assertNotNull("Quick fix image descriptor must not be null (test " + params.name + ")", imageDescriptor);
         }
     }
 
     @Test
     public void getLabel() {
         final String label = getQuickFix().getLabel();
-        if (params.expectedLabel == null) {
-            assertNotNull("Quick fix label must not be null (test " + params.name + ")", label);
+        if (params.expectedLabel.isPresent()) {
+            assertEquals("Quick fix label in test " + params.name, params.expectedLabel.get(), label);
         } else {
-            assertEquals("Quick fix label in test " + params.name, params.expectedLabel, label);
+            assertNotNull("Quick fix label must not be null (test " + params.name + ")", label);
         }
     }
 
     @Test
     public void getDescription() {
         final String description = getQuickFix().getDescription();
-        if (params.expectedDescription == null) {
-            assertNotNull("Quick fix description must not be null (test " + params.name + ")", description);
+        if (params.expectedDescription.isPresent()) {
+            assertEquals("Quick fix description in test " + params.name, params.expectedDescription.get(), description);
         } else {
-            assertEquals("Quick fix description in test " + params.name, params.expectedDescription, description);
+            assertNotNull("Quick fix description must not be null (test " + params.name + ")", description);
         }
     }
 

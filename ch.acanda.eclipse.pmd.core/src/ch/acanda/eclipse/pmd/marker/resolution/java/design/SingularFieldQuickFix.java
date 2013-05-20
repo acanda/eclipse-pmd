@@ -85,7 +85,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
             replaceAssignment(node, assignment.get(), !finder.hasMoreThanOneAssignment());
             updateFieldDeclaration(node);
         }
-        return assignment != null;
+        return assignment.isPresent();
     }
     
     /**
@@ -190,7 +190,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         
         private void checkName(final Assignment assignment, final SimpleName variableName) {
             if (fieldName.equals(variableName.getIdentifier())) {
-                if (searchResult == null) {
+                if (!searchResult.isPresent()) {
                     searchResult = Optional.of(assignment);
                 } else {
                     moreThanOneAssignment = true;

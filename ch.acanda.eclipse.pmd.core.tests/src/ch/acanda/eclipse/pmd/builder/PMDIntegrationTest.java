@@ -106,10 +106,10 @@ public class PMDIntegrationTest {
 
     @Test
     public void violationRange() throws IOException, RuleSetNotFoundException, PMDException {
-        if (params.language == null) {
-            fail(testDataXml + ": language is missing");
-        }
-        final LanguageVersion languageVersion = LanguageVersion.findByTerseName(params.language);
+        assertTrue(testDataXml + ": language is missing", params.language.isPresent());
+        assertTrue(testDataXml + ": pmdReferenceId is missing", params.pmdReferenceId.isPresent());
+
+        final LanguageVersion languageVersion = LanguageVersion.findByTerseName(params.language.get());
         final String fileExtension = "." + languageVersion.getLanguage().getExtensions().get(0);
         final File sourceFile = File.createTempFile(getClass().getSimpleName(), fileExtension);
         try {
@@ -117,7 +117,7 @@ public class PMDIntegrationTest {
             final Reader reader = new StringReader(params.source);
             final RuleContext context = PMD.newRuleContext(sourceFile.getName(), sourceFile);
             context.setLanguageVersion(languageVersion);
-            final RuleSets ruleSets = new RuleSetFactory().createRuleSets(params.pmdReferenceId);
+            final RuleSets ruleSets = new RuleSetFactory().createRuleSets(params.pmdReferenceId.get());
             new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
 
             // Only verify when PMD actually reports an error. There are a few test cases where the quick fix can
