@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 
+import ch.acanda.eclipse.pmd.exception.EclipsePMDException;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.marker.resolution.java.SuppressWarningsQuickFix;
 
@@ -65,7 +66,7 @@ public class PMDMarkerResolutionGenerator implements IMarkerResolutionGenerator 
             
         } catch (final SecurityException | ReflectiveOperationException e) {
             // the quick fix class does exist but it is not correctly implemented.
-            throw new RuntimeException("Quick fix class " + className + " is not correctly implemented", e);
+            throw new EclipsePMDException("Quick fix class " + className + " is not correctly implemented", e);
         }
         return resolutions;
     }
