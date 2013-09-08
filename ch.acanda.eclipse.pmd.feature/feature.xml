@@ -9,12 +9,12 @@
 -->
 <feature
       id="ch.acanda.eclipse.pmd.feature"
-      label="Eclipse PMD"
+      label="eclipse-pmd"
       version="0.7.0.qualifier"
       provider-name="Philip Graf">
 
    <description url="http://acanda.github.com/eclipse-pmd/">
-      The eclipse-pmd plug-in integrates PMD 5.0.4 into the Eclipse IDE.
+      The eclipse-pmd plug-in integrates PMD 5.0.5 into the Eclipse IDE.
    </description>
 
    <copyright url="">

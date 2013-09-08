@@ -1,27 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Copyright (C) 2012 - 2013, Philip Graf
+    Copyright (C) 2012 - 2013, Philip Graf
 
-	All rights reserved. This program and the accompanying materials
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>ch.acanda.eclipse.pmd</groupId>
-		<artifactId>parent</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
-		<relativePath>../ch.acanda.eclipse.pmd</relativePath>
-	</parent>
-	
-	<groupId>ch.acanda.eclipse.pmd</groupId>
-	<artifactId>ch.acanda.eclipse.pmd.core</artifactId>
-	<version>0.7.0-SNAPSHOT</version>
-	<packaging>eclipse-plugin</packaging>
-	<name>eclipse-pmd core</name>
+    <parent>
+        <groupId>ch.acanda.eclipse.pmd</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.7.0-SNAPSHOT</version>
+        <relativePath>../ch.acanda.eclipse.pmd</relativePath>
+    </parent>
+
+    <groupId>ch.acanda.eclipse.pmd</groupId>
+    <artifactId>ch.acanda.eclipse.pmd.core</artifactId>
+    <version>0.7.0-SNAPSHOT</version>
+    <packaging>eclipse-plugin</packaging>
+    <name>eclipse-pmd core</name>
+    
+    <properties>
+      <libPath>${basedir}/lib</libPath>
+      <pmdVersion>5.0.5</pmdVersion>
+      <guavaVersion>15.0-rc1</guavaVersion>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${libPath}</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-libs</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${libPath}</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.google.guava</groupId>
+                                    <artifactId>guava</artifactId>
+                                    <version>${guavaVersion}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.google.guava</groupId>
+                                    <artifactId>guava</artifactId>
+                                    <version>${guavaVersion}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd</artifactId>
+                                    <version>${pmdVersion}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd</artifactId>
+                                    <version>${pmdVersion}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>jaxen</groupId>
+                                    <artifactId>jaxen</artifactId>
+                                    <version>1.1.1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>asm</groupId>
+                                    <artifactId>asm</artifactId>
+                                    <version>3.2</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.mozilla</groupId>
+                                    <artifactId>rhino</artifactId>
+                                    <version>1.7R3</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>commons-io</groupId>
+                                    <artifactId>commons-io</artifactId>
+                                    <version>2.2</version>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
