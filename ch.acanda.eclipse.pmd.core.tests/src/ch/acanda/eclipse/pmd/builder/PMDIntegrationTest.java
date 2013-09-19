@@ -78,7 +78,10 @@ public class PMDIntegrationTest {
             "java/optimization/LocalVariableCouldBeFinal.xml",
             "java/optimization/MethodArgumentCouldBeFinal.xml",
             "java/optimization/RedundantFieldInitializer.xml",
-            "java/optimization/SimplifyStartsWith.xml");
+            "java/optimization/SimplifyStartsWith.xml",
+            "java/stringandstringbuffer/AppendCharacterWithChar.xml",
+            "java/stringandstringbuffer/UseIndexOfChar.xml",
+            "java/stringandstringbuffer/StringToString.xml");
     
     private final String testDataXml;
     private final TestParameters params;
