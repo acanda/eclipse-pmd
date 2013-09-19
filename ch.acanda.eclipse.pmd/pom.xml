@@ -16,6 +16,7 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <name>eclipse-pmd parent</name>
+    <url>http://acanda.github.io/eclipse-pmd/</url>
 
     <properties>
         <tycho-version>0.18.0</tycho-version>
@@ -99,4 +100,34 @@
             </plugin>
         </plugins>
     </build>
+
+    <developers>
+        <developer>
+            <name>Philip Graf</name>
+            <roles>
+                <role>Owner</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/acanda/eclipse-pmd</url>
+        <connection>scm:git:git://github.com/acanda/eclipse-pmd.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/acanda/eclipse-pmd.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/acanda/eclipse-pmd/issues/</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Eclipse Public License - v 1.0</name>
+            <url>http://www.eclipse.org/legal/epl-v10.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
 </project>
