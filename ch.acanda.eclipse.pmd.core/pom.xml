@@ -27,7 +27,7 @@
     <properties>
       <libPath>${basedir}/lib</libPath>
       <pmdVersion>5.0.5</pmdVersion>
-      <guavaVersion>15.0-rc1</guavaVersion>
+      <guavaVersion>15.0</guavaVersion>
     </properties>
 
     <build>
