@@ -78,7 +78,6 @@ class AddRuleSetConfigurationModel extends ViewModel {
         return !(Strings.isNullOrEmpty(name) && Strings.isNullOrEmpty(location));
     }
     
-    @Override
     protected void reset() {
         setName(null);
         setLocation(null);

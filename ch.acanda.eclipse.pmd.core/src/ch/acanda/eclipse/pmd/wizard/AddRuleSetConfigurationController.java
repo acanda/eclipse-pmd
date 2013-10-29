@@ -27,12 +27,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
-import ch.acanda.eclipse.pmd.domain.FileSystemRuleSetConfiguration;
-import ch.acanda.eclipse.pmd.domain.ProjectRuleSetConfiguration;
-import ch.acanda.eclipse.pmd.domain.RemoteRuleSetConfiguration;
-import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
-import ch.acanda.eclipse.pmd.domain.WorkspaceRuleSetConfiguration;
-import ch.acanda.eclipse.pmd.preferences.PMDWorkspaceSettings;
+import ch.acanda.eclipse.pmd.domain.Location;
+import ch.acanda.eclipse.pmd.domain.LocationContext;
+import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.ui.dialog.FileSelectionDialog;
 
 /**
@@ -106,25 +103,33 @@ final class AddRuleSetConfigurationController {
         return Paths.get(container.getLocationURI()).relativize(Paths.get(resource.getLocationURI())).toString();
     }
     
-    public RuleSetConfiguration createRuleSetConfiguration() {
+    public RuleSetModel createRuleSetModel() {
         if (model.isValid()) {
-            final PMDWorkspaceSettings workspaceSettings = new PMDWorkspaceSettings(PMDPlugin.getDefault().getPreferenceStore());
-            final int id = workspaceSettings.getNextRuleSetConfigurationId();
-            final RuleSetConfiguration config;
-            if (model.isWorkspaceTypeSelected()) {
-                config = new WorkspaceRuleSetConfiguration(id, model.getName(), Paths.get(model.getLocation()));
-            } else if (model.isProjectTypeSelected()) {
-                config = new ProjectRuleSetConfiguration(id, model.getName(), Paths.get(model.getLocation()));
-            } else if (model.isFileSystemTypeSelected()) {
-                config = new FileSystemRuleSetConfiguration(id, model.getName(), Paths.get(model.getLocation()));
-            } else if (model.isRemoteTypeSelected()) {
-                config = new RemoteRuleSetConfiguration(id, model.getName(), model.getLocation());
-            } else {
-                throw new IllegalStateException("Unknown configuration type");
-            }
-            return config;
+            return new RuleSetModel(model.getName(), new Location(model.getLocation(), getLocationContext()));
         }
-        throw new IllegalStateException("Cannot create RuleSetConfiguration as the model is not valid");
+        throw new IllegalStateException("Cannot create RuleSetModel as the view model is not valid");
+    }
+    
+    private LocationContext getLocationContext() {
+        final LocationContext locationContext;
+
+        if (model.isWorkspaceTypeSelected()) {
+            locationContext = LocationContext.WORKSPACE;
+
+        } else if (model.isProjectTypeSelected()) {
+            locationContext = LocationContext.PROJECT;
+
+        } else if (model.isFileSystemTypeSelected()) {
+            locationContext = LocationContext.FILESYSTEM;
+
+        } else if (model.isRemoteTypeSelected()) {
+            locationContext = LocationContext.REMOTE;
+
+        } else {
+            throw new IllegalStateException("Unknown configuration type");
+        }
+
+        return locationContext;
     }
     
 }

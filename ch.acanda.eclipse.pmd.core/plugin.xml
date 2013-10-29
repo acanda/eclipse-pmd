@@ -71,8 +71,8 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="ch.acanda.eclipse.pmd.properties.PMDProjectPropertyPage"
-            id="ch.acanda.eclipse.pmd.properties.PMDProjectPropertyPage"
+            class="ch.acanda.eclipse.pmd.properties.PMDPropertyPage"
+            id="ch.acanda.eclipse.pmd.properties.PMDPropertyPage"
             name="PMD"
             nameFilter="*">
          <enabledWhen>

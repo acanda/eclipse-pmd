@@ -9,28 +9,14 @@
 //
 // =====================================================================
 
-package ch.acanda.eclipse.pmd.swtbot;
+package ch.acanda.eclipse.pmd.wizard;
 
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.jface.wizard.IWizardPage;
 
-/**
- * @author Philip Graf
- */
-public enum SWTBotID {
+import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 
-    ENABLE_PMD,
-    ADD,
-    NAME,
-    LOCATION,
-    RULES,
-    RULESETS,
-    FILE_SYSTEM,
-    WORKSPACE,
-    PROJECT,
-    REMOTE;
-
-    public static void set(final Control control, final SWTBotID id) {
-        control.setData("org.eclipse.swtbot.widget.key", id.name());
-    }
-
+public interface RuleSetWizardPage extends IWizardPage {
+    
+    RuleSetModel getRuleSet();
+    
 }

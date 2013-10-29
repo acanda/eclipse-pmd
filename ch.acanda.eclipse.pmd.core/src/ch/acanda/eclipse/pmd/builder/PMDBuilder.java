@@ -25,22 +25,24 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
-import ch.acanda.eclipse.pmd.properties.PMDProjectSettings;
+import ch.acanda.eclipse.pmd.cache.RuleSetsCache;
+import ch.acanda.eclipse.pmd.cache.RuleSetsCacheLoader;
 
 /**
  * Builder for PMD enabled projects.
- * 
+ *
  * @author Philip Graf
  */
 public class PMDBuilder extends IncrementalProjectBuilder {
-    
+
     public static final String ID = "ch.acanda.eclipse.pmd.builder.PMDBuilder";
-    
+
+    private final RuleSetsCache cache = new RuleSetsCache(new RuleSetsCacheLoader(), PMDPlugin.getDefault().getWorkspaceModel());
+
     @Override
     @SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
     protected IProject[] build(final int kind, @SuppressWarnings("rawtypes") final Map args, final IProgressMonitor monitor)
             throws CoreException {
-        new PMDProjectSettings(getProject()).resetActiveRuleSetsCache();
         if (kind == FULL_BUILD) {
             fullBuild(monitor);
         } else {
@@ -53,7 +55,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
         }
         return null;
     }
-    
+
     protected void fullBuild(final IProgressMonitor monitor) throws CoreException {
         try {
             getProject().accept(new ResourceVisitor());
@@ -61,18 +63,18 @@ public class PMDBuilder extends IncrementalProjectBuilder {
             PMDPlugin.getDefault().error("Could not run a full PMD build", e);
         }
     }
-    
+
     protected void incrementalBuild(final IResourceDelta delta, final IProgressMonitor monitor) throws CoreException {
         delta.accept(new DeltaVisitor());
     }
-    
+
     void analyze(final IResource resource) {
         if (resource instanceof IFile) {
-            final RuleSets ruleSets = new PMDProjectSettings(resource.getProject()).getActiveRuleSets();
+            final RuleSets ruleSets = cache.getRuleSets(resource.getProject().getName());
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
         }
     }
-    
+
     class DeltaVisitor implements IResourceDeltaVisitor {
         @Override
         public boolean visit(final IResourceDelta delta) throws CoreException {
@@ -82,14 +84,14 @@ public class PMDBuilder extends IncrementalProjectBuilder {
                 case IResourceDelta.CHANGED:
                     analyze(resource);
                     break;
-                    
+
                 default:
                     break;
             }
             return true;
         }
     }
-    
+
     class ResourceVisitor implements IResourceVisitor {
         @Override
         public boolean visit(final IResource resource) {
@@ -97,5 +99,5 @@ public class PMDBuilder extends IncrementalProjectBuilder {
             return true;
         }
     }
-    
+
 }

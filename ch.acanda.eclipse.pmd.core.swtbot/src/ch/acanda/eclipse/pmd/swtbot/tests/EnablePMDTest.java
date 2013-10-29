@@ -44,7 +44,7 @@ public final class EnablePMDTest extends GUITestCase {
 
     @Test
     public void enablePMD() {
-        SWTBotShell dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME);
+        SWTBotShell dialog = JavaProjectClient.openPMDPropertyDialog(PROJECT_NAME);
         SWTBotCheckBox enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
         assertFalse("PMD should be disabled by default", enablePMDCheckBox.isChecked());
         
@@ -52,7 +52,7 @@ public final class EnablePMDTest extends GUITestCase {
         dialog.bot().button("OK").click();
         bot().waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses(dialog));
         
-        dialog = JavaProjectClient.openPMDProjectPropertyDialog(PROJECT_NAME);
+        dialog = JavaProjectClient.openPMDPropertyDialog(PROJECT_NAME);
         enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
         assertTrue("PMD should be enabled", enablePMDCheckBox.isChecked());
         

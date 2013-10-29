@@ -20,7 +20,7 @@ import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
-import ch.acanda.eclipse.pmd.swtbot.bot.PMDProjectPropertyDialogBot;
+import ch.acanda.eclipse.pmd.swtbot.bot.PMDPropertyDialogBot;
 
 /**
  * @author Philip Graf
@@ -70,11 +70,11 @@ public final class JavaProjectClient {
      * @param name The name of the project.
      * @return A bot for the open PMD property dialog.
      */
-    public static PMDProjectPropertyDialogBot openPMDProjectPropertyDialog(final String name) {
+    public static PMDPropertyDialogBot openPMDPropertyDialog(final String name) {
         final SWTWorkbenchBot bot = new SWTWorkbenchBot();
         bot.viewById("org.eclipse.jdt.ui.PackageExplorer").bot().tree().getTreeItem(name).select();
         bot.menu("File").menu("Properties").click();
-        final PMDProjectPropertyDialogBot dialog = new PMDProjectPropertyDialogBot(bot.shell("Properties for " + name).widget);
+        final PMDPropertyDialogBot dialog = new PMDPropertyDialogBot(bot.shell("Properties for " + name).widget);
         dialog.bot().tree().getTreeItem("PMD").select();
         return dialog;
     }

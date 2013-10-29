@@ -9,28 +9,13 @@
 //
 // =====================================================================
 
-package ch.acanda.eclipse.pmd.swtbot;
-
-import org.eclipse.swt.widgets.Control;
-
 /**
+ * This package contains conditions which can be used for
+ * {@link org.eclipse.swtbot.swt.finder.SWTBot#waitUntil(org.eclipse.swtbot.swt.finder.waits.ICondition)
+ * SWTBot.waitUntil(...)} and
+ * {@link org.eclipse.swtbot.swt.finder.SWTBot#waitWhile(org.eclipse.swtbot.swt.finder.waits.ICondition)
+ * SWTBot.waitWhile(...)}.
+ * 
  * @author Philip Graf
  */
-public enum SWTBotID {
-
-    ENABLE_PMD,
-    ADD,
-    NAME,
-    LOCATION,
-    RULES,
-    RULESETS,
-    FILE_SYSTEM,
-    WORKSPACE,
-    PROJECT,
-    REMOTE;
-
-    public static void set(final Control control, final SWTBotID id) {
-        control.setData("org.eclipse.swtbot.widget.key", id.name());
-    }
-
-}
+package ch.acanda.eclipse.pmd.swtbot.condition;

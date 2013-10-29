@@ -14,13 +14,13 @@ package ch.acanda.eclipse.pmd.wizard;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.Wizard;
 
-import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
+import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 
 public class AddRuleSetConfigurationWizard extends Wizard {
     
     private final AddRuleSetConfigurationController controller;
-    private RuleSetConfiguration configuration;
-    RuleSetConfigurationWizardPage ruleSetConfigurationWizardPage;
+    private RuleSetModel ruleSetModel;
+    RuleSetWizardPage ruleSetConfigurationWizardPage;
     
     public AddRuleSetConfigurationWizard(final IProject project) {
         controller = new AddRuleSetConfigurationController(project);
@@ -30,12 +30,12 @@ public class AddRuleSetConfigurationWizard extends Wizard {
     
     @Override
     public boolean performFinish() {
-        configuration = controller.createRuleSetConfiguration();
+        ruleSetModel = controller.createRuleSetModel();
         return true;
     }
     
-    public RuleSetConfiguration getRuleSetConfiguration() {
-        return configuration;
+    public RuleSetModel getRuleSetModel() {
+        return ruleSetModel;
     }
     
     @Override

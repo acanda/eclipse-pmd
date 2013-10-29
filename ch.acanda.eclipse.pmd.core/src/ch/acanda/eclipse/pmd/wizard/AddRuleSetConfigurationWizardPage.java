@@ -45,12 +45,12 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 
-import ch.acanda.eclipse.pmd.domain.RuleSetConfiguration;
+import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.util.SelectionAdapter;
 
-public class AddRuleSetConfigurationWizardPage extends WizardPage implements RuleSetConfigurationWizardPage {
+public class AddRuleSetConfigurationWizardPage extends WizardPage implements RuleSetWizardPage {
     private final AddRuleSetConfigurationController controller;
     
     private Text location;
@@ -132,9 +132,10 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
     }
     
     @Override
-    public RuleSetConfiguration getRuleSetConfiguration() {
-        return controller.createRuleSetConfiguration();
+    public RuleSetModel getRuleSet() {
+        return controller.createRuleSetModel();
     }
+    
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
