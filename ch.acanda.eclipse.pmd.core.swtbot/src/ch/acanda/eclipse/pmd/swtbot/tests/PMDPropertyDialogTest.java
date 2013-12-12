@@ -114,6 +114,8 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         wizard.name().setText(FILE_SYSTEM_RULE_SET_NAME);
         assertFalse("The finish button should be disabled as long as the location is missing", wizard.finish().isEnabled());
 
+        assertTrue("The browse button should be visible for a file system rule set", wizard.isBrowseButtonVisible());
+
         wizard.location().setText(rules.getAbsolutePath());
         wizard.bot().waitUntil(tableHasRows(wizard.rules(), 2));
         final String[] expectedNames = new String[] { "ExtendsObject", "BooleanInstantiation" };
@@ -172,6 +174,8 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         wizard.next().click();
         assertFalse("The finish button should be disabled as long as the name is missing", wizard.finish().isEnabled());
         
+        assertTrue("The browse button should be visible for a workspace rule set", wizard.isBrowseButtonVisible());
+
         wizard.name().setText(WORKSPACE_RULE_SET_NAME);
         assertFalse("The finish button should be disabled as long as the location is missing", wizard.finish().isEnabled());
         
@@ -210,6 +214,8 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         wizard.next().click();
         assertFalse("The finish button should be disabled as long as the name is missing", wizard.finish().isEnabled());
         
+        assertTrue("The browse button should be visible for a project rule set", wizard.isBrowseButtonVisible());
+
         wizard.name().setText(PROJECT_RULE_SET_NAME);
         assertFalse("The finish button should be disabled as long as the location is missing", wizard.finish().isEnabled());
         
@@ -247,6 +253,8 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         wizard.next().click();
         assertFalse("The finish button should be disabled as long as the name is missing", wizard.finish().isEnabled());
         
+        assertFalse("The browse button should not be visible for a remote rule set", wizard.isBrowseButtonVisible());
+
         wizard.name().setText(REMOTE_RULE_SET_NAME);
         assertFalse("The finish button should be disabled as long as the location is missing", wizard.finish().isEnabled());
         

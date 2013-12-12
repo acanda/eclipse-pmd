@@ -52,12 +52,12 @@ import ch.acanda.eclipse.pmd.ui.util.SelectionAdapter;
 
 public class AddRuleSetConfigurationWizardPage extends WizardPage implements RuleSetWizardPage {
     private final AddRuleSetConfigurationController controller;
-    
+
     private Text location;
     private TableViewer tableViewer;
     private Text name;
     private Button browse;
-    
+
     public AddRuleSetConfigurationWizardPage(final AddRuleSetConfigurationController controller) {
         super("addFileSystemRuleSetConfigurationWizardPage");
         this.controller = controller;
@@ -74,68 +74,69 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
         });
         controller.getModel().reset();
     }
-    
+
     @Override
     public void createControl(final Composite parent) {
         final Composite container = new Composite(parent, SWT.NULL);
         setControl(container);
         container.setLayout(new GridLayout(3, false));
-        
+
         final Label lblName = new Label(container, SWT.NONE);
         lblName.setText("Name:");
-        
+
         name = new Text(container, SWT.BORDER);
         name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         SWTBotID.set(name, SWTBotID.NAME);
-        
+
         new Label(container, SWT.NONE);
-        
+
         final Label lblLocation = new Label(container, SWT.NONE);
         lblLocation.setText("Location:");
-        
+
         location = new Text(container, SWT.BORDER);
         location.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         SWTBotID.set(location, SWTBotID.LOCATION);
-        
+
         browse = new Button(container, SWT.NONE);
         browse.setText("Browse...");
+        SWTBotID.set(browse, SWTBotID.BROWSE);
         browse.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 controller.browse(((Control) e.widget).getShell());
             }
         });
-        
+
         final Label lblRules = new Label(container, SWT.NONE);
         final GridData lblRulesGridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
         lblRulesGridData.verticalIndent = 3;
         lblRules.setLayoutData(lblRulesGridData);
         lblRules.setText("Rules:");
-        
+
         final Composite tableComposite = new Composite(container, SWT.NONE);
         tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         final TableColumnLayout tableCompositeTableColumnLayout = new TableColumnLayout();
         tableComposite.setLayout(tableCompositeTableColumnLayout);
-        
+
         tableViewer = new TableViewer(tableComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.HIDE_SELECTION);
         final Table table = tableViewer.getTable();
         table.setLinesVisible(true);
         SWTBotID.set(table, SWTBotID.RULES);
-        
+
         final TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         final TableColumn tblclmnName = tableViewerColumn.getColumn();
         tableCompositeTableColumnLayout.setColumnData(tblclmnName, new ColumnWeightData(1, 200, false));
         tblclmnName.setText("Name");
         new Label(container, SWT.NONE);
-        
+
         initDataBindings();
     }
-    
+
     @Override
     public RuleSetModel getRuleSet() {
         return controller.createRuleSetModel();
     }
-    
+
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //

@@ -11,7 +11,13 @@
 
 package ch.acanda.eclipse.pmd.swtbot.bot;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.allOf;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.widgetOfType;
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withId;
+
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
@@ -19,6 +25,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
+import org.hamcrest.Matcher;
 
 import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 
@@ -42,6 +49,12 @@ public final class AddRuleSetConfigurationWizardBot extends SWTBotShell {
     
     public SWTBotText location() {
         return bot().textWithId(SWTBotID.LOCATION.name());
+    }
+    
+    public boolean isBrowseButtonVisible() {
+        @SuppressWarnings("unchecked")
+        final Matcher<Widget> matcher = allOf(widgetOfType(Button.class), withId(SWTBotID.BROWSE.name()));
+        return bot().getFinder().findControls(widget, matcher, true).size() == 1;
     }
 
     public SWTBotTable rules() {

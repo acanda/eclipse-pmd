@@ -27,7 +27,8 @@ public enum SWTBotID {
     FILE_SYSTEM,
     WORKSPACE,
     PROJECT,
-    REMOTE;
+    REMOTE,
+    BROWSE;
 
     public static void set(final Control control, final SWTBotID id) {
         control.setData("org.eclipse.swtbot.widget.key", id.name());
