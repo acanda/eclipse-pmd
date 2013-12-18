@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.builder;
 
+import java.io.File;
 import java.nio.file.Paths;
 
 import org.eclipse.core.resources.IProject;
@@ -30,11 +31,11 @@ public final class LocationResolver {
         final String path;
         switch (location.getContext()) {
             case WORKSPACE:
-                path = Paths.get(project.getWorkspace().getRoot().getLocationURI()).resolve(location.getPath()).toString();
+                path = Paths.get(project.getWorkspace().getRoot().getLocationURI()).resolve(toOSPath(location.getPath())).toString();
                 break;
 
             case PROJECT:
-                path = Paths.get(project.getLocationURI()).resolve(location.getPath()).toString();
+                path = Paths.get(project.getLocationURI()).resolve(toOSPath(location.getPath())).toString();
                 break;
 
             case FILESYSTEM:
@@ -46,6 +47,10 @@ public final class LocationResolver {
                 throw new IllegalStateException("Unknown location context: " + location.getContext());
         }
         return path;
+    }
+
+    private static String toOSPath(final String path) {
+        return path.replaceAll("[/\\\\]", File.separator);
     }
 
 }

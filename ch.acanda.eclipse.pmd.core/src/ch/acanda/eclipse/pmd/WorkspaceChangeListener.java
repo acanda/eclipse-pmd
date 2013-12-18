@@ -73,7 +73,7 @@ final class WorkspaceChangeListener implements IResourceChangeListener {
                 // a project has been deleted
                 removeProject(project.getName());
 
-            } else if (delta.getKind() == IResourceDelta.CHANGED) {
+            } else if (delta.getKind() == IResourceDelta.CHANGED && isFlagged(delta, IResourceDelta.OPEN)) {
                 // a project has been opened or closed
                 if (project.isOpen()) {
                     addProject(project.getName());
@@ -82,6 +82,10 @@ final class WorkspaceChangeListener implements IResourceChangeListener {
                 }
 
             }
+        }
+
+        private boolean isFlagged(final IResourceDelta delta, final int flag) {
+            return (delta.getFlags() & flag) == flag;
         }
 
         private void addProject(final String projectName) {

@@ -17,16 +17,33 @@ import static java.util.concurrent.TimeUnit.HOURS;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import net.sourceforge.pmd.RuleSets;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
+
+import ch.acanda.eclipse.pmd.PMDPlugin;
+import ch.acanda.eclipse.pmd.builder.LocationResolver;
 import ch.acanda.eclipse.pmd.domain.DomainModel.AddElementPropertyChangeEvent;
 import ch.acanda.eclipse.pmd.domain.DomainModel.RemoveElementPropertyChangeEvent;
+import ch.acanda.eclipse.pmd.domain.LocationContext;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
+import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.domain.WorkspaceModel;
+import ch.acanda.eclipse.pmd.file.FileChangedListener;
+import ch.acanda.eclipse.pmd.file.FileWatcher;
+import ch.acanda.eclipse.pmd.file.Subscription;
 
+import com.google.common.base.Optional;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 /**
  * The rule set cache caches the PMD rule sets so they do not have to be rebuilt every time PMD is invoked.
@@ -36,20 +53,67 @@ import com.google.common.cache.LoadingCache;
 public final class RuleSetsCache {
 
     /**
-     * Maps a project name to the projects rule set.
+     * Maps a project name to the project's rule sets.
      */
     private final LoadingCache<String, RuleSets> cache;
 
     private final ProjectModelListener projectModelListener = new ProjectModelListener();
 
+    private final Optional<FileWatcher> fileWatcher;
+
+    private final Multimap<String, Subscription> subscriptions = HashMultimap.create();
+
     public RuleSetsCache(final CacheLoader<String, RuleSets> loader, final WorkspaceModel workspaceModel) {
         // by expiring the rule sets we make sure to notice changes in remote configurations
         cache = CacheBuilder.newBuilder().expireAfterWrite(1, HOURS).build(loader);
 
+        fileWatcher = createFileWatcher(cache);
+
         for (final ProjectModel projectModel : workspaceModel.getProjects()) {
-            projectModel.addPropertyChangeListener(RULESETS_PROPERTY, projectModelListener);
+            projectModel.addPropertyChangeListener(/* RULESETS_PROPERTY, */projectModelListener);
+            startWatchingRuleSetFiles(projectModel);
         }
         workspaceModel.addPropertyChangeListener(PROJECTS_PROPERTY, new WorkspaceModelListener());
+    }
+
+    private void startWatchingRuleSetFiles(final ProjectModel projectModel) {
+        if (fileWatcher.isPresent() && projectModel.isPMDEnabled()) {
+            final FileChangedListener listener = new RuleSetFileListener(projectModel);
+            final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectModel.getProjectName());
+            for (final RuleSetModel ruleSetModel : projectModel.getRuleSets()) {
+                if (ruleSetModel.getLocation().getContext() != LocationContext.REMOTE) {
+                    final Path file = Paths.get(LocationResolver.resolve(ruleSetModel.getLocation(), project));
+                    try {
+                        final Subscription subscription = fileWatcher.get().subscribe(file, listener);
+                        subscriptions.put(projectModel.getProjectName(), subscription);
+                    } catch (final IOException e) {
+                        final String msg = "Cannot watch rule set file %s. Changes to this file will not be picked up for up to an hour.";
+                        PMDPlugin.getDefault().warn(String.format(msg, file.toAbsolutePath()), e);
+                    }
+                }
+            }
+        }
+    }
+
+    private void stopWatchingRuleSetFiles(final ProjectModel projectModel) {
+        for (final Subscription subscription : subscriptions.removeAll(projectModel.getProjectName())) {
+            subscription.cancel();
+        }
+    }
+
+    private void resetFileWatcher(final ProjectModel projectModel) {
+        stopWatchingRuleSetFiles(projectModel);
+        startWatchingRuleSetFiles(projectModel);
+    }
+
+    private Optional<FileWatcher> createFileWatcher(final LoadingCache<String, RuleSets> cache) {
+        Optional<FileWatcher> fileWatcher;
+        try {
+            fileWatcher = Optional.of(new FileWatcher());
+        } catch (final IOException e) {
+            fileWatcher = Optional.absent();
+        }
+        return fileWatcher;
     }
 
     /**
@@ -64,6 +128,17 @@ public final class RuleSetsCache {
     }
 
     /**
+     * Invalidates the cache entry for the project with the provided name, i.e. the next time
+     * {@link #getRuleSets(String)} is called, the rule sets are loaded from their source.
+     *
+     * @param projectName The name of the project.
+     */
+    private void invalidate(final String projectName) {
+        PMDPlugin.getDefault().info("Invalidating cache for " + projectName);
+        cache.invalidate(projectName);
+    }
+
+    /**
      * Keeps track of added and removed project models.
      */
     private final class WorkspaceModelListener implements PropertyChangeListener {
@@ -73,13 +148,15 @@ public final class RuleSetsCache {
             if (event instanceof AddElementPropertyChangeEvent) {
                 // A project has been added. Add a listener to invalidate its cache entry when its rule sets change
                 final ProjectModel projectModel = (ProjectModel) ((AddElementPropertyChangeEvent) event).getAddedElement();
-                projectModel.addPropertyChangeListener(RULESETS_PROPERTY, projectModelListener);
+                projectModel.addPropertyChangeListener(/* RULESETS_PROPERTY, */projectModelListener);
+                startWatchingRuleSetFiles(projectModel);
 
             } else if (event instanceof RemoveElementPropertyChangeEvent) {
                 // A project has been removed. Invalidate it's cache entry to release the cached resources.
                 final ProjectModel projectModel = (ProjectModel) ((RemoveElementPropertyChangeEvent) event).getRemovedElement();
-                cache.invalidate(projectModel.getProjectName());
+                invalidate(projectModel.getProjectName());
                 projectModel.removePropertyChangeListener(RULESETS_PROPERTY, projectModelListener);
+                stopWatchingRuleSetFiles(projectModel);
             }
         }
     }
@@ -91,9 +168,28 @@ public final class RuleSetsCache {
     private final class ProjectModelListener implements PropertyChangeListener {
         @Override
         public void propertyChange(final PropertyChangeEvent event) {
-            final String projectName = ((ProjectModel) event.getSource()).getProjectName();
-            cache.invalidate(projectName);
+            final ProjectModel projectModel = (ProjectModel) event.getSource();
+            invalidate(projectModel.getProjectName());
+            resetFileWatcher(projectModel);
         }
+    }
+
+    /**
+     * Invalidates the respective cache entry when a rule set file is changed.
+     */
+    private final class RuleSetFileListener implements FileChangedListener {
+
+        private final String projectName;
+
+        public RuleSetFileListener(final ProjectModel projectModel) {
+            projectName = projectModel.getProjectName();
+        }
+
+        @Override
+        public void fileChanged(final Path file) {
+            invalidate(projectName);
+        }
+
     }
 
 }

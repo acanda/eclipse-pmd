@@ -38,7 +38,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
 
     public static final String ID = "ch.acanda.eclipse.pmd.builder.PMDBuilder";
 
-    private final RuleSetsCache cache = new RuleSetsCache(new RuleSetsCacheLoader(), PMDPlugin.getDefault().getWorkspaceModel());
+    private static final RuleSetsCache cache = new RuleSetsCache(new RuleSetsCacheLoader(), PMDPlugin.getDefault().getWorkspaceModel());
 
     @Override
     @SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
