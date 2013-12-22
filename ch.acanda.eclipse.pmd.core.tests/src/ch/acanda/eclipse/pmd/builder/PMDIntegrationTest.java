@@ -81,7 +81,8 @@ public class PMDIntegrationTest {
             "java/optimization/SimplifyStartsWith.xml",
             "java/stringandstringbuffer/AppendCharacterWithChar.xml",
             "java/stringandstringbuffer/UseIndexOfChar.xml",
-            "java/stringandstringbuffer/StringToString.xml");
+            "java/stringandstringbuffer/StringToString.xml",
+            "java/unnecessary/UselessOverridingMethod.xml");
     
     private final String testDataXml;
     private final TestParameters params;
