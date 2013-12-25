@@ -46,6 +46,7 @@
                 <configuration>
                     <useUIHarness>true</useUIHarness>
                     <useUIThread>false</useUIThread>
+                    <argLine>${os-jvm-flags}</argLine>
                     <product>org.eclipse.sdk.ide</product>
                     <application>org.eclipse.ui.ide.workbench</application>
                     <dependencies>

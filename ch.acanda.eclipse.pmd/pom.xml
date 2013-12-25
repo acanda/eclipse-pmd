@@ -22,6 +22,7 @@
         <tycho-version>0.19.0</tycho-version>
         <tycho-extras-version>0.19.0</tycho-extras-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
     </properties>
 
     <repositories>
@@ -83,18 +84,6 @@
                         </artifact>
                     </target>
                     <ignoreTychoRepositories>true</ignoreTychoRepositories>
-                    <!-- environments>
-                        <environment>
-                        <os>win32</os>
-                        <ws>win32</ws>
-                        <arch>x86</arch>
-                        </environment>
-                        <environment>
-                        <os>linux</os>
-                        <ws>gtk</ws>
-                        <arch>x86</arch>
-                        </environment>
-                        </environments -->
                 </configuration>
             </plugin>
             <plugin>
@@ -105,6 +94,21 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>macosx-jvm-flags</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <!-- tycho-surefire-plugin needs -XstartOnFirstThread on mac os-->
+                <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
+            </properties>
+        </profile>
+    </profiles>
 
     <developers>
         <developer>
