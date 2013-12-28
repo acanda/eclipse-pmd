@@ -14,7 +14,7 @@
   <test name="UselessOverridingMethod">
     <setup>
       <source>
-public class UseIndexOfChar {
+public class UselessOverridingMethod {
     public <marker>void foo(String bar) {
         super.foo(bar);
     }</marker>
@@ -23,7 +23,7 @@ public class UseIndexOfChar {
     </setup>
     <expected>
       <source>
-public class UseIndexOfChar {
+public class UselessOverridingMethod {
 }
       </source>
       <image>QUICKFIX_REMOVE</image>
