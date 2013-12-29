@@ -43,8 +43,10 @@
         <module>../ch.acanda.eclipse.pmd.repository</module>
         <module>../ch.acanda.eclipse.pmd.target</module>
         <module>../ch.acanda.eclipse.pmd.core</module>
+        <module>../ch.acanda.eclipse.pmd.unsupported</module>
         <module>../ch.acanda.eclipse.pmd.feature</module>
         <module>../ch.acanda.eclipse.pmd.core.tests</module>
+        <module>../ch.acanda.eclipse.pmd.unsupported.tests</module>
         <module>../ch.acanda.eclipse.pmd.core.swtbot</module>
     </modules>
 
