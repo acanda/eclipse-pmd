@@ -89,16 +89,16 @@ class Example {
         <setup>
             <source>
 public class SuspiciousHashcodeMethodName {
-	
+    
     public <marker>int hashcode() {
-		int hashcode = 0;
-		Object o = new Object() {
-			public int hashcode() {
-				return 1;
-			}
-		};
-		return hashcode;
-	}</marker>
+        int hashcode = 0;
+        Object o = new Object() {
+            public int hashcode() {
+                return 1;
+            }
+        };
+        return hashcode;
+    }</marker>
 
 }
             </source>
@@ -107,16 +107,16 @@ public class SuspiciousHashcodeMethodName {
         <expected>
             <source>
 public class SuspiciousHashcodeMethodName {
-	
+    
     @SuppressWarnings("PMD.SuspiciousHashcodeMethodName") public int hashcode() {
-		int hashcode = 0;
-		Object o = new Object() {
-			public int hashcode() {
-				return 1;
-			}
-		};
-		return hashcode;
-	}
+        int hashcode = 0;
+        Object o = new Object() {
+            public int hashcode() {
+                return 1;
+            }
+        };
+        return hashcode;
+    }
 
 }
             </source>

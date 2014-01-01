@@ -15,18 +15,18 @@
         <setup>
             <source>
 class UseNotifyAllInsteadOfNotify {
-	void foo(final Object x) {
-		<marker>x.notify()</marker>;
-	}
+    void foo(final Object x) {
+        <marker>x.notify()</marker>;
+    }
 }
             </source>
         </setup>
         <expected>
             <source>
 class UseNotifyAllInsteadOfNotify {
-	void foo(final Object x) {
-		x.notifyAll();
-	}
+    void foo(final Object x) {
+        x.notifyAll();
+    }
 }
             </source>
             <image>QUICKFIX_CHANGE</image>
@@ -39,18 +39,18 @@ class UseNotifyAllInsteadOfNotify {
         <setup>
             <source>
 class UseNotifyAllInsteadOfNotify {
-	void foo() {
-		<marker>("foo" + "bar").notify()</marker>;
-	}
+    void foo() {
+        <marker>("foo" + "bar").notify()</marker>;
+    }
 }
             </source>
         </setup>
         <expected>
             <source>
 class UseNotifyAllInsteadOfNotify {
-	void foo() {
-		("foo" + "bar").notifyAll();
-	}
+    void foo() {
+        ("foo" + "bar").notifyAll();
+    }
 }
             </source>
             <image>QUICKFIX_CHANGE</image>

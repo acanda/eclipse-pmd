@@ -22,4 +22,5 @@
     <property name="onCommentFormat" value="CHECKSTYLE ON\: ALL"/>
     <property name="checkC" value="false"/>
   </module>
+  <module name="FileTabCharacter"/>
 </module>
