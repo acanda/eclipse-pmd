@@ -13,6 +13,14 @@
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
     <module name="WhitespaceAround"/>
+    <module name="OperatorWrap">
+      <metadata name="net.sf.eclipsecs.core.comment" value="Operator must be on new line"/>
+    </module>
+    <module name="OperatorWrap">
+      <metadata name="net.sf.eclipsecs.core.comment" value="Operator must be at the end of the line"/>
+      <property name="option" value="eol"/>
+      <property name="tokens" value="ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN"/>
+    </module>
   </module>
   <module name="Header">
     <property name="header" value="// =====================================================================\n//\n// Copyright (C) 2012 - 2014, Philip Graf\n//\n// All rights reserved. This program and the accompanying materials\n// are made available under the terms of the Eclipse Public License v1.0\n// which accompanies this distribution, and is available at\n// http://www.eclipse.org/legal/epl-v10.html\n//\n// =====================================================================\n\n"/>

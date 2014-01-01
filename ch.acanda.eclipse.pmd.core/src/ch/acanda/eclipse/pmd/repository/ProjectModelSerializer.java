@@ -78,10 +78,10 @@ public class ProjectModelSerializer {
         final StringWriter result = new StringWriter(1024);
         final PrintWriter writer = new PrintWriter(result);
         writer.format("<?xml version=\"1.0\" encoding=\"%s\"?>\n", ENCODING);
-        writer.format("<%s xmlns=\"http://acanda.ch/eclipse-pmd/%2$s\"" +
-                " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
-                " xsi:schemaLocation=\"http://acanda.ch/eclipse-pmd/%2$s" +
-                " http://acanda.ch/eclipse-pmd/eclipse-pmd-%2$s.xsd\">\n",
+        writer.format("<%s xmlns=\"http://acanda.ch/eclipse-pmd/%2$s\""
+                + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+                + " xsi:schemaLocation=\"http://acanda.ch/eclipse-pmd/%2$s"
+                + " http://acanda.ch/eclipse-pmd/eclipse-pmd-%2$s.xsd\">\n",
                       TAG_NAME_ECLIPSE_PMD, SCHEMA_VERSION);
         writer.format("  <%s %s=\"%b\" />\n", TAG_NAME_ANALYSIS, ATTRIBUTE_NAME_ENABLED, model.isPMDEnabled());
         if (!model.getRuleSets().isEmpty()) {
