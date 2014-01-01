@@ -33,35 +33,35 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
  * Quick fix for the rule <a
  * href="http://pmd.sourceforge.net/rules/java/design.html#UseCollectionIsEmpty">UseCollectionIsEmpty</a>. It replaces
  * {@code x.size() == 0} with {@code x.isEmpty()}.
- * 
+ *
  * @author Philip Graf
  */
 public class UseCollectionIsEmptyQuickFix extends ASTQuickFix<InfixExpression> {
-    
+
     public UseCollectionIsEmptyQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Replace with call to isEmpty()";
     }
-    
+
     @Override
     public String getDescription() {
         return "Replaces call to size() with call to isEmpty().";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, InfixExpression> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Replaces {@code x.size() == 0} or {@code 0 == x.size()} with {@code x.isEmpty()}. Replaces {@code x.size() != 0}
      * or {@code 0 != x.size()} with {@code !x.isEmpty()}.
@@ -69,21 +69,21 @@ public class UseCollectionIsEmptyQuickFix extends ASTQuickFix<InfixExpression> {
     @Override
     protected boolean apply(final InfixExpression node) {
         final MethodInvocation size;
-        if(node.getLeftOperand() instanceof MethodInvocation) {
+        if (node.getLeftOperand() instanceof MethodInvocation) {
             size = (MethodInvocation) node.getLeftOperand();
         } else if (node.getRightOperand() instanceof MethodInvocation) {
             size = (MethodInvocation) node.getRightOperand();
         } else {
             return false;
         }
-        
+
         final AST ast = node.getAST();
         final MethodInvocation invocation = (MethodInvocation) ast.createInstance(MethodInvocation.class);
         invocation.setExpression(ASTUtil.copy(size.getExpression()));
         final SimpleName isEmpty = (SimpleName) ast.createInstance(SimpleName.class);
         isEmpty.setIdentifier("isEmpty");
         invocation.setName(isEmpty);
-        
+
         final Expression replacement;
         if (Operator.NOT_EQUALS.equals(node.getOperator())) {
             final PrefixExpression not = (PrefixExpression) ast.createInstance(PrefixExpression.class);
@@ -93,9 +93,9 @@ public class UseCollectionIsEmptyQuickFix extends ASTQuickFix<InfixExpression> {
         } else {
             replacement = invocation;
         }
-        
+
         ASTUtil.replace(node, replacement);
         return true;
     }
-    
+
 }
