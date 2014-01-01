@@ -8,6 +8,7 @@
 // http://www.eclipse.org/legal/epl-v10.html
 //
 // =====================================================================
+
 package ch.acanda.eclipse.pmd.unsupported;
 
 import static org.junit.Assert.assertFalse;

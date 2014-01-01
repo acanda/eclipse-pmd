@@ -8,6 +8,7 @@
 // http://www.eclipse.org/legal/epl-v10.html
 //
 // =====================================================================
+
 package ch.acanda.eclipse.pmd.repository;
 
 import static ch.acanda.eclipse.pmd.repository.ProjectModelSerializer.ATTRIBUTE_NAME_NAME;
