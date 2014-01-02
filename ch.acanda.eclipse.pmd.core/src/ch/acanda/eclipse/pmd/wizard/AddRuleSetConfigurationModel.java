@@ -214,9 +214,9 @@ class AddRuleSetConfigurationModel extends ViewModel {
                 referenceId = tempFile.toString();
             }
         } catch (final URISyntaxException e) {
-            result.add(new ValidationProblem("location", Severity.ERROR, "The location is not a valid URI"));
+            result.add(new ValidationProblem(LOCATION, Severity.ERROR, "The location is not a valid URI"));
         } catch (final IOException e) {
-            result.add(new ValidationProblem("location", Severity.ERROR, "The resource at the given URI does not exist"));
+            result.add(new ValidationProblem(LOCATION, Severity.ERROR, "The resource at the given URI does not exist"));
         }
         return referenceId;
     }
@@ -227,7 +227,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
         if (Files.exists(absoluteLocation)) {
             referenceId = absoluteLocation.toString();
         } else {
-            result.add(new ValidationProblem("location", Severity.ERROR, "The location is not a valid URI"));
+            result.add(new ValidationProblem(LOCATION, Severity.ERROR, "The location is not a valid URI"));
         }
         return referenceId;
     }
