@@ -11,11 +11,14 @@
 
 package ch.acanda.eclipse.pmd.v07tov08;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -71,7 +74,7 @@ public final class V07ToV08Converter {
             projectModel.setPMDEnabled(pmdProjectSettings.isPMDEnabled());
             final List<RuleSetModel> ruleSets = new ArrayList<>(activeConfigs.size());
             for (final RuleSetConfiguration config : activeConfigs) {
-                final Location location = new Location(config.getLocation(), getContext(config));
+                final Location location = getLocation(config, project.getWorkspace().getRoot());
                 final RuleSetModel ruleSetModel = new RuleSetModel(config.getName(), location);
                 ruleSets.add(ruleSetModel);
             }
@@ -81,6 +84,28 @@ public final class V07ToV08Converter {
         if (repository.load(project.getName()).isPresent()) {
             pmdProjectSettings.deleteSettings();
         }
+    }
+
+    protected static Location getLocation(final RuleSetConfiguration config, final IWorkspaceRoot workspaceRoot) {
+        final LocationContext context = getContext(config);
+        if (context == LocationContext.WORKSPACE) {
+            return convertWorkspacePath(config, workspaceRoot);
+        }
+        return new Location(config.getLocation(), context);
+    }
+
+    private static Location convertWorkspacePath(final RuleSetConfiguration config, final IWorkspaceRoot workspaceRoot) {
+        final Path target = Paths.get(workspaceRoot.getLocationURI()).resolve(config.getLocation()).normalize();
+        for (final IProject project : workspaceRoot.getProjects()) {
+            final Path projectPath = Paths.get(project.getLocationURI()).normalize();
+            if (target.startsWith(projectPath)) {
+                final String location = Paths.get(project.getName()).resolve(projectPath.relativize(target)).toString();
+                return new Location(location, LocationContext.WORKSPACE);
+            }
+        }
+        // fallback: if the workspace path cannot be converted,
+        // replace the workspace location with a file system location
+        return new Location(target.toString(), LocationContext.FILESYSTEM);
     }
 
     private static LocationContext getContext(final RuleSetConfiguration config) {

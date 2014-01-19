@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 
 import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
@@ -25,7 +24,7 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
  * 
  * @author Philip Graf
  */
-public class PMDPropertyDialogBot extends SWTBotShell {
+public class PMDPropertyDialogBot extends DialogBot {
     
     public PMDPropertyDialogBot(final Shell shell) throws WidgetNotFoundException {
         super(shell);
@@ -43,13 +42,6 @@ public class PMDPropertyDialogBot extends SWTBotShell {
      */
     public SWTBotTable ruleSets() {
         return bot().tableWithId(SWTBotID.RULESETS.name());
-    }
-    
-    /**
-     * @return The dialog's OK button.
-     */
-    public SWTBotButton ok() {
-        return bot().button("OK");
     }
     
     public SWTBotCheckBox enablePMD() {

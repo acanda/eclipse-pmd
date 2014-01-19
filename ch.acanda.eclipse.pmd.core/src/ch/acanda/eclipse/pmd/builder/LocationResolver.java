@@ -12,6 +12,7 @@
 package ch.acanda.eclipse.pmd.builder;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.eclipse.core.resources.IProject;
@@ -31,7 +32,13 @@ public final class LocationResolver {
         final String path;
         switch (location.getContext()) {
             case WORKSPACE:
-                path = Paths.get(project.getWorkspace().getRoot().getLocationURI()).resolve(toOSPath(location.getPath())).toString();
+                // format of the location's path: <project-name>/<project-relative-path>
+                final Path locationPath = Paths.get(toOSPath(location.getPath()));
+                final IProject locationProject = project.getWorkspace().getRoot().getProject(locationPath.getName(0).toString());
+                path = Paths.get(locationProject.getLocationURI())
+                            .resolve(locationPath.subpath(1, locationPath.getNameCount()))
+                            .toString();
+
                 break;
 
             case PROJECT:
@@ -50,7 +57,7 @@ public final class LocationResolver {
     }
 
     private static String toOSPath(final String path) {
-        return path.replaceAll("[/\\\\]", File.separator);
+        return path.replace('\\', File.separatorChar).replace('/', File.separatorChar);
     }
 
 }

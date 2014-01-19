@@ -31,6 +31,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ch.acanda.eclipse.pmd.swtbot.bot.AddRuleSetConfigurationWizardBot;
+import ch.acanda.eclipse.pmd.swtbot.bot.FileSelectionDialogBot;
 import ch.acanda.eclipse.pmd.swtbot.bot.PMDPropertyDialogBot;
 import ch.acanda.eclipse.pmd.swtbot.client.JavaProjectClient;
 
@@ -179,8 +180,15 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         wizard.name().setText(WORKSPACE_RULE_SET_NAME);
         assertFalse("The finish button should be disabled as long as the location is missing", wizard.finish().isEnabled());
         
-        final String workspaceRelativePath = Paths.get(PROJECT_NAME_1).resolve(PMD_XML).toString();
-        wizard.location().setText(workspaceRelativePath);
+        wizard.browse().click();
+        final FileSelectionDialogBot fileSelectionDialog = FileSelectionDialogBot.getActive();
+        fileSelectionDialog.select(PROJECT_NAME_1, PMD_XML.toString());
+        fileSelectionDialog.ok().click();
+        fileSelectionDialog.waitUntilClosed();
+        final String workspaceRelativePath = PROJECT_NAME_1 + '/' + PMD_XML;
+        assertEquals("The location should contain the project name and the path to the rule set file",
+                     wizard.location().getText(), workspaceRelativePath);
+
         wizard.bot().waitUntil(tableHasRows(wizard.rules(), 2));
         final String[] expectedNames = new String[] { "ExtendsObject", "BooleanInstantiation" };
         final String[] actualNames = wizard.ruleNames();

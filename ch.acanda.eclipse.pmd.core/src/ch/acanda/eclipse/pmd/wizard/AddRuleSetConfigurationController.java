@@ -32,25 +32,27 @@ import ch.acanda.eclipse.pmd.domain.LocationContext;
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.ui.dialog.FileSelectionDialog;
 
+import com.google.common.base.Optional;
+
 /**
  * Controller for the wizard to add a new rule set configuration.
- * 
+ *
  * @author Philip Graf
  */
 final class AddRuleSetConfigurationController {
-    
+
     private final AddRuleSetConfigurationModel model;
     private final IProject project;
-    
+
     public AddRuleSetConfigurationController(final IProject project) {
         model = new AddRuleSetConfigurationModel(project);
         this.project = project;
     }
-    
+
     public AddRuleSetConfigurationModel getModel() {
         return model;
     }
-    
+
     public void browse(final Shell shell) {
         if (model.isFileSystemTypeSelected()) {
             final FileDialog fileDialog = new FileDialog(shell);
@@ -58,19 +60,26 @@ final class AddRuleSetConfigurationController {
             if (file != null) {
                 model.setLocation(file);
             }
-            
+
         } else if (model.isProjectTypeSelected()) {
-            browseContainer(shell, project);
-            
+            final Optional<IResource> resource = browseContainer(shell, project);
+            if (resource.isPresent()) {
+                model.setLocation(getRelativePath(project, resource.get()));
+            }
+
         } else if (model.isWorkspaceTypeSelected()) {
-            browseContainer(shell, project.getWorkspace().getRoot());
-            
+            final Optional<IResource> optionalResource = browseContainer(shell, project.getWorkspace().getRoot());
+            if (optionalResource.isPresent()) {
+                final IResource resource = optionalResource.get();
+                model.setLocation(resource.getProject().getName() + "/" + resource.getProjectRelativePath().toString());
+            }
+
         } else {
             throw new IllegalStateException();
         }
     }
-    
-    private void browseContainer(final Shell shell, final IContainer container) {
+
+    private Optional<IResource> browseContainer(final Shell shell, final IContainer container) {
         final FileSelectionDialog dialog = new FileSelectionDialog(shell);
         dialog.setMessage("Choose a PMD rule set configuration:");
         dialog.setValidator(new ISelectionStatusValidator() {
@@ -95,21 +104,22 @@ final class AddRuleSetConfigurationController {
         });
         dialog.setInput(container);
         if (dialog.open() == Window.OK) {
-            model.setLocation(getRelativePath(container, (IResource) dialog.getFirstResult()));
+            return Optional.of((IResource) dialog.getFirstResult());
         }
+        return Optional.absent();
     }
-    
+
     private String getRelativePath(final IContainer container, final IResource resource) {
-        return Paths.get(container.getLocationURI()).relativize(Paths.get(resource.getLocationURI())).toString();
+        return Paths.get(container.getLocationURI()).relativize(Paths.get(resource.getLocationURI())).toString().replace('\\', '/');
     }
-    
+
     public RuleSetModel createRuleSetModel() {
         if (model.isValid()) {
             return new RuleSetModel(model.getName(), new Location(model.getLocation(), getLocationContext()));
         }
         throw new IllegalStateException("Cannot create RuleSetModel as the view model is not valid");
     }
-    
+
     private LocationContext getLocationContext() {
         final LocationContext locationContext;
 
@@ -131,5 +141,5 @@ final class AddRuleSetConfigurationController {
 
         return locationContext;
     }
-    
+
 }
