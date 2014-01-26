@@ -1,360 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Eclipse PMD - Changelog</title>
+    <head>
+        <meta charset="utf-8" />
+        <title>Eclipse PMD - Changelog</title>
 
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="css/layout.css" rel="stylesheet">
-		<link href="css/jquery.lightbox.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/jquery.lightbox.css" rel="stylesheet">
 
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<![endif]-->
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <![endif]-->
 
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-37305934-1']);
-			_gaq.push(['_trackPageview']);
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-37305934-1']);
+            _gaq.push(['_trackPageview']);
 
-			(function() {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
-	</head>
-	<body>
-		<div class="navbar">
-			<div class="navbar-inner">
-				<a class="brand" href="index.html">eclipse-pmd</a>
-				<ul class="nav">
-					<li>
-						<a href="getting-started.html">Get started</a>
-					</li>
-					<li class="active">
-						<a href="changelog.html">Changelog</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="index.html">eclipse-pmd</a>
+                <ul class="nav">
+                    <li>
+                        <a href="getting-started.html">Get started</a>
+                    </li>
+                    <li class="active">
+                        <a href="changelog.html">Changelog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-		<div class="container">
-			<h2>eclipse-pmd 0.7</h2>
-			<p class="muted">
-				<small>Release: 21.9.2013</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.7</small>
-			</p>
-			<h3>Quick fixes</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						New quick fixes are available for the following rules: AppendCharacterWithChar, UseIndexOfChar, StringToString.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/quickfix-appendwithchar.png" class="thumbnail" title="Quick fix for replacing buffer.append(&quot;a&quot;) with buffer.append('a')"> <img src="img/quickfix-appendwithchar.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+        <div class="container">
+            <h2>eclipse-pmd 0.8</h2>
+            <p class="muted">
+                <small>Release: 26.1.2014</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.8</small>
+            </p>
 
-			<h3>PMD 5.0.5</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						The embedded PMD has been updated to version 5.0.5.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.5 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.5.txt"> <img src="img/pmd-5.0.5-release-notes.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <h3>Shareable eclipse-pmd configuration</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        The eclipse-pmd configuration is now stored in the file .eclipse-pmd in the root of each project. This makes it easy
+                        to share an eclipse-pmd configuration across a development team by putting it in version control with the rest of
+                        the code. When someone from the team changes the configuration an puts it in version control, eclipse-pmd will
+                        automatically apply the changes when the other team members fetch the updated configuration from version control.
+                    </p>
+                    <p>
+                        eclipse-pmd stored the configuration in the workspace of your Eclipse installation up to version 0.8. eclipse-pmd
+                        will convert the configuration automatically after you use eclipse-pmd the first time after updating to version 0.8.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/shareable-config.png" class="thumbnail" title="Share the eclipse-pmd configuration with your team"> <img src="img/shareable-config.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<hr	/>
-			<h2>eclipse-pmd 0.6</h2>
-			<p class="muted">
-				<small>Release: 9.6.2013</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.6</small>
-			</p>
-			<h3>Remote PMD rule set configurations</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						eclipse-pmd supports PMD rule set configurations stored at a remote location. Use this type if you have a rule set configuration file that is only available via an URI.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/remote-configuration.png" class="thumbnail" title="Remote"> <img src="img/remote-configuration.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <h3>Message when running on an unsupported JVM</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        eclipse-pmd needs to run on a Java 7 VM. As Eclipse happily installs plug-ins that will not run due to their runtime
+                        requirements, eclipse-pmd now shows a message on the PMD property page explaining the situation and how to resolve it.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/jre6.png" class="thumbnail" title="Share the eclipse-pmd configuration with your team"> <img src="img/jre6.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<hr	/>
+            <h3>Quick fixes</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        New quick fixes are available for the following rules: UselessOverridingMethodRule, UnnecessaryReturn.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix-unnecessaryreturn.png" class="thumbnail" title="Quick fix for removing an unnecessary return statement"> <img src="img/quickfix-unnecessaryreturn.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h2>eclipse-pmd 0.5</h2>
-			<p class="muted">
-				<small>Release: 5.5.2013</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.5</small>
-			</p>
-			<h3>PMD 5.0.4</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						The embedded PMD has been updated to version 5.0.4.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.4 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.4.txt"> <img src="img/pmd-5.0.4-release-notes.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <hr />
 
-			<hr	/>
+            <h2>eclipse-pmd 0.7</h2>
+            <p class="muted">
+                <small>Release: 21.9.2013</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.7</small>
+            </p>
+            <h3>Quick fixes</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        New quick fixes are available for the following rules: AppendCharacterWithChar, UseIndexOfChar, StringToString.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix-appendwithchar.png" class="thumbnail" title="Quick fix for replacing buffer.append(&quot;a&quot;) with buffer.append('a')"> <img src="img/quickfix-appendwithchar.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h2>eclipse-pmd 0.4</h2>
-			<p class="muted">
-				<small>Release: 31.3.2013</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.4</small>
-			</p>
-			<h3>Configure PMD Annotations</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						This change adds preferences to configure style and colour of PMD annotations in text editors.
-						The <code>General > Editors > Text Editors > Annotations</code>	preference page lists the PMD Violations annotation and allows setting its preference values.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/annotation-preferences.png" class="thumbnail" title="Configure PMD Annotations"> <img src="img/annotation-preferences.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
-			<h3>Quick fixes</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						New quick fixes are available for the following rules: DefaultLabelNotLastInSwitchStmt, EqualsNull, UseNotifyAllInsteadOfNotify, UseCollectionIsEmpty, SingularField.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/quickfix-equalsnull.png" class="thumbnail" title="Quick fix for replacing x.equals(null) with x == null"> <img src="img/quickfix-equalsnull.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <h3>PMD 5.0.5</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        The embedded PMD has been updated to version 5.0.5.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.5 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.5.txt"> <img src="img/pmd-5.0.5-release-notes.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<hr	/>
+            <hr	/>
+            <h2>eclipse-pmd 0.6</h2>
+            <p class="muted">
+                <small>Release: 9.6.2013</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.6</small>
+            </p>
+            <h3>Remote PMD rule set configurations</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        eclipse-pmd supports PMD rule set configurations stored at a remote location. Use this type if you have a rule set configuration file that is only available via an URI.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/remote-configuration.png" class="thumbnail" title="Remote"> <img src="img/remote-configuration.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h2>eclipse-pmd 0.3</h2>
-			<p class="muted">
-				<small>Released: 2.3.2012</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.3</small>
-			</p>
-			<h3>Suppress Warnings</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						A new quick fix is available that adds a <code>@SuppressWarnings</code>	annotation to suppress PMD warnings.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/quickfix-suppresswarnings.png" class="thumbnail" title="Quick fix for adding a @SuppressWarnings annotation"> <img src="img/quickfix-suppresswarnings.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
-			<h3>PMD 5.0.2</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						The embedded PMD has been updated to version 5.0.2.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.2 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.2.txt"> <img src="img/pmd-5.0.2-release-notes.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <hr	/>
 
-			<hr	/>
+            <h2>eclipse-pmd 0.5</h2>
+            <p class="muted">
+                <small>Release: 5.5.2013</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.5</small>
+            </p>
+            <h3>PMD 5.0.4</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        The embedded PMD has been updated to version 5.0.4.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.4 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.4.txt"> <img src="img/pmd-5.0.4-release-notes.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h2>eclipse-pmd 0.2</h2>
-			<p class="muted">
-				<small>Released: 29.1.2013</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.2</small>
-			</p>
-			<h3>Quick fixes</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						New quick fixes are available for the following rules: EmptyIfStmt, EmptyWhileStmt, EmptyTryBlock, EmptyFinallyBlock, EmptySwitchStatements,
-						EmptySynchronizedBlock, EmptyInitializer, EmptyStatementBlock, EmptyStaticInitializer, EmptyStatementNotInLoop, RedundantFieldInitializer,
-						SimplifyStartsWith.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/quickfix-emptyif.png" class="thumbnail" title="Quick fix for removing an empty if statement"> <img src="img/quickfix-emptyif.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
-			<h3>PMD 5.0.1</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						The embedded PMD has been updated to version 5.0.1.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.1 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.1.txt"> <img src="img/pmd-5.0.1-release-notes.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <hr	/>
 
-			<hr	/>
+            <h2>eclipse-pmd 0.4</h2>
+            <p class="muted">
+                <small>Release: 31.3.2013</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.4</small>
+            </p>
+            <h3>Configure PMD Annotations</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        This change adds preferences to configure style and colour of PMD annotations in text editors.
+                        The
+                        <code>
+                            General > Editors > Text Editors > Annotations
+                        </code>
+                        preference page lists the PMD Violations annotation and allows setting its preference values.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/annotation-preferences.png" class="thumbnail" title="Configure PMD Annotations"> <img src="img/annotation-preferences.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+            <h3>Quick fixes</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        New quick fixes are available for the following rules: DefaultLabelNotLastInSwitchStmt, EqualsNull, UseNotifyAllInsteadOfNotify, UseCollectionIsEmpty, SingularField.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix-equalsnull.png" class="thumbnail" title="Quick fix for replacing x.equals(null) with x == null"> <img src="img/quickfix-equalsnull.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h2>eclipse-pmd 0.1</h2>
-			<p class="muted">
-				<small>Released: 28.12.2012</small>
-				<br />
-				<small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.1</small>
-			</p>
+            <hr	/>
 
-			<h3>Quick fixes</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						eclipse-pmd provides quick fixes for a couple of PMD rules that can be fixed automatically.
-					</p>
-					<p>
-						Quick fixes are available for the following rules: ExtendsObject, SuspiciousHashcodeMethodName, LocalVariableCouldBeFinal, MethodArgumentCouldBeFinal.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/quickfix.png" class="thumbnail" title="Quick fixes"> <img src="img/quickfix.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
-			<div class="row">
-				<div class="span8">
-					<p>
-						You can apply a quick fix to multiple violations of the same type at once if you use the context menu on a PMD problem in the Problems view and select the item "Quick Fix".
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/quickfix-problemsview.png" class="thumbnail" title="Apply a quick fix to multiple violations"> <img src="img/quickfix-problemsview.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <h2>eclipse-pmd 0.3</h2>
+            <p class="muted">
+                <small>Released: 2.3.2012</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.3</small>
+            </p>
+            <h3>Suppress Warnings</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        A new quick fix is available that adds a
+                        <code>
+                            @SuppressWarnings
+                        </code>
+                        annotation to suppress PMD warnings.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix-suppresswarnings.png" class="thumbnail" title="Quick fix for adding a @SuppressWarnings annotation"> <img src="img/quickfix-suppresswarnings.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+            <h3>PMD 5.0.2</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        The embedded PMD has been updated to version 5.0.2.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.2 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.2.txt"> <img src="img/pmd-5.0.2-release-notes.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h3>Multiple PMD ruleset configurations</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						This feature lets you use multiple PMD ruleset configurations. Once a configuration is created it is available to all projects in the workspace and can be activated for each project individually.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/multiple-configurations.png" class="thumbnail" title="Multiple PMD ruleset configurations"> <img src="img/multiple-configurations.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <hr	/>
 
-			<h3>Workspace and project PMD rule set configurations</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						Besides the PMD rule set configurations stored at an absolute path in the file system, eclipse-pmd also supports PMD rule set configurations stored relative to the workspace or project. The workspace type is used when you want to use the same PMD rule set configuration for several projects in the workspace. If you want to use a different PMD ruleset configuration for each project, you can use the project type. And as long as those PMD ruleset configurations are at the same place within the projects, you need to set up the configuration only once.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/relative-configurations.png" class="thumbnail" title="Workspace and project PMD rule set configurations"> <img src="img/relative-configurations.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
+            <h2>eclipse-pmd 0.2</h2>
+            <p class="muted">
+                <small>Released: 29.1.2013</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.2</small>
+            </p>
+            <h3>Quick fixes</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        New quick fixes are available for the following rules: EmptyIfStmt, EmptyWhileStmt, EmptyTryBlock, EmptyFinallyBlock, EmptySwitchStatements,
+                        EmptySynchronizedBlock, EmptyInitializer, EmptyStatementBlock, EmptyStaticInitializer, EmptyStatementNotInLoop, RedundantFieldInitializer,
+                        SimplifyStartsWith.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix-emptyif.png" class="thumbnail" title="Quick fix for removing an empty if statement"> <img src="img/quickfix-emptyif.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+            <h3>PMD 5.0.1</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        The embedded PMD has been updated to version 5.0.1.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="#pmd-release-notes" class="thumbnail" title="PMD 5.0.1 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.0.1.txt"> <img src="img/pmd-5.0.1-release-notes.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
 
-			<h3>Support for additional languages</h3>
-			<div class="row">
-				<div class="span8">
-					<p>
-						Besides Java, eclipse-pmd now also supports the additional languages that came with PMD 5.0. Supported are JavaScript, XML, XSL and JSP/JSF.
-					</p>
-				</div>
-				<ul class="thumbnails">
-					<li class="span4">
-						<a href="img/analyze-xml.png" class="thumbnail" title="Support for additional languages"> <img src="img/analyze-xml.png" alt=""> </a>
-					</li>
-				</ul>
-			</div>
-		</div>
+            <hr	/>
 
-		<footer class="footer">
-			<div class="container">
-				<div class="row">
-					<div class="span4">
-						<p>
-							&copy; 2012 &ndash; 2013 Philip Graf. All Rights Reserved.
-							<br />
-							eclipse-pmd uses <a href="http://pmd.sourceforge.net/">PMD</a>.
-						</p>
-					</div>
-					<div class="span4 offset4">
-						<p>
-							Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a>
-							<br />
-							Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-		<div id="pmd-release-notes" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="release-notes-label" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-				</button>
-				<h3 id="pmd-501-release-notes-label">PMD Release Notes</h3>
-			</div>
-			<div class="modal-body" style="white-space: pre-line;"></div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
-					Close
-				</button>
-			</div>
-		</div>
+            <h2>eclipse-pmd 0.1</h2>
+            <p class="muted">
+                <small>Released: 28.12.2012</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/0.1</small>
+            </p>
 
-		<div id="forkme">
-			<a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
-		</div>
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.lightbox.pack.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				$('a.thumbnail:not([data-toggle~="modal"])').lightBox();
-			});
-		</script>
-	</body>
+            <h3>Quick fixes</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        eclipse-pmd provides quick fixes for a couple of PMD rules that can be fixed automatically.
+                    </p>
+                    <p>
+                        Quick fixes are available for the following rules: ExtendsObject, SuspiciousHashcodeMethodName, LocalVariableCouldBeFinal, MethodArgumentCouldBeFinal.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix.png" class="thumbnail" title="Quick fixes"> <img src="img/quickfix.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        You can apply a quick fix to multiple violations of the same type at once if you use the context menu on a PMD problem in the Problems view and select the item "Quick Fix".
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/quickfix-problemsview.png" class="thumbnail" title="Apply a quick fix to multiple violations"> <img src="img/quickfix-problemsview.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+
+            <h3>Multiple PMD ruleset configurations</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        This feature lets you use multiple PMD ruleset configurations. Once a configuration is created it is available to all projects in the workspace and can be activated for each project individually.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/multiple-configurations.png" class="thumbnail" title="Multiple PMD ruleset configurations"> <img src="img/multiple-configurations.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+
+            <h3>Workspace and project PMD rule set configurations</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        Besides the PMD rule set configurations stored at an absolute path in the file system, eclipse-pmd also supports PMD rule set configurations stored relative to the workspace or project. The workspace type is used when you want to use the same PMD rule set configuration for several projects in the workspace. If you want to use a different PMD ruleset configuration for each project, you can use the project type. And as long as those PMD ruleset configurations are at the same place within the projects, you need to set up the configuration only once.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/relative-configurations.png" class="thumbnail" title="Workspace and project PMD rule set configurations"> <img src="img/relative-configurations.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+
+            <h3>Support for additional languages</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        Besides Java, eclipse-pmd now also supports the additional languages that came with PMD 5.0. Supported are JavaScript, XML, XSL and JSP/JSF.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/analyze-xml.png" class="thumbnail" title="Support for additional languages"> <img src="img/analyze-xml.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="span4">
+                        <p>
+                            &copy; 2012 &ndash; 2014 Philip Graf. All Rights Reserved.
+                            <br />
+                            eclipse-pmd uses <a href="http://pmd.sourceforge.net/">PMD</a>.
+                        </p>
+                    </div>
+                    <div class="span4 offset4">
+                        <p>
+                            Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a>
+                            <br />
+                            Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div id="pmd-release-notes" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="release-notes-label" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 id="pmd-501-release-notes-label">PMD Release Notes</h3>
+            </div>
+            <div class="modal-body" style="white-space: pre-line;"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">
+                    Close
+                </button>
+            </div>
+        </div>
+
+        <div id="forkme">
+            <a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
+        </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.lightbox.pack.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('a.thumbnail:not([data-toggle~="modal"])').lightBox();
+            });
+        </script>
+    </body>
 </html>
