@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eclipse-pmd thrid party libraries
+Bundle-SymbolicName: ch.acanda.eclipse.pmd.lib
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: Philip Graf
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: lib/guava-16.0.jar
+Export-Package: com.google.common.annotations,
+ com.google.common.base,
+ com.google.common.cache,
+ com.google.common.collect,
+ com.google.common.escape,
+ com.google.common.eventbus,
+ com.google.common.hash,
+ com.google.common.html,
+ com.google.common.io,
+ com.google.common.math,
+ com.google.common.net,
+ com.google.common.primitives,
+ com.google.common.reflect,
+ com.google.common.util.concurrent,
+ com.google.common.xml

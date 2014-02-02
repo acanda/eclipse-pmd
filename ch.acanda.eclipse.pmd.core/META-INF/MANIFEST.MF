@@ -7,16 +7,11 @@ Bundle-Vendor: Philip Graf
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.ui.ide;bundle-version="3.7.0",
  org.eclipse.jface.text;bundle-version="3.7.0",
  org.eclipse.core.databinding;bundle-version="1.4.0",
  org.eclipse.core.databinding.beans;bundle-version="1.2.0",
- org.eclipse.core.databinding.observable;bundle-version="1.4.0",
- org.eclipse.core.databinding.property;bundle-version="1.4.0",
  org.eclipse.jface.databinding;bundle-version="1.5.0",
- org.eclipse.core.filebuffers;bundle-version="3.5.0",
- org.eclipse.ui.editors;bundle-version="3.7.0",
- org.eclipse.jdt.core;bundle-version="3.7.0"
+ org.eclipse.core.databinding.property;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
  lib/pmd-5.0.5.jar,
@@ -27,3 +22,8 @@ Bundle-ClassPath: .,
  lib/commons-io-2.2.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
+Export-Package: ch.acanda.eclipse.pmd.exception,
+ ch.acanda.eclipse.pmd.marker,
+ ch.acanda.eclipse.pmd.ui.util,
+ net.sourceforge.pmd,
+ net.sourceforge.pmd.lang

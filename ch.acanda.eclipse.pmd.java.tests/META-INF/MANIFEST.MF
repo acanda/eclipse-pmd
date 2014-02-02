@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests for the plug-in ch.acanda.eclipse.pmd.java
+Bundle-SymbolicName: ch.acanda.eclipse.pmd.java.tests
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: Philip Graf
+Fragment-Host: ch.acanda.eclipse.pmd.java;bundle-version="0.8.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.junit;bundle-version="4.8.2"
+Bundle-ClassPath: .,
+ lib/mockito-all-1.9.5.jar

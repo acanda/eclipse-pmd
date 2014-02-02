@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: eclipse-pmd java
+Bundle-SymbolicName: ch.acanda.eclipse.pmd.java;singleton:=true
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: Philip Graf
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: ch.acanda.eclipse.pmd.core;bundle-version="0.8.0",
+ ch.acanda.eclipse.pmd.lib;bundle-version="0.8.0",
+ org.eclipse.jdt.core;bundle-version="3.7.0",
+ org.eclipse.core.resources;bundle-version="3.7.0",
+ org.eclipse.jface;bundle-version="3.7.0",
+ org.eclipse.ui.workbench.texteditor;bundle-version="3.7.0",
+ org.eclipse.jface.text;bundle-version="3.7.0",
+ org.eclipse.ui.ide;bundle-version="3.7.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.eclipse.core.filebuffers,
+ org.eclipse.ui.editors;bundle-version="3.7.0"

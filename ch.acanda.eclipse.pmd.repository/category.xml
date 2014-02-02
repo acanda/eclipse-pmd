@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (C) 2012 - 2014, Philip Graf
-
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License v1.0
-    which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
--->
 <site>
    <feature url="features/ch.acanda.eclipse.pmd.feature_0.8.0.qualifier.jar" id="ch.acanda.eclipse.pmd.feature" version="0.8.0.qualifier">
       <category name="ch.acanda.eclipse.pmd"/>

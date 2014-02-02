@@ -18,13 +18,54 @@
         <relativePath>../ch.acanda.eclipse.pmd</relativePath>
     </parent>
 
-    <groupId>ch.acanda.eclipse.pmd</groupId>
     <artifactId>ch.acanda.eclipse.pmd.core.tests</artifactId>
     <packaging>eclipse-test-plugin</packaging>
-    <name>eclipse-pmd unit tests</name>
+    <name>eclipse-pmd unit tests for core</name>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${lib-path}</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-libs</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${lib-path}</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.mockito</groupId>
+                                    <artifactId>mockito-all</artifactId>
+                                    <version>${mockito-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.mockito</groupId>
+                                    <artifactId>mockito-all</artifactId>
+                                    <version>${mockito-version}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
@@ -36,4 +77,5 @@
             </plugin>
         </plugins>
     </build>
+    
 </project>

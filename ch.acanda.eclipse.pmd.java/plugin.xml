@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="ch.acanda.eclipse.pmd.java.resolution.PMDMarkerResolutionGenerator"
+            markerType="ch.acanda.eclipse.pmd.core.pmdMarker">
+      </markerResolutionGenerator>
+      <markerResolutionGenerator
+            class="ch.acanda.eclipse.pmd.java.resolution.PMDMarkerResolutionGenerator"
+            markerType="ch.acanda.eclipse.pmd.core.pmdLongMarker">
+      </markerResolutionGenerator>
+   </extension>
+
+</plugin>

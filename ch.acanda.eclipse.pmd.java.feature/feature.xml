@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="ch.acanda.eclipse.pmd.java.feature"
+      label="eclipse-pmd Java Support (Optional, JDT Prerequisite)"
+      version="0.8.0.qualifier"
+      provider-name="Philip Graf"
+      license-feature="ch.acanda.eclipse.pmd.core.feature"
+      license-feature-version="0.8.0.qualifier">
+
+   <description url="http://acanda.github.com/eclipse-pmd/">
+      Provides additional functionality for Java related PMD violations:
+      - Quick fixes for PMD violations
+   </description>
+
+   <copyright>
+      Copyright (C) 2012 - 2014, Philip Graf
+   </copyright>
+
+   <url>
+      <update label="Latest stable release" url="http://www.acanda.ch/eclipse-pmd/release/latest/"/>
+   </url>
+
+   <requires>
+      <import plugin="ch.acanda.eclipse.pmd.core" version="0.8.0" match="greaterOrEqual"/>
+      <import plugin="ch.acanda.eclipse.pmd.lib" version="0.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jface" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jface.text" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.filebuffers"/>
+      <import plugin="org.eclipse.ui.editors" version="3.7.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="ch.acanda.eclipse.pmd.java"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

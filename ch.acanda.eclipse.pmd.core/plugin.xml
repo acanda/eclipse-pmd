@@ -83,17 +83,6 @@
       </page>
    </extension>
    <extension
-         point="org.eclipse.ui.ide.markerResolution">
-      <markerResolutionGenerator
-            class="ch.acanda.eclipse.pmd.marker.resolution.PMDMarkerResolutionGenerator"
-            markerType="ch.acanda.eclipse.pmd.core.pmdMarker">
-      </markerResolutionGenerator>
-      <markerResolutionGenerator
-            class="ch.acanda.eclipse.pmd.marker.resolution.PMDMarkerResolutionGenerator"
-            markerType="ch.acanda.eclipse.pmd.core.pmdLongMarker">
-      </markerResolutionGenerator>
-   </extension>
-   <extension
          point="org.eclipse.ui.editors.annotationTypes">
       <type
             markerType="ch.acanda.eclipse.pmd.core.pmdMarker"
