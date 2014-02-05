@@ -11,8 +11,7 @@
 
 package ch.acanda.eclipse.pmd.unsupported;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -61,4 +60,27 @@ public class ProjectPropertyTesterTest {
         assertFalse("Version 1.7.0_45 should not be less than 1.7.0_45", result);
     }
     
+    @Test
+    public void java8EarlyAccess() {
+        System.setProperty("java.version", "1.8.0-ea");
+        final ProjectPropertyTester tester = new ProjectPropertyTester();
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7.0_51" }, null);
+        assertFalse("Version 1.7.0_51 should not be less than 1.8.0-ea", result);
+    }
+    
+    @Test
+    public void invalidJVMVersion() {
+        System.setProperty("java.version", "x.y.z");
+        final ProjectPropertyTester tester = new ProjectPropertyTester();
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7.0_51" }, null);
+        assertFalse("The tester should return false as the JVM version is invalid", result);
+    }
+    
+    @Test
+    public void invalidArgumentVersion() {
+        System.setProperty("java.version", "1.7.0_51");
+        final ProjectPropertyTester tester = new ProjectPropertyTester();
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "x.y.z" }, null);
+        assertFalse("The tester should return false as the argument version is invalid", result);
+    }
 }

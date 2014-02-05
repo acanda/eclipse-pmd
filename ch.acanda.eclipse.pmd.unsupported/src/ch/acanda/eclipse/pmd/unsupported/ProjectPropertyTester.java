@@ -11,6 +11,8 @@
 
 package ch.acanda.eclipse.pmd.unsupported;
 
+import java.util.regex.Pattern;
+
 import org.eclipse.core.expressions.PropertyTester;
 import org.osgi.framework.Version;
 
@@ -22,6 +24,12 @@ import org.osgi.framework.Version;
  */
 public class ProjectPropertyTester extends PropertyTester {
     
+    /**
+     * A pattern matching the Java version separators. This is used to convert a Java version into an OSGi version.
+     * Therefore the pattern does not have to include {@code '.'}.
+     */
+    private static final Pattern JAVA_VERSION_SEPARATORS = Pattern.compile("[_-]");
+    
     public boolean test(final Object receiver, final String property, final Object[] args, final Object expectedValue) {
         if ("javaVersionLessThan".equals(property)) {
             return isJavaVersionLessThan(args[0].toString());
@@ -30,22 +38,28 @@ public class ProjectPropertyTester extends PropertyTester {
     }
     
     /**
-     * Returns {@code true} if the version of the currently used JVM is lower than the provided argument.
+     * Returns {@code true} if the version of the currently used JVM is lower than the provided argument. If either of
+     * the versions cannot be parsed this method returns {@code false}.
      * 
      * @param version The version string against the version of the JVM is tested. The format of the version string
      *            should follow the Java version format, e.g. 1.7.0_45.
      */
     private boolean isJavaVersionLessThan(final String version) {
-        final Version actual = new Version(convert(System.getProperty("java.version", "0")));
-        final Version upperBound = new Version(convert(version));
-        return actual.compareTo(upperBound) < 0;
+        try {
+            final Version actual = new Version(convert(System.getProperty("java.version", "0")));
+            final Version upperBound = new Version(convert(version));
+            return actual.compareTo(upperBound) < 0;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
     
     /**
-     * Converts a Java version string (e.g. 1.7.0_45) to an OSGi version string (e.g. 1.7.0.45).
+     * Converts a Java version string (e.g. 1.7.0_45 and 1.8.0-ea) to an OSGi version string (e.g. 1.7.0.45 and 1.8.0.ea
+     * respectively).
      */
     private String convert(final String javaVersion) {
-        return javaVersion.replace('_', '.');
+        return JAVA_VERSION_SEPARATORS.matcher(javaVersion).replaceAll(".");
     }
     
 }
