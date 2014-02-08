@@ -1,0 +1,18 @@
+language: java
+
+env: DISPLAY=:99
+
+jdk: oraclejdk7
+
+install:
+  - sudo apt-get update
+  - sudo apt-get install metacity
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 10 # give xvfb some time to start
+  - metacity --sm-disable --replace &
+
+script: mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B
+
