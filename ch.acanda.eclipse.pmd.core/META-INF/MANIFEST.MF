@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eclipse-pmd: Core
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.core;singleton:=true
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.9.0.qualifier
 Bundle-Vendor: Philip Graf
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
@@ -22,8 +22,6 @@ Bundle-ClassPath: .,
  lib/commons-io-2.2.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
-Export-Package: ch.acanda.eclipse.pmd.exception,
- ch.acanda.eclipse.pmd.marker,
- ch.acanda.eclipse.pmd.ui.util,
- net.sourceforge.pmd,
- net.sourceforge.pmd.lang
+Export-Package: ch.acanda.eclipse.pmd.exception,ch.acanda.eclipse.pmd.
+ marker,ch.acanda.eclipse.pmd.ui.util,net.sourceforge.pmd,net.sourcefo
+ rge.pmd.lang
