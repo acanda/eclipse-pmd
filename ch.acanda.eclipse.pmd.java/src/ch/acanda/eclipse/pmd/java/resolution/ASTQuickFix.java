@@ -64,32 +64,32 @@ import com.google.common.base.Optional;
 
 /**
  * Base class for Java quick fix that modifies the AST.
- * 
+ *
  * @author Philip Graf
- * 
+ *
  * @param <T> The type of AST node that will be passed to {@link #apply(ASTNode)}.
  */
 public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerResolution {
-    
+
     private static final IMarker[] NO_OTHER_MARKERS = new IMarker[0];
     protected final PMDMarker marker;
-    
+
     public ASTQuickFix(final PMDMarker marker) {
         this.marker = marker;
     }
-    
+
     @Override
     public final Image getImage() {
         return PMDPluginImages.get(getImageDescriptor());
     }
-    
+
     /**
      * Returns the image descriptor for the image to be displayed in the list of resolutions.
-     * 
+     *
      * @return The image descriptor for the image to be shown. Must not return <code>null</code>.
      */
     abstract protected ImageDescriptor getImageDescriptor();
-    
+
     /**
      * Returns other markers with the same rule id as the marker of this quick fix. This allows to fix multiple PMD
      * problems of the same type all at once.
@@ -114,7 +114,7 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
         }
         return result;
     }
-    
+
     @Override
     public void run(final IMarker[] markers, final IProgressMonitor monitor) {
         final Map<IFile, List<IMarker>> map = createMarkerMap(markers);
@@ -127,7 +127,7 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
             monitor.done();
         }
     }
-    
+
     /**
      * @return A map grouping the markers by their file.
      */
@@ -147,7 +147,7 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
         }
         return markerMap;
     }
-    
+
     @Override
     public void run(final IMarker marker) {
         final IResource resource = marker.getResource();
@@ -155,44 +155,44 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
             fixMarkersInFile((IFile) resource, Arrays.asList(marker), new NullProgressMonitor());
         }
     }
-    
+
     /**
      * Fixes all provided markers in a file.
-     * 
+     *
      * @param markers The markers to fix. There is at least one marker in this collection and all markers can be fixed
      *            by this quick fix.
      */
     private void fixMarkersInFile(final IFile file, final List<IMarker> markers, final IProgressMonitor monitor) {
         monitor.subTask(file.getFullPath().toOSString());
-        
+
         final Optional<ICompilationUnit> optionalCompilationUnit = getCompilationUnit(file);
-        
+
         if (!optionalCompilationUnit.isPresent()) {
             return;
         }
-        
+
         final ICompilationUnit compilationUnit = optionalCompilationUnit.get();
         ITextFileBufferManager bufferManager = null;
         final IPath path = compilationUnit.getPath();
-        
+
         try {
             bufferManager = FileBuffers.getTextFileBufferManager();
             bufferManager.connect(path, LocationKind.IFILE, null);
-            
+
             final ITextFileBuffer textFileBuffer = bufferManager.getTextFileBuffer(path, LocationKind.IFILE);
-            
+
             final IDocument document = textFileBuffer.getDocument();
             final IAnnotationModel annotationModel = textFileBuffer.getAnnotationModel();
-            
+
             final ASTParser astParser = ASTParser.newParser(AST.JLS4);
             astParser.setKind(ASTParser.K_COMPILATION_UNIT);
             astParser.setSource(compilationUnit);
-            
+
             final SubProgressMonitor parserMonitor = new SubProgressMonitor(monitor, 100);
             final CompilationUnit ast = (CompilationUnit) astParser.createAST(parserMonitor);
             parserMonitor.done();
             ast.recordModifications();
-            
+
             for (final IMarker marker : markers) {
                 try {
                     final MarkerAnnotation annotation = getMarkerAnnotation(annotationModel, marker);
@@ -208,11 +208,11 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
                     monitor.worked(100);
                 }
             }
-            
+
             // rewrite all recorded changes to the document
             final Map<?, ?> options = compilationUnit.getJavaProject().getOptions(true);
             ast.rewrite(document, options).apply(document);
-            
+
             // commit changes to underlying file if it is not opened in an editor
             if (!isEditorOpen(file)) {
                 final SubProgressMonitor commitMonitor = new SubProgressMonitor(monitor, 100);
@@ -221,11 +221,11 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
             } else {
                 monitor.worked(100);
             }
-            
+
         } catch (CoreException | MalformedTreeException | BadLocationException e) {
             // TODO: log error
 //            PMDPlugin.getDefault().error("Error processing quickfix", e);
-            
+
         } finally {
             if (bufferManager != null) {
                 try {
@@ -237,17 +237,17 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
             }
         }
     }
-    
+
     /**
      * @param position The position of the marker.
      * @return The node finder that will be used to search for the node which will be passed to the quick fix.
      */
     abstract protected NodeFinder<CompilationUnit, T> getNodeFinder(final Position position);
-    
+
     /**
      * Returns the type of the AST node that will be used to find the node that will be used as an argument when
      * invoking {@link #apply(ASTNode)}. This method takes the type from the type parameter of this class.
-     * 
+     *
      * @return The type of the node that will be used when invoking {@link #apply(ASTNode)}.
      */
     @SuppressWarnings("unchecked")
@@ -256,20 +256,20 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         return (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
-    
+
     /**
      * Applies the quick fix to the provided node. The marker's range lies within the node's range and the node's type
      * is the same as the one returned by {@link #getNodeType()}.
-     * 
+     *
      * @return {@code true} iff the quick fix was applied successfully, i.e. the PMD problem was resolved.
      */
     protected abstract boolean apply(final T node);
-    
+
     private Optional<ICompilationUnit> getCompilationUnit(final IFile file) {
         final IJavaElement element = JavaCore.create(file);
-        return element instanceof ICompilationUnit ? Optional.of((ICompilationUnit) element) : Optional.<ICompilationUnit> absent();
+        return element instanceof ICompilationUnit ? Optional.of((ICompilationUnit) element) : Optional.<ICompilationUnit>absent();
     }
-    
+
     private MarkerAnnotation getMarkerAnnotation(final IAnnotationModel annotationModel, final IMarker marker) {
         @SuppressWarnings("unchecked")
         final Iterator<Annotation> annotations = annotationModel.getAnnotationIterator();
@@ -284,7 +284,7 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
         }
         return null;
     }
-    
+
     /**
      * @return {@code true} iff an editor for the provided file is open. The editor must not necessarily be visible or
      *         even belong to the active window or perspective.
@@ -306,5 +306,5 @@ public abstract class ASTQuickFix<T extends ASTNode> extends WorkbenchMarkerReso
         }
         return false;
     }
-    
+
 }

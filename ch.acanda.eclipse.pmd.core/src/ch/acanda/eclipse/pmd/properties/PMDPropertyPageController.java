@@ -76,7 +76,7 @@ final class PMDPropertyPageController {
 
     public void reset() {
         model.setActiveRuleSets(ImmutableSet.copyOf(toViewModels(projectModel.getRuleSets())));
-        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel> of());
+        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel>of());
         model.setPMDEnabled(projectModel.isPMDEnabled());
     }
 
@@ -120,7 +120,7 @@ final class PMDPropertyPageController {
         final Predicate<RuleSetViewModel> notInSelection = not(in(model.getSelectedRuleSets()));
         model.setRuleSets(ImmutableList.copyOf(filter(model.getRuleSets(), notInSelection)));
         model.setActiveRuleSets(filter(model.getActiveRuleSets(), notInSelection));
-        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel> of());
+        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel>of());
     }
 
 }

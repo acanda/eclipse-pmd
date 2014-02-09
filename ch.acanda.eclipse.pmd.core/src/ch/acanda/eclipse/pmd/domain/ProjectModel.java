@@ -29,7 +29,7 @@ public class ProjectModel extends DomainModel {
     private final String projectName;
 
     private boolean isPMDEnabled;
-    private ImmutableSortedSet<RuleSetModel> ruleSets = ImmutableSortedSet.<RuleSetModel> of();
+    private ImmutableSortedSet<RuleSetModel> ruleSets = ImmutableSortedSet.<RuleSetModel>of();
 
     /**
      * Creates a new project model without any rule sets and where PMD is disabled.

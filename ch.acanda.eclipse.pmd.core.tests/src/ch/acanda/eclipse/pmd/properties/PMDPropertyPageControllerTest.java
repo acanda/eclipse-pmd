@@ -37,7 +37,7 @@ public class PMDPropertyPageControllerTest {
     public void removeSelectedConfigurations() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
         final PMDPropertyPageViewModel model = controller.getModel();
-        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel> of());
+        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of());
         final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
         model.setRuleSets(ruleSets);
         model.setActiveRuleSets(ruleSets.subList(0, 2));
@@ -58,11 +58,11 @@ public class PMDPropertyPageControllerTest {
     public void removeSelectedConfigurationsWithoutSelection() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
         final PMDPropertyPageViewModel model = controller.getModel();
-        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel> of());
+        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of());
         final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
         model.setRuleSets(ruleSets);
         model.setActiveRuleSets(ruleSets.subList(0, 2));
-        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel> of());
+        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel>of());
         
         controller.removeSelectedConfigurations();
         
