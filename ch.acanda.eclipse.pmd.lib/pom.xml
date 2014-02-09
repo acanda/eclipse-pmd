@@ -21,7 +21,7 @@
     <groupId>ch.acanda.eclipse.pmd</groupId>
     <artifactId>ch.acanda.eclipse.pmd.lib</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <name>eclipse-pmd thrid party libraries</name>
+    <name>eclipse-pmd third party libraries</name>
     
     <build>
         <plugins>
