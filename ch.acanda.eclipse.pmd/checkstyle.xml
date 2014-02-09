@@ -5,7 +5,7 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: eclipse-pmd Checks
+    Checkstyle-Configuration: eclipse-pmd checks
     Description: none
 -->
 <module name="Checker">
@@ -20,6 +20,22 @@
       <metadata name="net.sf.eclipsecs.core.comment" value="Operator must be at the end of the line"/>
       <property name="option" value="eol"/>
       <property name="tokens" value="ASSIGN,BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DIV_ASSIGN,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN"/>
+    </module>
+    <module name="WhitespaceAfter"/>
+    <module name="TypecastParenPad">
+      <property name="tokens" value="TYPECAST"/>
+    </module>
+    <module name="ParenPad"/>
+    <module name="MethodParamPad"/>
+    <module name="NoWhitespaceBefore"/>
+    <module name="NoWhitespaceAfter">
+      <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
+    </module>
+    <module name="EmptyForIteratorPad">
+      <property name="option" value="space"/>
+    </module>
+    <module name="EmptyForInitializerPad">
+      <property name="option" value="space"/>
     </module>
   </module>
   <module name="Header">
