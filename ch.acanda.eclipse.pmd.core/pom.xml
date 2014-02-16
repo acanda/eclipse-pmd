@@ -22,11 +22,11 @@
     <artifactId>ch.acanda.eclipse.pmd.core</artifactId>
     <packaging>eclipse-plugin</packaging>
     <name>eclipse-pmd core</name>
-    
+
     <properties>
-      <libPath>${basedir}/lib</libPath>
-      <pmdVersion>5.0.5</pmdVersion>
-      <guavaVersion>15.0</guavaVersion>
+        <libPath>${basedir}/lib</libPath>
+        <pmdVersion>5.1.0</pmdVersion>
+        <guavaVersion>15.0</guavaVersion>
     </properties>
 
     <build>
@@ -97,6 +97,11 @@
                                     <groupId>commons-io</groupId>
                                     <artifactId>commons-io</artifactId>
                                     <version>2.2</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>xerces</groupId>
+                                    <artifactId>xercesImpl</artifactId>
+                                    <version>2.9.1</version>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
