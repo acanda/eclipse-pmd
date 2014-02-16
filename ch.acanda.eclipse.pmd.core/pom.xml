@@ -26,7 +26,6 @@
     <properties>
         <libPath>${basedir}/lib</libPath>
         <pmdVersion>5.1.0</pmdVersion>
-        <guavaVersion>15.0</guavaVersion>
     </properties>
 
     <build>
@@ -56,17 +55,6 @@
                         <configuration>
                             <outputDirectory>${libPath}</outputDirectory>
                             <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.google.guava</groupId>
-                                    <artifactId>guava</artifactId>
-                                    <version>${guavaVersion}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>com.google.guava</groupId>
-                                    <artifactId>guava</artifactId>
-                                    <version>${guavaVersion}</version>
-                                    <classifier>sources</classifier>
-                                </artifactItem>
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd</artifactId>
