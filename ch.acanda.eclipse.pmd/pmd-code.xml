@@ -5,7 +5,7 @@
 
     <rule ref="rulesets/java/codesize.xml/TooManyMethods"/>
 
-    <rule ref="rulesets/java/design.xml/UseSingleton" />
+    <rule ref="rulesets/java/design.xml/UseUtilityClass" />
     
     <rule ref="rulesets/java/strings.xml/AvoidDuplicateLiterals">
         <properties>
