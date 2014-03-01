@@ -19,12 +19,12 @@ import ch.acanda.eclipse.pmd.exception.EclipsePMDException;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 
 /**
- * Creates resolutions for a PMD marker.
- * 
+ * Creates resolutions for a Java PMD marker.
+ *
  * @author Philip Graf
  */
 public class PMDMarkerResolutionGenerator implements IMarkerResolutionGenerator {
-    
+
     @Override
     public IMarkerResolution[] getResolutions(final IMarker marker) {
         final IMarkerResolution[] resolutions;
@@ -33,21 +33,18 @@ public class PMDMarkerResolutionGenerator implements IMarkerResolutionGenerator 
         if (ruleId != null) {
             resolutions = loadQuickFix(pmdMarker);
         } else {
-            resolutions = createDefaultResolutions(isJavaMarker(marker), pmdMarker);
+            resolutions = createDefaultResolutions(pmdMarker);
         }
         return resolutions;
     }
-    
+
     /**
-     * Cleans the rule id by removing characters not suitable for a package or class name.
+     * Cleans the rule id by removing the "java." prefix and characters not suitable for a package or class name.
      */
     private String clean(final String ruleId) {
-        if (isJavaMarker(ruleId)) {
-            return ruleId.substring(5).replace(" ", "");
-        }
-        return ruleId.replace(" ", "");
+        return ruleId.substring(5).replace(" ", "");
     }
-    
+
     private IMarkerResolution[] loadQuickFix(final PMDMarker marker) {
         IMarkerResolution[] resolutions;
         final String ruleId = marker.getRuleId();
@@ -56,39 +53,20 @@ public class PMDMarkerResolutionGenerator implements IMarkerResolutionGenerator 
             @SuppressWarnings("unchecked")
             final Class<? extends IMarkerResolution> quickFixClass = (Class<? extends IMarkerResolution>) Class.forName(className);
             final IMarkerResolution quickFix = quickFixClass.getConstructor(PMDMarker.class).newInstance(marker);
-            if (isJavaQuickFix(quickFixClass)) {
-                resolutions = new IMarkerResolution[] { quickFix, new SuppressWarningsQuickFix(marker) };
-            } else {
-                resolutions = new IMarkerResolution[] { quickFix };
-            }
-            
+            resolutions = new IMarkerResolution[] { quickFix, new SuppressWarningsQuickFix(marker) };
+
         } catch (final ClassNotFoundException e) {
             // the quick fix class does not exist
-            resolutions = createDefaultResolutions(isJavaMarker(ruleId), marker);
-            
+            resolutions = createDefaultResolutions(marker);
+
         } catch (final SecurityException | ReflectiveOperationException e) {
             // the quick fix class does exist but it is not correctly implemented.
             throw new EclipsePMDException("Quick fix class " + className + " is not correctly implemented", e);
         }
         return resolutions;
     }
-    
-    private boolean isJavaMarker(final String ruleId) {
-        return ruleId.startsWith("java.");
-    }
-    
-    private boolean isJavaMarker(final IMarker marker) {
-        return "java".equals(marker.getResource().getFileExtension());
-    }
-    
-    private boolean isJavaQuickFix(final Class<? extends IMarkerResolution> quickFixClass) {
-        return quickFixClass.getPackage().getName().startsWith(SuppressWarningsQuickFix.class.getPackage().getName());
-    }
-    
-    private IMarkerResolution[] createDefaultResolutions(final boolean isJavaMarker, final PMDMarker marker) {
-        if (isJavaMarker) {
-            return new IMarkerResolution[] { new SuppressWarningsQuickFix(marker) };
-        }
-        return new IMarkerResolution[0];
+
+    private IMarkerResolution[] createDefaultResolutions(final PMDMarker marker) {
+        return new IMarkerResolution[] { new SuppressWarningsQuickFix(marker) };
     }
 }

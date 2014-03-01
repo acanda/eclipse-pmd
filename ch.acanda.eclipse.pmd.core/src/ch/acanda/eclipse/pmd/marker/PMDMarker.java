@@ -18,68 +18,79 @@ import com.google.common.base.Preconditions;
 
 /**
  * Wrapper around an {@link IMarker} with convenience methods for accessing the attributes of a PMD marker.
- * 
+ *
  * @author Philip Graf
  */
 public class PMDMarker {
-    
+
     private static final String DEFAULT_VALUE = "";
     private static final String RULE_ID = "ruleId";
     private static final String RULE_NAME = "ruleName";
     private static final String VIOLATION_CLASS_NAME = "violationClassName";
     private static final String VARIABLE_NAME = "variableName";
     private static final String MARKER_TEXT = "markerText";
-    
+    private static final String LANGUAGE = "language";
+
     private final IMarker marker;
-    
+
     public PMDMarker(final IMarker marker) {
         Preconditions.checkArgument(marker != null);
         this.marker = marker;
     }
-    
+
     public void setRuleId(final String ruleId) throws CoreException {
         marker.setAttribute(RULE_ID, ruleId);
     }
-    
+
     public String getRuleId() {
         return marker.getAttribute(RULE_ID, null);
     }
-    
+
     public void setRuleName(final String name) throws CoreException {
         marker.setAttribute(RULE_NAME, name);
     }
-    
+
     public String getRuleName() {
         return marker.getAttribute(RULE_NAME, DEFAULT_VALUE);
     }
-    
+
     public void setViolationClassName(final String violationClassName) throws CoreException {
         marker.setAttribute(VIOLATION_CLASS_NAME, violationClassName);
     }
-    
+
     public String getViolationClassName() {
         return marker.getAttribute(VIOLATION_CLASS_NAME, DEFAULT_VALUE);
     }
-    
+
     public void setVariableName(final String variableName) throws CoreException {
         marker.setAttribute(VARIABLE_NAME, variableName);
     }
-    
+
     public String getVariableName() {
         return marker.getAttribute(VARIABLE_NAME, DEFAULT_VALUE);
     }
-    
+
     public void setMarkerText(final String markerText) throws CoreException {
         marker.setAttribute(MARKER_TEXT, markerText);
     }
-    
+
     public String getMarkerText() {
         return marker.getAttribute(MARKER_TEXT, DEFAULT_VALUE);
     }
-    
+
     @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public boolean isOtherWithSameRuleId(final IMarker other) {
         return other != marker && marker.getAttribute(RULE_ID, DEFAULT_VALUE).equals(other.getAttribute(RULE_ID, DEFAULT_VALUE));
     }
-    
+
+    /**
+     * The language attribute is used in the plugin.xml to filter markers by language.
+     * 
+     * @param language The name of the language. This is the terse name of the language as returned by
+     *            {@code net.sourceforge.pmd.lang.Language.getTerseName()}.
+     */
+    public void setLanguage(final String language) throws CoreException {
+        marker.setAttribute(LANGUAGE, language);
+    }
+
 }

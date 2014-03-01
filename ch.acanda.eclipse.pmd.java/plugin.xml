@@ -6,10 +6,18 @@
       <markerResolutionGenerator
             class="ch.acanda.eclipse.pmd.java.resolution.PMDMarkerResolutionGenerator"
             markerType="ch.acanda.eclipse.pmd.core.pmdMarker">
+         <attribute
+               name="language"
+               value="java">
+         </attribute>
       </markerResolutionGenerator>
       <markerResolutionGenerator
             class="ch.acanda.eclipse.pmd.java.resolution.PMDMarkerResolutionGenerator"
             markerType="ch.acanda.eclipse.pmd.core.pmdLongMarker">
+         <attribute
+               name="language"
+               value="java">
+         </attribute>
       </markerResolutionGenerator>
    </extension>
 

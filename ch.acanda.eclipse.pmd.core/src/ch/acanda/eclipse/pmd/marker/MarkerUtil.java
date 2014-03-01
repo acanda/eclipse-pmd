@@ -27,37 +27,37 @@ import org.eclipse.jface.text.Document;
 
 /**
  * Utility for creating, adding and removing PMD markers.
- * 
+ *
  * @author Philip Graf
  */
 public final class MarkerUtil {
-    
+
     private static final int PMD_TAB_SIZE = new Tabs().size;
-    
+
     private static final String MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdMarker";
     private static final String LONG_MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdLongMarker";
-    
+
     private MarkerUtil() {
         // hide constructor of utility class
     }
-    
+
     /**
      * Removes all PMD markers from a file.
      */
     public static void removeAllMarkers(final IFile file) throws CoreException {
         file.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ZERO);
     }
-    
+
     /**
      * Removes all PMD markers from a project and all the files it contains.
      */
     public static void removeAllMarkers(final IProject project) throws CoreException {
         project.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_INFINITE);
     }
-    
+
     /**
      * Adds a PMD Marker to a file.
-     * 
+     *
      * @param file The marker will be added to this file.
      * @param content The content of the file.
      * @param violation The PMD rule violation.
@@ -85,31 +85,32 @@ public final class MarkerUtil {
         pmdMarker.setViolationClassName(violation.getClassName());
         pmdMarker.setVariableName(violation.getVariableName());
         pmdMarker.setRuleName(rule.getName());
+        pmdMarker.setLanguage(violation.getRule().getLanguage().getTerseName());
         return marker;
     }
-    
+
     public static Range getAbsoluteRange(final String content, final RuleViolation violation) {
         final Document document = new Document(content);
         Range range = null;
         try {
-            
+
             // violation line and column start at one, the marker's start and end positions at zero
             final int start = getAbsolutePosition(content, document.getLineOffset(violation.getBeginLine() - 1), violation.getBeginColumn());
             final int end = getAbsolutePosition(content, document.getLineOffset(violation.getEndLine() - 1), violation.getEndColumn());
-            
+
             // for some rules PMD creates violations with the end position before the start position
             if (start <= end) {
                 range = new Range(start - 1, end);
             } else {
                 range = new Range(end - 1, start);
             }
-            
+
         } catch (final BadLocationException e) {
             range = new Range(0, 0);
         }
         return range;
     }
-    
+
     private static int getAbsolutePosition(final String content, final int lineOffset, final int pmdCharOffset) {
         int pmdCharCounter = 0;
         int absoluteOffset = lineOffset;
@@ -128,11 +129,11 @@ public final class MarkerUtil {
         }
         return absoluteOffset;
     }
-    
+
     public static final class Range {
         private final int start;
         private final int end;
-        
+
         public Range(final int start, final int end) {
             // if (start <= end) {
             this.start = start;
@@ -142,16 +143,16 @@ public final class MarkerUtil {
             // this.end = start;
             // }
         }
-        
+
         public int getStart() {
             return start;
         }
-        
+
         public int getEnd() {
             return end;
         }
     }
-    
+
     /**
      * Provides access to {@link JavaCharStream#tabSize}. The tab size is used to calculate the correct start and end
      * character for the marker. {@link RuleViolation#getBeginColumn()} and {@link RuleViolation#getEndColumn()} count a
@@ -159,13 +160,13 @@ public final class MarkerUtil {
      * character.
      */
     private static final class Tabs extends JavaCharStream {
-        
+
         public int size = super.tabSize;
-        
+
         public Tabs() {
             super((Reader) null);
         }
-        
+
     }
-    
+
 }

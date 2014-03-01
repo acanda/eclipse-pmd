@@ -128,5 +128,17 @@ public class PMDMarkerTest {
         final String actual = pmdMarker.getViolationClassName();
         assertEquals("The rule id should be read from the wrapped marker", expected, actual);
     }
+    
+    /**
+     * Verifies that {@link PMDMarker#setLanguage(String)} sets the language on the wrapped marker.
+     */
+    @Test
+    public void setLanguage() throws CoreException {
+        final IMarker marker = mock(IMarker.class);
+        final PMDMarker pmdMarker = new PMDMarker(marker);
+        final String expected = "java";
+        pmdMarker.setLanguage(expected);
+        verify(marker).setAttribute("language", expected);
+    }
 
 }
