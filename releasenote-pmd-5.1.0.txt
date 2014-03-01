@@ -1,0 +1,71 @@
+**New/Updated Languages:**
+
+- Java 1.8 support added.
+- PLSQL support added; thanks to Stuart Turton. See also http://pldoc.sourceforge.net/
+- Apache Velocity support added; thanks to Andrey Utis. See also http://velocity.apache.org
+
+**New/Updated Rulesets and Rules:**
+
+- EcmaScript
+    - Controversial ruleset, featuring AvoidWithStatement
+    - UseBaseWithParseInt
+- Java
+    - GuardLogStatement
+        - replace xpath implementation of GuardDebugLogging by GuardLogStatement (better perf)
+    - CommentRequired
+        - basic rule to check for existence for formal (javadoc) comments.
+    - AvoidProtectedMethodInFinalClassNotExtending
+        - rule to avoid protected methods in final classes that don't extend anything other than Object.
+    - ConsecutiveAppendsShouldReuse
+        - rule to encourage to reuse StringBuilder.append returned object for consecutive calls.
+    - PositionLiteralsFirstInCaseInsensitiveComparisons
+        - rule similar to PositionLiteralsFirstInComparisons, but for case insensitive comparisons (equalsIgnoreCase).
+          Thanks to Larry Diamond
+    - ConfusingTernary
+        - new property "ignoreElseIf" to suppress this rule in case of if-else-if-else usage.
+          See [feature 1161]: Confusing Ternary should skip else if statements (or have a property to do so)
+    - FieldDeclarationsShouldBeAtStartOfClass
+        - new property "ignoreEnumDeclarations" which is enabled by default. This relaxes the rule, so
+          that enums can be declared before fields and the rule is not triggered.
+
+[feature 1161]: http://sourceforge.net/p/pmd/bugs/1161/
+
+
+**Bugfixes:**
+
+<http://sourceforge.net/p/pmd/bugs/milestone/PMD-5.1.0/>
+
+* Fixed [bug  881]: private final without setter is flagged
+* Fixed [bug 1059]: Change rule name "Use Singleton" should be "Use Utility class"
+* Fixed [bug 1106]: PMD 5.0.4 fails with NPE on parsing java enum with inner class instance creation
+* Fixed [bug 1045]: //NOPMD not working (or not implemented) with ECMAscript
+* Fixed [bug 1054]: XML Rules ever report a line -1 and not the line/column where the error occurs
+* Fixed [bug 1115]: commentRequiredRule in pmd 5.1 is not working properly
+* Fixed [bug 1120]: equalsnull false positive
+* Fixed [bug 1121]: NullPointerException when invoking XPathCLI
+* Fixed [bug 1123]: failure in help examples
+* Fixed [bug 1124]: PMD.run() multithreading issue
+* Fixed [bug 1125]: Missing Static Method In Non Instantiatable Class
+* Fixed [bug 1126]: False positive with FieldDeclarationsShouldBeAtStartOfClass for static enums
+* Fixed [bug 1130]: CloseResource doesn't recognize custom close method
+* Fixed [bug 1131]: CloseResource should complain if code betwen declaration of resource and try
+* Fixed [bug 1134]: UseStringBufferLength: false positives
+* Fixed [bug 1135]: CheckResultSet ignores results set declared outside of try/catch
+* Fixed [bug 1136]: ECMAScript: NullPointerException in getLeft() and getRight()
+* Fixed [bug 1140]: public EcmascriptNode getBody(int index)
+* Fixed [bug 1141]: ECMAScript: getFinallyBlock() is buggy.
+* Fixed [bug 1142]: ECMAScript: getCatchClause() is buggy.
+* Fixed [bug 1144]: CPD encoding argument has no effect
+* Fixed [bug 1146]: UseArrayListInsteadOfVector false positive when using own Vector class
+* Fixed [bug 1147]: EmptyMethodInAbstractClassShouldBeAbstract false positives
+* Fixed [bug 1150]: "EmptyExpression" for valid statements!
+* Fixed [bug 1154]: Call super onPause when there is no super
+* Fixed [bug 1155]: maven pmd plugin does not like empty rule sets
+* Fixed [bug 1159]: false positive UnusedFormalParameter readObject(ObjectInputStream) if not used
+* Fixed [bug 1164]: Violations are not suppressed with @java.lang.SuppressWarnings("all")
+
+**Miscellaneous:**
+
+- Upgrade to javacc 5.0 (see patch #1109 Patch to build with Javacc 5.0)
+- DBURI as DataSource possible - directly scan plsql code stored within the database
+
