@@ -5,7 +5,7 @@ Bundle-SymbolicName: ch.acanda.eclipse.pmd.lib
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Philip Graf
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ClassPath: lib/guava-16.0.jar
+Bundle-ClassPath: lib/guava-17.0.jar
 Export-Package: com.google.common.annotations,com.google.common.base,c
  om.google.common.cache,com.google.common.collect,com.google.common.es
  cape,com.google.common.eventbus,com.google.common.hash,com.google.com
