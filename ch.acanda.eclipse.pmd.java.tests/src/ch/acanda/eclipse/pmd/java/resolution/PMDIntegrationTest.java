@@ -50,12 +50,12 @@ import com.google.common.collect.Iterators;
 /**
  * Quick fixes usually depend on an exact location of a violation to be able to work correctly. This regression test
  * verifies that the range values of PMD violations (begin/end line, begin/end column) are as expected.
- * 
+ *
  * @author Philip Graf
  */
 @RunWith(value = Parameterized.class)
 public class PMDIntegrationTest {
-    
+
     private static final ImmutableCollection<String> TEST_DATA_XML = ImmutableList.of(
             "basic/ExtendsObject.xml",
             "design/DefaultLabelNotLastInSwitchStmt.xml",
@@ -73,6 +73,7 @@ public class PMDIntegrationTest {
             "emptycode/EmptySynchronizedBlock.xml",
             "emptycode/EmptyTryBlock.xml",
             "emptycode/EmptyWhileStmt.xml",
+            "migration/IntegerInstantiation.xml",
             "naming/SuspiciousHashcodeMethodName.xml",
             "optimization/LocalVariableCouldBeFinal.xml",
             "optimization/MethodArgumentCouldBeFinal.xml",
@@ -83,10 +84,10 @@ public class PMDIntegrationTest {
             "stringandstringbuffer/StringToString.xml",
             "unnecessary/UselessOverridingMethod.xml",
             "unnecessary/UnnecessaryReturn.xml");
-    
+
     private final String testDataXml;
     private final TestParameters params;
-    
+
     public PMDIntegrationTest(final String testDataXml, final TestParameters params) {
         this.testDataXml = testDataXml;
         this.params = params;
