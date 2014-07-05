@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.MessageFormat;
 
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleSet;
@@ -29,6 +30,9 @@ import net.sourceforge.pmd.RuleSetNotFoundException;
 
 import org.eclipse.core.resources.IProject;
 
+import ch.acanda.eclipse.pmd.builder.LocationResolver;
+import ch.acanda.eclipse.pmd.domain.Location;
+import ch.acanda.eclipse.pmd.domain.LocationContext;
 import ch.acanda.eclipse.pmd.ui.model.ValidationProblem;
 import ch.acanda.eclipse.pmd.ui.model.ValidationProblem.Severity;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
@@ -227,23 +231,24 @@ class AddRuleSetConfigurationModel extends ViewModel {
         if (Files.exists(absoluteLocation)) {
             referenceId = absoluteLocation.toString();
         } else {
-            result.add(new ValidationProblem(LOCATION, Severity.ERROR, "The location is not a valid URI"));
+            final String msg = "The location {0} which resolves to {1} does not point to an existing file";
+            result.add(new ValidationProblem(LOCATION, Severity.ERROR, MessageFormat.format(msg, location, absoluteLocation)));
         }
         return referenceId;
     }
 
     private Path getAbsoluteLocation() {
-        final Path absoluteLocation;
+        final LocationContext locationContext;
         if (isWorkspaceTypeSelected) {
-            absoluteLocation = Paths.get(project.getWorkspace().getRoot().getLocationURI()).resolve(Paths.get(location));
+            locationContext = LocationContext.WORKSPACE;
         } else if (isProjectTypeSelected) {
-            absoluteLocation = Paths.get(project.getLocationURI()).resolve(Paths.get(location));
+            locationContext = LocationContext.PROJECT;
         } else if (isFileSystemTypeSelected) {
-            absoluteLocation = Paths.get(location);
+            locationContext = LocationContext.FILESYSTEM;
         } else {
             throw new IllegalStateException("Unknown ");
         }
-        return absoluteLocation;
+        return Paths.get(LocationResolver.resolve(new Location(location, locationContext), project));
     }
 
     private void validateName(final ValidationResult result) {
