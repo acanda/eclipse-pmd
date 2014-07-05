@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -36,9 +35,8 @@ import ch.acanda.eclipse.pmd.swtbot.bot.PMDPropertyDialogBot;
 import ch.acanda.eclipse.pmd.swtbot.client.JavaProjectClient;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
-import com.google.common.io.InputSupplier;
+import com.google.common.io.Resources;
 
 /**
  * Tests the PMD rule set functionality of the PMD property dialog.
@@ -49,25 +47,27 @@ public final class PMDPropertyDialogTest extends GUITestCase {
     
     private static final String PROJECT_NAME_1 = PMDPropertyDialogTest.class.getSimpleName() + "1";
     private static final String PROJECT_NAME_2 = PMDPropertyDialogTest.class.getSimpleName() + "2";
-    
+    private static final String RULE_SET_FILE = "PMDRuleSetTest.xml";
+
     private static final String FILE_SYSTEM_RULE_SET_NAME = "PMD Rules (File System)";
     private static final String WORKSPACE_RULE_SET_NAME = "PMD Rules (Workspace)";
     private static final String PROJECT_RULE_SET_NAME = "PMD Rules (Project)";
     private static final String REMOTE_RULE_SET_NAME = "PMD Rules (Remote)";
     private static final Path PMD_XML = Paths.get("pmd.xml");
+
     private static File rules;
 
     @BeforeClass
     public static void createJavaProjects() throws IOException {
         JavaProjectClient.createJavaProject(PROJECT_NAME_1);
 
-        final String content = CharStreams.toString(CharStreams.newReaderSupplier(new PMDRuleSetSupplier(), Charsets.UTF_8));
+        final String content = Resources.toString(PMDPropertyDialogTest.class.getResource(RULE_SET_FILE), Charsets.UTF_8);
         JavaProjectClient.createFileInProject(PROJECT_NAME_1, PMD_XML, content);
         
         JavaProjectClient.createJavaProject(PROJECT_NAME_2);
         
         rules = File.createTempFile(PMDPropertyDialogTest.class.getSimpleName() + "-", ".xml");
-        Files.copy(new PMDRuleSetSupplier(), rules);
+        Files.write(content, rules, Charsets.UTF_8);
     }
     
     @AfterClass
@@ -325,10 +325,4 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         dialog.bot().waitUntil(shellCloses(dialog));
     }
 
-    private static class PMDRuleSetSupplier implements InputSupplier<InputStream> {
-        @Override
-        public InputStream getInput() throws IOException {
-            return PMDPropertyDialogTest.class.getResourceAsStream("PMDRuleSetTest.xml");
-        }
-    }
 }
