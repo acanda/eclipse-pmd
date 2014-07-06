@@ -56,6 +56,8 @@ class AddRuleSetConfigurationModel extends ViewModel {
     public static final String REMOTE_TYPE_SELECTED = "remoteTypeSelected";
     public static final String BROWSE_ENABLED = "browseEnabled";
     public static final String LOCATION = "location";
+    public static final String NAME = "name";
+    public static final String RULES = "rules";
 
     private final IProject project;
 
@@ -95,7 +97,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
     }
 
     public void setName(final String name) {
-        setProperty("name", this.name, this.name = name);
+        setProperty(NAME, this.name, this.name = name);
     }
 
     public String getLocation() {
@@ -112,7 +114,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
 
     private void setRules(final ImmutableList<Rule> rules) {
         assert rules != null;
-        setProperty("rules", this.rules, this.rules = rules);
+        setProperty(RULES, this.rules, this.rules = rules);
     }
 
     public boolean isFileSystemTypeSelected() {
@@ -165,7 +167,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
 
     @Override
     protected ImmutableSet<String> createValidatedPropertiesSet() {
-        return ImmutableSet.of(LOCATION, "name");
+        return ImmutableSet.of(LOCATION, NAME);
     }
 
     @Override
@@ -246,13 +248,13 @@ class AddRuleSetConfigurationModel extends ViewModel {
         } else if (isFileSystemTypeSelected) {
             locationContext = LocationContext.FILESYSTEM;
         } else {
-            throw new IllegalStateException("Unknown ");
+            throw new IllegalStateException("Unknown location type");
         }
         return Paths.get(LocationResolver.resolve(new Location(location, locationContext), project));
     }
 
     private void validateName(final ValidationResult result) {
-        errorIfBlank("name", name, "Please enter a name for this rule set configuration", result);
+        errorIfBlank(NAME, name, "Please enter a name for this rule set configuration", result);
     }
 
 }
