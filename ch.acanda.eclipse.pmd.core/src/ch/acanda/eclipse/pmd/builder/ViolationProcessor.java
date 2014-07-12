@@ -12,7 +12,7 @@
 package ch.acanda.eclipse.pmd.builder;
 
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.charset.Charset;
 
 import net.sourceforge.pmd.RuleViolation;
 
@@ -21,19 +21,24 @@ import org.eclipse.core.runtime.CoreException;
 
 import ch.acanda.eclipse.pmd.marker.MarkerUtil;
 
+import com.google.common.collect.Iterables;
+import com.google.common.io.Files;
+
 /**
  * Processes the rule violations found by a PMD analysis.
- * 
+ *
  * @author Philip Graf
  */
 public class ViolationProcessor {
-    
+
     public void annotate(final IFile file, final Iterable<RuleViolation> violations) throws CoreException, IOException {
         MarkerUtil.removeAllMarkers(file);
-        final String content = new String(Files.readAllBytes(file.getRawLocation().toFile().toPath()), file.getCharset());
-        for (final RuleViolation violation : violations) {
-            MarkerUtil.addMarker(file, content, violation);
+        if (!Iterables.isEmpty(violations)) {
+            final String content = Files.toString(file.getRawLocation().toFile(), Charset.forName(file.getCharset()));
+            for (final RuleViolation violation : violations) {
+                MarkerUtil.addMarker(file, content, violation);
+            }
         }
     }
-    
+
 }

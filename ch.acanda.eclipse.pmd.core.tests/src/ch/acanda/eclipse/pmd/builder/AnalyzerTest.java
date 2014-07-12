@@ -14,7 +14,6 @@ package ch.acanda.eclipse.pmd.builder;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -169,8 +168,7 @@ public class AnalyzerTest {
             final RuleSets ruleSets = new RuleSetFactory().createRuleSets(ruleSetRefId);
             new Analyzer().analyze(file, ruleSets, violationProcessor);
             
-            final int invocations = violatedRules.length > 0 ? 1 : 0;
-            verify(violationProcessor, times(invocations)).annotate(same(file), violations(violatedRules));
+            verify(violationProcessor).annotate(same(file), violations(violatedRules));
 
         } catch (final RuleSetNotFoundException e) {
             throw new AssertionError("Failed to create rule sets", e);
