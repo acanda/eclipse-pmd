@@ -37,11 +37,11 @@ import com.google.common.collect.ImmutableMap;
 
 /**
  * Analyzes files for coding problems, bugs and inefficient code, i.e. runs PMD.
- * 
+ *
  * @author Philip Graf
  */
 public final class Analyzer {
-    
+
     private static final ImmutableMap<String, Language> LANGUAGES;
     static {
         final Map<String, Language> languages = new HashMap<>();
@@ -52,10 +52,10 @@ public final class Analyzer {
         }
         LANGUAGES = ImmutableMap.copyOf(languages);
     }
-    
+
     /**
      * Analyzes a single file.
-     * 
+     *
      * @param file The file to analyze.
      * @param ruleSets The rule sets against the file will be analyzed.
      * @param violationProcessor The processor that processes the violated rules.
@@ -69,6 +69,7 @@ public final class Analyzer {
                     final InputStreamReader reader = new InputStreamReader(file.getContents(), file.getCharset());
                     final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
                     context.setLanguageVersion(language.getDefaultVersion());
+                    context.setIgnoreExceptions(false);
                     new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
                     final ImmutableList<RuleViolation> violations = ImmutableList.copyOf(context.getReport().iterator());
                     violationProcessor.annotate(file, violations);
@@ -84,7 +85,7 @@ public final class Analyzer {
             }
         }
     }
-    
+
     private boolean isValidFile(final IFile file, final RuleSets ruleSets) {
         // derived (i.e. generated or compiled) files are not analyzed
         return !file.isDerived()
@@ -95,13 +96,13 @@ public final class Analyzer {
                 // the file must not be excluded in the pmd configuration
                 && ruleSets.applies(file.getRawLocation().toFile());
     }
-    
+
     private boolean isValidLanguage(final Language language) {
         return language != null
                 && language.getDefaultVersion() != null
                 && language.getDefaultVersion().getLanguageVersionHandler() != null;
     }
-    
+
     private boolean isIncorrectSyntaxCause(final PMDException e) {
         final Throwable cause = e.getCause();
         // syntax of a Java or JSP file is incorrect
@@ -109,5 +110,5 @@ public final class Analyzer {
                 // syntax of an XML file is incorrect
                 || cause instanceof SAXParseException;
     }
-    
+
 }

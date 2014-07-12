@@ -90,6 +90,15 @@ public class AnalyzerTest {
     }
 
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Velocity files.
+     */
+    @Test
+    public void analyzeVelocity() {
+        analyze("<script type=\"text/javascript\">$s</script>", "UTF-8", "vm", "rulesets/vm/basic.xml/NoInlineJavaScript",
+                "NoInlineJavaScript");
+    }
+    
+    /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't throw a NullPointerException
      * when the file to analyze does not have a file extension.
      */
