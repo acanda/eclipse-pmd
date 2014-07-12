@@ -61,6 +61,11 @@ public final class Analyzer {
      * @param violationProcessor The processor that processes the violated rules.
      */
     public void analyze(final IFile file, final RuleSets ruleSets, final ViolationProcessor violationProcessor) {
+        final Iterable<RuleViolation> violations = runPMD(file, ruleSets);
+        annotateFile(file, violationProcessor, violations);
+    }
+
+    private Iterable<RuleViolation> runPMD(final IFile file, final RuleSets ruleSets) {
         try {
             if (isValidFile(file, ruleSets)) {
                 final Language language = LANGUAGES.get(file.getFileExtension().toLowerCase());
@@ -71,8 +76,7 @@ public final class Analyzer {
                     context.setLanguageVersion(language.getDefaultVersion());
                     context.setIgnoreExceptions(false);
                     new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
-                    final ImmutableList<RuleViolation> violations = ImmutableList.copyOf(context.getReport().iterator());
-                    violationProcessor.annotate(file, violations);
+                    return ImmutableList.copyOf(context.getReport().iterator());
                 }
             }
         } catch (CoreException | IOException e) {
@@ -83,6 +87,15 @@ public final class Analyzer {
             } else {
                 PMDPlugin.getDefault().warn("Could not run PMD on file " + file.getRawLocation(), e);
             }
+        }
+        return ImmutableList.<RuleViolation>of();
+    }
+
+    private void annotateFile(final IFile file, final ViolationProcessor violationProcessor, final Iterable<RuleViolation> violations) {
+        try {
+            violationProcessor.annotate(file, violations);
+        } catch (CoreException | IOException e) {
+            PMDPlugin.getDefault().error("Could not annotate the file " + file.getRawLocation(), e);
         }
     }
 
