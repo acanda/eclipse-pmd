@@ -47,6 +47,7 @@ import org.junit.runners.Parameterized;
 import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 import ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFixTest;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
+import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 import com.google.common.base.Function;
@@ -56,27 +57,27 @@ import com.google.common.collect.Lists;
 /**
  * Base class for testing quick fix tests based on {@link ASTQuickFix}. An extending class must provide a static method
  * with the annotation {@link Parameters} that returns the parameters for the test case, e.g:
- * 
+ *
  * <pre>
  * &#064;Parameters
  * public static Collection&lt;Object[]&gt; getTestData() {
  *     return createTestData(ExtendsObjectQuickFixTest.class.getResourceAsStream(&quot;ExtendsObject.xml&quot;));
  * }
  * </pre>
- * 
+ *
  * The easiest way to implement this method is to use {@link QuickFixTestData#createTestData(InputStream)} and provide
  * an {@code InputStream} to an XML file containing all the test data. See {@link QuickFixTestData} for the format of
  * the XML file.
- * 
+ *
  * See {@link ExtendsObjectQuickFixTest} for a complete example.
- * 
+ *
  * @author Philip Graf
  * @param <T> The type of the quick fix.
  */
 @RunWith(value = Parameterized.class)
 @SuppressWarnings({ "PMD.CommentSize", "PMD.AbstractClassWithoutAbstractMethod" })
 public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNode>> {
-    
+
     private final TestParameters params;
 
     public ASTQuickFixTestCase(final TestParameters parameters) {
@@ -92,7 +93,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
             when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename.orNull());
             final String markerText = params.source.substring(params.offset, params.offset + params.length);
             when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
-            return (ASTQuickFix<ASTNode>) quickFixClass.getConstructor(PMDMarker.class).newInstance(new PMDMarker(marker));
+            return (ASTQuickFix<ASTNode>) quickFixClass.getConstructor(PMDMarker.class).newInstance(new WrappingPMDMarker(marker));
         } catch (SecurityException | ReflectiveOperationException e) {
             throw new IllegalArgumentException(e);
         }
@@ -113,9 +114,9 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         final org.eclipse.jface.text.Document document = new org.eclipse.jface.text.Document(params.source);
         final CompilationUnit ast = createAST(document);
         final ASTNode node = findNode(params, ast, quickFix);
-        
+
         quickFix.apply(node);
-        
+
         final String actual = rewriteAST(document, ast);
         assertEquals("Result of applying the quick fix " + quickFix.getClass().getSimpleName() + " to the test " + params.name,
                 params.expectedSource, actual);
@@ -154,7 +155,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         options.put(DefaultCodeFormatterConstants.FORMATTER_INDENT_BREAKS_COMPARE_TO_CASES, DefaultCodeFormatterConstants.TRUE);
         return options;
     }
-    
+
     @Test
     public void getImage() throws IllegalAccessException, NoSuchFieldException, SecurityException {
         final ImageDescriptor imageDescriptor = getQuickFix().getImageDescriptor();

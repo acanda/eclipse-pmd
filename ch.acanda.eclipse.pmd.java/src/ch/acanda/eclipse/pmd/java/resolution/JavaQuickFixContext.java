@@ -9,22 +9,20 @@
 //
 // =====================================================================
 
-package ch.acanda.eclipse.pmd.marker;
+package ch.acanda.eclipse.pmd.java.resolution;
 
-import org.eclipse.core.resources.IMarker;
+import org.osgi.framework.Version;
 
-public interface PMDMarker {
+final class JavaQuickFixContext {
 
-    String getRuleId();
+    private final Version compilerCompliance;
 
-    String getRuleName();
+    public JavaQuickFixContext(final Version compilerCompliance) {
+        this.compilerCompliance = compilerCompliance;
+    }
 
-    String getViolationClassName();
-
-    String getVariableName();
-
-    String getMarkerText();
-
-    boolean isOtherWithSameRuleId(IMarker other);
+    public Version getCompilerCompliance() {
+        return compilerCompliance;
+    }
 
 }

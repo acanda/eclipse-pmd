@@ -67,7 +67,7 @@ public final class MarkerUtil {
     public static IMarker addMarker(final IFile file, final String content, final RuleViolation violation) throws CoreException {
         final boolean isLongMarker = violation.getBeginLine() != violation.getEndLine();
         final IMarker marker = file.createMarker(isLongMarker ? LONG_MARKER_TYPE : MARKER_TYPE);
-        final PMDMarker pmdMarker = new PMDMarker(marker);
+        final WrappingPMDMarker pmdMarker = new WrappingPMDMarker(marker);
         marker.setAttribute(IMarker.MESSAGE, violation.getDescription());
         marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
         marker.setAttribute(IMarker.LINE_NUMBER, Math.max(violation.getBeginLine(), 0));
@@ -80,13 +80,16 @@ public final class MarkerUtil {
             pmdMarker.setMarkerText(content.substring(start, end));
         }
         final Rule rule = violation.getRule();
-        final String ruleId = rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase() + "." + rule.getName();
-        pmdMarker.setRuleId(ruleId);
+        pmdMarker.setRuleId(createRuleId(rule));
         pmdMarker.setViolationClassName(violation.getClassName());
         pmdMarker.setVariableName(violation.getVariableName());
         pmdMarker.setRuleName(rule.getName());
         pmdMarker.setLanguage(violation.getRule().getLanguage().getTerseName());
         return marker;
+    }
+
+    public static String createRuleId(final Rule rule) {
+        return rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase() + "." + rule.getName();
     }
 
     public static Range getAbsoluteRange(final String content, final RuleViolation violation) {

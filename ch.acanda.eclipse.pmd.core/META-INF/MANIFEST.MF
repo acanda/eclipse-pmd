@@ -24,6 +24,9 @@ Bundle-ClassPath: .,
  lib/xercesImpl-2.9.1.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
-Export-Package: ch.acanda.eclipse.pmd.exception,ch.acanda.eclipse.pmd.
- marker,ch.acanda.eclipse.pmd.ui.util,net.sourceforge.pmd,net.sourcefo
- rge.pmd.lang
+Export-Package: ch.acanda.eclipse.pmd.domain,
+ ch.acanda.eclipse.pmd.exception,
+ ch.acanda.eclipse.pmd.marker,
+ ch.acanda.eclipse.pmd.ui.util,
+ net.sourceforge.pmd,
+ net.sourceforge.pmd.lang

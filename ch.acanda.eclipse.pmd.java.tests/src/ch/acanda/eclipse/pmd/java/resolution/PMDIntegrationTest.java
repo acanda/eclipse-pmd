@@ -13,6 +13,8 @@ package ch.acanda.eclipse.pmd.java.resolution;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,11 +38,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.osgi.framework.Version;
 
 import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 import ch.acanda.eclipse.pmd.marker.MarkerUtil;
 import ch.acanda.eclipse.pmd.marker.MarkerUtil.Range;
+import ch.acanda.eclipse.pmd.marker.PMDMarker;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
@@ -110,7 +115,7 @@ public class PMDIntegrationTest {
     }
 
     @Test
-    public void violationRange() throws IOException, RuleSetNotFoundException, PMDException {
+    public void violationRangeAndRuleId() throws IOException, RuleSetNotFoundException, PMDException {
         assertTrue(testDataXml + ": language is missing", params.language.isPresent());
         assertTrue(testDataXml + ": pmdReferenceId is missing", params.pmdReferenceId.isPresent());
 
@@ -129,7 +134,7 @@ public class PMDIntegrationTest {
             // handle violations that PMD does not (yet) find.
             if (!context.getReport().isEmpty()) {
                 // PMD might find more than one violation. If there is one with a matching range then the test passes.
-                final boolean hasViolationWithMatchingRange = Iterators.any(context.getReport().iterator(),
+                final Optional<RuleViolation> violation = Iterators.tryFind(context.getReport().iterator(),
                         new Predicate<RuleViolation>() {
                             @Override
                             public boolean apply(final RuleViolation violation) {
@@ -138,7 +143,20 @@ public class PMDIntegrationTest {
                             }
                         });
                 assertTrue(testDataXml + " > " + params.name + ": couldn't find violation with expected range (offset = " + params.offset
-                        + ", length = " + params.length + ")", hasViolationWithMatchingRange);
+                        + ", length = " + params.length + ")", violation.isPresent());
+
+                final JavaQuickFixGenerator generator = new JavaQuickFixGenerator();
+                final PMDMarker marker = mock(PMDMarker.class);
+                final String ruleId = MarkerUtil.createRuleId(violation.get().getRule());
+                when(marker.getRuleId()).thenReturn(ruleId);
+                when(marker.getMarkerText()).thenReturn("");
+                final JavaQuickFixContext quickFixContext = new JavaQuickFixContext(new Version(languageVersion.getVersion()));
+
+                assertTrue("The Java quick fix generator should have quick fixes for " + ruleId,
+                        generator.hasQuickFixes(marker, quickFixContext));
+                assertTrue("The Java quick fix generator should have at least one quick fix besides the SuppressWarningsQuickFix for "
+                        + ruleId,
+                        generator.getQuickFixes(marker, quickFixContext).size() > 1);
             }
         } finally {
             sourceFile.delete();
