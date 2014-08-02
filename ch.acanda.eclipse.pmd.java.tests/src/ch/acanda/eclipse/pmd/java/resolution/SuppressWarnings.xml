@@ -147,6 +147,78 @@ public class SimplifyStartsWith extends <marker>Object</marker> {
     </test>
 
 
+    <test name="SuppressWarningsAddAnnotationToClassFromOutsideClass">
+        <setup>
+            <source>
+<marker>import foo.Foo;</marker>
+
+public class Bar {
+}
+            </source>
+            <rulename>ExcessiveImports</rulename>
+        </setup>
+        <expected>
+            <source>
+import foo.Foo;
+
+@SuppressWarnings("PMD.ExcessiveImports") public class Bar {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExcessiveImports'</label>
+            <description>Adds @SuppressWarnings("PMD.ExcessiveImports").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddAnnotationToEnumFromOutsideEnum">
+        <setup>
+            <source>
+<marker>import foo.Foo;</marker>
+
+public enum Bar {
+}
+            </source>
+            <rulename>ExcessiveImports</rulename>
+        </setup>
+        <expected>
+            <source>
+import foo.Foo;
+
+@SuppressWarnings("PMD.ExcessiveImports") public enum Bar {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExcessiveImports'</label>
+            <description>Adds @SuppressWarnings("PMD.ExcessiveImports").</description>
+        </expected>
+    </test>
+
+
+    <test name="SuppressWarningsAddAnnotationToAnnotationDeclarationFromOutsideAnnotationDeclaration">
+        <setup>
+            <source>
+<marker>import foo.Foo;</marker>
+
+public @interface Bar {
+}
+            </source>
+            <rulename>ExcessiveImports</rulename>
+        </setup>
+        <expected>
+            <source>
+import foo.Foo;
+
+@SuppressWarnings("PMD.ExcessiveImports") public @interface Bar {
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add @SuppressWarnings 'PMD.ExcessiveImports'</label>
+            <description>Adds @SuppressWarnings("PMD.ExcessiveImports").</description>
+        </expected>
+    </test>
+
+
     <test name="SuppressWarningsAddToSingleMemberAnnotationToClass">
         <setup>
             <source>

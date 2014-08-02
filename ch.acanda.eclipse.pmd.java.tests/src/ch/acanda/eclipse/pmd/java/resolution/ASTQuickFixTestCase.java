@@ -52,6 +52,7 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
 /**
@@ -135,6 +136,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         final ASTParser astParser = ASTParser.newParser(AST.JLS4);
         astParser.setKind(ASTParser.K_COMPILATION_UNIT);
         astParser.setSource(document.get().toCharArray());
+        astParser.setCompilerOptions(ImmutableMap.<String, String>builder().put(JavaCore.COMPILER_SOURCE, "1.7").build());
         final CompilationUnit ast = (CompilationUnit) astParser.createAST(null);
         ast.recordModifications();
         return ast;
