@@ -15,7 +15,7 @@ Require-Bundle: ch.acanda.eclipse.pmd.lib;bundle-version="1.1.0",
  org.eclipse.core.databinding.property;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
- lib/pmd-5.1.1.jar,
+ lib/pmd-5.1.2.jar,
  lib/jaxen-1.1.1.jar,
  lib/asm-5.0_BETA.jar,
  lib/rhino-1.7R3.jar,

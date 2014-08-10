@@ -25,7 +25,7 @@
 
     <properties>
         <libPath>${basedir}/lib</libPath>
-        <pmdVersion>5.1.1</pmdVersion>
+        <pmdVersion>5.1.2</pmdVersion>
     </properties>
 
     <build>
