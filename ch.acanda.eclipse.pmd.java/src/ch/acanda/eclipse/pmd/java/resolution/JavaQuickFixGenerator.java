@@ -35,6 +35,8 @@ import ch.acanda.eclipse.pmd.java.resolution.migration.ByteInstantiationAutoboxi
 import ch.acanda.eclipse.pmd.java.resolution.migration.ByteInstantiationValueOfQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.migration.IntegerInstantiationAutoboxingQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.migration.IntegerInstantiationValueOfQuickFix;
+import ch.acanda.eclipse.pmd.java.resolution.migration.LongInstantiationAutoboxingQuickFix;
+import ch.acanda.eclipse.pmd.java.resolution.migration.LongInstantiationValueOfQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.migration.ShortInstantiationAutoboxingQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.migration.ShortInstantiationValueOfQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.naming.SuspiciousHashcodeMethodNameQuickFix;
@@ -87,6 +89,9 @@ public final class JavaQuickFixGenerator {
                     .putAll("java.migration.ShortInstantiation",
                             ShortInstantiationAutoboxingQuickFix.class,
                             ShortInstantiationValueOfQuickFix.class)
+                    .putAll("java.migration.LongInstantiation",
+                            LongInstantiationAutoboxingQuickFix.class,
+                            LongInstantiationValueOfQuickFix.class)
                     .putAll("java.naming.SuspiciousHashcodeMethodName", SuspiciousHashcodeMethodNameQuickFix.class)
                     .putAll("java.optimization.LocalVariableCouldBeFinal", LocalVariableCouldBeFinalQuickFix.class)
                     .putAll("java.optimization.MethodArgumentCouldBeFinal", MethodArgumentCouldBeFinalQuickFix.class)
