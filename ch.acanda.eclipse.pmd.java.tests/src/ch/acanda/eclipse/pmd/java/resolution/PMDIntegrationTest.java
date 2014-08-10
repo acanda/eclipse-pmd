@@ -82,6 +82,8 @@ public class PMDIntegrationTest {
             "migration/IntegerInstantiationValueOf.xml",
             "migration/ByteInstantiationAutoboxing.xml",
             "migration/ByteInstantiationValueOf.xml",
+            "migration/ShortInstantiationAutoboxing.xml",
+            "migration/ShortInstantiationValueOf.xml",
             "naming/SuspiciousHashcodeMethodName.xml",
             "optimization/LocalVariableCouldBeFinal.xml",
             "optimization/MethodArgumentCouldBeFinal.xml",
