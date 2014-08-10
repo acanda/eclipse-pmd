@@ -1,0 +1,43 @@
+Bugfixes:
+
+* Fixed [bug #1181]: unused import false positive if used as parameter in javadoc only.
+* Fixed [bug #1192]: Ecmascript fails to parse this operator " ^= "
+* Fixed [bug #1198]: ConfusingTernary does not ignore else if blocks even when property is set
+* Fixed [bug #1200]: setRuleSets method javadoc mistype commands instead commas
+* Fixed [bug #1201]: Error "Can't find resource null" when ruleset contains spaces after comma
+* Fixed [bug #1202]: StackOverflowError in RuleSetReferenceId
+* Fixed [bug #1205]: Parse error on lambda with if
+* Fixed [bug #1206]: SummaryHTMLRenderer always shows suppressed warnings/violations
+* Fixed [bug #1208]: yahtml's outputDir property does not work
+* Fixed [bug #1209]: XPath 2.0 following-sibling incorrectly includes context node
+* Fixed [bug #1211]: PMD is failing with NPE for rule UseIndexOfChar while analyzing Jdk 8 Lambda expression
+* Fixed [bug #1214]: UseCollectionIsEmpty misses some usage
+* Fixed [bug #1215]: AvoidInstantiatingObjectsInLoops matches the right side of a list iteration loop
+* Fixed [bug #1216]: AtLeastOneConstructor ignores classes with *any* methods
+* Fixed [bug #1218]: TooFewBranchesForASwitchStatement misprioritized
+* Fixed [bug #1219]: PrimarySuffix/@Image does not work in some cases in xpath 2.0
+* Fixed [bug #1223]: UnusedPrivateMethod: Java 8 method reference causing false positives
+* Fixed [bug #1224]: GuardDebugLogging broken in 5.1.1 - missing additive statement check in log statement
+* Fixed [bug #1226]: False Positive: UnusedPrivateMethod overloading with varargs
+* Fixed [bug #1227]: GuardLogStatementJavaUtil doesn't catch log(Level.FINE, "msg" + " msg") calls
+
+
+Feature Requests and Improvements:
+
+* [#1203]: Make GuardLogStatementJavaUtil configurable
+* [#1213]: AvoidLiteralsInIfCondition -- switch for integer comparison with 0
+* [#1217]: SystemPrintln always says "System.out.print is used"
+* [#1221]: OneDeclarationPerLine really checks for one declaration each statement
+
+Pull requests:
+
+* [#41]: Update to use asm 5.0.2
+* [#42]: Add SLF4j Logger type to MoreThanOneLogger rule
+* [#43]: Standard and modified cyclomatic complexity
+
+New Rules:
+
+* Java - codesize ruleset:
+    * StdCyclomaticComplexity: Like CyclomaticComplexityRule, but not including boolean operators
+    * ModifiedCyclomaticComplexity: Like StdCyclomaticComplexity, but switch statement plus all cases count as 1
+    * Thanks to Alan Hohn
