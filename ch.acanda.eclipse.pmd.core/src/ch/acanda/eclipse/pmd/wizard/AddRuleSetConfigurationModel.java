@@ -11,7 +11,7 @@
 
 package ch.acanda.eclipse.pmd.wizard;
 
-import static ch.acanda.eclipse.pmd.ui.util.ValidationUtil.errorIfBlank;
+import static ch.acanda.eclipse.pmd.ui.model.ValidationUtil.errorIfBlank;
 
 import java.io.IOException;
 import java.io.InputStream;
