@@ -67,7 +67,7 @@ public final class RuleSetsCache {
         // by expiring the rule sets we make sure to notice changes in remote configurations
         cache = CacheBuilder.newBuilder().expireAfterWrite(1, HOURS).build(loader);
 
-        fileWatcher = createFileWatcher(cache);
+        fileWatcher = createFileWatcher();
 
         for (final ProjectModel projectModel : workspaceModel.getProjects()) {
             projectModel.addPropertyChangeListener(/* RULESETS_PROPERTY, */projectModelListener);
@@ -106,7 +106,7 @@ public final class RuleSetsCache {
         startWatchingRuleSetFiles(projectModel);
     }
 
-    private Optional<FileWatcher> createFileWatcher(final LoadingCache<String, RuleSets> cache) {
+    private Optional<FileWatcher> createFileWatcher() {
         Optional<FileWatcher> fileWatcher;
         try {
             fileWatcher = Optional.of(new FileWatcher());

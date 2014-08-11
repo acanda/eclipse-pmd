@@ -38,7 +38,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
 
     public static final String ID = "ch.acanda.eclipse.pmd.builder.PMDBuilder";
 
-    private static final RuleSetsCache cache = new RuleSetsCache(new RuleSetsCacheLoader(), PMDPlugin.getDefault().getWorkspaceModel());
+    private static final RuleSetsCache CACHE = new RuleSetsCache(new RuleSetsCacheLoader(), PMDPlugin.getDefault().getWorkspaceModel());
 
     @Override
     @SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
@@ -71,7 +71,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
 
     void analyze(final IResource resource) {
         if (resource instanceof IFile) {
-            final RuleSets ruleSets = cache.getRuleSets(resource.getProject().getName());
+            final RuleSets ruleSets = CACHE.getRuleSets(resource.getProject().getName());
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
         }
     }
