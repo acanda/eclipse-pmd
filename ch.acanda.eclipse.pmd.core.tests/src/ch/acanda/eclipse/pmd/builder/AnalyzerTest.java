@@ -20,8 +20,11 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Properties;
 
+import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
@@ -55,6 +58,25 @@ public class AnalyzerTest {
     }
     
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all Java rules.
+     */
+    @Test
+    public void analyzeJavaAllRules() throws IOException {
+        final String content = "/** */\n"
+                + "package a;\n"
+                + "class FooBar {\n"
+                + "  /** */\n"
+                + "  public FooBar() {\n"
+                + "    baz();\n"
+                + "  }\n"
+                + "  private void baz() {\n"
+                + "    /* */\n"
+                + "  }\n"
+                + "}\n";
+        analyze(content, "UTF-8", "java", getAllRuleSetRefIds("java"));
+    }
+
+    /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze xml files.
      */
     @Test
@@ -63,6 +85,14 @@ public class AnalyzerTest {
     }
 
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all xml rules.
+     */
+    @Test
+    public void analyzeXMLAllRules() throws IOException {
+        analyze("<a/>", "UTF-8", "xml", getAllRuleSetRefIds("xml"));
+    }
+    
+    /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze jsp files.
      */
     @Test
@@ -70,6 +100,14 @@ public class AnalyzerTest {
         analyze("<jsp:forward page='a.jsp'/>", "UTF-8", "jsp", "rulesets/jsp/basic.xml/NoJspForward", "NoJspForward");
     }
 
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all jsp rules.
+     */
+    @Test
+    public void analyzeJSPAllRules() throws IOException {
+        analyze("<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>", "UTF-8", "jsp", getAllRuleSetRefIds("jsp"));
+    }
+    
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze xsl files.
      */
@@ -80,14 +118,30 @@ public class AnalyzerTest {
     }
 
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all jsp rules.
+     */
+    @Test
+    public void analyzeXSLAllRules() throws IOException {
+        analyze("<a/>", "UTF-8", "xsl", getAllRuleSetRefIds("xsl"));
+    }
+    
+    /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Ecmascript files.
      */
     @Test
     public void analyzeEcmascript() {
-        analyze("var z = 1.12345678901234567;", "UTF-8", "js",
+        analyze("var z = 1.12345678901234567", "UTF-8", "js",
                 "rulesets/ecmascript/basic.xml/InnaccurateNumericLiteral", "InnaccurateNumericLiteral");
     }
 
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all ecmascript rules.
+     */
+    @Test
+    public void analyzeEcmascriptAllRules() throws IOException {
+        analyze("var i = 0", "UTF-8", "js", getAllRuleSetRefIds("ecmascript"));
+    }
+    
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Velocity files.
      */
@@ -95,6 +149,39 @@ public class AnalyzerTest {
     public void analyzeVelocity() {
         analyze("<script type=\"text/javascript\">$s</script>", "UTF-8", "vm", "rulesets/vm/basic.xml/NoInlineJavaScript",
                 "NoInlineJavaScript");
+    }
+    
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all Velocity rules.
+     */
+    @Test
+    public void analyzeVelocityAllRules() throws IOException {
+        analyze("<a/>", "UTF-8", "vm", getAllRuleSetRefIds("vm"));
+    }
+    
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze PLSQL files.
+     */
+    @Test
+    public void analyzePLSQL() {
+        final String content = "CREATE OR REPLACE PACKAGE BODY date_utilities\n"
+                + "IS\n"
+                + "FUNCTION to_date_single_parameter (p_date_string IN VARCHAR2) RETURN DATE\n"
+                + "IS\n"
+                + "BEGIN\n"
+                + "   RETURN TO_DATE(p_date_string);\n"
+                + "END to_date_single_parameter;\n"
+                + "END date_utilities;";
+        analyze(content, "UTF-8", "sql", "rulesets/plsql/dates.xml/TO_DATEWithoutDateFormat",
+                "TO_DATEWithoutDateFormat");
+    }
+    
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all PLSQL rules.
+     */
+    @Test
+    public void analyzePLSQLAllRules() throws IOException {
+        analyze("select * from a", "UTF-8", "sql", getAllRuleSetRefIds("plsql"));
     }
     
     /**
@@ -192,6 +279,14 @@ public class AnalyzerTest {
         return file;
     }
 
+    private String getAllRuleSetRefIds(final String language) throws IOException {
+        try (final InputStream in = PMD.class.getResourceAsStream("/rulesets/" + language + "/rulesets.properties")) {
+            final Properties properties = new Properties();
+            properties.load(in);
+            return properties.getProperty("rulesets.filenames");
+        }
+    }
+
     private Iterable<RuleViolation> violations(final String... ruleNames) {
         return argThat(new RuleViolationIteratorMatcher(ruleNames));
     }
@@ -232,5 +327,4 @@ public class AnalyzerTest {
         }
 
     }
-    
 }
