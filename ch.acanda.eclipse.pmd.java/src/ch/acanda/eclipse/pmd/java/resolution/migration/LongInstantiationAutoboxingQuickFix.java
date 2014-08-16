@@ -31,13 +31,13 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a href=http://pmd.sourceforge.net/rules/java/migrating.html#LongInstantiation"
- * >LongInstantiation</a>. It replaces an Long instantiation with autoboxing.
+ * >LongInstantiation</a>. It replaces a Long instantiation with autoboxing.
  *
  * @author Philip Graf
  */
 public class LongInstantiationAutoboxingQuickFix extends ASTQuickFix<ClassInstanceCreation> {
 
-    private final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
+    private static final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
 
     public LongInstantiationAutoboxingQuickFix(final PMDMarker marker) {
         super(marker);

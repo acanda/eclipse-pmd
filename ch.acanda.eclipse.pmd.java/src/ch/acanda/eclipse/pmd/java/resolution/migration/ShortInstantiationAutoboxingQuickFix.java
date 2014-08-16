@@ -31,13 +31,13 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a href=http://pmd.sourceforge.net/rules/java/migrating.html#ShortInstantiation"
- * >ShortInstantiation</a>. It replaces an Short instantiation with autoboxing.
+ * >ShortInstantiation</a>. It replaces a Short instantiation with autoboxing.
  *
  * @author Philip Graf
  */
 public class ShortInstantiationAutoboxingQuickFix extends ASTQuickFix<ClassInstanceCreation> {
 
-    private final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
+    private static final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
 
     public ShortInstantiationAutoboxingQuickFix(final PMDMarker marker) {
         super(marker);

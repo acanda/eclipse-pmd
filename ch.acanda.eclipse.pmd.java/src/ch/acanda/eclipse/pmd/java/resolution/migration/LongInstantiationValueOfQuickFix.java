@@ -33,13 +33,13 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a href=http://pmd.sourceforge.net/rules/java/migrating.html#LongInstantiation"
- * >LongInstantiation</a>. It replaces an Long instantiation with a call to {@code Long.valueOf(Long)}.
+ * >LongInstantiation</a>. It replaces a Long instantiation with a call to {@code Long.valueOf(Long)}.
  *
  * @author Philip Graf
  */
 public class LongInstantiationValueOfQuickFix extends ASTQuickFix<ClassInstanceCreation> {
 
-    private final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
+    private static final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
 
     public LongInstantiationValueOfQuickFix(final PMDMarker marker) {
         super(marker);

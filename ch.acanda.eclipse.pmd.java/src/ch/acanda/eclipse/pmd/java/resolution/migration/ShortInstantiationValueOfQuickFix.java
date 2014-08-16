@@ -33,13 +33,13 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a href=http://pmd.sourceforge.net/rules/java/migrating.html#ShortInstantiation"
- * >ShortInstantiation</a>. It replaces an Short instantiation with a call to {@code Short.valueOf(short)}.
+ * >ShortInstantiation</a>. It replaces a Short instantiation with a call to {@code Short.valueOf(short)}.
  *
  * @author Philip Graf
  */
 public class ShortInstantiationValueOfQuickFix extends ASTQuickFix<ClassInstanceCreation> {
 
-    private final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
+    private static final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
 
     public ShortInstantiationValueOfQuickFix(final PMDMarker marker) {
         super(marker);

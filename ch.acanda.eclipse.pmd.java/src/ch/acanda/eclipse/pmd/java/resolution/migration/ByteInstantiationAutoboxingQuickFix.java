@@ -31,13 +31,13 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
  * Quick fix for the rule <a href= "http://pmd.sourceforge.net/rules/java/migrating.html#ByteInstantiation"
- * >ByteInstantiation</a>. It replaces an Byte instantiation with autoboxing.
+ * >ByteInstantiation</a>. It replaces a Byte instantiation with autoboxing.
  *
  * @author Philip Graf
  */
 public class ByteInstantiationAutoboxingQuickFix extends ASTQuickFix<ClassInstanceCreation> {
 
-    private final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
+    private static final Pattern ARGUMENT = Pattern.compile("\\((.*)\\)");
 
     public ByteInstantiationAutoboxingQuickFix(final PMDMarker marker) {
         super(marker);
