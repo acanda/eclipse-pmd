@@ -27,68 +27,68 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
-
 import com.google.common.base.Optional;
 
 /**
  * Reads the test data from an xml file with the following format:
- * 
+ *
  * <pre>
  * &lt;?xml version="1.0" encoding="UTF-8"?>
  * &lt;tests>
  *     &lt;!-- The PMD reference id of the rule that is being tested -->
  *     &lt;pmdReferenceId>rulesets/java/basic.xml/ExtendsObject&lt;/pmdReferenceId>
- * 
+ *
  *     &lt;!-- The language and version of the provided source code -->
  *     &lt;language>java 1.7&lt;/language>
- * 
+ *
  *     &lt;!-- Every test must have a name. It will be shown in assertion messages
  *          so you can identify the failing test. There can be more than one test in a file. -->
  *     &lt;test name="SimpleExtendsObject">
- * 
+ *
  *         &lt;!-- The setup contains all the data to set up the test -->
  *         &lt;setup>
- * 
+ *
  *             &lt;!-- The source must be a valid Java compilation unit and must contain a marker.
  *                  The marker marks the position where the quick fix should be applied. -->
  *             &lt;source>
  * class Example extends &lt;marker>Object&lt;/marker> {
  * }
  *             &lt;/source>
- * 
+ *
  *         &lt;/setup>
- * 
+ *
  *         &lt;!-- The 'expected' part contains all the expected values. -->
  *         &lt;expected>
- * 
+ *
  *             &lt;!-- The expected source after the quick fix has been applied. -->
  *             &lt;source>
  * class Example {
  * }
  *             &lt;/source>
- * 
- *             &lt;!-- The expected image of the quick fix. This must be the name of a field in {@link PMDPluginImages}.
- *                  The image is optional. If no image is provided the test verifies only that the image is not {@code null}. -->
+ *
+ *             &lt;!-- The expected image of the quick fix. This must be the name of a field in
+ *                  {@link ch.acanda.eclipse.pmd.ui.util.PMDPluginImages PMDPluginImages}.
+ *                  The image is optional. If no image is provided the test verifies only that
+ *                  the image is not {@code null}. -->
  *             &lt;image>QUICKFIX_REMOVE&lt;/image>
- * 
+ *
  *             &lt;!-- The expected label of the quick fix. The label is optional.
  *                  If no label is provided the test verifies only that the label is not {@code null}. -->
  *             &lt;label>Remove 'extends Object'&lt;/label>
- * 
+ *
  *             &lt;!-- The expected description of the quick fix. The description is optional.
  *                  If no description is provided the test verifies only that the description is not {@code null}. -->
  *             &lt;description>Removes &amp;lt;b>extends Object&amp;lt;/b> from the type declaration of Example&lt;/description>
- * 
+ *
  *         &lt;/expected>
  *     &lt;/test>
  * &lt;/tests>
  * </pre>
- * 
+ *
  * @author Philip Graf
  */
 public class QuickFixTestData {
-    
+
     public static List<TestParameters> createTestData(final InputStream testCase) {
         final List<TestParameters> data = new ArrayList<>();
         try {
@@ -127,7 +127,7 @@ public class QuickFixTestData {
         params.expectedDescription = getOptionalValue(expected, "description");
         return params;
     }
-    
+
     private static Optional<String> getOptionalValue(final Element element, final String tagName) {
         return getOptionalValue(element.getElementsByTagName(tagName));
     }
@@ -138,7 +138,7 @@ public class QuickFixTestData {
         }
         return Optional.of(elements.item(0).getFirstChild().getNodeValue().trim());
     }
-    
+
     private static String getValue(final Element element, final String tagName) {
         return getValue(element.getElementsByTagName(tagName));
     }
@@ -160,7 +160,7 @@ public class QuickFixTestData {
         }
         return s.substring(pos);
     }
-    
+
     private static String rtrim(final String s) {
         final int len = s.length();
         int pos = s.length() - 1;
@@ -169,7 +169,7 @@ public class QuickFixTestData {
         }
         return s.substring(0, pos + 1);
     }
-    
+
     public static final class TestParameters {
         public Optional<String> pmdReferenceId;
         public Optional<String> language;

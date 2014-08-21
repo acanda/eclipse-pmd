@@ -16,10 +16,10 @@ import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
-import ch.acanda.eclipse.pmd.ui.dialog.FileSelectionDialog;
 
 /**
- * The {@link FileSelectionDialogBot} provides easy access to the {@link FileSelectionDialog}'s widgets.
+ * The {@link FileSelectionDialogBot} provides easy access to the
+ * {@link ch.acanda.eclipse.pmd.ui.dialog.FileSelectionDialog FileSelectionDialog}'s widgets.
  * 
  * @author Philip Graf
  */

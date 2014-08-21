@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.security.Policy.Parameters;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
-import ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFixTest;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
@@ -57,7 +55,8 @@ import com.google.common.collect.Lists;
 
 /**
  * Base class for testing quick fix tests based on {@link ASTQuickFix}. An extending class must provide a static method
- * with the annotation {@link Parameters} that returns the parameters for the test case, e.g:
+ * with the annotation {@link org.junit.runners.Parameterized.Parameters} that returns the parameters for the test case,
+ * e.g:
  *
  * <pre>
  * &#064;Parameters
@@ -70,7 +69,8 @@ import com.google.common.collect.Lists;
  * an {@code InputStream} to an XML file containing all the test data. See {@link QuickFixTestData} for the format of
  * the XML file.
  *
- * See {@link ExtendsObjectQuickFixTest} for a complete example.
+ * See {@link ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFixTest ExtendsObjectQuickFixTest} for a
+ * complete example.
  *
  * @author Philip Graf
  * @param <T> The type of the quick fix.
