@@ -30,7 +30,7 @@
 
     <rule ref="rulesets/java/design.xml">
         <exclude name="ConfusingTernary" />
-        <exclude name="UseSingleton" />
+        <exclude name="UseUtilityClass" />
     </rule>
 
     <rule ref="rulesets/java/empty.xml">
