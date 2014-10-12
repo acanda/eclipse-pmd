@@ -22,6 +22,11 @@
     <packaging>eclipse-test-plugin</packaging>
     <name>eclipse-pmd unit tests for java</name>
 
+    <properties>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -75,6 +80,25 @@
                     <argLine>${os-jvm-flags}</argLine>
                 </configuration>
             </plugin>
+            
+            <!-- temporarily disable failOnViolation until the maven checkstyle plugin supports Java 8 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>checkstyle</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <failOnViolation>false</failOnViolation>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

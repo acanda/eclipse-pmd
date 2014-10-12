@@ -48,7 +48,6 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -101,12 +100,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     }
 
     public static List<Object[]> createTestData(final InputStream testCase) {
-        return Lists.transform(QuickFixTestData.createTestData(testCase), new Function<TestParameters, Object[]>() {
-            @Override
-            public Object[] apply(final TestParameters params) {
-                return new Object[] { params };
-            }
-        });
+        return Lists.transform(QuickFixTestData.createTestData(testCase), params -> new Object[] { params });
     }
 
     @Test

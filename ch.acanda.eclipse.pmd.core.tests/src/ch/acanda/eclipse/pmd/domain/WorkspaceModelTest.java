@@ -101,13 +101,8 @@ public class WorkspaceModelTest {
     public void removeDoesNotFireARemoveElementPropertyChangeEventForInexistentProject() {
         final WorkspaceModel model = new WorkspaceModel();
         final boolean[] eventFired = new boolean[1];
-        model.addPropertyChangeListener(WorkspaceModel.PROJECTS_PROPERTY, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(final PropertyChangeEvent event) {
-                eventFired[0] = true;
-            }
-        });
-        
+        model.addPropertyChangeListener(WorkspaceModel.PROJECTS_PROPERTY, event -> eventFired[0] = true);
+
         model.remove("Bar");
         
         assertFalse("An event should not be fired when removing an inexistent project model", eventFired[0]);
