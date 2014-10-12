@@ -14,5 +14,7 @@ before_script:
   - sleep 10 # give xvfb some time to start
   - metacity --sm-disable --replace &
 
-script: mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B
+script: 
+  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=indigo
+  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=juno
 

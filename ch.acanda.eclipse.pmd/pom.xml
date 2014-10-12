@@ -23,6 +23,7 @@
         <tycho-extras-version>0.21.0</tycho-extras-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
+        <eclipse-release>indigo</eclipse-release>
         <lib-path>${basedir}/lib</lib-path>
         <mockito-version>1.9.5</mockito-version>
         <guava-version>18.0</guava-version>
@@ -33,11 +34,6 @@
     </properties>
 
     <repositories>
-        <repository>
-            <id>indigo</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/releases/indigo/</url>
-        </repository>
         <repository>
             <id>swtbot</id>
             <layout>p2</layout>
@@ -100,8 +96,8 @@
                     <target>
                         <artifact>
                             <groupId>ch.acanda.eclipse.pmd</groupId>
-                            <artifactId>indigo</artifactId>
-                            <classifier>indigo</classifier>
+                            <artifactId>${eclipse-release}</artifactId>
+                            <classifier>${eclipse-release}</classifier>
                         </artifact>
                     </target>
                     <ignoreTychoRepositories>true</ignoreTychoRepositories>
@@ -156,11 +152,12 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
         </plugins>
     </build>
 
     <profiles>
+
         <profile>
             <id>macosx-jvm-flags</id>
             <activation>
@@ -173,6 +170,42 @@
                 <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
             </properties>
         </profile>
+
+        <profile>
+            <id>eclipse-indigo</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>indigo</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>indigo</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/indigo/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>eclipse-juno</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>juno</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>juno</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/juno/</url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
 
     <developers>
