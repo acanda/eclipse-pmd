@@ -174,10 +174,8 @@
         <profile>
             <id>eclipse-indigo</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
                 <property>
-                    <name>eclipse-release</name>
-                    <value>indigo</value>
+                    <name>!eclipse-release</name>
                 </property>
             </activation>
             <repositories>
