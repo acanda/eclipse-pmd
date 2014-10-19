@@ -24,6 +24,7 @@ import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.SourceCodeProcessor;
 import net.sourceforge.pmd.lang.Language;
+import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.ast.ParseException;
 
 import org.eclipse.core.resources.IFile;
@@ -45,7 +46,7 @@ public final class Analyzer {
     private static final ImmutableMap<String, Language> LANGUAGES;
     static {
         final Map<String, Language> languages = new HashMap<>();
-        for (final Language language : Language.values()) {
+        for (final Language language : LanguageRegistry.getLanguages()) {
             for (final String extension : language.getExtensions()) {
                 languages.put(extension, language);
             }

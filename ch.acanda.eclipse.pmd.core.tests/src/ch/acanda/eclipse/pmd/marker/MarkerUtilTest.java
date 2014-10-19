@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleViolation;
-import net.sourceforge.pmd.lang.Language;
+import net.sourceforge.pmd.lang.java.JavaLanguageModule;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -75,7 +75,7 @@ public class MarkerUtilTest {
         when(violation.getEndColumn()).thenReturn(22);
         when(violation.getClassName()).thenReturn("ClassName");
         final Rule rule = mock(Rule.class);
-        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getLanguage()).thenReturn(new JavaLanguageModule());
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
@@ -111,7 +111,7 @@ public class MarkerUtilTest {
         when(violation.getEndColumn()).thenReturn(30);
         when(violation.getClassName()).thenReturn("ClassName");
         final Rule rule = mock(Rule.class);
-        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getLanguage()).thenReturn(new JavaLanguageModule());
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
@@ -147,7 +147,7 @@ public class MarkerUtilTest {
         when(violation.getEndColumn()).thenReturn(-24);
         when(violation.getClassName()).thenReturn("ClassName");
         final Rule rule = mock(Rule.class);
-        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getLanguage()).thenReturn(new JavaLanguageModule());
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
@@ -184,7 +184,7 @@ public class MarkerUtilTest {
         when(violation.getEndColumn()).thenReturn(1);
         when(violation.getClassName()).thenReturn("ClassName");
         final Rule rule = mock(Rule.class);
-        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getLanguage()).thenReturn(new JavaLanguageModule());
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
@@ -221,7 +221,7 @@ public class MarkerUtilTest {
         when(violation.getEndColumn()).thenReturn(17);
         when(violation.getClassName()).thenReturn("ClassName");
         final Rule rule = mock(Rule.class);
-        when(rule.getLanguage()).thenReturn(Language.JAVA);
+        when(rule.getLanguage()).thenReturn(new JavaLanguageModule());
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);

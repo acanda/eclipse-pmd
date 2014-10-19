@@ -15,15 +15,27 @@ Require-Bundle: ch.acanda.eclipse.pmd.lib;bundle-version="1.2.0",
  org.eclipse.core.databinding.property;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
- lib/pmd-5.1.3.jar,
  lib/jaxen-1.1.1.jar,
- lib/asm-5.0_BETA.jar,
+ lib/asm-5.0.2.jar,
  lib/rhino-1.7R3.jar,
  lib/commons-io-2.2.jar,
  lib/commons-lang3-3.1.jar,
  lib/xercesImpl-2.9.1.jar,
  lib/saxon-9.1.0.8-dom.jar,
- lib/saxon-9.1.0.8.jar
+ lib/saxon-9.1.0.8.jar,
+ lib/pmd-core-5.2.0.jar,
+ lib/pmd-cpp-5.2.0.jar,
+ lib/pmd-cs-5.2.0.jar,
+ lib/pmd-fortran-5.2.0.jar,
+ lib/pmd-go-5.2.0.jar,
+ lib/pmd-java-5.2.0.jar,
+ lib/pmd-javascript-5.2.0.jar,
+ lib/pmd-jsp-5.2.0.jar,
+ lib/pmd-php-5.2.0.jar,
+ lib/pmd-plsql-5.2.0.jar,
+ lib/pmd-ruby-5.2.0.jar,
+ lib/pmd-vm-5.2.0.jar,
+ lib/pmd-xml-5.2.0.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
 Export-Package: ch.acanda.eclipse.pmd.domain,

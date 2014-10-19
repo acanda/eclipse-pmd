@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.java.resolution;
 
+import static com.google.common.base.Preconditions.checkState;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
@@ -22,6 +23,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;
@@ -32,6 +35,8 @@ import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
 import net.sourceforge.pmd.SourceCodeProcessor;
+import net.sourceforge.pmd.lang.Language;
+import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
 
 import org.junit.Test;
@@ -123,10 +128,14 @@ public class PMDIntegrationTest {
 
     @Test
     public void violationRangeAndRuleId() throws IOException, RuleSetNotFoundException, PMDException {
-        assertTrue(testDataXml + ": language is missing", params.language.isPresent());
-        assertTrue(testDataXml + ": pmdReferenceId is missing", params.pmdReferenceId.isPresent());
+        checkState(params.language.isPresent(), "%s: language is missing", testDataXml);
+        checkState(params.pmdReferenceId.isPresent(), "%s: pmdReferenceId is missing", testDataXml);
 
-        final LanguageVersion languageVersion = LanguageVersion.findByTerseName(params.language.get());
+        final Matcher languageMatcher = Pattern.compile("(.*)\\s+(\\d+[\\.\\d]+)").matcher(params.language.get());
+        checkState(languageMatcher.matches(), "%s: language must be formated '<terse-name> <version>'", testDataXml);
+
+        final Language language = LanguageRegistry.findLanguageByTerseName(languageMatcher.group(1));
+        final LanguageVersion languageVersion = language.getVersion(languageMatcher.group(2));
         final String fileExtension = "." + languageVersion.getLanguage().getExtensions().get(0);
         final File sourceFile = File.createTempFile(getClass().getSimpleName(), fileExtension);
         try {

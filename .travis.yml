@@ -15,6 +15,6 @@ before_script:
   - metacity --sm-disable --replace &
 
 script: 
-  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=indigo
+  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B
   - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=juno
 
