@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tests for the plug-in ch.acanda.eclipse.pmd.java
+Bundle-Name: eclipse-pmd Java Tests
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.java.tests
 Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Philip Graf
