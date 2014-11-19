@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.swtbot.condition;
 
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
 
@@ -36,6 +37,15 @@ public final class Conditions {
      */
     public static ICondition isChecked(final SWTBotTableItem tableItem) {
         return new IsChecked(tableItem);
+    }
+
+    /**
+     * Returns a condition that tests if a perspective is active.
+     * 
+     * @see IsPerspectiveActive
+     */
+    public static ICondition isPerspectiveActive(final SWTBotPerspective perspective) {
+        return new IsPerspectiveActive(perspective);
     }
 
 }

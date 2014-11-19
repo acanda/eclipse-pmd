@@ -33,15 +33,6 @@
         <maven.compiler.testSource>1.8</maven.compiler.testSource>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>swtbot</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site</url>
-        </repository>
-    </repositories>
-
-
     <modules>
         <module>../ch.acanda.eclipse.pmd.repository</module>
         <module>../ch.acanda.eclipse.pmd.target</module>
@@ -180,7 +171,7 @@
                 </os>
             </activation>
             <properties>
-                <!-- tycho-surefire-plugin needs -XstartOnFirstThread on mac os-->
+                <!-- tycho-surefire-plugin needs -XstartOnFirstThread on mac os -->
                 <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
             </properties>
         </profile>
@@ -198,6 +189,11 @@
                     <layout>p2</layout>
                     <url>http://download.eclipse.org/releases/indigo/</url>
                 </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
             </repositories>
         </profile>
 
@@ -214,6 +210,11 @@
                     <id>juno</id>
                     <layout>p2</layout>
                     <url>http://download.eclipse.org/releases/juno/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
                 </repository>
             </repositories>
         </profile>
