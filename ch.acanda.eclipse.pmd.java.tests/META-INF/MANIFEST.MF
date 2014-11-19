@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eclipse-pmd Java Tests
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.java.tests
-Bundle-Version: 1.3.0.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: Philip Graf
-Fragment-Host: ch.acanda.eclipse.pmd.java;bundle-version="1.3.0"
+Fragment-Host: ch.acanda.eclipse.pmd.java;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit;bundle-version="4.8.2"
 Bundle-ClassPath: .,
