@@ -5,7 +5,7 @@ Bundle-SymbolicName: ch.acanda.eclipse.pmd.java.tests
 Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: Philip Graf
 Fragment-Host: ch.acanda.eclipse.pmd.java;bundle-version="1.4.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit;bundle-version="4.8.2"
 Bundle-ClassPath: .,
  lib/mockito-all-1.10.8.jar

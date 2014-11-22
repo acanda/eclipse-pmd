@@ -17,4 +17,7 @@ before_script:
 script: 
   - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B
   - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=juno
+  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=kepler
+  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=luna
+  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=mars
 

@@ -219,6 +219,72 @@
             </repositories>
         </profile>
 
+        <profile>
+            <id>eclipse-kepler</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>kepler</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>kepler</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/kepler/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>eclipse-luna</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>luna</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>luna</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/luna/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>eclipse-mars</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>mars</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>mars</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/eclipse/updates/4.5milestones</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
 
     <developers>
