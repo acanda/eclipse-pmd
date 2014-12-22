@@ -76,7 +76,8 @@ public class AddRuleSetConfigurationModelTest {
         model.validate(AddRuleSetConfigurationModel.LOCATION, validationResult);
         
         if (validationResult.hasErrors()) {
-            final String msg = "The validation should not result in any errors if the project is located outside the workspace. First error: ";
+            final String msg = "The validation should not result in any errors "
+                    + "if the project is located outside the workspace. First error: ";
             fail(msg + " First error: " + validationResult.getFirstErrorMessage());
         }
     }

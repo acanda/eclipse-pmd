@@ -54,7 +54,6 @@ public class RulesSetConfigurationSerializerTest {
         assertFileSystemRuleSetConfigurationEquals(expected, actual.get(0));
     }
     
-
     /**
      * Verifies that {@link RuleSetConfigurationSerializer#deserialize(String)} corretly deserializes multiple
      * {@link RuleSetConfiguration}s.
@@ -83,14 +82,16 @@ public class RulesSetConfigurationSerializerTest {
         assertProjectRuleSetConfigurationEquals(expected3, actual.get(2));
     }
 
-    private void assertFileSystemRuleSetConfigurationEquals(final FileSystemRuleSetConfiguration expected, final RuleSetConfiguration actual) {
+    private void assertFileSystemRuleSetConfigurationEquals(final FileSystemRuleSetConfiguration expected,
+            final RuleSetConfiguration actual) {
         assertEquals("Class of deserialized rule set configuration", FileSystemRuleSetConfiguration.class, actual.getClass());
         final FileSystemRuleSetConfiguration actualFS = (FileSystemRuleSetConfiguration) actual;
         assertEquals("Name", expected.getName(), actualFS.getName());
         assertEquals("Configuration", expected.getLocation(), actualFS.getLocation());
     }
     
-    private void assertWorkspaceRuleSetConfigurationEquals(final WorkspaceRuleSetConfiguration expected, final RuleSetConfiguration actual) {
+    private void assertWorkspaceRuleSetConfigurationEquals(final WorkspaceRuleSetConfiguration expected,
+            final RuleSetConfiguration actual) {
         assertEquals("Class of deserialized rule set configuration", WorkspaceRuleSetConfiguration.class, actual.getClass());
         final WorkspaceRuleSetConfiguration actualWS = (WorkspaceRuleSetConfiguration) actual;
         assertEquals("Name", expected.getName(), actualWS.getName());

@@ -60,7 +60,8 @@ public class JavaQuickFixGeneratorTest {
     }
 
     @SafeVarargs
-    private static Object[] createTestData(final String ruleId, final int javaVersion, final Class<? extends IMarkerResolution>... classes) {
+    private static Object[] createTestData(final String ruleId, final int javaVersion,
+            final Class<? extends IMarkerResolution>... classes) {
         return new Object[] { ruleId, javaVersion, classes };
     }
 

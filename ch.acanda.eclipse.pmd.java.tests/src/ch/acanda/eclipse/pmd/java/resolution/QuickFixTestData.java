@@ -107,7 +107,8 @@ public class QuickFixTestData {
         return data;
     }
 
-    private static TestParameters getParameters(final Optional<String> pmdReferenceId, final Optional<String> language, final Element test) {
+    private static TestParameters getParameters(final Optional<String> pmdReferenceId, final Optional<String> language,
+            final Element test) {
         final TestParameters params = new TestParameters();
         params.pmdReferenceId = pmdReferenceId;
         params.language = language;

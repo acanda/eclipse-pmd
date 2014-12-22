@@ -45,12 +45,13 @@ final class PMDProjectSettings {
     private static final QualifiedName ACTIVE_RULE_SETS = new QualifiedName(PMDPlugin.ID, "rulesets");
     private static final QualifiedName ACTIVE_RULE_SET_IDS = new QualifiedName(PMDPlugin.ID, "activerulesets");
 
-    private final Function<RuleSetConfiguration, RuleSetReferenceId> toReferenceId = new Function<RuleSetConfiguration, RuleSetReferenceId>() {
-        @Override
-        public RuleSetReferenceId apply(final RuleSetConfiguration config) {
-            return new RuleSetReferenceId(config.getConfiguration(project).toString());
-        }
-    };
+    private final Function<RuleSetConfiguration, RuleSetReferenceId> toReferenceId =
+            new Function<RuleSetConfiguration, RuleSetReferenceId>() {
+                @Override
+                public RuleSetReferenceId apply(final RuleSetConfiguration config) {
+                    return new RuleSetReferenceId(config.getConfiguration(project).toString());
+                }
+            };
 
     private final IProject project;
 
