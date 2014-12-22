@@ -15,34 +15,34 @@ package ch.acanda.eclipse.pmd.ui.model;
  * @author Philip Graf
  */
 public class ValidationProblem {
-    
+
     private final String propertyName;
     private final Severity severity;
     private final String message;
-    
+
     public enum Severity {
         ERROR, WARNING
-    };
-    
+    }
+
     public ValidationProblem(final String propertyName, final Severity severity, final String message) {
         assert propertyName != null && severity != null && message != null;
         this.propertyName = propertyName;
         this.severity = severity;
         this.message = message;
     }
-    
+
     public String getPropertyName() {
         return propertyName;
     }
-    
+
     public Severity getSeverity() {
         return severity;
     }
-    
+
     public String getMessage() {
         return message;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -52,7 +52,7 @@ public class ValidationProblem {
         result = prime * result + (severity == null ? 0 : severity.hashCode());
         return result;
     }
-    
+
     @Override
     @SuppressWarnings("PMD.NPathComplexity")
     public boolean equals(final Object obj) {
@@ -85,5 +85,5 @@ public class ValidationProblem {
         }
         return true;
     }
-    
+
 }
