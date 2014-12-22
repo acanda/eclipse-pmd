@@ -20,6 +20,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
+import org.eclipse.swtbot.swt.finder.waits.ICondition;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotRadio;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
@@ -33,24 +35,24 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
  * @author Philip Graf
  */
 public final class AddRuleSetConfigurationWizardBot extends SWTBotShell {
-    
+
     public AddRuleSetConfigurationWizardBot(final Shell shell) throws WidgetNotFoundException {
         super(shell);
     }
-    
+
     public static AddRuleSetConfigurationWizardBot getActive() {
         final SWTBotShell wizard = new SWTWorkbenchBot().shell("Add Rule Set Configuration");
         return new AddRuleSetConfigurationWizardBot(wizard.widget);
     }
-    
+
     public SWTBotText name() {
         return bot().textWithId(SWTBotID.NAME.name());
     }
-    
+
     public SWTBotText location() {
         return bot().textWithId(SWTBotID.LOCATION.name());
     }
-    
+
     public boolean isBrowseButtonVisible() {
         @SuppressWarnings("unchecked")
         final Matcher<Widget> matcher = allOf(widgetOfType(Button.class), withId(SWTBotID.BROWSE.name()));
@@ -60,7 +62,7 @@ public final class AddRuleSetConfigurationWizardBot extends SWTBotShell {
     public SWTBotTable rules() {
         return bot().tableWithId(SWTBotID.RULES.name());
     }
-    
+
     public String[] ruleNames() {
         final SWTBotTable table = rules();
         final String[] names = new String[table.rowCount()];
@@ -68,6 +70,29 @@ public final class AddRuleSetConfigurationWizardBot extends SWTBotShell {
             names[i] = table.cell(i, 0);
         }
         return names;
+    }
+
+    public void waitUntilFinishIsEnabled(final String failureMessage) {
+        bot().waitUntil(isFinishEnabled(failureMessage));
+    }
+
+    public void waitUntilFinishIsDisabled(final String failureMessage) {
+        bot().waitWhile(isFinishEnabled(failureMessage));
+    }
+
+    private ICondition isFinishEnabled(final String failureMessage) {
+        return new DefaultCondition() {
+            @Override
+            @SuppressWarnings("PMD.JUnit4TestShouldUseTestAnnotation")
+            public boolean test() throws Exception {
+                return finish().isEnabled();
+            }
+
+            @Override
+            public String getFailureMessage() {
+                return failureMessage;
+            }
+        };
     }
 
     public SWTBotButton next() {

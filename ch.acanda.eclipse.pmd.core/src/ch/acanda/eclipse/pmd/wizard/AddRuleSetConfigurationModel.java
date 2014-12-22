@@ -183,6 +183,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     private void validateLocation(final String propertyName, final ValidationResult result) {
         final Builder<Rule> rules = ImmutableList.builder();
+        String ruleSetName = null;
         if (!errorIfBlank(LOCATION, location, "Please enter the location of the rule set configuration", result)) {
             RuleSet ruleSet = null;
             try {
@@ -194,6 +195,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
                 }
                 if (referenceId != null) {
                     ruleSet = new RuleSetFactory().createRuleSet(referenceId);
+                    ruleSetName = ruleSet.getName();
                     rules.addAll(ruleSet.getRules());
                 }
             } catch (final RuleSetNotFoundException | RuntimeException e) {
@@ -206,6 +208,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
         }
         if (LOCATION.equals(propertyName)) {
             setRules(rules.build());
+            setName(ruleSetName == null ? "" : ruleSetName);
         }
     }
 

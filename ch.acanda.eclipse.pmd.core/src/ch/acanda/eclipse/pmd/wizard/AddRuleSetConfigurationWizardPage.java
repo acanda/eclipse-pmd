@@ -81,15 +81,6 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
         setControl(container);
         container.setLayout(new GridLayout(3, false));
 
-        final Label lblName = new Label(container, SWT.NONE);
-        lblName.setText("Name:");
-
-        name = new Text(container, SWT.BORDER);
-        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        SWTBotID.set(name, SWTBotID.NAME);
-
-        new Label(container, SWT.NONE);
-
         final Label lblLocation = new Label(container, SWT.NONE);
         lblLocation.setText("Location:");
 
@@ -106,6 +97,21 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
                 controller.browse(((Control) e.widget).getShell());
             }
         });
+
+        final Label lblName = new Label(container, SWT.NONE);
+        lblName.setText("Name:");
+
+        name = new Text(container, SWT.BORDER);
+        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        SWTBotID.set(name, SWTBotID.NAME);
+
+        // This button is only here to make this row the same height as the previous row.
+        // Without this button the distance between the text of this row and the text of
+        // the previous row is much larger than the distance between the text of this row
+        // and the table of the next row.
+        final Button button = new Button(container, SWT.NONE);
+        button.setEnabled(false);
+        button.setVisible(false);
 
         final Label lblRules = new Label(container, SWT.NONE);
         final GridData lblRulesGridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
@@ -127,6 +133,9 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
         final TableColumn tblclmnName = tableViewerColumn.getColumn();
         tableCompositeTableColumnLayout.setColumnData(tblclmnName, new ColumnWeightData(1, 200, false));
         tblclmnName.setText("Name");
+        new Label(container, SWT.NONE);
+        new Label(container, SWT.NONE);
+        new Label(container, SWT.NONE);
         new Label(container, SWT.NONE);
 
         initDataBindings();
