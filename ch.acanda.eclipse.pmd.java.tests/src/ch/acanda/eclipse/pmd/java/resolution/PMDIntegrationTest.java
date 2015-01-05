@@ -25,6 +25,7 @@ import java.io.StringReader;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;
@@ -135,6 +136,9 @@ public class PMDIntegrationTest {
         checkState(languageMatcher.matches(), "%s: language must be formated '<terse-name> <version>'", testDataXml);
 
         final Language language = LanguageRegistry.findLanguageByTerseName(languageMatcher.group(1));
+        if (language == null) {
+            failDueToInvalidTerseName(languageMatcher.group(1));
+        }
         final LanguageVersion languageVersion = language.getVersion(languageMatcher.group(2));
         final String fileExtension = "." + languageVersion.getLanguage().getExtensions().get(0);
         final File sourceFile = File.createTempFile(getClass().getSimpleName(), fileExtension);
@@ -177,6 +181,23 @@ public class PMDIntegrationTest {
         } finally {
             sourceFile.delete();
         }
+    }
+
+    private void failDueToInvalidTerseName(final String languageTerseName) {
+        final String msg;
+        if (LanguageRegistry.getLanguages().isEmpty()) {
+            msg = String.format("Cannot find the language for terse name '%s'"
+                    + " as there aren't any registered languages in the PMD language registry.",
+                    languageTerseName);
+        } else {
+            final String knownLanguages =
+                    LanguageRegistry.getLanguages().stream()
+                            .map(l -> l.getTerseName())
+                            .collect(Collectors.joining(", "));
+            msg = String.format("The language terse name '%s' is not supported by PMD. The supported language terse names are: %s.",
+                    languageTerseName, knownLanguages);
+        }
+        fail(msg);
     }
 
 }
