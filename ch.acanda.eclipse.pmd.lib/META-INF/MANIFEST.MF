@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eclipse-pmd Third Party Libraries
-Bundle-SymbolicName: ch.acanda.eclipse.pmd.lib
+Bundle-SymbolicName: ch.acanda.eclipse.pmd.lib;singleton:=true
 Bundle-Version: 1.5.0.qualifier
 Bundle-Vendor: Philip Graf
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
