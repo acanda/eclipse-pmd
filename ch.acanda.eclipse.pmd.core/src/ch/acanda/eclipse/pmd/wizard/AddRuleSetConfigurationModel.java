@@ -38,6 +38,7 @@ import ch.acanda.eclipse.pmd.ui.model.ValidationProblem.Severity;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.model.ViewModel;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
@@ -232,17 +233,22 @@ class AddRuleSetConfigurationModel extends ViewModel {
 
     private String validateLocalLocation(final ValidationResult result) {
         String referenceId = null;
-        final Path absoluteLocation = getAbsoluteLocation();
-        if (Files.exists(absoluteLocation)) {
-            referenceId = absoluteLocation.toString();
+        final Optional<Path> absoluteLocation = getAbsoluteLocation();
+        if (absoluteLocation.isPresent()) {
+            if (Files.exists(absoluteLocation.get())) {
+                referenceId = absoluteLocation.get().toString();
+            } else {
+                final String msg = "The location {0} which resolves to {1} does not point to an existing file";
+                result.add(new ValidationProblem(LOCATION, Severity.ERROR, MessageFormat.format(msg, location, absoluteLocation)));
+            }
         } else {
-            final String msg = "The location {0} which resolves to {1} does not point to an existing file";
-            result.add(new ValidationProblem(LOCATION, Severity.ERROR, MessageFormat.format(msg, location, absoluteLocation)));
+            final String msg = "The location {0} cannot be resolved";
+            result.add(new ValidationProblem(LOCATION, Severity.ERROR, MessageFormat.format(msg, location)));
         }
         return referenceId;
     }
 
-    private Path getAbsoluteLocation() {
+    private Optional<Path> getAbsoluteLocation() {
         final LocationContext locationContext;
         if (isWorkspaceTypeSelected) {
             locationContext = LocationContext.WORKSPACE;
@@ -253,7 +259,11 @@ class AddRuleSetConfigurationModel extends ViewModel {
         } else {
             throw new IllegalStateException("Unknown location type");
         }
-        return Paths.get(LocationResolver.resolve(new Location(location, locationContext), project));
+        final Optional<String> resolvedLocation = LocationResolver.resolve(new Location(location, locationContext), project);
+        if (resolvedLocation.isPresent()) {
+            return Optional.of(Paths.get(resolvedLocation.get()));
+        }
+        return Optional.absent();
     }
 
     private void validateName(final ValidationResult result) {

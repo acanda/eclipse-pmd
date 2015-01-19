@@ -80,15 +80,20 @@ public final class RuleSetsCache {
         if (fileWatcher.isPresent() && projectModel.isPMDEnabled()) {
             final FileChangedListener listener = new RuleSetFileListener(projectModel);
             final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectModel.getProjectName());
+
             for (final RuleSetModel ruleSetModel : projectModel.getRuleSets()) {
                 if (ruleSetModel.getLocation().getContext() != LocationContext.REMOTE) {
-                    final Path file = Paths.get(LocationResolver.resolve(ruleSetModel.getLocation(), project));
-                    try {
-                        final Subscription subscription = fileWatcher.get().subscribe(file, listener);
-                        subscriptions.put(projectModel.getProjectName(), subscription);
-                    } catch (final IOException e) {
-                        final String msg = "Cannot watch rule set file %s. Changes to this file will not be picked up for up to an hour.";
-                        PMDPlugin.getDefault().warn(String.format(msg, file.toAbsolutePath()), e);
+                    final Optional<String> resolvedLocation = LocationResolver.resolve(ruleSetModel.getLocation(), project);
+                    if (resolvedLocation.isPresent()) {
+                        final Path file = Paths.get(resolvedLocation.get());
+                        try {
+                            final Subscription subscription = fileWatcher.get().subscribe(file, listener);
+                            subscriptions.put(projectModel.getProjectName(), subscription);
+                        } catch (final IOException e) {
+                            final String msg = "Cannot watch rule set file %s. "
+                                    + "Changes to this file will not be picked up for up to an hour.";
+                            PMDPlugin.getDefault().warn(String.format(msg, file.toAbsolutePath()), e);
+                        }
                     }
                 }
             }

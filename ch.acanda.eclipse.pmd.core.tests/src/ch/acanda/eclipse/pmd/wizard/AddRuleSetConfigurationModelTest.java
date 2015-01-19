@@ -42,7 +42,7 @@ public class AddRuleSetConfigurationModelTest {
 
     @BeforeClass
     public static void createRuleSetFile() throws IOException {
-        ruleSetFile = Files.createTempFile("AddRuleSetConfigurationModelTest-", "xml");
+        ruleSetFile = Files.createTempFile("AddRuleSetConfigurationModelTest-", ".xml");
         try (final InputStream in = AddRuleSetConfigurationModelTest.class.getResourceAsStream("AddRuleSetConfigurationModelTest.xml")) {
             Files.copy(in, ruleSetFile, StandardCopyOption.REPLACE_EXISTING);
         }
@@ -78,7 +78,7 @@ public class AddRuleSetConfigurationModelTest {
         if (validationResult.hasErrors()) {
             final String msg = "The validation should not result in any errors "
                     + "if the project is located outside the workspace. First error: ";
-            fail(msg + " First error: " + validationResult.getFirstErrorMessage());
+            fail(msg + validationResult.getFirstErrorMessage());
         }
     }
     
