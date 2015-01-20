@@ -60,7 +60,7 @@ public class LocationResolverTest {
      */
     @Test
     public void resolveFileSystemLocationWithInvalidPath() {
-        final Location location = new Location("/tmp/?", LocationContext.FILESYSTEM);
+        final Location location = new Location("\u0000:", LocationContext.FILESYSTEM);
         final IProject project = mock(IProject.class);
         
         final Optional<String> result = LocationResolver.resolve(location, project);
@@ -121,7 +121,7 @@ public class LocationResolverTest {
      */
     @Test
     public void resolveProjectLocationWithInvalidPath() throws URISyntaxException {
-        final Location location = new Location("pmd.xml?", LocationContext.PROJECT);
+        final Location location = new Location("\u0000:", LocationContext.PROJECT);
         final IProject project = mock(IProject.class);
         when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
         
@@ -178,7 +178,7 @@ public class LocationResolverTest {
      */
     @Test
     public void resolveWorkspaceLocationWithInvalidPath() throws URISyntaxException {
-        final Location location = new Location("project/pmd.xml?", LocationContext.WORKSPACE);
+        final Location location = new Location("project/\u0000:", LocationContext.WORKSPACE);
         final IProject project = mock(IProject.class);
         final IWorkspace workspace = mock(IWorkspace.class);
         final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
