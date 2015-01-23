@@ -85,7 +85,7 @@ public class UseCollectionIsEmptyQuickFix extends ASTQuickFix<InfixExpression> {
         invocation.setName(isEmpty);
 
         final Expression replacement;
-        if (Operator.NOT_EQUALS.equals(node.getOperator())) {
+        if (isNotEmpty(node)) {
             final PrefixExpression not = (PrefixExpression) ast.createInstance(PrefixExpression.class);
             not.setOperator(org.eclipse.jdt.core.dom.PrefixExpression.Operator.NOT);
             not.setOperand(invocation);
@@ -96,6 +96,13 @@ public class UseCollectionIsEmptyQuickFix extends ASTQuickFix<InfixExpression> {
 
         ASTUtil.replace(node, replacement);
         return true;
+    }
+
+    /**
+     * {@code c.size() != 0} and {@code c.size() >= 0} should be converted into {@code !c.isEmpty()}.
+     */
+    private boolean isNotEmpty(final InfixExpression node) {
+        return Operator.NOT_EQUALS.equals(node.getOperator()) || Operator.GREATER.equals(node.getOperator());
     }
 
 }

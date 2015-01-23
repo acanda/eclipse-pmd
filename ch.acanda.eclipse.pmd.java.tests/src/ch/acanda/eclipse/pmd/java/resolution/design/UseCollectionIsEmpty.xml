@@ -167,4 +167,56 @@ class UseCollectionIsEmpty {
         </expected>
     </test>
 
+    <test name="UseCollectionIsEmptyGreaterZero">
+        <setup>
+            <source>
+class UseCollectionIsEmpty {
+    void foo(Collection c) {
+        if (<marker>c.size</marker>() > 0) {
+        }
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class UseCollectionIsEmpty {
+    void foo(Collection c) {
+        if (!c.isEmpty()) {
+        }
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with call to isEmpty()</label>
+            <description>Replaces call to size() with call to isEmpty().</description>
+        </expected>
+    </test>
+
+    <test name="UseCollectionIsEmptyLessEqualZero">
+        <setup>
+            <source>
+class UseCollectionIsEmpty {
+    void foo(Collection c) {
+        if (<marker>c.size</marker>() &lt;= 0) {
+        }
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class UseCollectionIsEmpty {
+    void foo(Collection c) {
+        if (c.isEmpty()) {
+        }
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with call to isEmpty()</label>
+            <description>Replaces call to size() with call to isEmpty().</description>
+        </expected>
+    </test>
+
 </tests>
