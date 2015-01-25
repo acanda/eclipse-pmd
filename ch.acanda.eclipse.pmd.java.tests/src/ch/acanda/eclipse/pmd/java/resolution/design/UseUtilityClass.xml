@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2015, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+    <pmdReferenceId>rulesets/java/design.xml/UseUtilityClass</pmdReferenceId>
+    <language>java 1.7</language>
+
+    <test name="UseUtilityClass">
+        <setup>
+            <source>
+public class UseUtilityClass <marker>{
+
+    public static final String FOO = "FOO";
+
+    public static void foo() {
+        return 0;
+    }
+
+}</marker>
+            </source>
+        </setup>
+        <expected>
+            <source>
+public final class UseUtilityClass {
+
+    public static final String FOO = "FOO";
+
+    private UseUtilityClass() {
+        // hide constructor of utility class
+    }
+
+    public static void foo() {
+        return 0;
+    }
+
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Convert to utility class</label>
+            <description>Makes the class final and adds a private constructor.</description>
+        </expected>
+    </test>
+
+    <test name="UseUtilityClassFinal">
+        <setup>
+            <source>
+public final class UseUtilityClass <marker>{
+    public static void foo() {
+        return 0;
+    }
+}</marker>
+            </source>
+        </setup>
+        <expected>
+            <source>
+public final class UseUtilityClass {
+    private UseUtilityClass() {
+        // hide constructor of utility class
+    }
+
+    public static void foo() {
+        return 0;
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Convert to utility class</label>
+            <description>Makes the class final and adds a private constructor.</description>
+        </expected>
+    </test>
+
+</tests>

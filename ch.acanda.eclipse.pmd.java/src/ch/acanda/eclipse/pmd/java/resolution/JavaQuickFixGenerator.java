@@ -21,6 +21,7 @@ import ch.acanda.eclipse.pmd.java.resolution.design.EqualsNullQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.design.SingularFieldQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.design.UseCollectionIsEmptyQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.design.UseNotifyAllInsteadOfNotifyQuickFix;
+import ch.acanda.eclipse.pmd.java.resolution.design.UseUtilityClassQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptyFinallyBlockQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptyIfStmtQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptyInitializerQuickFix;
@@ -70,6 +71,7 @@ public final class JavaQuickFixGenerator {
                     .putAll("java.design.SingularField", SingularFieldQuickFix.class)
                     .putAll("java.design.UseCollectionIsEmpty", UseCollectionIsEmptyQuickFix.class)
                     .putAll("java.design.UseNotifyAllInsteadOfNotify", UseNotifyAllInsteadOfNotifyQuickFix.class)
+                    .putAll("java.design.UseUtilityClass", UseUtilityClassQuickFix.class)
                     .putAll("java.empty code.EmptyFinallyBlock", EmptyFinallyBlockQuickFix.class)
                     .putAll("java.empty code.EmptyIfStmt", EmptyIfStmtQuickFix.class)
                     .putAll("java.empty code.EmptyInitializer", EmptyInitializerQuickFix.class)

@@ -74,6 +74,7 @@ public class PMDIntegrationTest {
             "design/SingularField.xml",
             "design/UseCollectionIsEmpty.xml",
             "design/UseNotifyAllInsteadOfNotify.xml",
+            "design/UseUtilityClass.xml",
             "emptycode/EmptyFinallyBlock.xml",
             "emptycode/EmptyIfStmt.xml",
             "emptycode/EmptyInitializer.xml",

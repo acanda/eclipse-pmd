@@ -163,9 +163,8 @@ public class QuickFixTestData {
     }
 
     private static String rtrim(final String s) {
-        final int len = s.length();
         int pos = s.length() - 1;
-        while (pos < len && s.charAt(pos) <= ' ') {
+        while (pos >= 0 && s.charAt(pos) <= ' ') {
             pos--;
         }
         return s.substring(0, pos + 1);
