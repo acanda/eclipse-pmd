@@ -12,7 +12,9 @@
 package ch.acanda.eclipse.pmd.properties;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
+import org.eclipse.core.resources.IProject;
 import org.junit.Test;
 
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
@@ -37,7 +39,8 @@ public class PMDPropertyPageControllerTest {
     public void removeSelectedConfigurations() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
         final PMDPropertyPageViewModel model = controller.getModel();
-        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of());
+        final IProject project = mock(IProject.class);
+        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of(), project);
         final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
         model.setRuleSets(ruleSets);
         model.setActiveRuleSets(ruleSets.subList(0, 2));
@@ -58,7 +61,8 @@ public class PMDPropertyPageControllerTest {
     public void removeSelectedConfigurationsWithoutSelection() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
         final PMDPropertyPageViewModel model = controller.getModel();
-        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of());
+        final IProject project = mock(IProject.class);
+        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of(), project);
         final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
         model.setRuleSets(ruleSets);
         model.setActiveRuleSets(ruleSets.subList(0, 2));
@@ -84,10 +88,10 @@ public class PMDPropertyPageControllerTest {
     }
 
     private ImmutableList<RuleSetViewModel> createRuleSets() {
-        return ImmutableList.of(new RuleSetViewModel("A", "A-Type", "A-Location"),
-                                new RuleSetViewModel("B", "B-Type", "B-Location"),
-                                new RuleSetViewModel("C", "C-Type", "C-Location"),
-                                new RuleSetViewModel("D", "D-Type", "D-Location"));
+        return ImmutableList.of(new RuleSetViewModel("A", "A-Type", "A-Location", true, "A-LocationToolTip"),
+                new RuleSetViewModel("B", "B-Type", "B-Location", false, "B-LocationToolTip"),
+                new RuleSetViewModel("C", "C-Type", "C-Location", true, "C-LocationToolTip"),
+                new RuleSetViewModel("D", "D-Type", "D-Location", false, "D-LocationToolTip"));
     }
     
 }

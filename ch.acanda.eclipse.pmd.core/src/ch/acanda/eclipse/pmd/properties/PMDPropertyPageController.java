@@ -65,17 +65,17 @@ final class PMDPropertyPageController {
         final WorkspaceModel workspaceModel = PMDPlugin.getDefault().getWorkspaceModel();
 
         projectModel = workspaceModel.getOrCreateProject(project.getName());
-        model.setInitialState(projectModel.isPMDEnabled(), projectModel.getRuleSets());
+        model.setInitialState(projectModel.isPMDEnabled(), projectModel.getRuleSets(), project);
         final ImmutableSortedSet.Builder<RuleSetModel> ruleSetBuilder = ImmutableSortedSet.orderedBy(ProjectModel.RULE_SET_COMPARATOR);
         for (final ProjectModel projectModel : workspaceModel.getProjects()) {
             ruleSetBuilder.addAll(projectModel.getRuleSets());
         }
-        model.setRuleSets(ImmutableList.copyOf(toViewModels(ruleSetBuilder.build())));
+        model.setRuleSets(ImmutableList.copyOf(toViewModels(ruleSetBuilder.build(), project)));
         reset();
     }
 
     public void reset() {
-        model.setActiveRuleSets(ImmutableSet.copyOf(toViewModels(projectModel.getRuleSets())));
+        model.setActiveRuleSets(ImmutableSet.copyOf(toViewModels(projectModel.getRuleSets(), project)));
         model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel>of());
         model.setPMDEnabled(projectModel.isPMDEnabled());
     }
@@ -108,7 +108,7 @@ final class PMDPropertyPageController {
         dialog.setPageSize(300, SWT.DEFAULT);
         final int result = dialog.open();
         if (result == Window.OK && wizard.getRuleSetModel() != null) {
-            final RuleSetViewModel viewModel = toViewModel(wizard.getRuleSetModel());
+            final RuleSetViewModel viewModel = toViewModel(wizard.getRuleSetModel(), project);
             model.addRuleSet(viewModel);
             final HashSet<RuleSetViewModel> activeConfigs = new HashSet<>(model.getActiveRuleSets());
             activeConfigs.add(viewModel);

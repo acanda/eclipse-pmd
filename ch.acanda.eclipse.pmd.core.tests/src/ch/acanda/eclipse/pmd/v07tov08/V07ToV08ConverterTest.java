@@ -60,7 +60,7 @@ public class V07ToV08ConverterTest {
         final Location result = V07ToV08Converter.getLocation(config, workspaceRoot);
         
         assertEquals("Location path", Paths.get("/home", "somewhere", "else", "pmd.xml").toString(), result.getPath());
-        assertEquals("Location context", LocationContext.FILESYSTEM, result.getContext());
+        assertEquals("Location context", LocationContext.FILE_SYSTEM, result.getContext());
     }
 
     @Test

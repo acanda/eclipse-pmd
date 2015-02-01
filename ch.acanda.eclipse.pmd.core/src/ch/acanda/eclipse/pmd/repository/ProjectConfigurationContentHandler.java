@@ -87,7 +87,7 @@ final class ProjectConfigurationContentHandler extends DefaultHandler {
                 break;
 
             case ATTRIBUTE_VALUE_FILESYSTEM:
-                context = LocationContext.FILESYSTEM;
+                context = LocationContext.FILE_SYSTEM;
                 break;
 
             case ATTRIBUTE_VALUE_REMOTE:

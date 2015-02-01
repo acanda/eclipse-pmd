@@ -105,7 +105,7 @@ public final class V07ToV08Converter {
         }
         // fallback: if the workspace path cannot be converted,
         // replace the workspace location with a file system location
-        return new Location(target.toString(), LocationContext.FILESYSTEM);
+        return new Location(target.toString(), LocationContext.FILE_SYSTEM);
     }
 
     private static LocationContext getContext(final RuleSetConfiguration config) {
@@ -115,7 +115,7 @@ public final class V07ToV08Converter {
         } else if (config instanceof ProjectRuleSetConfiguration) {
             context = LocationContext.PROJECT;
         } else if (config instanceof FileSystemRuleSetConfiguration) {
-            context = LocationContext.FILESYSTEM;
+            context = LocationContext.FILE_SYSTEM;
         } else if (config instanceof RemoteRuleSetConfiguration) {
             context = LocationContext.REMOTE;
         } else {

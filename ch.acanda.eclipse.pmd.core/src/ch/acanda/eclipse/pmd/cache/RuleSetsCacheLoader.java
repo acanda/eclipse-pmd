@@ -64,7 +64,7 @@ public class RuleSetsCacheLoader extends CacheLoader<String, RuleSets> {
 
         @Override
         public Optional<RuleSetReferenceId> apply(final RuleSetModel model) {
-            final Optional<String> resolvedLocation = LocationResolver.resolve(model.getLocation(), project);
+            final Optional<String> resolvedLocation = LocationResolver.resolveIfExists(model.getLocation(), project);
             return resolvedLocation.transform(new Function<String, RuleSetReferenceId>() {
                 @Override
                 public RuleSetReferenceId apply(final String location) {

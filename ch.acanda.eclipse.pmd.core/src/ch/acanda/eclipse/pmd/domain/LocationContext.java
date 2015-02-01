@@ -12,5 +12,5 @@
 package ch.acanda.eclipse.pmd.domain;
 
 public enum LocationContext {
-    PROJECT, WORKSPACE, FILESYSTEM, REMOTE;
+    PROJECT, WORKSPACE, FILE_SYSTEM, REMOTE;
 }

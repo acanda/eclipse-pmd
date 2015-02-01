@@ -57,7 +57,7 @@ final class RuleSetConfigurationToXMLTag implements Function<RuleSetModel, Strin
             case PROJECT:
                 value = ATTRIBUTE_VALUE_PROJECT;
                 break;
-            case FILESYSTEM:
+            case FILE_SYSTEM:
                 value = ATTRIBUTE_VALUE_FILESYSTEM;
                 break;
             case REMOTE:

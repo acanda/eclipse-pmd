@@ -11,23 +11,25 @@
 
 package ch.acanda.eclipse.pmd.properties;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
-import org.eclipse.core.databinding.beans.PojoObservables;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -39,7 +41,7 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 
 /**
  * A composite containing a single checkbox table viewer showing the rule set configurations.
- * 
+ *
  * @author Philip Graf
  */
 final class RuleSetConfigurationTable extends Composite {
@@ -60,34 +62,35 @@ final class RuleSetConfigurationTable extends Composite {
         table = tableViewer.getTable();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
+        ColumnViewerToolTipSupport.enableFor(tableViewer, ToolTip.NO_RECREATE);
         SWTBotID.set(table, SWTBotID.RULESETS);
 
         final TableViewerColumn nameViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         final TableColumn nameColumn = nameViewerColumn.getColumn();
         tableColumnLayout.setColumnData(nameColumn, new ColumnWeightData(1, 50, true));
         nameColumn.setText("Name");
+        nameViewerColumn.setLabelProvider(new NameLabelProvider(model));
 
         final TableViewerColumn typeViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         final TableColumn typeColumn = typeViewerColumn.getColumn();
         tableColumnLayout.setColumnData(typeColumn, new ColumnPixelData(75, true, true));
         typeColumn.setText("Type");
+        typeViewerColumn.setLabelProvider(new TypeLabelProvider(model));
 
         final TableViewerColumn locationViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         final TableColumn locationColumn = locationViewerColumn.getColumn();
         tableColumnLayout.setColumnData(locationColumn, new ColumnWeightData(2, 50, true));
         locationColumn.setText("Location");
+        locationViewerColumn.setLabelProvider(new LocationLabelProvider(model));
 
         initDataBindings();
+        initListeners();
     }
 
     private void initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
         final ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
-        final IObservableMap[] observeMaps = PojoObservables.observeMaps(listContentProvider.getKnownElements(),
-                                                                         RuleSetViewModel.class,
-                                                                         new String[] { "name", "type", "location" });
-        tableViewer.setLabelProvider(new ObservableMapLabelProvider(observeMaps));
         tableViewer.setContentProvider(listContentProvider);
         //
         final IObservableList ruleSetsObserveList = BeansObservables.observeList(Realm.getDefault(), model, "ruleSets");
@@ -105,6 +108,16 @@ final class RuleSetConfigurationTable extends Composite {
                                                                                                            RuleSetViewModel.class);
         final IObservableSet activeConfigurationsObserveSet = BeansObservables.observeSet(Realm.getDefault(), model, "activeRuleSets");
         bindingContext.bindSet(tableViewerObserveCheckedElements, activeConfigurationsObserveSet, null, null);
+    }
+
+    private void initListeners() {
+        model.addPropertyChangeListener(PMDPropertyPageViewModel.ACTIVE_RULE_SETS, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(final PropertyChangeEvent evt) {
+                // this updates the column image of invalid configurations when their checked state changes
+                tableViewer.refresh(true);
+            }
+        });
     }
 
 }

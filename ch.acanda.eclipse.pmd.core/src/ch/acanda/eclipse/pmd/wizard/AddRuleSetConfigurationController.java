@@ -130,7 +130,7 @@ final class AddRuleSetConfigurationController {
             locationContext = LocationContext.PROJECT;
 
         } else if (model.isFileSystemTypeSelected()) {
-            locationContext = LocationContext.FILESYSTEM;
+            locationContext = LocationContext.FILE_SYSTEM;
 
         } else if (model.isRemoteTypeSelected()) {
             locationContext = LocationContext.REMOTE;

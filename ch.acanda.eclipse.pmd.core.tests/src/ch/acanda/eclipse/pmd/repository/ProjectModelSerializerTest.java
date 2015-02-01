@@ -108,7 +108,7 @@ public final class ProjectModelSerializerTest {
     private Iterable<RuleSetModel> createRuleSets() {
         return Arrays.asList(new RuleSetModel("Project Rule Set", new Location("pmd.xml", LocationContext.PROJECT)),
                              new RuleSetModel("Workspace Rule Set", new Location("Projext X/pmd.xml", LocationContext.WORKSPACE)),
-                             new RuleSetModel("Filesystem Rule Set", new Location("x:\\pmx.xml", LocationContext.FILESYSTEM)),
+                             new RuleSetModel("Filesystem Rule Set", new Location("x:\\pmx.xml", LocationContext.FILE_SYSTEM)),
                              new RuleSetModel("Remote Rule Set", new Location("http://example.org/pmd.xml", LocationContext.REMOTE)));
     }
     
@@ -187,7 +187,7 @@ public final class ProjectModelSerializerTest {
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
-        assertRuleSetModel(projectModel, LocationContext.FILESYSTEM, "Filesystem Rule Set", "x:\\pmx.xml");
+        assertRuleSetModel(projectModel, LocationContext.FILE_SYSTEM, "Filesystem Rule Set", "x:\\pmx.xml");
     }
     
     /**

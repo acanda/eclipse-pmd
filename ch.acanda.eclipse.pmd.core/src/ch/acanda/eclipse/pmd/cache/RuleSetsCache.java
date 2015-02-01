@@ -83,7 +83,7 @@ public final class RuleSetsCache {
 
             for (final RuleSetModel ruleSetModel : projectModel.getRuleSets()) {
                 if (ruleSetModel.getLocation().getContext() != LocationContext.REMOTE) {
-                    final Optional<String> resolvedLocation = LocationResolver.resolve(ruleSetModel.getLocation(), project);
+                    final Optional<String> resolvedLocation = LocationResolver.resolveIfExists(ruleSetModel.getLocation(), project);
                     if (resolvedLocation.isPresent()) {
                         final Path file = Paths.get(resolvedLocation.get());
                         try {

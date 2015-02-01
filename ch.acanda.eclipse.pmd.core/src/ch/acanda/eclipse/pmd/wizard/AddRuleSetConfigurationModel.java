@@ -255,11 +255,11 @@ class AddRuleSetConfigurationModel extends ViewModel {
         } else if (isProjectTypeSelected) {
             locationContext = LocationContext.PROJECT;
         } else if (isFileSystemTypeSelected) {
-            locationContext = LocationContext.FILESYSTEM;
+            locationContext = LocationContext.FILE_SYSTEM;
         } else {
             throw new IllegalStateException("Unknown location type");
         }
-        final Optional<String> resolvedLocation = LocationResolver.resolve(new Location(location, locationContext), project);
+        final Optional<String> resolvedLocation = LocationResolver.resolveIfExists(new Location(location, locationContext), project);
         if (resolvedLocation.isPresent()) {
             return Optional.of(Paths.get(resolvedLocation.get()));
         }

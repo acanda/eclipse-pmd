@@ -17,6 +17,8 @@ import static com.google.common.collect.Iterables.elementsEqual;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IProject;
+
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.model.ViewModel;
@@ -32,6 +34,9 @@ import com.google.common.collect.ImmutableSortedSet;
  * @author Philip Graf
  */
 final class PMDPropertyPageViewModel extends ViewModel {
+
+    public static final String RULE_SETS = "ruleSets";
+    public static final String ACTIVE_RULE_SETS = "activeRuleSets";
 
     /**
      * All available rule sets of the entire workspace.
@@ -65,16 +70,16 @@ final class PMDPropertyPageViewModel extends ViewModel {
     }
 
     public void setRuleSets(final ImmutableList<RuleSetViewModel> ruleSets) {
-        setProperty("ruleSets", this.ruleSets, this.ruleSets = ruleSets);
+        setProperty(RULE_SETS, this.ruleSets, this.ruleSets = ruleSets);
     }
 
     /**
      * Sets the initial state, i.e. the state of the view model before any changes were made. This state is used by
      * {@link #updateDirty()} so it must be set before any properties of the view model are changed.
      */
-    public void setInitialState(final boolean isPmdEnabled, final ImmutableSortedSet<RuleSetModel> ruleSets) {
+    public void setInitialState(final boolean isPmdEnabled, final ImmutableSortedSet<RuleSetModel> ruleSets, final IProject project) {
         initialIsPMDEnabled = isPMDEnabled;
-        initialActiveRuleSets = toViewModels(ruleSets);
+        initialActiveRuleSets = toViewModels(ruleSets, project);
     }
 
     @Override
@@ -110,11 +115,11 @@ final class PMDPropertyPageViewModel extends ViewModel {
     }
 
     public void setActiveRuleSets(final Iterable<RuleSetViewModel> ruleSets) {
-        setProperty("activeRuleSets", activeRuleSets, activeRuleSets = ImmutableSet.copyOf(ruleSets));
+        setProperty(ACTIVE_RULE_SETS, activeRuleSets, activeRuleSets = ImmutableSet.copyOf(ruleSets));
     }
 
     public void setActiveRuleSets(final Set<RuleSetViewModel> ruleSets) {
-        setProperty("activeRuleSets", activeRuleSets, activeRuleSets = ImmutableSet.copyOf(ruleSets));
+        setProperty(ACTIVE_RULE_SETS, activeRuleSets, activeRuleSets = ImmutableSet.copyOf(ruleSets));
     }
 
     public Set<RuleSetViewModel> getActiveRuleSets() {
@@ -126,11 +131,16 @@ final class PMDPropertyPageViewModel extends ViewModel {
         private final String name;
         private final String type;
         private final String location;
+        private final boolean isLocationValid;
+        private final String locationToolTip;
 
-        public RuleSetViewModel(final String name, final String type, final String location) {
+        public RuleSetViewModel(final String name, final String type, final String location, final boolean isLocationValid,
+                final String locationToolTip) {
             this.name = name;
             this.type = type;
             this.location = location;
+            this.isLocationValid = isLocationValid;
+            this.locationToolTip = locationToolTip;
         }
 
         public String getName() {
@@ -143,6 +153,14 @@ final class PMDPropertyPageViewModel extends ViewModel {
 
         public String getLocation() {
             return location;
+        }
+
+        public boolean isLocationValid() {
+            return isLocationValid;
+        }
+
+        public String getLocationToolTip() {
+            return locationToolTip;
         }
 
         @Override
