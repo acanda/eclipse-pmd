@@ -35,7 +35,7 @@ final class LocationLabelProvider extends RuleSetConfigurationLabelProvider {
     public String getToolTipText(final Object element) {
         final RuleSetViewModel ruleSet = toRuleSet(element);
         if (ruleSet.isLocationValid()) {
-            return ruleSet.getLocationToolTip();
+            return ruleSet.getResolvedPath();
         }
         return getErrorMessage(ruleSet);
     }

@@ -279,6 +279,46 @@ public class LocationResolverTest {
     }
 
     /**
+     * Verifies that {@link LocationResolver#resolveIfExists(Location, IProject)} does not throw an exception in a
+     * workspace context if the path consists only of the project name.
+     */
+    @Test
+    public void resolveIfExistsWorkspaceLocationWithProjectNameOnly() throws URISyntaxException {
+        final Location location = new Location("project", LocationContext.WORKSPACE);
+        final IProject project = mock(IProject.class);
+        final IWorkspace workspace = mock(IWorkspace.class);
+        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
+        when(project.getWorkspace()).thenReturn(workspace);
+        when(workspace.getRoot()).thenReturn(workspaceRoot);
+        when(workspaceRoot.getProject("project")).thenReturn(project);
+        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
+        
+        final Optional<String> result = LocationResolver.resolveIfExists(location, project);
+        
+        assertFalse("The location should not resolve", result.isPresent());
+    }
+    
+    /**
+     * Verifies that {@link LocationResolver#resolveIfExists(Location, IProject)} does not throw an exception in a
+     * workspace context if the path is empty.
+     */
+    @Test
+    public void resolveIfExistsWorkspaceLocationWithoutPath() throws URISyntaxException {
+        final Location location = new Location("", LocationContext.WORKSPACE);
+        final IProject project = mock(IProject.class);
+        final IWorkspace workspace = mock(IWorkspace.class);
+        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
+        when(project.getWorkspace()).thenReturn(workspace);
+        when(workspace.getRoot()).thenReturn(workspaceRoot);
+        when(workspaceRoot.getProject("project")).thenReturn(project);
+        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
+        
+        final Optional<String> result = LocationResolver.resolveIfExists(location, project);
+        
+        assertFalse("The location should not resolve", result.isPresent());
+    }
+    
+    /**
      * Verifies that {@link LocationResolver#resolve(Location, IProject)} resolves the location in a project context
      * correctly.
      */

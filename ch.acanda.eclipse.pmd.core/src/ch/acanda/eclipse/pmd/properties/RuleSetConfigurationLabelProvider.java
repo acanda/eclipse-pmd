@@ -57,8 +57,12 @@ abstract class RuleSetConfigurationLabelProvider extends ColumnLabelProvider {
     }
 
     protected String getErrorMessage(final RuleSetViewModel ruleSet) {
-        final String template = "The file {0} does not exist.";
-        return MessageFormat.format(template, ruleSet.getLocationToolTip());
+        final String resolvedPath = ruleSet.getResolvedPath();
+        if (resolvedPath != null) {
+            final String template = "The file {0} does not exist";
+            return MessageFormat.format(template, resolvedPath);
+        }
+        return "The file does not exist";
     }
 
 }

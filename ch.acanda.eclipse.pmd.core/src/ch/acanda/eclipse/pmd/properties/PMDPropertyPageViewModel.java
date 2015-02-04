@@ -132,15 +132,15 @@ final class PMDPropertyPageViewModel extends ViewModel {
         private final String type;
         private final String location;
         private final boolean isLocationValid;
-        private final String locationToolTip;
+        private final String resolvedPath;
 
         public RuleSetViewModel(final String name, final String type, final String location, final boolean isLocationValid,
-                final String locationToolTip) {
+                final String resolvedPath) {
             this.name = name;
             this.type = type;
             this.location = location;
             this.isLocationValid = isLocationValid;
-            this.locationToolTip = locationToolTip;
+            this.resolvedPath = resolvedPath;
         }
 
         public String getName() {
@@ -159,8 +159,8 @@ final class PMDPropertyPageViewModel extends ViewModel {
             return isLocationValid;
         }
 
-        public String getLocationToolTip() {
-            return locationToolTip;
+        public String getResolvedPath() {
+            return resolvedPath;
         }
 
         @Override

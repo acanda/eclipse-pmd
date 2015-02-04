@@ -112,13 +112,17 @@ public final class LocationResolver {
 
     private static Path resolveWorkspaceLocation(final Location location, final IProject project) {
         // format of the location's path: <project-name>/<project-relative-path>
-        final Path locationPath = Paths.get(toOSPath(location.getPath()));
-        final String projectName = locationPath.getName(0).toString();
-        final IWorkspaceRoot root = project.getWorkspace().getRoot();
-        final URI locationURI = root.getProject(projectName).getLocationURI();
-        if (locationURI != null) {
-            final Path projectRelativePath = locationPath.subpath(1, locationPath.getNameCount());
-            return Paths.get(locationURI).resolve(projectRelativePath);
+        if (location.getPath().trim().length() > 0) {
+            final Path locationPath = Paths.get(toOSPath(location.getPath()));
+            if (locationPath.getNameCount() >= 2) {
+                final String projectName = locationPath.getName(0).toString();
+                final IWorkspaceRoot root = project.getWorkspace().getRoot();
+                final URI locationURI = root.getProject(projectName).getLocationURI();
+                if (locationURI != null) {
+                    final Path projectRelativePath = locationPath.subpath(1, locationPath.getNameCount());
+                    return Paths.get(locationURI).resolve(projectRelativePath);
+                }
+            }
         }
         return null;
     }
