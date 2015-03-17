@@ -11,6 +11,8 @@
 
 package ch.acanda.eclipse.pmd;
 
+import net.sourceforge.pmd.lang.LanguageRegistry;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -28,6 +30,7 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 import ch.acanda.eclipse.pmd.v07tov08.V07ToV08Converter;
 
 import com.google.common.base.Optional;
+
 
 /**
  * @author Philip Graf
@@ -47,6 +50,7 @@ public final class PMDPlugin extends AbstractUIPlugin {
         plugin = this;
         V07ToV08Converter.moveSettings(getPreferenceStore(), new ProjectModelRepository());
         initWorkspaceModel();
+        initPMD();
     }
 
     @Override
@@ -75,6 +79,13 @@ public final class PMDPlugin extends AbstractUIPlugin {
         }
         final IResourceChangeListener workspaceChangeListener = new WorkspaceChangeListener(workspaceModel, projectModelRepository);
         ResourcesPlugin.getWorkspace().addResourceChangeListener(workspaceChangeListener, IResourceChangeEvent.POST_CHANGE);
+    }
+
+    private void initPMD() {
+        // The PMD languages are made available as services using the java.util.ServiceLoader facility. The following
+        // line ensures the services are loaded using a class loader with access to the different service
+        // implementations (i.e. languages).
+        LanguageRegistry.getLanguages();
     }
 
     public WorkspaceModel getWorkspaceModel() {
