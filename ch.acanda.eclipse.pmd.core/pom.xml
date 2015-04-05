@@ -21,7 +21,7 @@
 
 	<properties>
 		<libPath>${basedir}/lib</libPath>
-		<pmdVersion>5.2.3</pmdVersion>
+		<pmdVersion>5.3.0</pmdVersion>
 	</properties>
 
 	<build>
@@ -141,6 +141,28 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-matlab</artifactId>
+									<version>${pmdVersion}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-matlab</artifactId>
+									<version>${pmdVersion}</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-objectivec</artifactId>
+									<version>${pmdVersion}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-objectivec</artifactId>
+									<version>${pmdVersion}</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
 									<artifactId>pmd-php</artifactId>
 									<version>${pmdVersion}</version>
 								</artifactItem>
@@ -163,12 +185,34 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-python</artifactId>
+									<version>${pmdVersion}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-python</artifactId>
+									<version>${pmdVersion}</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
 									<artifactId>pmd-ruby</artifactId>
 									<version>${pmdVersion}</version>
 								</artifactItem>
 								<artifactItem>
 									<groupId>net.sourceforge.pmd</groupId>
 									<artifactId>pmd-ruby</artifactId>
+									<version>${pmdVersion}</version>
+									<classifier>sources</classifier>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-scala</artifactId>
+									<version>${pmdVersion}</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>net.sourceforge.pmd</groupId>
+									<artifactId>pmd-scala</artifactId>
 									<version>${pmdVersion}</version>
 									<classifier>sources</classifier>
 								</artifactItem>
