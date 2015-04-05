@@ -7,10 +7,9 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
 -->
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>ch.acanda.eclipse.pmd</groupId>
@@ -23,9 +22,9 @@
     <artifactId>indigo</artifactId>
     <packaging>eclipse-target-definition</packaging>
     <name>eclipse-pmd target definition</name>
-    
-	<build>
-		<plugins>
+
+    <build>
+        <plugins>
             <plugin>
                 <groupId>org.eclipse.tycho.extras</groupId>
                 <artifactId>target-platform-validation-plugin</artifactId>
@@ -45,7 +44,7 @@
                     </execution>
                 </executions>
             </plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
 </project>
