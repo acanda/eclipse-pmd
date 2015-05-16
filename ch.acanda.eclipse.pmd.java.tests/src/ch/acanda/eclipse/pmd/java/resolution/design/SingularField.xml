@@ -17,7 +17,7 @@
 class SingularField {
     private <marker>int i;</marker>
     void foo() {
-        i = 1;
+        i=1;
     }
 }
             </source>
@@ -26,7 +26,7 @@ class SingularField {
             <source>
 class SingularField {
     void foo() {
-        final int i = 1;
+        final int i=1;
     }
 }
             </source>
@@ -42,7 +42,7 @@ class SingularField {
 class SingularField {
     private <marker>int i;</marker>
     void foo() {
-        this.i = 1;
+        this.i=1;
     }
 }
             </source>
@@ -51,7 +51,7 @@ class SingularField {
             <source>
 class SingularField {
     void foo() {
-        final int i = 1;
+        final int i=1;
     }
 }
             </source>
@@ -67,8 +67,8 @@ class SingularField {
 class SingularField {
     private <marker>int i;</marker>
     void foo() {
-        i = 1;
-        i = 2;
+        i=1;
+        i=2;
     }
 }
             </source>
@@ -77,8 +77,8 @@ class SingularField {
             <source>
 class SingularField {
     void foo() {
-        int i = 1;
-        i = 2;
+        int i=1;
+        i=2;
     }
 }
             </source>
@@ -94,11 +94,11 @@ class SingularField {
 class SingularField {
     private <marker>int i;</marker>
     void bar() {
-        int i = 0;
-        i = 1;
+        int i=0;
+        i=1;
     }
     void foo() {
-        i = 1;
+        i=1;
     }
 }
             </source>
@@ -107,11 +107,11 @@ class SingularField {
             <source>
 class SingularField {
     void bar() {
-        int i = 0;
-        i = 1;
+        int i=0;
+        i=1;
     }
     void foo() {
-        final int i = 1;
+        final int i=1;
     }
 }
             </source>
@@ -129,9 +129,9 @@ class SingularField {
     void foo() {
         {
             int i;
-            i = 0;
+            i=0;
         }
-        i = 1;
+        i=1;
     }
 }
             </source>
@@ -142,9 +142,9 @@ class SingularField {
     void foo() {
         {
             int i;
-            i = 0;
+            i=0;
         }
-        final int i = 1;
+        final int i=1;
     }
 }
             </source>
@@ -158,9 +158,9 @@ class SingularField {
         <setup>
             <source>
 class SingularField {
-    private <marker>int i, x = 7, y;</marker>
+    private <marker>int i, x=7, y;</marker>
     void foo() {
-        i = 1;
+        i=1;
     }
 }
             </source>
@@ -168,9 +168,9 @@ class SingularField {
         <expected>
             <source>
 class SingularField {
-    private int x = 7, y;
+    private int x=7, y;
     void foo() {
-        final int i = 1;
+        final int i=1;
     }
 }
             </source>
@@ -186,7 +186,7 @@ class SingularField {
 class SingularField {
     private <marker>int i;</marker>
     {
-        i = 1;
+        i=1;
     }
 }
             </source>
@@ -195,7 +195,7 @@ class SingularField {
             <source>
 class SingularField {
     {
-        final int i = 1;
+        final int i=1;
     }
 }
             </source>
