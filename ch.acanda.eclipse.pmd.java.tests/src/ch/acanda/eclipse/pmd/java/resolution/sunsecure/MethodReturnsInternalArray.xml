@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2012 - 2015, Philip Graf
+
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+  <pmdReferenceId>rulesets/java/sunsecure.xml/MethodReturnsInternalArray</pmdReferenceId>
+  <language>java 1.7</language>
+
+  <test name="MethodReturnsInternalArray">
+    <setup>
+      <source>
+public class MethodReturnsInternalArray {
+    private int[] bar = new int[] { 1, 2, 3 };
+    public int[] foo() {
+        <marker>return bar;</marker>
+    }
+}
+      </source>
+    </setup>
+    <expected>
+      <source>
+public class MethodReturnsInternalArray {
+    private int[] bar = new int[] { 1, 2, 3 };
+    public int[] foo() {
+        return bar.clone();
+    }
+}
+      </source>
+      <image>QUICKFIX_CHANGE</image>
+      <label>Return a clone of the array</label>
+      <description><![CDATA[Replaces <b>return bar</b> with <b>return bar.clone()</b>.]]></description>
+    </expected>
+  </test>
+
+  <test name="MethodReturnsInternalArrayWithThis">
+    <setup>
+      <source>
+public class MethodReturnsInternalArray {
+    private int[] bar = new int[] { 1, 2, 3 };
+    public int[] foo() {
+        <marker>return this.bar;</marker>
+    }
+}
+      </source>
+    </setup>
+    <expected>
+      <source>
+public class MethodReturnsInternalArray {
+    private int[] bar = new int[] { 1, 2, 3 };
+    public int[] foo() {
+        return this.bar.clone();
+    }
+}
+      </source>
+      <image>QUICKFIX_CHANGE</image>
+      <label>Return a clone of the array</label>
+      <description><![CDATA[Replaces <b>return this.bar</b> with <b>return this.bar.clone()</b>.]]></description>
+    </expected>
+  </test>
+
+  <test name="MethodReturnsInternalArrayWithMethod">
+    <setup>
+      <source>
+public class MethodReturnsInternalArray {
+    public int[] foo() {
+        <marker>return bar();</marker>
+    }
+    private int[] bar() {
+        new int[] { 1, 2, 3 };
+    }
+}
+      </source>
+    </setup>
+    <expected>
+      <source>
+public class MethodReturnsInternalArray {
+    public int[] foo() {
+        return bar().clone();
+    }
+    private int[] bar() {
+        new int[] { 1, 2, 3 };
+    }
+}
+      </source>
+      <image>QUICKFIX_CHANGE</image>
+      <label>Return a clone of the array</label>
+      <description><![CDATA[Replaces <b>return bar()</b> with <b>return bar().clone()</b>.]]></description>
+    </expected>
+  </test>
+
+</tests>

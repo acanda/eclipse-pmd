@@ -101,6 +101,7 @@ public class PMDIntegrationTest {
             "stringandstringbuffer/AppendCharacterWithChar.xml",
             "stringandstringbuffer/UseIndexOfChar.xml",
             "stringandstringbuffer/StringToString.xml",
+            "sunsecure/MethodReturnsInternalArray.xml",
             "unnecessary/UselessOverridingMethod.xml",
             "unnecessary/UnnecessaryReturn.xml");
 
@@ -142,7 +143,7 @@ public class PMDIntegrationTest {
         }
         final LanguageVersion languageVersion = language.getVersion(languageMatcher.group(2));
         final String fileExtension = "." + languageVersion.getLanguage().getExtensions().get(0);
-        final File sourceFile = File.createTempFile(getClass().getSimpleName(), fileExtension);
+        final File sourceFile = File.createTempFile(getFilePrefix(params), fileExtension);
         try {
             final PMDConfiguration configuration = new PMDConfiguration();
             final Reader reader = new StringReader(params.source);
@@ -182,6 +183,18 @@ public class PMDIntegrationTest {
         } finally {
             sourceFile.delete();
         }
+    }
+
+    private static String getFilePrefix(final TestParameters params) {
+        return params.pmdReferenceId.transform(PMDIntegrationTest::getRuleId).or("") + '-' + params.name + '-';
+    }
+
+    private static String getRuleId(final String pmdReferenceId) {
+        final Matcher matcher = Pattern.compile(".*/([^/]+)").matcher(pmdReferenceId);
+        if (matcher.matches()) {
+            return matcher.group(1);
+        }
+        return "";
     }
 
     private void failDueToInvalidTerseName(final String languageTerseName) {
