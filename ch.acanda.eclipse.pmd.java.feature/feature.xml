@@ -21,17 +21,10 @@
    </url>
 
    <requires>
-      <import plugin="ch.acanda.eclipse.pmd.core" version="1.2.0" match="greaterOrEqual"/>
-      <import plugin="ch.acanda.eclipse.pmd.lib" version="1.2.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jdt.core" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.resources" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jface" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jface.text" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.ide" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.runtime" version="3.7.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.filebuffers"/>
-      <import plugin="org.eclipse.ui.editors" version="3.7.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jdt" version="3.7.2.v20120120-1414-7z8gFcuFMP7BW5XTz0jLTnz0l9B1"/>
+      <import feature="org.eclipse.rcp" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
+      <import feature="org.eclipse.platform" version="3.7.2.v20120207-1839-9gF7UHPDFxGjd-PqDr2jX_4yKaumkoHTz04_q-q"/>
+      <import feature="ch.acanda.eclipse.pmd.core.feature" version="1.6.0.qualifier"/>
    </requires>
 
    <plugin
