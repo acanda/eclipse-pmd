@@ -18,33 +18,70 @@
         <relativePath>../ch.acanda.eclipse.pmd</relativePath>
     </parent>
 
-    <groupId>ch.acanda.eclipse.pmd</groupId>
-    <artifactId>indigo</artifactId>
-    <packaging>eclipse-target-definition</packaging>
-    <name>eclipse-pmd target definition</name>
+    <artifactId>ch.acanda.eclipse.pmd.target</artifactId>
+    <packaging>pom</packaging>
+    <name>eclipse-pmd target definitions</name>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.eclipse.tycho.extras</groupId>
-                <artifactId>target-platform-validation-plugin</artifactId>
-                <version>${tycho-extras-version}</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>validate-target-platform</goal>
-                        </goals>
-                        <configuration>
-                            <targetFiles>
-                                <param>indigo.target</param>
-                            </targetFiles>
-                            <failOnError>true</failOnError>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <profile>
+            <id>eclipse-indigo</id>
+            <activation>
+                <property>
+                    <name>!eclipse-release</name>
+                </property>
+            </activation>
+            <modules>
+                <module>indigo</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>eclipse-juno</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>juno</value>
+                </property>
+            </activation>
+            <modules>
+                <module>juno</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>eclipse-kepler</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>kepler</value>
+                </property>
+            </activation>
+            <modules>
+                <module>kepler</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>eclipse-luna</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>luna</value>
+                </property>
+            </activation>
+            <modules>
+                <module>luna</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>eclipse-mars</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>mars</value>
+                </property>
+            </activation>
+            <modules>
+                <module>mars</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
