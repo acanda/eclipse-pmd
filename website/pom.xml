@@ -27,6 +27,16 @@
             <resource>
                 <directory>src/html</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/*.html</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/html</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.html</exclude>
+                </excludes>
             </resource>
         </resources>
 
