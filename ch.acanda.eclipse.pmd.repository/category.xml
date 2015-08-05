@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/ch.acanda.eclipse.pmd.feature_1.6.0.qualifier.jar" id="ch.acanda.eclipse.pmd.feature" version="1.6.0.qualifier">
+   <feature url="features/ch.acanda.eclipse.pmd.feature_1.7.0.qualifier.jar" id="ch.acanda.eclipse.pmd.feature" version="1.7.0.qualifier">
       <category name="ch.acanda.eclipse.pmd"/>
    </feature>
    <category-def name="ch.acanda.eclipse.pmd" label="Eclipse PMD Plug-in"/>
