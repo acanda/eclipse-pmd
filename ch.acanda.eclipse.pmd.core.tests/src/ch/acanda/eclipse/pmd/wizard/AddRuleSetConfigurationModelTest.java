@@ -25,9 +25,9 @@ import java.nio.file.StandardCopyOption;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 
@@ -38,27 +38,17 @@ import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
  */
 public class AddRuleSetConfigurationModelTest {
     
-    private static Path ruleSetFile;
-
-    @BeforeClass
-    public static void createRuleSetFile() throws IOException {
-        ruleSetFile = Files.createTempFile("AddRuleSetConfigurationModelTest-", ".xml");
-        try (final InputStream in = AddRuleSetConfigurationModelTest.class.getResourceAsStream("AddRuleSetConfigurationModelTest.xml")) {
-            Files.copy(in, ruleSetFile, StandardCopyOption.REPLACE_EXISTING);
-        }
-    }
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
     
-    @AfterClass
-    public static void deleteRuleSetFile() throws IOException {
-        Files.deleteIfExists(ruleSetFile);
-    }
-
     /**
      * Verifies that a rule set configuration in a project outside of the workspace does not produce an error in the
      * "Add Rule Set Configuration" wizard.
      */
     @Test
     public void validateWorkspaceConfigurationWithProjectOutsideWorkspace() throws IOException {
+        final Path ruleSetFile = createRuleSetFile();
+        
         final IProject project = mock(IProject.class);
         final IWorkspace workspace = mock(IWorkspace.class);
         final IWorkspaceRoot root = mock(IWorkspaceRoot.class);
@@ -66,7 +56,7 @@ public class AddRuleSetConfigurationModelTest {
         when(workspace.getRoot()).thenReturn(root);
         when(root.getProject(anyString())).thenReturn(project);
         when(project.getLocationURI()).thenReturn(ruleSetFile.getParent().toUri());
-
+        
         final AddRuleSetConfigurationModel model = new AddRuleSetConfigurationModel(project);
         model.setWorkspaceTypeSelected(true);
         model.setName("X");
@@ -80,6 +70,14 @@ public class AddRuleSetConfigurationModelTest {
                     + "if the project is located outside the workspace. First error: ";
             fail(msg + validationResult.getFirstErrorMessage());
         }
+    }
+    
+    public Path createRuleSetFile() throws IOException {
+        final Path ruleSetFile = folder.newFile("AddRuleSetConfigurationModelTest.xml").toPath();
+        try (final InputStream in = AddRuleSetConfigurationModelTest.class.getResourceAsStream("AddRuleSetConfigurationModelTest.xml")) {
+            Files.copy(in, ruleSetFile, StandardCopyOption.REPLACE_EXISTING);
+        }
+        return ruleSetFile;
     }
     
 }
