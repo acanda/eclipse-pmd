@@ -14,6 +14,10 @@ package ch.acanda.eclipse.pmd.java.resolution;
 import org.eclipse.ui.IMarkerResolution;
 import org.osgi.framework.Version;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ImmutableListMultimap.Builder;
+
 import ch.acanda.eclipse.pmd.exception.EclipsePMDException;
 import ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.design.DefaultLabelNotLastInSwitchStmtQuickFix;
@@ -41,6 +45,7 @@ import ch.acanda.eclipse.pmd.java.resolution.migration.LongInstantiationValueOfQ
 import ch.acanda.eclipse.pmd.java.resolution.migration.ShortInstantiationAutoboxingQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.migration.ShortInstantiationValueOfQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.naming.SuspiciousHashcodeMethodNameQuickFix;
+import ch.acanda.eclipse.pmd.java.resolution.optimization.AddEmptyStringQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.optimization.LocalVariableCouldBeFinalQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.optimization.MethodArgumentCouldBeFinalQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.optimization.RedundantFieldInitializerQuickFix;
@@ -52,10 +57,6 @@ import ch.acanda.eclipse.pmd.java.resolution.sunsecure.MethodReturnsInternalArra
 import ch.acanda.eclipse.pmd.java.resolution.unnecessary.UnnecessaryReturnQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.unnecessary.UselessOverridingMethodQuickFix;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableListMultimap.Builder;
 
 @SuppressWarnings({ "PMD.CouplingBetweenObjects", "PMD.ExcessiveImports" })
 public final class JavaQuickFixGenerator {
@@ -96,6 +97,7 @@ public final class JavaQuickFixGenerator {
                             LongInstantiationAutoboxingQuickFix.class,
                             LongInstantiationValueOfQuickFix.class)
                     .putAll("java.naming.SuspiciousHashcodeMethodName", SuspiciousHashcodeMethodNameQuickFix.class)
+                    .putAll("java.optimization.AddEmptyString", AddEmptyStringQuickFix.class)
                     .putAll("java.optimization.LocalVariableCouldBeFinal", LocalVariableCouldBeFinalQuickFix.class)
                     .putAll("java.optimization.MethodArgumentCouldBeFinal", MethodArgumentCouldBeFinalQuickFix.class)
                     .putAll("java.optimization.RedundantFieldInitializer", RedundantFieldInitializerQuickFix.class)

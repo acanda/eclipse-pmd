@@ -57,10 +57,10 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
 import org.eclipse.ui.views.markers.WorkbenchMarkerResolution;
 
+import com.google.common.base.Optional;
+
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
-
-import com.google.common.base.Optional;
 
 /**
  * Base class for a Java quick fix.
@@ -95,6 +95,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
      * problems of the same type all at once.
      */
     @Override
+    @SuppressWarnings("PMD.UseVarargs")
     public IMarker[] findOtherMarkers(final IMarker[] markers) {
         final IMarker[] result;
         if (markers.length > 1) {
@@ -186,6 +187,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
 
             final ASTParser astParser = ASTParser.newParser(AST.JLS4);
             astParser.setKind(ASTParser.K_COMPILATION_UNIT);
+            astParser.setResolveBindings(needsTypeResolution());
             astParser.setSource(compilationUnit);
 
             final SubProgressMonitor parserMonitor = new SubProgressMonitor(monitor, 100);
@@ -241,14 +243,26 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
     }
 
     /**
+     * Returns {@code true} if the quick fix needs resolved types. Type resolution comes at a considerable cost in both
+     * time and space, however, and should not be requested frivolously. The additional space is not reclaimed until the
+     * AST, all its nodes, and all its bindings become garbage. So it is very important to not retain any of these
+     * objects longer than absolutely necessary.
+     *
+     * @see ASTParser#setResolveBindings(boolean)
+     */
+    protected boolean needsTypeResolution() {
+        return false;
+    }
+
+    /**
      * Prepares the quick fix for fixing the markers. This method is guaranteed to be invoked before
      * {@link #fixMarker(ASTNode, IDocument, Map)} and {@link #finishFixingMarkers(CompilationUnit, IDocument, Map).
      */
     protected abstract void startFixingMarkers(final CompilationUnit ast);
 
-/**
-     * Fixes a single marker. The marker is already resolve to its corresponding node in the AST. This method is guaranteed to be invoked
-     * before {@link #finishFixingMarkers(CompilationUnit, IDocument, Map).
+    /**
+     * Fixes a single marker. The marker is already resolve to its corresponding node in the AST. This method is
+     * guaranteed to be invoked before {@link #finishFixingMarkers(CompilationUnit, IDocument, Map).
      *
      * @param node The marker's corresponding node in the AST.
      * @param document The document representing the Java file.

@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.java.resolution;
 
+import static java.text.MessageFormat.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -43,14 +44,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+
 import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
-
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 /**
  * Base class for testing quick fix tests based on {@link ASTQuickFix}. An extending class must provide a static method
@@ -107,7 +108,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     public void apply() throws MalformedTreeException, BadLocationException {
         final ASTQuickFix<ASTNode> quickFix = getQuickFix();
         final org.eclipse.jface.text.Document document = new org.eclipse.jface.text.Document(params.source);
-        final CompilationUnit ast = createAST(document);
+        final CompilationUnit ast = createAST(document, quickFix);
         final ASTNode node = findNode(params, ast, quickFix);
 
         quickFix.apply(node);
@@ -126,23 +127,36 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         return node.get();
     }
 
-    private CompilationUnit createAST(final org.eclipse.jface.text.Document document) {
+    private CompilationUnit createAST(final org.eclipse.jface.text.Document document, final ASTQuickFix<ASTNode> quickFix) {
         final ASTParser astParser = ASTParser.newParser(AST.JLS4);
-        astParser.setKind(ASTParser.K_COMPILATION_UNIT);
         astParser.setSource(document.get().toCharArray());
-        astParser.setCompilerOptions(ImmutableMap.<String, String>builder().put(JavaCore.COMPILER_SOURCE, "1.7").build());
+        astParser.setKind(ASTParser.K_COMPILATION_UNIT);
+        astParser.setResolveBindings(quickFix.needsTypeResolution());
+        astParser.setEnvironment(new String[0], new String[0], new String[0], true);
+        final String name = last(params.pmdReferenceId.or("QuickFixTest").split("/"));
+        astParser.setUnitName(format("{0}.java", name));
+        final String version = last(params.language.or("java 1.7").split("\\s+"));
+        astParser.setCompilerOptions(ImmutableMap.<String, String>builder()
+                .put(JavaCore.COMPILER_SOURCE, version)
+                .put(JavaCore.COMPILER_COMPLIANCE, version)
+                .put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, version)
+                .build());
         final CompilationUnit ast = (CompilationUnit) astParser.createAST(null);
         ast.recordModifications();
         return ast;
     }
 
+    private String last(final String... strings) {
+        return strings[strings.length - 1];
+    }
+
     private String rewriteAST(final org.eclipse.jface.text.Document document, final CompilationUnit ast) throws BadLocationException {
-        final TextEdit edit = ast.rewrite(document, getOptions());
+        final TextEdit edit = ast.rewrite(document, getRewriteOptions());
         edit.apply(document);
         return document.get();
     }
 
-    private Map<String, String> getOptions() {
+    private Map<String, String> getRewriteOptions() {
         final Map<String, String> options = new HashMap<>();
         options.put(DefaultCodeFormatterConstants.FORMATTER_TAB_CHAR, JavaCore.SPACE);
         options.put(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE, "4");
