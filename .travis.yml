@@ -1,7 +1,16 @@
 language: java
 
-env: DISPLAY=:99
-
+env: 
+  global:
+    - DISPLAY=:99
+    - MAVEN_OPTS="-Xmx512m"
+  matrix:
+    - ECLIPSE_RELEASE=""
+    - ECLIPSE_RELEASE="-Declipse-release=juno"
+    - ECLIPSE_RELEASE="-Declipse-release=kepler"
+    - ECLIPSE_RELEASE="-Declipse-release=luna"
+    - ECLIPSE_RELEASE="-Declipse-release=mars"
+    
 jdk: oraclejdk8
 
 install:
@@ -10,15 +19,8 @@ install:
 
 before_script:
   - sudo rm /etc/mavenrc
-  - export MAVEN_OPTS="-Xmx1g"
-  - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 10 # give xvfb some time to start
   - metacity --sm-disable --replace &
 
-script: 
-  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B
-  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=juno
-  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=kepler
-  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=luna
-  - mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B -Declipse-release=mars
+script: mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B $ECLIPSE_RELEASE
