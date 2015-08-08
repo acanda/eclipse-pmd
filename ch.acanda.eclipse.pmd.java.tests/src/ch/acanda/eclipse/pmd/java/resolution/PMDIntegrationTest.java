@@ -27,6 +27,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.osgi.framework.Version;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+import com.google.common.collect.Iterators;
+
+import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
+import ch.acanda.eclipse.pmd.marker.MarkerUtil;
+import ch.acanda.eclipse.pmd.marker.MarkerUtil.Range;
+import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
@@ -39,24 +56,6 @@ import net.sourceforge.pmd.SourceCodeProcessor;
 import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.LanguageVersion;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import org.osgi.framework.Version;
-
-import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
-import ch.acanda.eclipse.pmd.marker.MarkerUtil;
-import ch.acanda.eclipse.pmd.marker.MarkerUtil.Range;
-import ch.acanda.eclipse.pmd.marker.PMDMarker;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-import com.google.common.collect.Iterators;
 
 /**
  * Quick fixes usually depend on an exact location of a violation to be able to work correctly. This regression test
@@ -75,6 +74,7 @@ public class PMDIntegrationTest {
             "design/UseCollectionIsEmpty.xml",
             "design/UseNotifyAllInsteadOfNotify.xml",
             "design/UseUtilityClass.xml",
+            "design/UseVarargs.xml",
             "emptycode/EmptyFinallyBlock.xml",
             "emptycode/EmptyIfStmt.xml",
             "emptycode/EmptyInitializer.xml",
@@ -94,6 +94,7 @@ public class PMDIntegrationTest {
             "migration/LongInstantiationAutoboxing.xml",
             "migration/LongInstantiationValueOf.xml",
             "naming/SuspiciousHashcodeMethodName.xml",
+            "optimization/AddEmptyString.xml",
             "optimization/LocalVariableCouldBeFinal.xml",
             "optimization/MethodArgumentCouldBeFinal.xml",
             "optimization/RedundantFieldInitializer.xml",

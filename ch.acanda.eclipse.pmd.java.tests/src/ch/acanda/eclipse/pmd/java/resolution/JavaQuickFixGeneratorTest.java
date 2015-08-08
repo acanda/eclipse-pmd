@@ -26,11 +26,11 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Version;
 
-import ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFix;
-import ch.acanda.eclipse.pmd.marker.PMDMarker;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
+
+import ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFix;
+import ch.acanda.eclipse.pmd.marker.PMDMarker;
 
 @RunWith(value = Parameterized.class)
 public class JavaQuickFixGeneratorTest {
@@ -42,9 +42,10 @@ public class JavaQuickFixGeneratorTest {
     private PMDMarker marker;
     private JavaQuickFixContext context;
 
+    @SafeVarargs
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public JavaQuickFixGeneratorTest(final String ruleId, final int javaVersion,
-            final Class<? extends IMarkerResolution>[] expectedQuickFixClasses) {
+            final Class<? extends IMarkerResolution>... expectedQuickFixClasses) {
         this.ruleId = ruleId;
         this.javaVersion = "1." + javaVersion + ".0";
         this.expectedQuickFixClasses = expectedQuickFixClasses;
