@@ -82,6 +82,18 @@
                 <module>mars</module>
             </modules>
         </profile>
+        <profile>
+            <id>eclipse-neon</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>neon</value>
+                </property>
+            </activation>
+            <modules>
+                <module>neon</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>
