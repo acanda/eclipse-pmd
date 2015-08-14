@@ -53,6 +53,7 @@ import ch.acanda.eclipse.pmd.java.resolution.optimization.RedundantFieldInitiali
 import ch.acanda.eclipse.pmd.java.resolution.optimization.SimplifyStartsWithQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.stringandstringbuffer.AppendCharacterWithCharQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.stringandstringbuffer.StringToStringQuickFix;
+import ch.acanda.eclipse.pmd.java.resolution.stringandstringbuffer.UnnecessaryCaseChangeQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.stringandstringbuffer.UseIndexOfCharQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.sunsecure.MethodReturnsInternalArrayQuickFix;
 import ch.acanda.eclipse.pmd.java.resolution.unnecessary.UnnecessaryReturnQuickFix;
@@ -107,6 +108,7 @@ public final class JavaQuickFixGenerator {
                     .putAll("java.string and stringbuffer.AppendCharacterWithChar", AppendCharacterWithCharQuickFix.class)
                     .putAll("java.string and stringbuffer.UseIndexOfChar", UseIndexOfCharQuickFix.class)
                     .putAll("java.string and stringbuffer.StringToString", StringToStringQuickFix.class)
+                    .putAll("java.string and stringbuffer.UnnecessaryCaseChange", UnnecessaryCaseChangeQuickFix.class)
                     .putAll("java.security code guidelines.MethodReturnsInternalArray", MethodReturnsInternalArrayQuickFix.class)
                     .putAll("java.unnecessary.UselessOverridingMethod", UselessOverridingMethodQuickFix.class)
                     .putAll("java.unnecessary.UnnecessaryReturn", UnnecessaryReturnQuickFix.class)

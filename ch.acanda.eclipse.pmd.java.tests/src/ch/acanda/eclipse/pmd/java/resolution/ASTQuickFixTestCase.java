@@ -93,7 +93,9 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
             final IMarker marker = mock(IMarker.class);
             when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename.orNull());
             final String markerText = params.source.substring(params.offset, params.offset + params.length);
-            when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
+            if (!markerText.contains("\n")) {
+                when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
+            }
             return (ASTQuickFix<ASTNode>) quickFixClass.getConstructor(PMDMarker.class).newInstance(new WrappingPMDMarker(marker));
         } catch (SecurityException | ReflectiveOperationException e) {
             throw new IllegalArgumentException(e);

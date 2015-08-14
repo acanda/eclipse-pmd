@@ -102,6 +102,7 @@ public class PMDIntegrationTest {
             "stringandstringbuffer/AppendCharacterWithChar.xml",
             "stringandstringbuffer/UseIndexOfChar.xml",
             "stringandstringbuffer/StringToString.xml",
+            "stringandstringbuffer/UnnecessaryCaseChange.xml",
             "sunsecure/MethodReturnsInternalArray.xml",
             "unnecessary/UselessOverridingMethod.xml",
             "unnecessary/UnnecessaryReturn.xml");
