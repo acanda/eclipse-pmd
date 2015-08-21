@@ -1,0 +1,21 @@
+**Bugfixes:**
+
+* Fixed [bug 1165]: SimplifyConditional false positive
+* Fixed [bug 1166]: PLSQL XPath Rules Fail for XPath 1.0
+* Fixed [bug 1167]: Error while processing PLSQL file with BOM
+* Fixed [bug 1168]: Designer errors when trying to copy xml to clipboard
+* Fixed [bug 1170]: false positive with switch in loop
+* Fixed [bug 1171]: Specifying minimum priority from command line gives NPE
+* Fixed [bug 1173]: Java 8 support: method references
+* Fixed [bug 1175]: false positive for StringBuilder.append called 2 consecutive times
+* Fixed [bug 1176]: ShortVariable false positive with for-each loops
+* Fixed [bug 1177]: Incorrect StringBuffer warning when that class is not used
+* Fixed [bug 1178]: LexicalError while parsing Java code aborts CPD run
+* Fixed [bug 1180]: False Positive for ConsecutiveAppendsShouldReuse on different variable names
+* Fixed [bug 1185]: UnusedModifier throws NPE when parsing enum with a nested static interface
+* Fixed [bug 1188]: False positive in UnusedPrivateField
+* Fixed [bug 1191]: Ecmascript fails to parse "void(0)"
+* Document that PMD requires Java 1.6, see [discussion].
+* [Pull request 38]: Some fixes for AbstractCommentRule
+* [Pull request 39]: Fixed NPE in ConsecutiveAppendsShouldReuseRule.getVariableAppended()
+* [Pull request 40]: Added support for enums in CommentRequiredRule

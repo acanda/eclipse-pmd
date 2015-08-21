@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Eclipse PMD - The Eclipse PMD Plug-in</title>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="css/layout.css" rel="stylesheet">
+
+		<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<![endif]-->
+		
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-37305934-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="index.html">eclipse-pmd</a>
+				<ul class="nav">
+					<li>
+						<a href="getting-started.html">Get started</a>
+					</li>
+					<li>
+						<a href="changelog.html">Changelog</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="container">
+			<div class="hero-unit">
+				<h1>eclipse-pmd <small>The&nbsp;Eclipse&nbsp;PMD&nbsp;Plug-in</small></h1>
+				<p>
+					The eclipse-pmd plug-in integrates the well-known source code analyzer PMD ${pmd-version} into the Eclipse IDE.
+				</p>
+				<p>
+					<a href="getting-started.html" class="btn btn-primary btn-large">Install&nbsp;v${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}&nbsp;&raquo;</a>
+				</p>
+			</div>
+
+			<div class="row">
+				<div class="span4">
+					<h2>Analyse</h2>
+					<p>
+						Everytime you save your work, eclipse-pmd scans your source code and looks for potential problems like possible bugs and suboptimal, duplicate, dead or overly complicated code.
+						<br/>
+
+					</p>
+				</div>
+
+				<div class="span4">
+					<h2>Locate</h2>
+					<p>
+						When eclipse-pmd finds problems it highlights those in your editor so you can fix them right away.
+						Discovered problems are also logged in the Eclipse Problems View.
+					</p>
+				</div>
+
+				<div class="span4">
+					<h2>Fix</h2>
+					<p>
+						Where possible, eclipse-pmd offers quick fixes that automatically fix the problems. These quick fixes can be used to fix a single problem or all occurrences in your entire code base.
+					</p>
+					<p>
+						<a class="btn btn-primary pull-right" href="getting-started.html">Get started &raquo;</a>
+					</p>
+				</div>
+
+			</div>
+		</div>
+		<footer class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="span4">
+						<p>
+							&copy; 2012 &ndash; ${build-year} Philip Graf. All Rights Reserved.
+							<br />
+							eclipse-pmd uses <a href="https://pmd.github.io/">PMD</a>.
+						</p>
+					</div>
+					<div class="span4 offset4">
+						<p>
+							Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a>
+							<br />
+							Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div id="forkme">
+			<a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

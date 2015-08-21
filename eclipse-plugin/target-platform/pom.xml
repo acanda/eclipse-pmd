@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.acanda.eclipse.pmd</groupId>
+        <artifactId>eclipse-plugin</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>target-platform</artifactId>
+    <packaging>pom</packaging>
+    <name>eclipse-pmd/Eclipse Plug-in/Target Platform</name>
+
+    <profiles>
+
+        <profile>
+            <id>target-platform-default</id>
+            <activation>
+                <property>
+                    <name>!target-platform</name>
+                </property>
+            </activation>
+            <modules>
+                <module>mars</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>target-platform-mars</id>
+            <activation>
+                <property>
+                    <name>target-platform</name>
+                    <value>mars</value>
+                </property>
+            </activation>
+            <modules>
+                <module>mars</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>target-platform-neon</id>
+            <activation>
+                <property>
+                    <name>target-platform</name>
+                    <value>neon</value>
+                </property>
+            </activation>
+            <modules>
+                <module>neon</module>
+            </modules>
+        </profile>
+
+    </profiles>
+
+</project>

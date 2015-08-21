@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.acanda.eclipse.pmd</groupId>
+        <artifactId>eclipse-pmd</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>eclipse-plugin</artifactId>
+    <packaging>pom</packaging>
+    <name>eclipse-pmd/Eclipse Plug-in</name>
+    <url>http://acanda.github.io/eclipse-pmd/</url>
+
+    <properties>
+        <tycho-version>0.23.1</tycho-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+        <maven.compiler.testSource>1.8</maven.compiler.testSource>
+    </properties>
+
+    <modules>
+        <module>target-platform</module>
+    </modules>
+
+    <build>
+        <sourceDirectory>${basedir}/src</sourceDirectory>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.10</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-versions-plugin</artifactId>
+                    <version>${tycho-version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.15</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.4</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <resolver>p2</resolver>
+                    <target>
+                        <artifact>
+                            <groupId>ch.acanda.eclipse.pmd</groupId>
+                            <artifactId>${eclipse-release}</artifactId>
+                            <version>${project.version}</version>
+                        </artifact>
+                    </target>
+                    <ignoreTychoRepositories>true</ignoreTychoRepositories>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <useProjectSettings>true</useProjectSettings>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>${maven.compiler.target}</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <profile>
+            <id>macosx-jvm-flags</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <!-- tycho-surefire-plugin needs -XstartOnFirstThread on mac os -->
+                <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>target-platform-default</id>
+            <activation>
+                <property>
+                    <name>!target-platform</name>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>mars</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/mars/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>target-platform-mars</id>
+            <activation>
+                <property>
+                    <name>target-platform</name>
+                    <value>mars</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>mars</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/mars/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
+            <id>target-platform-neon</id>
+            <activation>
+                <property>
+                    <name>target-platform</name>
+                    <value>neon</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>neon</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M1-201508052000</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+    </profiles>
+
+    <developers>
+        <developer>
+            <name>Philip Graf</name>
+            <roles>
+                <role>Founder</role>
+                <role>Maintainer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/acanda/eclipse-pmd</url>
+        <connection>scm:git:git://github.com/acanda/eclipse-pmd.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/acanda/eclipse-pmd.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/acanda/eclipse-pmd/issues/</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Eclipse Public License - v 1.0</name>
+            <url>http://www.eclipse.org/legal/epl-v10.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+</project>
