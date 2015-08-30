@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>website</artifactId>
-    <name>eclipse-pmd/Website</name>
+    <name>eclipse-pmd Website</name>
     <url>http://acanda.github.io/eclipse-pmd/</url>
 
     <properties>
@@ -24,22 +24,30 @@
 
         <resources>
             <resource>
-                <directory>src/html</directory>
+                <directory>src/main/html</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>**/*.html</include>
                 </includes>
             </resource>
             <resource>
-                <directory>src/html</directory>
+                <directory>src/main/html</directory>
                 <filtering>false</filtering>
                 <excludes>
                     <exclude>**/*.html</exclude>
                 </excludes>
             </resource>
+            <resource>
+                <directory>target/generated-docs</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.html</include>
+                </includes>
+            </resource>
         </resources>
 
         <plugins>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -50,7 +58,42 @@
                             <goal>parse-version</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>java-spec-version</id>
+                        <goals>
+                            <goal>regex-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>java-spec-version</name>
+                            <value>${java-version}</value>
+                            <regex>^\d+\.(\d+).*$</regex>
+                            <replacement>$1</replacement>
+                            <failIfNoMatch>true</failIfNoMatch>
+                        </configuration>
+                    </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.2</version>
+                <executions>
+                    <execution>
+                        <id>output-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <backend>html</backend>
+                    <attributes>
+                        <java-spec-version>${java-spec-version}</java-spec-version>
+                        <java-jdk-version>${java.version}</java-jdk-version>
+                    </attributes>
+                </configuration>
             </plugin>
         </plugins>
 

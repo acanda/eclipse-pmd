@@ -1,0 +1,35 @@
+:toc:
+
+= User Documentation
+
+== Minimum Requirements
+
+eclipse-pmd requires *Eclipse 4.5 (Mars)* running on a *JRE {java-spec-version}*.
+
+If you are not running Eclipse on a JRE {java-spec-version} then the PMD project property page will show a corresponding message.
+To workaround this you can add the `-vm` argument to Eclipse command line or eclipse.ini. For Eclipse 4.5 it would look something like this:
+
+[source, subs="attributes,quotes"]
+-startup
+plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.300.v20150602-1417
+-product
+org.eclipse.epp.package.rcp.product
+--launcher.defaultAction
+openFile
+-showsplash
+org.eclipse.platform
+--launcher.XXMaxPermSize
+256m
+--launcher.defaultAction
+openFile
+--launcher.appendVmargs
+*-vm*
+*C:\Program Files\Java\jdk{java-jdk-version}\bin\javaw.exe*
+-vmargs
+-Dosgi.requiredJavaVersion=1.7
+-Xms256m
+-Xmx1024m
+
+The Eclipse wiki has more information on http://wiki.eclipse.org/Eclipse.ini#Specifying_the_JVM[how to specify the VM].

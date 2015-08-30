@@ -11,8 +11,11 @@
     <url>http://acanda.github.io/eclipse-pmd/</url>
 
     <properties>
+        <java-version>1.8</java-version>
         <pmd-version>5.3.3</pmd-version>
     </properties>
+
+
 
     <modules>
         <module>eclipse-plugin</module>
@@ -31,6 +34,17 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>1.9.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>wagon-maven-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

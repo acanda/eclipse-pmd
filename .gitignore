@@ -1,4 +1,6 @@
 target/
 .settings/
+bin/
+lib/
 .project
 .classpath

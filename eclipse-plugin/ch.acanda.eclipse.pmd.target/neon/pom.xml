@@ -5,13 +5,13 @@
 
     <parent>
         <groupId>ch.acanda.eclipse.pmd</groupId>
-        <artifactId>target-platform</artifactId>
+        <artifactId>ch.acanda.eclipse.pmd.target</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mars</artifactId>
+    <artifactId>neon</artifactId>
     <packaging>eclipse-target-definition</packaging>
-    <name>eclipse-pmd/Eclipse Plug-in/Target Platform/Eclipse Mars</name>
+    <name>eclipse-pmd Target Platform Eclipse Neon</name>
 
     <build>
         <plugins>
@@ -27,7 +27,7 @@
                         </goals>
                         <configuration>
                             <targetFiles>
-                                <param>mars.target</param>
+                                <param>neon.target</param>
                             </targetFiles>
                             <failOnError>true</failOnError>
                         </configuration>
