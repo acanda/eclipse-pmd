@@ -1,15 +1,19 @@
+title=eclipse-pmd - The Eclipse PMD Plug-in
+type=page
+status=published
+~~~~~~
 :toc:
 
 = User Documentation
 
 == Minimum Requirements
 
-eclipse-pmd requires *Eclipse 4.5 (Mars)* running on a *JRE {java-spec-version}*.
+eclipse-pmd requires *Eclipse 4.5 (Mars)* running on a *JRE ${java-spec-version}*.
 
-If you are not running Eclipse on a JRE {java-spec-version} then the PMD project property page will show a corresponding message.
+If you are not running Eclipse on a JRE ${java-spec-version} then the PMD project property page will show a corresponding message.
 To workaround this you can add the `-vm` argument to Eclipse command line or eclipse.ini. For Eclipse 4.5 it would look something like this:
 
-[source, subs="attributes,quotes"]
+[source, subs="quotes"]
 -startup
 plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar
 --launcher.library
@@ -26,7 +30,7 @@ org.eclipse.platform
 openFile
 --launcher.appendVmargs
 *-vm*
-*C:\Program Files\Java\jdk{java-jdk-version}\bin\javaw.exe*
+*C:\Program Files\Java\jdk${java-jdk-version}\bin\javaw.exe*
 -vmargs
 -Dosgi.requiredJavaVersion=1.7
 -Xms256m
