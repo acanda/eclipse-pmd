@@ -240,7 +240,7 @@
                                 <artifactItem>
                                     <groupId>jaxen</groupId>
                                     <artifactId>jaxen</artifactId>
-                                    <version>1.1.4</version>
+                                    <version>1.1.6</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>xml-apis</groupId>
@@ -250,12 +250,12 @@
                                 <artifactItem>
                                     <groupId>org.ow2.asm</groupId>
                                     <artifactId>asm</artifactId>
-                                    <version>5.0.3</version>
+                                    <version>5.0.4</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.mozilla</groupId>
                                     <artifactId>rhino</artifactId>
-                                    <version>1.7R4</version>
+                                    <version>1.7.7</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>commons-io</groupId>
@@ -270,7 +270,7 @@
                                 <artifactItem>
                                     <groupId>org.apache.commons</groupId>
                                     <artifactId>commons-lang3</artifactId>
-                                    <version>3.3.2</version>
+                                    <version>3.4</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.sourceforge.saxon</groupId>
