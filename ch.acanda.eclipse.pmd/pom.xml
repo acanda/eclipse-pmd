@@ -301,7 +301,7 @@
                 <repository>
                     <id>neon</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M1-201508052000</url>
+                    <url>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M3-201510291100</url>
                 </repository>
                 <repository>
                     <id>swtbot</id>
