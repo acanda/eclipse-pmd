@@ -11,9 +11,11 @@
 
 package ch.acanda.eclipse.pmd.builder;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -23,13 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-
-import net.sourceforge.pmd.PMD;
-import net.sourceforge.pmd.Rule;
-import net.sourceforge.pmd.RuleSetFactory;
-import net.sourceforge.pmd.RuleSetNotFoundException;
-import net.sourceforge.pmd.RuleSets;
-import net.sourceforge.pmd.RuleViolation;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -41,6 +36,14 @@ import org.junit.Test;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
+import net.sourceforge.pmd.PMD;
+import net.sourceforge.pmd.Rule;
+import net.sourceforge.pmd.RuleContext;
+import net.sourceforge.pmd.RuleSetFactory;
+import net.sourceforge.pmd.RuleSetNotFoundException;
+import net.sourceforge.pmd.RuleSets;
+import net.sourceforge.pmd.RuleViolation;
 
 /**
  * Unit tests for {@link Analyzer}.
@@ -247,15 +250,22 @@ public class AnalyzerTest {
     
     /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
-     * invokes {@link ViolationProcessor#annotate(IFile, Iterable) with the correct rule violations.
+     * invokes {@link ViolationProcessor#annotate(IFile, Iterable) with the correct rule violations and that it invokes
+     * {@link RuleSets#start(RuleContext)} as well as {@link RuleSets#end(RuleContext)} if the file is valid.
      */
     public void analyze(final IFile file, final String ruleSetRefId, final String... violatedRules) {
         try {
             final ViolationProcessor violationProcessor = mock(ViolationProcessor.class);
-            final RuleSets ruleSets = new RuleSetFactory().createRuleSets(ruleSetRefId);
+            final RuleSets ruleSets = spy(new RuleSetFactory().createRuleSets(ruleSetRefId));
             new Analyzer().analyze(file, ruleSets, violationProcessor);
             
             verify(violationProcessor).annotate(same(file), violations(violatedRules));
+
+            final boolean isValidFile = violatedRules.length > 0;
+            if (isValidFile) {
+                verify(ruleSets).start(any(RuleContext.class));
+                verify(ruleSets).end(any(RuleContext.class));
+            }
 
         } catch (final RuleSetNotFoundException e) {
             throw new AssertionError("Failed to create rule sets", e);

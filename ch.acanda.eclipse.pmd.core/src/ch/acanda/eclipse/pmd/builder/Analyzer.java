@@ -16,6 +16,14 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.xml.sax.SAXParseException;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+
+import ch.acanda.eclipse.pmd.PMDPlugin;
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
@@ -26,15 +34,6 @@ import net.sourceforge.pmd.SourceCodeProcessor;
 import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageRegistry;
 import net.sourceforge.pmd.lang.ast.ParseException;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
-import org.xml.sax.SAXParseException;
-
-import ch.acanda.eclipse.pmd.PMDPlugin;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 /**
  * Analyzes files for coding problems, bugs and inefficient code, i.e. runs PMD.
@@ -76,7 +75,9 @@ public final class Analyzer {
                     final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
                     context.setLanguageVersion(language.getDefaultVersion());
                     context.setIgnoreExceptions(false);
+                    ruleSets.start(context);
                     new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
+                    ruleSets.end(context);
                     return ImmutableList.copyOf(context.getReport().iterator());
                 }
             }
