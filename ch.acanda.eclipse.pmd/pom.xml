@@ -218,7 +218,7 @@
                 <repository>
                     <id>swtbot</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
                 </repository>
             </repositories>
         </profile>
@@ -240,7 +240,7 @@
                 <repository>
                     <id>swtbot</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
                 </repository>
             </repositories>
         </profile>
@@ -262,7 +262,7 @@
                 <repository>
                     <id>swtbot</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
                 </repository>
             </repositories>
         </profile>
@@ -284,7 +284,7 @@
                 <repository>
                     <id>swtbot</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
                 </repository>
             </repositories>
         </profile>
@@ -301,12 +301,12 @@
                 <repository>
                     <id>neon</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M3-201510291100</url>
+                    <url>http://download.eclipse.org/eclipse/updates/4.6milestones/S-4.6M4-201512092300</url>
                 </repository>
                 <repository>
                     <id>swtbot</id>
                     <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
                 </repository>
             </repositories>
         </profile>
