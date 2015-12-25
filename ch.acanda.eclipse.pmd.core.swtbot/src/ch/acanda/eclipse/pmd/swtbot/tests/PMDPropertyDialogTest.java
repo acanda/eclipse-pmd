@@ -193,7 +193,7 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         final String[] expectedNames = new String[] { "ExtendsObject", "BooleanInstantiation" };
         final String[] actualNames = wizard.ruleNames();
         assertArrayEquals("Rules of the PMD rule set", expectedNames, actualNames);
-        wizard.waitUntilFinishIsEnabled("The finish button should be enabled if bot a name and a location are available");
+        wizard.waitUntilFinishIsEnabled("The finish button should be enabled if both a name and a location are available");
 
         wizard.name().setText("");
         wizard.waitUntilFinishIsDisabled("The finish button should be disabled if the name is not available");
