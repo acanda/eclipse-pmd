@@ -16,7 +16,11 @@ import static ch.acanda.eclipse.pmd.swtbot.condition.Conditions.isPerspectiveAct
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotPerspective;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
+import org.eclipse.swtbot.swt.finder.results.BoolResult;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -25,9 +29,9 @@ import org.junit.BeforeClass;
  * @author Philip Graf
  */
 public class GUITestCase {
-    
+
     private final SWTWorkbenchBot bot;
-    
+
     protected GUITestCase() {
         bot = new SWTWorkbenchBot();
     }
@@ -45,10 +49,24 @@ public class GUITestCase {
         final SWTWorkbenchBot workbenchBot = new SWTWorkbenchBot();
         workbenchBot.resetWorkbench();
     }
-    
+
     @After
     public void closeAllDialogs() {
-        bot.closeAllShells();
+        final SWTBotShell[] shells = bot.shells();
+        for (final SWTBotShell shell : shells) {
+            if (shell.isOpen() && !isEclipseShell(shell)) {
+                shell.close();
+            }
+        }
+    }
+
+    public static boolean isEclipseShell(final SWTBotShell shell) {
+        return UIThreadRunnable.syncExec(new BoolResult() {
+            @Override
+            public Boolean run() {
+                return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell() == shell.widget;
+            }
+        });
     }
 
     private static void closeWelcomeView(final SWTWorkbenchBot workbenchBot) {
@@ -66,7 +84,7 @@ public class GUITestCase {
             workbenchBot.waitUntil(isPerspectiveActive(javaPerspective));
         }
     }
-    
+
     protected SWTWorkbenchBot bot() {
         return bot;
     }
