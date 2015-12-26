@@ -61,4 +61,13 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>skipSWTBot</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

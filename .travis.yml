@@ -1,9 +1,11 @@
+sudo: false
+
 language: java
 
 env:
   global:
-    - DISPLAY=:99
     - MAVEN_OPTS="-Xmx512m"
+    - DISPLAY=:99.0
   matrix:
     - ECLIPSE_RELEASE=""
     - ECLIPSE_RELEASE="-Declipse-release=juno"
@@ -14,14 +16,19 @@ env:
 
 jdk: oraclejdk8
 
-install:
-  - sudo apt-get update
-  - sudo apt-get install metacity
+cache:
+  directories:
+    - $HOME/.m2
+
+install: true
+
+addons:
+  apt:
+    packages:
+      - metacity
 
 before_script:
-  - sudo rm /etc/mavenrc
   - sh -e /etc/init.d/xvfb start
-  - sleep 10 # give xvfb some time to start
-  - metacity --sm-disable --replace &
+  - metacity --sm-disable --replace 2> metacity.err &
 
-script: mvn clean integration-test -f ch.acanda.eclipse.pmd/pom.xml -B $ECLIPSE_RELEASE
+script: mvn clean verify -f ch.acanda.eclipse.pmd/pom.xml -B -PskipSWTBot $ECLIPSE_RELEASE
