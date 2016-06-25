@@ -13,9 +13,8 @@ package ch.acanda.eclipse.pmd.builder;
 
 import java.util.Map;
 
-import net.sourceforge.pmd.RuleSets;
-
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -28,6 +27,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.cache.RuleSetsCache;
 import ch.acanda.eclipse.pmd.cache.RuleSetsCacheLoader;
+import net.sourceforge.pmd.RuleSets;
 
 /**
  * Builder for PMD enabled projects.
@@ -69,10 +69,15 @@ public class PMDBuilder extends IncrementalProjectBuilder {
         delta.accept(new DeltaVisitor());
     }
 
-    void analyze(final IResource resource) {
+    void analyze(final IResource resource) throws CoreException {
         if (resource instanceof IFile) {
             final RuleSets ruleSets = CACHE.getRuleSets(resource.getProject().getName());
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
+        } else if (resource instanceof IFolder) {
+            final IFolder folder = (IFolder) resource;
+            for (final IResource member : folder.members()) {
+                analyze(member);
+            }
         }
     }
 
@@ -95,7 +100,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
 
     class ResourceVisitor implements IResourceVisitor {
         @Override
-        public boolean visit(final IResource resource) {
+        public boolean visit(final IResource resource) throws CoreException {
             analyze(resource);
             return true;
         }

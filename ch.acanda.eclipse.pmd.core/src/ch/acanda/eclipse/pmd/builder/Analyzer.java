@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.xml.sax.SAXParseException;
 
@@ -103,7 +104,7 @@ public final class Analyzer {
 
     private boolean isValidFile(final IFile file, final RuleSets ruleSets) {
         // derived (i.e. generated or compiled) files are not analyzed
-        return !file.isDerived()
+        return !file.isDerived(IResource.CHECK_ANCESTORS)
                 // the file must exist
                 && file.isAccessible()
                 // the file must have an extension so we can determine the language

@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.hamcrest.BaseMatcher;
@@ -210,7 +211,7 @@ public class AnalyzerTest {
      */
     @Test
     public void analyzeDerivedFile() throws UnsupportedEncodingException, CoreException {
-        final IFile file = mockFile("", "UTF-8", "java", true, true);
+        final IFile file = mockFile("class A extends Object {}", "UTF-8", "java", true, true);
         analyze(file, "rulesets/java/basic.xml/ExtendsObject");
     }
     
@@ -278,7 +279,7 @@ public class AnalyzerTest {
     private IFile mockFile(final String content, final String charset, final String fileExtension, final boolean isDerived,
             final boolean isAccessible) throws CoreException, UnsupportedEncodingException {
         final IFile file = mock(IFile.class);
-        when(file.isDerived()).thenReturn(isDerived);
+        when(file.isDerived(IResource.CHECK_ANCESTORS)).thenReturn(isDerived);
         when(file.isAccessible()).thenReturn(isAccessible);
         when(file.getFileExtension()).thenReturn(fileExtension);
         when(file.getCharset()).thenReturn(charset);
