@@ -162,6 +162,17 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-perl</artifactId>
+                                    <version>${pmd-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-perl</artifactId>
+                                    <version>${pmd-version}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd-php</artifactId>
                                     <version>${pmd-version}</version>
                                 </artifactItem>
@@ -201,6 +212,17 @@
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd-ruby</artifactId>
+                                    <version>${pmd-version}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-swift</artifactId>
+                                    <version>${pmd-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-swift</artifactId>
                                     <version>${pmd-version}</version>
                                     <classifier>sources</classifier>
                                 </artifactItem>
