@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-cpp-5.5.0.jar" sourcepath="lib/pmd-cpp-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-cs-5.5.0.jar" sourcepath="lib/pmd-cs-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-fortran-5.5.0.jar" sourcepath="lib/pmd-fortran-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-go-5.5.0.jar" sourcepath="lib/pmd-go-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-java-5.5.0.jar" sourcepath="lib/pmd-java-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-javascript-5.5.0.jar" sourcepath="lib/pmd-javascript-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-jsp-5.5.0.jar" sourcepath="lib/pmd-jsp-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-matlab-5.5.0.jar" sourcepath="lib/pmd-matlab-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-objectivec-5.5.0.jar" sourcepath="lib/pmd-objectivec-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-perl-5.5.0.jar" sourcepath="lib/pmd-perl-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-php-5.5.0.jar" sourcepath="lib/pmd-php-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-plsql-5.5.0.jar" sourcepath="lib/pmd-plsql-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-python-5.5.0.jar" sourcepath="lib/pmd-python-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-ruby-5.5.0.jar" sourcepath="lib/pmd-ruby-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-scala-5.5.0.jar" sourcepath="lib/pmd-scala-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-swift-5.5.0.jar" sourcepath="lib/pmd-swift-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-vm-5.5.0.jar" sourcepath="lib/pmd-vm-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-xml-5.5.0.jar" sourcepath="lib/pmd-xml-5.5.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-core-5.5.0.jar" sourcepath="lib/pmd-core-5.5.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-cpp-5.5.1.jar" sourcepath="lib/pmd-cpp-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-cs-5.5.1.jar" sourcepath="lib/pmd-cs-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-fortran-5.5.1.jar" sourcepath="lib/pmd-fortran-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-go-5.5.1.jar" sourcepath="lib/pmd-go-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-java-5.5.1.jar" sourcepath="lib/pmd-java-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-javascript-5.5.1.jar" sourcepath="lib/pmd-javascript-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-jsp-5.5.1.jar" sourcepath="lib/pmd-jsp-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-matlab-5.5.1.jar" sourcepath="lib/pmd-matlab-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-objectivec-5.5.1.jar" sourcepath="lib/pmd-objectivec-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-perl-5.5.1.jar" sourcepath="lib/pmd-perl-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-php-5.5.1.jar" sourcepath="lib/pmd-php-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-plsql-5.5.1.jar" sourcepath="lib/pmd-plsql-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-python-5.5.1.jar" sourcepath="lib/pmd-python-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-ruby-5.5.1.jar" sourcepath="lib/pmd-ruby-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-scala-5.5.1.jar" sourcepath="lib/pmd-scala-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-swift-5.5.1.jar" sourcepath="lib/pmd-swift-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-vm-5.5.1.jar" sourcepath="lib/pmd-vm-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-xml-5.5.1.jar" sourcepath="lib/pmd-xml-5.5.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-core-5.5.1.jar" sourcepath="lib/pmd-core-5.5.1-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
