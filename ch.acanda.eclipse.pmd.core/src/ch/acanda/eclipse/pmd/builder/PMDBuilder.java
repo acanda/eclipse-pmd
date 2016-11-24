@@ -22,6 +22,8 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.cache.RuleSetsCache;
@@ -43,14 +45,15 @@ public class PMDBuilder extends IncrementalProjectBuilder {
     @SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
     protected IProject[] build(final int kind, @SuppressWarnings("rawtypes") final Map args, final IProgressMonitor monitor)
             throws CoreException {
+        final IProgressMonitor subMonitor = SubMonitor.convert(monitor);
         if (kind == FULL_BUILD) {
-            fullBuild(monitor);
+            fullBuild(subMonitor);
         } else {
             final IResourceDelta delta = getDelta(getProject());
             if (delta == null) {
-                fullBuild(monitor);
+                fullBuild(subMonitor);
             } else {
-                incrementalBuild(delta, monitor);
+                incrementalBuild(delta, subMonitor);
             }
         }
         return null;
@@ -58,44 +61,65 @@ public class PMDBuilder extends IncrementalProjectBuilder {
 
     protected void fullBuild(final IProgressMonitor monitor) {
         try {
-            getProject().accept(new ResourceVisitor());
+            getProject().accept(new ResourceVisitor(monitor));
         } catch (final CoreException e) {
             PMDPlugin.getDefault().error("Could not run a full PMD build", e);
         }
     }
 
     protected void incrementalBuild(final IResourceDelta delta, final IProgressMonitor monitor) throws CoreException {
-        delta.accept(new DeltaVisitor());
+        delta.accept(new DeltaVisitor(monitor));
     }
 
-    void analyze(final IResource resource) {
+    void analyze(final IResource resource, final IProgressMonitor monitor) {
         if (resource instanceof IFile) {
+            monitor.setTaskName("PMD analyizing file: " + ((IFile) resource).getName());
             final RuleSets ruleSets = CACHE.getRuleSets(resource.getProject().getName());
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
         }
     }
 
     class DeltaVisitor implements IResourceDeltaVisitor {
+
+        private final IProgressMonitor monitor;
+
+        public DeltaVisitor(final IProgressMonitor monitor) {
+            this.monitor = monitor;
+        }
+
         @Override
         public boolean visit(final IResourceDelta delta) {
             final IResource resource = delta.getResource();
             switch (delta.getKind()) {
                 case IResourceDelta.ADDED:
                 case IResourceDelta.CHANGED:
-                    analyze(resource);
+                    analyze(resource, monitor);
                     break;
 
                 default:
                     break;
+            }
+            if (monitor.isCanceled()) {
+                throw new OperationCanceledException();
             }
             return true;
         }
     }
 
     class ResourceVisitor implements IResourceVisitor {
+
+        private final IProgressMonitor monitor;
+
+        public ResourceVisitor(final IProgressMonitor monitor) {
+            this.monitor = monitor;
+        }
+
         @Override
         public boolean visit(final IResource resource) {
-            analyze(resource);
+            analyze(resource, monitor);
+            if (monitor.isCanceled()) {
+                throw new OperationCanceledException();
+            }
             return true;
         }
     }
