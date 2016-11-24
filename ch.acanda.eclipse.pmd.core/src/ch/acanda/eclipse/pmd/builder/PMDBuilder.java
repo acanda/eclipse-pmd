@@ -14,7 +14,6 @@ package ch.acanda.eclipse.pmd.builder;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -57,7 +56,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
         return null;
     }
 
-    protected void fullBuild(final IProgressMonitor monitor) throws CoreException {
+    protected void fullBuild(final IProgressMonitor monitor) {
         try {
             getProject().accept(new ResourceVisitor());
         } catch (final CoreException e) {
@@ -69,21 +68,16 @@ public class PMDBuilder extends IncrementalProjectBuilder {
         delta.accept(new DeltaVisitor());
     }
 
-    void analyze(final IResource resource) throws CoreException {
+    void analyze(final IResource resource) {
         if (resource instanceof IFile) {
             final RuleSets ruleSets = CACHE.getRuleSets(resource.getProject().getName());
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
-        } else if (resource instanceof IFolder) {
-            final IFolder folder = (IFolder) resource;
-            for (final IResource member : folder.members()) {
-                analyze(member);
-            }
         }
     }
 
     class DeltaVisitor implements IResourceDeltaVisitor {
         @Override
-        public boolean visit(final IResourceDelta delta) throws CoreException {
+        public boolean visit(final IResourceDelta delta) {
             final IResource resource = delta.getResource();
             switch (delta.getKind()) {
                 case IResourceDelta.ADDED:
@@ -100,7 +94,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
 
     class ResourceVisitor implements IResourceVisitor {
         @Override
-        public boolean visit(final IResource resource) throws CoreException {
+        public boolean visit(final IResource resource) {
             analyze(resource);
             return true;
         }
