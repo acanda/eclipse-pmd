@@ -24,6 +24,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
+import ch.acanda.eclipse.pmd.builder.PMDNature;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 
 import com.google.common.base.Optional;
@@ -68,6 +69,17 @@ public class ProjectModelRepository {
                 result = Optional.of(new ProjectModelSerializer().deserialize(configFile.getContents(true), projectName));
             } catch (IOException | CoreException e) {
                 PMDPlugin.getDefault().error("Cannot load " + PMD_CONFIG_FILENAME + " in project " + projectName, e);
+            }
+        }
+        if (project.isAccessible()) {
+            try {
+                if (result.isPresent() && result.get().isPMDEnabled()) {
+                    PMDNature.addTo(project);
+                } else {
+                    PMDNature.removeFrom(project);
+                }
+            } catch (final CoreException e) {
+                PMDPlugin.getDefault().error("Cannot change PMD nature of project " + project.getName(), e);
             }
         }
         return result;
