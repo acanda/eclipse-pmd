@@ -37,7 +37,7 @@ import com.google.common.base.Strings;
  */
 public class ProjectModelRepository {
     
-    private static final String PMD_CONFIG_FILENAME = ".eclipse-pmd";
+    public static final String PMD_CONFIG_FILENAME = ".eclipse-pmd";
     
     public void save(final ProjectModel model) {
         checkNotNull(model, "The argument 'model' must not be null.");
