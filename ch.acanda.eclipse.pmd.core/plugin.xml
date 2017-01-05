@@ -78,6 +78,10 @@
          <enabledWhen>
             <adapt
                   type="org.eclipse.core.resources.IProject">
+               <test
+                     property="org.eclipse.core.resources.open"
+                     value="true">
+               </test>
             </adapt>
          </enabledWhen>
       </page>
