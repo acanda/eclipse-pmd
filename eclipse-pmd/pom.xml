@@ -63,6 +63,12 @@
                 <role>Developer</role>
             </roles>
         </developer>
+        <developer>
+            <name>Sebastian Ratz</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </developer>
     </developers>
 
     <scm>
