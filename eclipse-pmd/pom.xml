@@ -19,7 +19,7 @@
     <url>http://acanda.github.io/eclipse-pmd/</url>
 
     <properties>
-        <pmd-version>5.5.1</pmd-version>
+        <pmd-version>5.5.4</pmd-version>
     </properties>
 
     <modules>
@@ -69,7 +69,13 @@
                 <role>Contributor</role>
             </roles>
         </developer>
-    </developers>
+        <developer>
+            <name>Felix Otto</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </developer>
+	</developers>
 
     <scm>
         <url>https://github.com/acanda/eclipse-pmd</url>
