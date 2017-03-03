@@ -76,9 +76,7 @@ public final class Analyzer {
                     final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
                     context.setLanguageVersion(language.getDefaultVersion());
                     context.setIgnoreExceptions(false);
-                    ruleSets.start(context);
                     new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
-                    ruleSets.end(context);
                     return ImmutableList.copyOf(context.getReport().iterator());
                 }
             }
