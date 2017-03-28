@@ -1,0 +1,26 @@
+Fixed Issues
+
+    general:
+        #305: [core] PMD not executing under git bash
+    java:
+        #309: [java] Parse error on method reference
+    java-design
+        #274: [java] AccessorMethodGeneration: Method inside static inner class incorrectly reported
+        #275: [java] FinalFieldCouldBeStatic: Constant in @interface incorrectly reported as “could be made static”
+        #282: [java] UnnecessaryLocalBeforeReturn false positive when cloning Maps
+        #291: [java] Improve quality of AccessorClassGeneration
+    java-junit:
+        #285: [java] JUnitTestsShouldIncludeAssertRule should support @Rule as well as @Test(expected = …)
+    java-optimizations:
+        #222: [java] UseStringBufferForStringAppends: False Positive with ternary operator
+    java-strings:
+        #290: [java] InefficientEmptyStringCheck misses String.trim().isEmpty()
+
+External Contributions
+
+    #280: [apex] Support for Aggregate Result in CRUD rules
+    #289: [apex] Complex SOQL Crud check bug fixes
+    #296: [apex] Adding String.IsNotBlank to the whitelist to prevent False positives
+    #303: [java] InefficientEmptyStringCheckRule now reports String.trim().isEmpty()
+    #307: [java] Fix false positive with UseStringBufferForStringAppendsRule
+    #308: [java] JUnitTestsShouldIncludeAssertRule supports @Rule annotated ExpectedExceptions

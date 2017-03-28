@@ -19,7 +19,7 @@
     <url>http://acanda.github.io/eclipse-pmd/</url>
 
     <properties>
-        <pmd-version>5.5.4</pmd-version>
+        <pmd-version>5.5.5</pmd-version>
     </properties>
 
     <modules>
