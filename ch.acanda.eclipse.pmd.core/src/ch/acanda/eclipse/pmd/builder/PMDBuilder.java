@@ -69,14 +69,14 @@ public class PMDBuilder extends IncrementalProjectBuilder {
         delta.accept(new DeltaVisitor());
     }
 
-    void analyze(final IResource resource) throws CoreException {
+    void analyze(final IResource resource, final boolean includeMembers) throws CoreException {
         if (resource instanceof IFile) {
             final RuleSets ruleSets = CACHE.getRuleSets(resource.getProject().getName());
             new Analyzer().analyze((IFile) resource, ruleSets, new ViolationProcessor());
-        } else if (resource instanceof IFolder) {
+        } else if (resource instanceof IFolder && includeMembers) {
             final IFolder folder = (IFolder) resource;
             for (final IResource member : folder.members()) {
-                analyze(member);
+                analyze(member, includeMembers);
             }
         }
     }
@@ -88,7 +88,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
             switch (delta.getKind()) {
                 case IResourceDelta.ADDED:
                 case IResourceDelta.CHANGED:
-                    analyze(resource);
+                    analyze(resource, (delta.getFlags() & IResourceDelta.DERIVED_CHANGED) != 0);
                     break;
 
                 default:
@@ -101,7 +101,7 @@ public class PMDBuilder extends IncrementalProjectBuilder {
     class ResourceVisitor implements IResourceVisitor {
         @Override
         public boolean visit(final IResource resource) throws CoreException {
-            analyze(resource);
+            analyze(resource, false);
             return true;
         }
     }
