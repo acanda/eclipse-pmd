@@ -6,7 +6,7 @@ Everytime you save your work, eclipse-pmd scans your source code and looks for p
 Where possible, eclipse-pmd offers quick fixes that automatically fix the problems. These quick fixes can be used to fix a single problem or all occurrences in your entire code base.
 
 ## How to get started
-Please follow the instructions on [how to get started with eclipse-pmd](http://acanda.github.io/eclipse-pmd/getting-started.html) on the website.
+You need Eclipse 3.7 or later and Java 7 or later to run eclipse-pmd. Please follow the instructions on [how to get started with eclipse-pmd](http://acanda.github.io/eclipse-pmd/getting-started.html) on the website.
 
 ## How to build and install eclipse-pmd
 Building eclipse-pmd is fairly easy. Please note, however, that building eclipse-pmd is not required if you are only interested in using it, since there is a pre-built version available in the Eclipse Marketplace.
