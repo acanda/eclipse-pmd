@@ -1,0 +1,36 @@
+Fixed Issues
+
+    General
+        #377: [core] Use maven wrapper and upgrade to maven 3.5.0
+        #376: [core] Improve build time on travis
+    java
+        #378: [java] Parser Error for empty statements
+    java-coupling
+        #1427: [java] Law of Demeter violations for the Builder pattern
+    java-design
+        #345: [java] FieldDeclarationsShouldBeAtStartOfClass: Add ability to ignore interfaces
+        #389: [java] RuleSetCompatibility - not taking rename of UnusedModifier into account
+    java-junit
+        #358: [java] Mockito verify method is not taken into account in JUnitTestsShouldIncludeAssert rule
+    java-strings
+        #334: [java] [doc] Add suggestion to use StringUtils#isBlank for InefficientEmptyStringCheck
+    jsp-basic
+        #369: [jsp] Wrong issue “JSP file should use UTF-8 encoding”
+
+API Changes
+
+    The method net.sourceforge.pmd.util.StringUtil#htmlEncode(String) is deprecated. org.apache.commons.lang3.StringEscapeUtils#escapeHtml4(String) should be used instead.
+
+External Contributions
+
+    #368: [vf] Adding proper AST support for negation expressions
+    #372: [core] Fix XSS in HTML renderer
+    #374: [java] Add property to ignore interfaces in FieldDeclarationsShouldBeAtStartOfClassRule
+    #381: [core] Fix broken link in the site’s doc
+    #382: [java] Added documentation details on InefficientEmptyStringCheck
+    #383: [jsp] Fixed JspEncoding false positive
+    #390: [java] Remove trailing whitespaces in design.xml
+    #391: [apex] Fix documentation typo
+    #392: [java] False positive for Law Of Demeter (Builder pattern)
+    #395: [java] Mockito verify method is not taken into account in JUnitTestsShouldIncludeAssert rule
+
