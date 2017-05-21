@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="Oxygen" sequenceNumber="3">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.5.0.201609021837"/>
+<repository location="http://download.eclipse.org/technology/swtbot/releases/2.5.0/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.sdk.ide" version="4.7.0.I20170518-1030"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.7milestones"/>
+</location>
+</locations>
+</target>
