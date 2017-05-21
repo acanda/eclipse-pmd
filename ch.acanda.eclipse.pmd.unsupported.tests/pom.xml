@@ -32,8 +32,7 @@
                 <configuration>
                     <!-- the methods in ProjectPropertyTesterTest cannot be run in parallel -->
                     <parallel>classes</parallel>
-                    <perCoreThreadCount>true</perCoreThreadCount>
-                    <threadCount>1</threadCount>
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
                     <argLine>${os-jvm-flags}</argLine>
                 </configuration>
             </plugin>
