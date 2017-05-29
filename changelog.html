@@ -45,6 +45,46 @@
 
         <div class="container">
 
+            <h2>eclipse-pmd 1.9</h2>
+            <p class="muted">
+                <small>Release: 29.5.2017</small>
+                <br />
+                <small>Eclipse repository: http://www.acanda.ch/eclipse-pmd/release/1.9</small>
+            </p>
+
+            <h3>Exclude files in derived folders</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        Until now eclipse-pmd did exclude files that were marked as derived but 
+                        not files that had only one of its parent folders marked as derived but
+                        were not marked themselves. Now it is enough to mark a folder as derived
+                        and eclipse-pmd will exclude all of its files.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="img/exclude-derived-folder.png" class="thumbnail" title="Exclude files in derived folders"> <img src="img/exclude-derived-folder.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+
+            <h3>PMD 5.7.0</h3>
+            <div class="row">
+                <div class="span8">
+                    <p>
+                        The embedded PMD has been updated to version 5.7.0.
+                    </p>
+                </div>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <a href="#pmd-release-notes" class="thumbnail" title="PMD 5.7.0 Release Notes" data-toggle="modal" data-remote="releasenote-pmd-5.7.0.txt"> <img src="img/pmd-5.7.0-release-notes.png" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+
+            <hr/>
+
             <h2>eclipse-pmd 1.8</h2>
             <p class="muted">
                 <small>Release: 6.12.2015</small>
@@ -745,7 +785,7 @@
                 <div class="row">
                     <div class="span4">
                         <p>
-                            &copy; 2012 &ndash; 2015 Philip Graf. All Rights Reserved.
+                            &copy; 2012 &ndash; 2017 Philip Graf. All Rights Reserved.
                             <br />
                             eclipse-pmd uses <a href="https://pmd.github.io/">PMD</a>.
                         </p>
