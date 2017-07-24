@@ -28,7 +28,7 @@
         <tycho-extras-version>${tycho-version}</tycho-extras-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
-        <eclipse-release>indigo</eclipse-release>
+        <eclipse-release>luna</eclipse-release>
         <lib-path>${basedir}/lib</lib-path>
         <mockito-version>1.10.19</mockito-version>
         <guava-version>20.0</guava-version>
@@ -175,71 +175,6 @@
                 <!-- tycho-surefire-plugin needs -XstartOnFirstThread on mac os -->
                 <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
             </properties>
-        </profile>
-
-        <profile>
-            <id>eclipse-indigo</id>
-            <activation>
-                <property>
-                    <name>!eclipse-release</name>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>indigo</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/releases/indigo/</url>
-                </repository>
-                <repository>
-                    <id>swtbot</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.2.1/</url>
-                </repository>
-            </repositories>
-        </profile>
-
-        <profile>
-            <id>eclipse-juno</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>juno</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>juno</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/releases/juno/</url>
-                </repository>
-                <repository>
-                    <id>swtbot</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
-                </repository>
-            </repositories>
-        </profile>
-
-        <profile>
-            <id>eclipse-kepler</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>kepler</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>kepler</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/releases/kepler/</url>
-                </repository>
-                <repository>
-                    <id>swtbot</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
-                </repository>
-            </repositories>
         </profile>
 
         <profile>

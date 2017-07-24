@@ -4,7 +4,7 @@ Bundle-Name: eclipse-pmd Third Party Libraries
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.lib;singleton:=true
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Philip Graf
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: lib/guava-20.0.jar
 Export-Package: com.google.common.annotations,com.google.common.base,c
  om.google.common.cache,com.google.common.collect,com.google.common.es

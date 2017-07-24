@@ -185,7 +185,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
             final IDocument document = textFileBuffer.getDocument();
             final IAnnotationModel annotationModel = textFileBuffer.getAnnotationModel();
 
-            final ASTParser astParser = ASTParser.newParser(AST.JLS4);
+            final ASTParser astParser = ASTParser.newParser(AST.JLS8);
             astParser.setKind(ASTParser.K_COMPILATION_UNIT);
             astParser.setResolveBindings(needsTypeResolution());
             astParser.setSource(compilationUnit);

@@ -44,14 +44,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+
 import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
-
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 /**
  * Base class for testing quick fix tests based on {@link ASTQuickFix}. An extending class must provide a static method
@@ -131,10 +131,10 @@ public abstract class TextEditQuickFixTestCase<T extends ASTRewriteQuickFix<? ex
     }
 
     private CompilationUnit createAST(final org.eclipse.jface.text.Document document) {
-        final ASTParser astParser = ASTParser.newParser(AST.JLS4);
+        final ASTParser astParser = ASTParser.newParser(AST.JLS8);
         astParser.setKind(ASTParser.K_COMPILATION_UNIT);
         astParser.setSource(document.get().toCharArray());
-        astParser.setCompilerOptions(ImmutableMap.<String, String>builder().put(JavaCore.COMPILER_SOURCE, "1.7").build());
+        astParser.setCompilerOptions(ImmutableMap.<String, String>builder().put(JavaCore.COMPILER_SOURCE, "1.8").build());
         final CompilationUnit ast = (CompilationUnit) astParser.createAST(null);
         ast.recordModifications();
         return ast;

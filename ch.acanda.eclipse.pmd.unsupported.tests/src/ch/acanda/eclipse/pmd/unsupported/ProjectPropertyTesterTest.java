@@ -38,27 +38,27 @@ public class ProjectPropertyTesterTest {
     }
 
     @Test
-    public void javaVersion6LessThan7() {
-        System.setProperty("java.version", "1.6.0_23");
+    public void javaVersion7LessThan8() {
+        System.setProperty("java.version", "1.7.0_23");
         final ProjectPropertyTester tester = new ProjectPropertyTester();
-        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7" }, null);
-        assertTrue("Version 1.6.0_23 should be less than 1.7", result);
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.8" }, null);
+        assertTrue("Version 1.7.0_23 should be less than 1.8", result);
     }
 
     @Test
-    public void javaVersion7LessThan7() {
-        System.setProperty("java.version", "1.7.0_45");
+    public void javaVersion8LessThan8() {
+        System.setProperty("java.version", "1.8.0_45");
         final ProjectPropertyTester tester = new ProjectPropertyTester();
-        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7" }, null);
-        assertFalse("Version 1.7.0_45 should not be less than 1.7", result);
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.8" }, null);
+        assertFalse("Version 1.8.0_45 should not be less than 1.8", result);
     }
 
     @Test
     public void javaVersionLessThanExactMatch() {
-        System.setProperty("java.version", "1.7.0_45");
+        System.setProperty("java.version", "1.8.0_45");
         final ProjectPropertyTester tester = new ProjectPropertyTester();
-        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7.0_45" }, null);
-        assertFalse("Version 1.7.0_45 should not be less than 1.7.0_45", result);
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.8.0_45" }, null);
+        assertFalse("Version 1.8.0_45 should not be less than 1.8.0_45", result);
     }
 
     @Test
@@ -66,20 +66,28 @@ public class ProjectPropertyTesterTest {
         System.setProperty("java.version", "1.8.0-ea");
         final ProjectPropertyTester tester = new ProjectPropertyTester();
         final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7.0_51" }, null);
-        assertFalse("Version 1.7.0_51 should not be less than 1.8.0-ea", result);
+        assertFalse("Version 1.8.0-ea should not be less than 1.7.0_51", result);
+    }
+
+    @Test
+    public void java11() {
+        System.setProperty("java.version", "11");
+        final ProjectPropertyTester tester = new ProjectPropertyTester();
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.8" }, null);
+        assertFalse("Version 11 should not be less than 1.8", result);
     }
 
     @Test
     public void invalidJVMVersion() {
         System.setProperty("java.version", "x.y.z");
         final ProjectPropertyTester tester = new ProjectPropertyTester();
-        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.7.0_51" }, null);
+        final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "1.8.0_51" }, null);
         assertFalse("The tester should return false as the JVM version is invalid", result);
     }
 
     @Test
     public void invalidArgumentVersion() {
-        System.setProperty("java.version", "1.7.0_51");
+        System.setProperty("java.version", "1.8.0_51");
         final ProjectPropertyTester tester = new ProjectPropertyTester();
         final boolean result = tester.test(null, "javaVersionLessThan", new String[] { "x.y.z" }, null);
         assertFalse("The tester should return false as the argument version is invalid", result);

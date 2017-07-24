@@ -76,14 +76,16 @@ public class UseVarargsQuickFix extends ASTQuickFix<SingleVariableDeclaration> {
 
     @Override
     protected boolean apply(final SingleVariableDeclaration node) {
-        node.setType(copy(((ArrayType) node.getType()).getComponentType()));
+        final ArrayType type = (ArrayType) node.getType();
+        final int dimensions = type.getDimensions();
+        if (dimensions > 1) {
+            node.setType(node.getAST().newArrayType(copy(type.getElementType()), dimensions - 1));
+        } else {
+            node.setType(copy(type.getElementType()));
+        }
+        type.delete();
         node.setVarargs(true);
         return true;
-        // final SingleVariableDeclaration varargsDeclaration = copy(node);
-        // varargsDeclaration.setVarargs(true);
-        // final Type type = copy(((ArrayType) node.getType()).getComponentType());
-        // varargsDeclaration.setType(type);
-        // return replace(node, varargsDeclaration);
     }
 
 }

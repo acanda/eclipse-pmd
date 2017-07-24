@@ -5,7 +5,7 @@ Bundle-SymbolicName: ch.acanda.eclipse.pmd.core.swtbot;singleton:=true
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Philip Graf
 Fragment-Host: ch.acanda.eclipse.pmd.core
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.apache.log4j;bundle-version="1.2.13",
  org.eclipse.swtbot.eclipse.finder;bundle-version="2.2.1"

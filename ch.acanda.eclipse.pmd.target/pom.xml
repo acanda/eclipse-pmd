@@ -24,38 +24,14 @@
 
     <profiles>
         <profile>
-            <id>eclipse-indigo</id>
+            <id>eclipse-default</id>
             <activation>
                 <property>
                     <name>!eclipse-release</name>
                 </property>
             </activation>
             <modules>
-                <module>indigo</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>eclipse-juno</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>juno</value>
-                </property>
-            </activation>
-            <modules>
-                <module>juno</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>eclipse-kepler</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>kepler</value>
-                </property>
-            </activation>
-            <modules>
-                <module>kepler</module>
+                <module>luna</module>
             </modules>
         </profile>
         <profile>

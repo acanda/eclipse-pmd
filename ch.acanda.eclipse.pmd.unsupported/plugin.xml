@@ -20,7 +20,7 @@
          <enabledWhen>
             <adapt type="org.eclipse.core.resources.IProject">
                <test property="ch.acanda.eclipse.pmd.unsupported.javaVersionLessThan"
-                     args="1.7"
+                     args="1.8"
                      forcePluginActivation="true" />
             </adapt>
          </enabledWhen>
