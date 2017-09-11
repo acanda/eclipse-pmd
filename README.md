@@ -61,4 +61,6 @@ Compile and test against Eclipse Mars: `mvn clean verify -Declipse-release=mars`
 
 Compile and test against Eclipse Neon: `mvn clean verify -Declipse-release=neon`
 
+Compile and test against Eclipse Oxygen: `mvn clean verify -Declipse-release=oxygen`
+
 Regardless of the chosen release, the built plug-in will always be the same as the one built without the parameter. So there isn't any advantage in building the plug-in yourself if you are using a newer Eclipse release.

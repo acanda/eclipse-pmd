@@ -11,6 +11,7 @@
 
 package ch.acanda.eclipse.pmd.swtbot.bot;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
@@ -26,10 +27,22 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
  */
 public class PMDPropertyDialogBot extends DialogBot {
     
+    private static final String OK_KEY = "PreferencesDialog.okButtonLabel";
+    private static final String OK_LABEL;
+    static {
+        final String label = JFaceResources.getString(OK_KEY);
+        OK_LABEL = OK_KEY.equals(label) ? "OK" : label;
+    }
+
     public PMDPropertyDialogBot(final Shell shell) throws WidgetNotFoundException {
         super(shell);
     }
     
+    @Override
+    public SWTBotButton ok() {
+        return bot().button(OK_LABEL);
+    }
+
     /**
      * @return The button to add a new PMD rule set.
      */
