@@ -70,6 +70,18 @@
                 <module>neon</module>
             </modules>
         </profile>
+        <profile>
+            <id>eclipse-oxygen</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>oxygen</value>
+                </property>
+            </activation>
+            <modules>
+                <module>oxygen</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>

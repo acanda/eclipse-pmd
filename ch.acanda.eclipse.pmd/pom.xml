@@ -243,6 +243,28 @@
             </repositories>
         </profile>
 
+        <profile>
+            <id>eclipse-oxygen</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>oxygen</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>oxygen</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/oxygen/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.6.0/</url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
 
     <developers>
