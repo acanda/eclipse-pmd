@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright (C) 2012 - 2017, Philip Graf
+    Copyright (C) 2012 - 2018, Philip Graf
 
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
@@ -14,13 +14,13 @@
     <parent>
         <groupId>ch.acanda.eclipse.pmd</groupId>
         <artifactId>ch.acanda.eclipse.pmd.target</artifactId>
-        <version>1.11.0-SNAPSHOT</version>
+        <version>1.13.0-SNAPSHOT</version>
     </parent>
 
     <groupId>ch.acanda.eclipse.pmd</groupId>
     <artifactId>oxygen</artifactId>
     <packaging>eclipse-target-definition</packaging>
-    <name>eclipse-pmd target definition for Eclipse Orion</name>
+    <name>eclipse-pmd target definition for Eclipse Oxygen</name>
 
     <build>
         <plugins>
