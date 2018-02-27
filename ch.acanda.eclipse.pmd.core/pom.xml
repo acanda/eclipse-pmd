@@ -272,7 +272,7 @@
                                 <artifactItem>
                                     <groupId>org.ow2.asm</groupId>
                                     <artifactId>asm</artifactId>
-                                    <version>5.0.4</version>
+                                    <version>6.0</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.mozilla</groupId>
@@ -292,7 +292,7 @@
                                 <artifactItem>
                                     <groupId>org.apache.commons</groupId>
                                     <artifactId>commons-lang3</artifactId>
-                                    <version>3.4</version>
+                                    <version>3.7</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.sourceforge.saxon</groupId>

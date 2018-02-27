@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2017, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+    <pmdReferenceId>category/java/performance.xml/AddEmptyString</pmdReferenceId>
+    <language>java 1.7</language>
+
+    <test name="AddEmptyStringIntLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + 123;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return String.valueOf(123);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringIntVariable">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo(int n) {
+        return <marker>""</marker> + n;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo(int n) {
+        return String.valueOf(n);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringLongLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + 123L;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return String.valueOf(123L);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringLongVariable">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo(long n) {
+        return <marker>""</marker> + n;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo(long n) {
+        return String.valueOf(n);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringFloatLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + 123.4f;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return String.valueOf(123.4f);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringFloatVariable">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo(float n) {
+        return <marker>""</marker> + n;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo(float n) {
+        return String.valueOf(n);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringDoubleLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + 123.4;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return String.valueOf(123.4);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringDoubleVariable">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo(double n) {
+        return <marker>""</marker> + n;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo(double n) {
+        return String.valueOf(n);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringStringLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + "abc";
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return "abc";
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringStringVariable">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo(String s) {
+        return <marker>""</marker> + s;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo(String s) {
+        return s;
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringCharacterLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + 'a';
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return "a";
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringEscapedCharacterLiteral">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return <marker>""</marker> + '\n';
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo() {
+        return "\n";
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+    <test name="AddEmptyStringCharVariable">
+        <setup>
+            <source>
+public class AddEmptyString {
+    public String foo(char c) {
+        return <marker>""</marker> + c;
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AddEmptyString {
+    public String foo(char c) {
+        return String.valueOf(c);
+    }
+}
+            </source>
+            <image>QUICKFIX_REMOVE</image>
+            <label>Remove empty string</label>
+            <description>Removes the empty string.</description>
+        </expected>
+    </test>
+
+</tests>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2017, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+    <pmdReferenceId>category/java/bestpractices.xml/DefaultLabelNotLastInSwitchStmt</pmdReferenceId>
+    <language>java 1.7</language>
+
+    <test name="DefaultLabelNotLastInSwitchStmt">
+        <setup>
+            <source>
+class DefaultLabelNotLastInSwitchStmt {
+
+    void foo(final int a) {
+        <marker>switch (a) {
+            case 1: // do something
+                break;
+            default: // the default case should be last, by convention
+                System.out.print(a);
+                break;
+            case 2:
+                break;
+        }</marker>
+    }
+
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class DefaultLabelNotLastInSwitchStmt {
+
+    void foo(final int a) {
+        switch (a) {
+            case 1: // do something
+                break;
+            case 2:
+                break;
+            default: // the default case should be last, by convention
+                System.out.print(a);
+                break;
+        }
+    }
+
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Move 'default:' to the end</label>
+            <description>Moves the default label to the end of the switch cases.</description>
+        </expected>
+    </test>
+
+    <test name="DefaultLabelNotLastInSwitchStmtWithLeadingComment">
+        <setup>
+            <source>
+class DefaultLabelNotLastInSwitchStmt {
+
+    void foo(final int a) {
+        <marker>switch (a) {
+            case 1: // do something
+                break;
+            // the default case should be last, by convention
+            default:
+                System.out.print(a);
+                break;
+            case 2:
+                break;
+        }</marker>
+    }
+
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+class DefaultLabelNotLastInSwitchStmt {
+
+    void foo(final int a) {
+        switch (a) {
+            case 1: // do something
+                break;
+            case 2:
+                break;
+            // the default case should be last, by convention
+                default:
+                System.out.print(a);
+                break;
+        }
+    }
+
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Move 'default:' to the end</label>
+            <description>Moves the default label to the end of the switch cases.</description>
+        </expected>
+    </test>
+
+</tests>

@@ -69,7 +69,7 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
  * an {@code InputStream} to an XML file containing all the test data. See {@link QuickFixTestData} for the format of
  * the XML file.
  *
- * See {@link ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFixTest ExtendsObjectQuickFixTest} for a
+ * See {@link ch.acanda.eclipse.pmd.java.resolution.codestyle.ExtendsObjectQuickFixTest ExtendsObjectQuickFixTest} for a
  * complete example.
  *
  * @author Philip Graf

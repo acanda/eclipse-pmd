@@ -12,6 +12,7 @@
 package ch.acanda.eclipse.pmd.java.resolution;
 
 import static com.google.common.base.Preconditions.checkState;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
@@ -67,45 +68,45 @@ import net.sourceforge.pmd.lang.LanguageVersion;
 public class PMDIntegrationTest {
 
     private static final ImmutableCollection<String> TEST_DATA_XML = ImmutableList.of(
-            "basic/ExtendsObject.xml",
-            "design/DefaultLabelNotLastInSwitchStmt.xml",
-            "design/EqualsNull.xml",
+            "bestpractices/DefaultLabelNotLastInSwitchStmt.xml",
+            "bestpractices/MethodReturnsInternalArray.xml",
+            "bestpractices/UseCollectionIsEmpty.xml",
+            "bestpractices/UseVarargs.xml",
+            "codestyle/ExtendsObject.xml",
+            "codestyle/LocalVariableCouldBeFinal.xml",
+            "codestyle/MethodArgumentCouldBeFinal.xml",
+            "codestyle/UnnecessaryReturn.xml",
             "design/SingularField.xml",
-            "design/UseCollectionIsEmpty.xml",
-            "design/UseNotifyAllInsteadOfNotify.xml",
+            "design/UselessOverridingMethod.xml",
             "design/UseUtilityClass.xml",
-            "design/UseVarargs.xml",
-            "emptycode/EmptyFinallyBlock.xml",
-            "emptycode/EmptyIfStmt.xml",
-            "emptycode/EmptyInitializer.xml",
-            "emptycode/EmptyStatementBlock.xml",
-            "emptycode/EmptyStatementNotInLoop.xml",
-            "emptycode/EmptyStaticInitializer.xml",
-            "emptycode/EmptySwitchStatements.xml",
-            "emptycode/EmptySynchronizedBlock.xml",
-            "emptycode/EmptyTryBlock.xml",
-            "emptycode/EmptyWhileStmt.xml",
-            "migration/IntegerInstantiationAutoboxing.xml",
-            "migration/IntegerInstantiationValueOf.xml",
-            "migration/ByteInstantiationAutoboxing.xml",
-            "migration/ByteInstantiationValueOf.xml",
-            "migration/ShortInstantiationAutoboxing.xml",
-            "migration/ShortInstantiationValueOf.xml",
-            "migration/LongInstantiationAutoboxing.xml",
-            "migration/LongInstantiationValueOf.xml",
-            "naming/SuspiciousHashcodeMethodName.xml",
-            "optimization/AddEmptyString.xml",
-            "optimization/LocalVariableCouldBeFinal.xml",
-            "optimization/MethodArgumentCouldBeFinal.xml",
-            "optimization/RedundantFieldInitializer.xml",
-            "optimization/SimplifyStartsWith.xml",
-            "stringandstringbuffer/AppendCharacterWithChar.xml",
-            "stringandstringbuffer/UseIndexOfChar.xml",
-            "stringandstringbuffer/StringToString.xml",
-            "stringandstringbuffer/UnnecessaryCaseChange.xml",
-            "sunsecure/MethodReturnsInternalArray.xml",
-            "unnecessary/UselessOverridingMethod.xml",
-            "unnecessary/UnnecessaryReturn.xml");
+            "errorprone/EmptyFinallyBlock.xml",
+            "errorprone/EmptyIfStmt.xml",
+            "errorprone/EmptyInitializer.xml",
+            "errorprone/EmptyStatementBlock.xml",
+            "errorprone/EmptyStatementNotInLoop.xml",
+            "errorprone/EmptyStaticInitializer.xml",
+            "errorprone/EmptySwitchStatements.xml",
+            "errorprone/EmptySynchronizedBlock.xml",
+            "errorprone/EmptyTryBlock.xml",
+            "errorprone/EmptyWhileStmt.xml",
+            "errorprone/EqualsNull.xml",
+            "errorprone/SuspiciousHashcodeMethodName.xml",
+            "multithreading/UseNotifyAllInsteadOfNotify.xml",
+            "performance/AddEmptyString.xml",
+            "performance/AppendCharacterWithChar.xml",
+            "performance/ByteInstantiationAutoboxing.xml",
+            "performance/ByteInstantiationValueOf.xml",
+            "performance/IntegerInstantiationAutoboxing.xml",
+            "performance/IntegerInstantiationValueOf.xml",
+            "performance/LongInstantiationAutoboxing.xml",
+            "performance/LongInstantiationValueOf.xml",
+            "performance/RedundantFieldInitializer.xml",
+            "performance/ShortInstantiationAutoboxing.xml",
+            "performance/ShortInstantiationValueOf.xml",
+            "performance/SimplifyStartsWith.xml",
+            "performance/StringToString.xml",
+            "performance/UseIndexOfChar.xml",
+            "performance/UnnecessaryCaseChange.xml");
 
     private final String testDataXml;
     private final TestParameters params;
@@ -120,6 +121,7 @@ public class PMDIntegrationTest {
         final Builder<Object[]> testData = ImmutableList.builder();
         for (final String tests : TEST_DATA_XML) {
             try (final InputStream stream = QuickFixTestData.class.getResourceAsStream(tests)) {
+                assertNotNull("Test data file " + tests + " not found.", stream);
                 final Collection<TestParameters> data = QuickFixTestData.createTestData(stream);
                 for (final TestParameters params : data) {
                     testData.add(new Object[] { tests, params });

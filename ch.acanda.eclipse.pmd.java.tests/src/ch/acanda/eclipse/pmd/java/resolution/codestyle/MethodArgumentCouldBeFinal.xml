@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2017, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+    <pmdReferenceId>category/java/codestyle.xml/MethodArgumentCouldBeFinal</pmdReferenceId>
+    <language>java 1.7</language>
+
+    <test name="SingleVariableDeclaration">
+        <setup>
+            <source>
+public class MethodArgumentCouldBeFinal {
+
+    public void foo(int a, <marker>int b</marker>) {
+    }
+
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class MethodArgumentCouldBeFinal {
+
+    public void foo(int a, final int b) {
+    }
+
+}
+            </source>
+            <image>QUICKFIX_ADD</image>
+            <label>Add 'final' modifier</label>
+            <description>Adds the &lt;b>final&lt;/b> modifier.</description>
+        </expected>
+    </test>
+
+</tests>

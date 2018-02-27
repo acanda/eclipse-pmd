@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2017, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+    <pmdReferenceId>category/java/performance.xml/IntegerInstantiation</pmdReferenceId>
+    <language>java 1.7</language>
+
+    <test name="IntegerInstantiationWithIntArgument">
+        <setup>
+            <source>
+public class IntegerInstantiation {
+
+    Integer i = <marker>new Integer(123)</marker>;
+
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class IntegerInstantiation {
+
+    Integer i = 123;
+
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Use autoboxing</label>
+            <description>Replaces the Integer instantiation with &lt;b>123&lt;/b>.</description>
+        </expected>
+    </test>
+
+    <test name="IntegerInstantiationWithExpressionArgument">
+        <setup>
+            <source>
+public class IntegerInstantiation {
+
+    Integer i = <marker>new Integer(123 + 4)</marker>;
+
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class IntegerInstantiation {
+
+    Integer i = 123 + 4;
+
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Use autoboxing</label>
+            <description>Replaces the Integer instantiation with &lt;b>123 + 4&lt;/b>.</description>
+        </expected>
+    </test>
+
+</tests>

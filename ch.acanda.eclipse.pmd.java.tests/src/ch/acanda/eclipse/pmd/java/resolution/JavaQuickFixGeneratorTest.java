@@ -29,7 +29,7 @@ import org.osgi.framework.Version;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 
-import ch.acanda.eclipse.pmd.java.resolution.basic.ExtendsObjectQuickFix;
+import ch.acanda.eclipse.pmd.java.resolution.codestyle.ExtendsObjectQuickFix;
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 
 @RunWith(value = Parameterized.class)
@@ -54,9 +54,9 @@ public class JavaQuickFixGeneratorTest {
     @Parameters
     public static Collection<Object[]> getTestData() {
         final Builder<Object[]> testData = ImmutableList.builder();
-        testData.add(createTestData("java.basic.ExtendsObject", 4, ExtendsObjectQuickFix.class));
-        testData.add(createTestData("java.basic.ExtendsObject", 8, SuppressWarningsQuickFix.class));
-        testData.add(createTestData("java.basic.ExtendsObject", 5, ExtendsObjectQuickFix.class, SuppressWarningsQuickFix.class));
+        testData.add(createTestData("java.code style.ExtendsObject", 4, ExtendsObjectQuickFix.class));
+        testData.add(createTestData("java.code style.ExtendsObject", 8, SuppressWarningsQuickFix.class));
+        testData.add(createTestData("java.code style.ExtendsObject", 5, ExtendsObjectQuickFix.class, SuppressWarningsQuickFix.class));
         return testData.build();
     }
 

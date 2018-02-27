@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2012 - 2017, Philip Graf
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+-->
+<tests>
+    <pmdReferenceId>category/java/performance.xml/AppendCharacterWithChar</pmdReferenceId>
+    <language>java 1.7</language>
+
+    <test name="AppendCharacterWithCharWithNormalCharacter">
+        <setup>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append(<marker>"a"</marker>);
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append('a');
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with 'a'</label>
+            <description>Replaces the string "a" with the character 'a'.</description>
+        </expected>
+    </test>
+
+    <test name="AppendCharacterWithCharEscapedCharacter">
+        <setup>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append(<marker>"\n"</marker>);
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append('\n');
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with '\n'</label>
+            <description>Replaces the string "\n" with the character '\n'.</description>
+        </expected>
+    </test>
+
+    <test name="AppendCharacterWithCharOctalCharacter">
+        <setup>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append(<marker>"\013"</marker>);
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append('\013');
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with '\013'</label>
+            <description>Replaces the string "\013" with the character '\013'.</description>
+        </expected>
+    </test>
+
+    <test name="AppendCharacterWithCharUnicodeCharacter">
+        <setup>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append(<marker>"\u2026"</marker>);
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return s.append('\u2026');
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with '\u2026'</label>
+            <description>Replaces the string "\u2026" with the character '\u2026'.</description>
+        </expected>
+    </test>
+
+    <test name="AppendCharacterWithCharStringExpression">
+        <setup>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return (s + s).append(<marker>"a"</marker>);
+    }
+}
+            </source>
+        </setup>
+        <expected>
+            <source>
+public class AppendCharacterWithChar {
+    public boolean foo(StringBuffer s) {
+        return (s + s).append('a');
+    }
+}
+            </source>
+            <image>QUICKFIX_CHANGE</image>
+            <label>Replace with 'a'</label>
+            <description>Replaces the string "a" with the character 'a'.</description>
+        </expected>
+    </test>
+
+</tests>
