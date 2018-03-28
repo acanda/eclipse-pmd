@@ -1,0 +1,84 @@
+New and noteworthy
+Ecmascript (JavaScript)
+
+The Rhino Library has been upgraded from version 1.7.7.2 to version 1.7.7.2.2.
+
+Detailed changes for changed in Rhino can be found:
+
+    For 1.7.7.2.2
+    For 1.7.7.2.1
+
+Both are bugfixing releases.
+Disable Incremental Analysis
+
+Some time ago, we added support for Incremental Analysis. On PMD 6.0.0, we started to add warns when not using it, as we strongly believe it's a great improvement to our user's experience as analysis time is greatly reduced; and in the future we plan to have it enabled by default. However, we realize some scenarios don't benefit from it (ie: CI jobs), and having the warning logged can be noisy and cause confusion.
+
+To this end, we have added a new flag to allow you to explicitly disable incremental analysis. On CLI, this is the new -no-cache flag. On Ant, there is a noCache attribute for the <pmd> task.
+
+On both scenarios, disabling the cache takes precedence over setting a cache location.
+New Rules
+
+    The new Java rule MissingOverride (category bestpractices) detects overridden and implemented methods, which are not marked with the @Override annotation. Annotating overridden methods with @Override ensures at compile time that the method really overrides one, which helps refactoring and clarifies intent.
+
+    The new Java rule UnnecessaryAnnotationValueElement (category codestyle) detects annotations with a single element (value) that explicitly names it. That is, doing @SuppressWarnings(value = "unchecked") would be flagged in favor of @SuppressWarnings("unchecked").
+
+    The new Java rule ControlStatementBraces (category codestyle) enforces the presence of braces on control statements where they are optional. Properties allow to customize which statements are required to have braces. This rule replaces the now deprecated rules WhileLoopMustUseBraces, ForLoopMustUseBraces, IfStmtMustUseBraces, and IfElseStmtMustUseBraces. More than covering the use cases of those rules, this rule also supports do ... while statements and case labels of switch statements (disabled by default).
+
+Modified Rules
+
+    The Java rule CommentContentRule (java-documentation) previously had the property wordsAreRegex. But this property never had been implemented and is removed now.
+
+    The Java rule UnusedPrivateField (java-bestpractices) now has a new ignoredAnnotations property that allows to configure annotations that imply the field should be ignored. By default @java.lang.Deprecated and @javafx.fxml.FXML are ignored.
+
+    The Java rule UnusedPrivateMethod (java-bestpractices) now has a new ignoredAnnotations property that allows to configure annotations that imply the method should be ignored. By default @java.lang.Deprecated is ignored.
+
+    The Java rule ImmutableField (java-design) now has a new ignoredAnnotations property that allows to configure annotations that imply the method should be ignored. By default several lombok annotations are ignored
+
+    The Java rule SingularField (java-design) now has a new ignoredAnnotations property that allows to configure annotations that imply the method should be ignored. By default several lombok annotations are ignored
+
+Deprecated Rules
+
+    The Java rules WhileLoopMustUseBraces, ForLoopMustUseBraces, IfStmtMustUseBraces, and IfElseStmtMustUseBraces are deprecated. They will be replaced by the new rule ControlStatementBraces, in the category codestyle.
+
+Fixed Issues
+
+    all
+        #928: [core] PMD build failure on Windows
+    java-bestpractices
+        #907: [java] UnusedPrivateField false-positive with @FXML
+        #963: [java] ArrayIsStoredDirectly not triggered from variadic functions
+    java-codestyle
+        #974: [java] Merge *StmtMustUseBraces rules
+        #983: [java] Detect annotations with single value element
+    java-design
+        #832: [java] AvoidThrowingNullPointerException documentation suggestion
+        #837: [java] CFGs of declared but not called lambdas are treated as parts of an enclosing method's CFG
+        #839: [java] SignatureDeclareThrowsException's IgnoreJUnitCompletely property not honored for constructors
+        #968: [java] UseUtilityClassRule reports false positive with lombok NoArgsConstructor
+    documentation
+        #978: [core] Broken link in CONTRIBUTING.md
+        #992: [core] Include info about rule doc generation in "Writing Documentation" md page
+
+API Changes
+
+    A new CLI switch, -no-cache, disables incremental analysis and the related suggestion. This overrides the -cache option. The corresponding Ant task parameter is noCache.
+
+    The static method PMDParameters.transformParametersIntoConfiguration(PMDParameters) is now deprecated, for removal in 7.0.0. The new instance method PMDParameters.toConfiguration() replaces it.
+
+    The method ASTConstructorDeclaration.getParameters() has been deprecated in favor of the new method getFormalParameters(). This method is available for both ASTConstructorDeclaration and ASTMethodDeclaration.
+
+External Contributions
+
+    #941: [java] Use char notation to represent a character to improve performance - reudismam
+    #943: [java] UnusedPrivateField false-positive with @FXML - BBG
+    #951: [java] Add ignoredAnnotations property to unusedPrivateMethod rule - BBG
+    #952: [java] SignatureDeclareThrowsException's IgnoreJUnitCompletely property not honored for constructors - BBG
+    #958: [java] Refactor how we ignore annotated elements in rules - BBG
+    #965: [java] Make Varargs trigger ArrayIsStoredDirectly - Stephen
+    #967: [doc] Issue 959: fixed broken link to XPath Rule Tutorial - Andrey Mochalov
+    #969: [java] Issue 968 Add logic to handle lombok private constructors with utility classes - Kirk Clemens
+    #970: [java] Fixed inefficient use of keySet iterator instead of entrySet iterator - Andrey Mochalov
+    #984: [java] issue983 Add new UnnecessaryAnnotationValueElement rule - Kirk Clemens
+    #989: [core] Update Contribute.md to close Issue #978 - Bolarinwa Saheed Olayemi
+    #990: [java] Updated Doc on AvoidThrowingNullPointerException to close Issue #832 - Bolarinwa Saheed Olayemi
+    #993: [core] Update writing_documentation.md to fix Issue #992 - Bolarinwa Saheed Olayemi

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-cpp-6.1.0.jar" sourcepath="lib/pmd-cpp-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-cs-6.1.0.jar" sourcepath="lib/pmd-cs-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-fortran-6.1.0.jar" sourcepath="lib/pmd-fortran-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-go-6.1.0.jar" sourcepath="lib/pmd-go-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-java-6.1.0.jar" sourcepath="lib/pmd-java-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-javascript-6.1.0.jar" sourcepath="lib/pmd-javascript-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-jsp-6.1.0.jar" sourcepath="lib/pmd-jsp-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-matlab-6.1.0.jar" sourcepath="lib/pmd-matlab-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-objectivec-6.1.0.jar" sourcepath="lib/pmd-objectivec-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-perl-6.1.0.jar" sourcepath="lib/pmd-perl-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-php-6.1.0.jar" sourcepath="lib/pmd-php-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-plsql-6.1.0.jar" sourcepath="lib/pmd-plsql-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-python-6.1.0.jar" sourcepath="lib/pmd-python-6.1.0-sources.jar"/> 
-	<classpathentry exported="true" kind="lib" path="lib/pmd-ruby-6.1.0.jar" sourcepath="lib/pmd-ruby-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-scala-6.1.0.jar" sourcepath="lib/pmd-scala-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-swift-6.1.0.jar" sourcepath="lib/pmd-swift-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-vm-6.1.0.jar" sourcepath="lib/pmd-vm-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-xml-6.1.0.jar" sourcepath="lib/pmd-xml-6.1.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-core-6.1.0.jar" sourcepath="lib/pmd-core-6.1.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-cpp-6.2.0.jar" sourcepath="lib/pmd-cpp-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-cs-6.2.0.jar" sourcepath="lib/pmd-cs-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-fortran-6.2.0.jar" sourcepath="lib/pmd-fortran-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-go-6.2.0.jar" sourcepath="lib/pmd-go-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-java-6.2.0.jar" sourcepath="lib/pmd-java-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-javascript-6.2.0.jar" sourcepath="lib/pmd-javascript-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-jsp-6.2.0.jar" sourcepath="lib/pmd-jsp-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-matlab-6.2.0.jar" sourcepath="lib/pmd-matlab-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-objectivec-6.2.0.jar" sourcepath="lib/pmd-objectivec-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-perl-6.2.0.jar" sourcepath="lib/pmd-perl-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-php-6.2.0.jar" sourcepath="lib/pmd-php-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-plsql-6.2.0.jar" sourcepath="lib/pmd-plsql-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-python-6.2.0.jar" sourcepath="lib/pmd-python-6.2.0-sources.jar"/> 
+	<classpathentry exported="true" kind="lib" path="lib/pmd-ruby-6.2.0.jar" sourcepath="lib/pmd-ruby-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-scala-6.2.0.jar" sourcepath="lib/pmd-scala-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-swift-6.2.0.jar" sourcepath="lib/pmd-swift-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-vm-6.2.0.jar" sourcepath="lib/pmd-vm-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-xml-6.2.0.jar" sourcepath="lib/pmd-xml-6.2.0-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/pmd-core-6.2.0.jar" sourcepath="lib/pmd-core-6.2.0-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
@@ -26,7 +26,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jaxen-1.1.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/xml-apis-1.4.01.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/asm-6.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/rhino-1.7.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/rhino-1.7.7.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/saxon-9.1.0.8-dom.jar"/>
