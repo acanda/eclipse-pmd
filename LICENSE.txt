@@ -1,30 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<feature
-      id="ch.acanda.eclipse.pmd.core.feature"
-      label="eclipse-pmd Core (Mandatory)"
-      version="1.13.0.qualifier"
-      provider-name="Philip Graf">
-
-   <description url="http://acanda.github.com/eclipse-pmd/">
-      Provides the core functionality of eclipse-pmd:
-      - Set up and configure PMD
-      - Marks PMD violations in the editors
-   </description>
-
-   <copyright>
-      Copyright (C) 2012 - 2018, Philip Graf
-   </copyright>
-
-   <license url="https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html">
 Eclipse Public License - v 2.0
 
     THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE
-    PUBLIC LICENSE (&quot;AGREEMENT&quot;). ANY USE, REPRODUCTION OR DISTRIBUTION
-    OF THE PROGRAM CONSTITUTES RECIPIENT&#39;S ACCEPTANCE OF THIS AGREEMENT.
+    PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION
+    OF THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
 
 1. DEFINITIONS
 
-&quot;Contribution&quot; means:
+"Contribution" means:
 
   a) in the case of the initial Contributor, the initial content
      Distributed under this Agreement, and
@@ -34,29 +16,29 @@ Eclipse Public License - v 2.0
      ii) additions to the Program;
   where such changes and/or additions to the Program originate from
   and are Distributed by that particular Contributor. A Contribution
-  &quot;originates&quot; from a Contributor if it was added to the Program by
-  such Contributor itself or anyone acting on such Contributor&#39;s behalf.
+  "originates" from a Contributor if it was added to the Program by
+  such Contributor itself or anyone acting on such Contributor's behalf.
   Contributions do not include changes or additions to the Program that
   are not Modified Works.
 
-&quot;Contributor&quot; means any person or entity that Distributes the Program.
+"Contributor" means any person or entity that Distributes the Program.
 
-&quot;Licensed Patents&quot; mean patent claims licensable by a Contributor which
+"Licensed Patents" mean patent claims licensable by a Contributor which
 are necessarily infringed by the use or sale of its Contribution alone
 or when combined with the Program.
 
-&quot;Program&quot; means the Contributions Distributed in accordance with this
+"Program" means the Contributions Distributed in accordance with this
 Agreement.
 
-&quot;Recipient&quot; means anyone who receives the Program under this Agreement
+"Recipient" means anyone who receives the Program under this Agreement
 or any Secondary License (as applicable), including Contributors.
 
-&quot;Derivative Works&quot; shall mean any work, whether in Source Code or other
+"Derivative Works" shall mean any work, whether in Source Code or other
 form, that is based on (or derived from) the Program and for which the
 editorial revisions, annotations, elaborations, or other modifications
 represent, as a whole, an original work of authorship.
 
-&quot;Modified Works&quot; shall mean any work in Source Code or other form that
+"Modified Works" shall mean any work in Source Code or other form that
 results from an addition to, deletion from, or modification of the
 contents of the Program, including, for purposes of clarity any new file
 in Source Code form that contains any contents of the Program. Modified
@@ -65,14 +47,14 @@ interfaces, types, classes, structures, or files of the Program solely
 in each case in order to link to, bind by name, or subclass the Program
 or Modified Works thereof.
 
-&quot;Distribute&quot; means the acts of a) distributing or b) making available
+"Distribute" means the acts of a) distributing or b) making available
 in any manner that enables the transfer of a copy.
 
-&quot;Source Code&quot; means the form of a Program preferred for making
+"Source Code" means the form of a Program preferred for making
 modifications, including but not limited to software source code,
 documentation source, and configuration files.
 
-&quot;Secondary License&quot; means either the GNU General Public License,
+"Secondary License" means either the GNU General Public License,
 Version 2.0, or any later versions of that license, including any
 exceptions or additional permissions as identified by the initial
 Contributor.
@@ -108,7 +90,7 @@ Contributor.
   assumes sole responsibility to secure any other intellectual
   property rights needed, if any. For example, if a third party
   patent license is required to allow Recipient to Distribute the
-  Program, it is Recipient&#39;s responsibility to acquire that license
+  Program, it is Recipient's responsibility to acquire that license
   before distributing the Program.
 
   d) Each Contributor represents that to its knowledge it has
@@ -117,7 +99,7 @@ Contributor.
 
   e) Notwithstanding the terms of any Secondary License, no
   Contributor makes additional grants to any Recipient (other than
-  those set forth in this Agreement) as a result of such Recipient&#39;s
+  those set forth in this Agreement) as a result of such Recipient's
   receipt of the Program under the terms of a Secondary License
   (if permitted under the terms of Section 3).
 
@@ -144,7 +126,7 @@ Contributor.
      liability for damages, including direct, indirect, special,
      incidental and consequential damages, such as lost profits;
 
-     iii) does not attempt to limit or alter the recipients&#39; rights
+     iii) does not attempt to limit or alter the recipients' rights
      in the Source Code under section 3.2; and
 
      iv) requires any subsequent distribution of the Program by any
@@ -165,7 +147,7 @@ Contributor.
 
 3.3 Contributors may not remove or alter any copyright, patent,
 trademark, attribution notices, disclaimers of warranty, or limitations
-of liability (&quot;notices&quot;) contained within the Program from any copy of
+of liability ("notices") contained within the Program from any copy of
 the Program which they Distribute, provided that Contributors may add
 their own appropriate notices.
 
@@ -178,9 +160,9 @@ the Contributor who includes the Program in a commercial product
 offering should do so in a manner which does not create potential
 liability for other Contributors. Therefore, if a Contributor includes
 the Program in a commercial product offering, such Contributor
-(&quot;Commercial Contributor&quot;) hereby agrees to defend and indemnify every
-other Contributor (&quot;Indemnified Contributor&quot;) against any losses,
-damages and costs (collectively &quot;Losses&quot;) arising from claims, lawsuits
+("Commercial Contributor") hereby agrees to defend and indemnify every
+other Contributor ("Indemnified Contributor") against any losses,
+damages and costs (collectively "Losses") arising from claims, lawsuits
 and other legal actions brought by a third party against the Indemnified
 Contributor to the extent caused by the acts or omissions of such
 Commercial Contributor in connection with its distribution of the Program
@@ -197,7 +179,7 @@ For example, a Contributor might include the Program in a commercial
 product offering, Product X. That Contributor is then a Commercial
 Contributor. If that Commercial Contributor then makes performance
 claims, or offers warranties related to Product X, those performance
-claims and warranties are such Commercial Contributor&#39;s responsibility
+claims and warranties are such Commercial Contributor's responsibility
 alone. Under this section, the Commercial Contributor would have to
 defend claims against the other Contributors related to those performance
 claims and warranties, and if a court requires any other Contributor to
@@ -207,7 +189,7 @@ those damages.
 5. NO WARRANTY
 
 EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, AND TO THE EXTENT
-PERMITTED BY APPLICABLE LAW, THE PROGRAM IS PROVIDED ON AN &quot;AS IS&quot;
+PERMITTED BY APPLICABLE LAW, THE PROGRAM IS PROVIDED ON AN "AS IS"
 BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR
 IMPLIED INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF
 TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR
@@ -241,17 +223,17 @@ minimum extent necessary to make such provision valid and enforceable.
 If Recipient institutes patent litigation against any entity
 (including a cross-claim or counterclaim in a lawsuit) alleging that the
 Program itself (excluding combinations of the Program with other software
-or hardware) infringes such Recipient&#39;s patent(s), then such Recipient&#39;s
+or hardware) infringes such Recipient's patent(s), then such Recipient's
 rights granted under Section 2(b) shall terminate as of the date such
 litigation is filed.
 
-All Recipient&#39;s rights under this Agreement shall terminate if it
+All Recipient's rights under this Agreement shall terminate if it
 fails to comply with any of the material terms or conditions of this
 Agreement and does not cure such failure in a reasonable period of
-time after becoming aware of such noncompliance. If all Recipient&#39;s
+time after becoming aware of such noncompliance. If all Recipient's
 rights under this Agreement terminate, Recipient agrees to cease use
 and distribution of the Program as soon as reasonably practicable.
-However, Recipient&#39;s obligations under this Agreement and any licenses
+However, Recipient's obligations under this Agreement and any licenses
 granted by Recipient relating to the Program shall continue and survive.
 
 Everyone is permitted to copy and distribute copies of this Agreement,
@@ -279,15 +261,15 @@ No third-party beneficiary rights are created under this Agreement.
 
 Exhibit A - Form of Secondary Licenses Notice
 
-&quot;This Source Code may also be made available under the following 
+"This Source Code may also be made available under the following 
 Secondary Licenses when the conditions for such availability set forth 
 in the Eclipse Public License, v. 2.0 are satisfied:
     Apache Software License 1.0
     Apache Software License 1.1
     Apache Software License 2.0
-    BSD 2-Clause &quot;Simplified&quot; License
-    BSD 3-Clause &quot;New&quot; or &quot;Revised&quot; License
-    BSD 4-Clause &quot;Original&quot; or &quot;Old&quot; License
+    BSD 2-Clause 'Simplified' License
+    BSD 3-Clause 'New' or 'Revised' License
+    BSD 4-Clause 'Original' or 'Old' License
     Creative Commons Attribution License 2.5
     Creative Commons Attribution 3.0 (Unported) License
     Creative Commons Attribution 4.0 International
@@ -302,7 +284,7 @@ in the Eclipse Public License, v. 2.0 are satisfied:
     Mozilla Public License Version 2.0
     W3C Software and Notice License (2002-12-31)
     W3C Software Notice and License (1998-07-20)
-    W3C Software Notice and Document License (2015-05-13)&quot;
+    W3C Software Notice and Document License (2015-05-13)"
 
   Simply including a copy of this Agreement, including this Exhibit A
   is not sufficient to license the Source Code under Secondary Licenses.
@@ -313,35 +295,3 @@ in the Eclipse Public License, v. 2.0 are satisfied:
   look for such a notice.
 
   You may add additional accurate notices of copyright ownership.
-     </license>
-
-   <url>
-      <update label="Latest stable release" url="http://www.acanda.ch/eclipse-pmd/release/latest/"/>
-   </url>
-
-   <requires>
-      <import feature="org.eclipse.platform" version="3.7.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.rcp" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
-   </requires>
-
-   <plugin
-         id="ch.acanda.eclipse.pmd.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="ch.acanda.eclipse.pmd.lib"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="ch.acanda.eclipse.pmd.unsupported"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-</feature>
