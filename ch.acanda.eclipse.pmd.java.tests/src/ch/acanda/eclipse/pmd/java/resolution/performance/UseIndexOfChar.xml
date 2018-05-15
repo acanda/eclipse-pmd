@@ -9,7 +9,7 @@
 -->
 <tests>
     <pmdReferenceId>category/java/performance.xml/UseIndexOfChar</pmdReferenceId>
-    <language>java 1.7</language>
+    <language>java 1.8</language>
 
     <test name="UseIndexOfCharWithNormalCharacter">
         <setup>

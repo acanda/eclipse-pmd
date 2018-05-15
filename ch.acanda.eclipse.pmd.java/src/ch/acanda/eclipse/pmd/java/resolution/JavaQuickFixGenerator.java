@@ -64,7 +64,7 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 public final class JavaQuickFixGenerator {
 
     private static final Version JAVA_5 = new Version(1, 5, 0);
-    private static final Version JAVA_8 = new Version(1, 8, 0);
+    private static final Version JAVA_9 = new Version(1, 9, 0);
 
     @SuppressWarnings("unchecked")
     private static final ImmutableListMultimap<String, Class<? extends IMarkerResolution>> QUICK_FIXES =
@@ -124,7 +124,7 @@ public final class JavaQuickFixGenerator {
 
     public ImmutableList<IMarkerResolution> getQuickFixes(final PMDMarker marker, final JavaQuickFixContext context) {
         final ImmutableList.Builder<IMarkerResolution> quickFixes = ImmutableList.builder();
-        if (context.getCompilerCompliance().compareTo(JAVA_8) < 0) {
+        if (context.getCompilerCompliance().compareTo(JAVA_9) < 0) {
             for (final Class<? extends IMarkerResolution> quickFixClass : QUICK_FIXES.get(marker.getRuleId())) {
                 quickFixes.add(createInstanceOf(quickFixClass, marker));
             }

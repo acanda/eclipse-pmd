@@ -39,7 +39,7 @@ import com.google.common.base.Optional;
  *     &lt;pmdReferenceId>rulesets/java/basic.xml/ExtendsObject&lt;/pmdReferenceId>
  *
  *     &lt;!-- The language and version of the provided source code -->
- *     &lt;language>java 1.7&lt;/language>
+ *     &lt;language>java 1.8&lt;/language>
  *
  *     &lt;!-- Every test must have a name. It will be shown in assertion messages
  *          so you can identify the failing test. There can be more than one test in a file. -->

@@ -55,7 +55,7 @@ public class JavaQuickFixGeneratorTest {
     public static Collection<Object[]> getTestData() {
         final Builder<Object[]> testData = ImmutableList.builder();
         testData.add(createTestData("java.code style.ExtendsObject", 4, ExtendsObjectQuickFix.class));
-        testData.add(createTestData("java.code style.ExtendsObject", 8, SuppressWarningsQuickFix.class));
+        testData.add(createTestData("java.code style.ExtendsObject", 9, SuppressWarningsQuickFix.class));
         testData.add(createTestData("java.code style.ExtendsObject", 5, ExtendsObjectQuickFix.class, SuppressWarningsQuickFix.class));
         return testData.build();
     }

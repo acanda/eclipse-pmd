@@ -9,7 +9,7 @@
 -->
 <tests>
     <pmdReferenceId>category/java/codestyle.xml/MethodArgumentCouldBeFinal</pmdReferenceId>
-    <language>java 1.7</language>
+    <language>java 1.8</language>
 
     <test name="SingleVariableDeclaration">
         <setup>
