@@ -1,0 +1,43 @@
+New and noteworthy
+Java 11 Support
+
+PMD is now able to parse the local-variable declaration syntax var xxx, that has been extended for lambda parameters with Java 11 via JEP 323: Local-Variable Syntax for Lambda Parameters.
+New Rules
+
+    The new Java rule LocalVariableNamingConventions (java-codestyle) detects local variable names that don’t comply to a given convention. It defaults to standard Java convention of using camelCase, but can be configured. Special cases can be configured for final variables and caught exceptions’ names.
+
+    The new Java rule FormalParameterNamingConventions (java-codestyle) detects formal parameter names that don’t comply to a given convention. It defaults to standard Java convention of using camelCase, but can be configured. Special cases can be configured for final parameters and lambda parameters (considering whether they are explicitly typed or not).
+
+Modified Rules
+
+    The Java rules AccessorClassGeneration and AccessorMethodGeneration] (both in category java-bestpractices) have been modified to be only valid up until Java 10. Java 11 adds support for JEP 181: Nest-Based Access Control which avoids the generation of accessor classes / methods altogether.
+
+Fixed Issues
+
+    core
+        #1178: [core] “Unsupported build listener” in gradle build
+        #1225: [core] Error in sed expression on line 82 of run.sh while detecting installed version of Java
+    doc
+        #1215: [doc] TOC links don’t work?
+    java-codestyle
+        #1211: [java] CommentDefaultAccessModifier false positive with nested interfaces (regression from 6.4.0)
+        #1216: [java] UnnecessaryFullyQualifiedName false positive for the same name method
+    java-design
+        #1217: [java] CyclomaticComplexityRule counts ?-operator twice
+        #1226: [java] NPath complexity false negative due to overflow
+    plsql
+        #980: [plsql] ParseException for CREATE TABLE
+        #981: [plsql] ParseException when parsing VIEW
+        #1047: [plsql] ParseException when parsing EXECUTE IMMEDIATE
+    ui
+        #1233: [ui] XPath autocomplete arrows on first and last items
+
+API Changes
+
+    The findDescendantsOfType methods in net.sourceforge.pmd.lang.ast.AbstractNode no longer search for exact type matches, but will match subclasses, too. That means, it’s now possible to look for abstract node types such as AbstractJavaTypeNode and not only for it’s concrete subtypes.
+
+External Contributions
+
+    #1182: [ui] XPath AutoComplete - Akshat Bahety
+    #1231: [doc] Minor typo fix in installation.md - Ashish Rana
+    #1250: [ci] [GSoC] Upload baseline of pmdtester automatically - BBG
