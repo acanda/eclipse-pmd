@@ -17,13 +17,13 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.core.resources.IProject;
 import org.junit.Test;
 
-import ch.acanda.eclipse.pmd.domain.RuleSetModel;
-import ch.acanda.eclipse.pmd.properties.PMDPropertyPageViewModel.RuleSetViewModel;
-
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
+
+import ch.acanda.eclipse.pmd.domain.RuleSetModel;
+import ch.acanda.eclipse.pmd.properties.PMDPropertyPageViewModel.RuleSetViewModel;
 
 /**
  * Unit tests for {@link PMDPropertyPageController}.
@@ -38,13 +38,7 @@ public class PMDPropertyPageControllerTest {
     @Test
     public void removeSelectedConfigurations() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
-        final PMDPropertyPageViewModel model = controller.getModel();
-        final IProject project = mock(IProject.class);
-        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of(), project);
-        final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
-        model.setRuleSets(ruleSets);
-        model.setActiveRuleSets(ruleSets.subList(0, 2));
-        model.setSelectedRuleSets(ruleSets.subList(1, 3));
+        final PMDPropertyPageViewModel model = createModel(controller, 1, 3);
         
         controller.removeSelectedConfigurations();
 
@@ -52,7 +46,7 @@ public class PMDPropertyPageControllerTest {
         assertEquals("activeRuleSets", "[A]", toNameString(model.getActiveRuleSets()));
         assertEquals("selectedRuleSets", "[]", toNameString(model.getSelectedRuleSets()));
     }
-    
+
     /**
      * Verifies that {@link PMDPropertyPageController#removeSelectedConfigurations()} updates the view model correctly
      * when none of the rule sets are selected.
@@ -60,13 +54,7 @@ public class PMDPropertyPageControllerTest {
     @Test
     public void removeSelectedConfigurationsWithoutSelection() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
-        final PMDPropertyPageViewModel model = controller.getModel();
-        final IProject project = mock(IProject.class);
-        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of(), project);
-        final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
-        model.setRuleSets(ruleSets);
-        model.setActiveRuleSets(ruleSets.subList(0, 2));
-        model.setSelectedRuleSets(ImmutableList.<RuleSetViewModel>of());
+        final PMDPropertyPageViewModel model = createModel(controller, 0, 0);
         
         controller.removeSelectedConfigurations();
         
@@ -75,10 +63,21 @@ public class PMDPropertyPageControllerTest {
         assertEquals("selectedRuleSets", "[]", toNameString(model.getSelectedRuleSets()));
     }
 
+    private static PMDPropertyPageViewModel createModel(final PMDPropertyPageController controller, final int from, final int to) {
+        final PMDPropertyPageViewModel model = controller.getModel();
+        final IProject project = mock(IProject.class);
+        model.setInitialState(true, ImmutableSortedSet.<RuleSetModel>of(), project);
+        final ImmutableList<RuleSetViewModel> ruleSets = createRuleSets();
+        model.setRuleSets(ruleSets);
+        model.setActiveRuleSets(ruleSets.subList(0, 2));
+        model.setSelectedRuleSets(ruleSets.subList(from, to));
+        return model;
+    }
+    
     /**
      * Returns a string representation of the provided rule sets iterable containing its element's names.
      */
-    private String toNameString(final Iterable<RuleSetViewModel> ruleSets) {
+    private static String toNameString(final Iterable<RuleSetViewModel> ruleSets) {
         return Iterables.toString(Iterables.transform(ruleSets, new Function<RuleSetViewModel, String>() {
             @Override
             public String apply(final RuleSetViewModel ruleSet) {
@@ -87,7 +86,7 @@ public class PMDPropertyPageControllerTest {
         }));
     }
 
-    private ImmutableList<RuleSetViewModel> createRuleSets() {
+    private static ImmutableList<RuleSetViewModel> createRuleSets() {
         return ImmutableList.of(new RuleSetViewModel("A", "A-Type", "A-Location", true, "A-LocationToolTip"),
                 new RuleSetViewModel("B", "B-Type", "B-Location", false, "B-LocationToolTip"),
                 new RuleSetViewModel("C", "C-Type", "C-Location", true, "C-LocationToolTip"),
