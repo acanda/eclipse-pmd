@@ -29,10 +29,10 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.junit.Test;
 
+import com.google.common.base.Optional;
+
 import ch.acanda.eclipse.pmd.domain.Location;
 import ch.acanda.eclipse.pmd.domain.LocationContext;
-
-import com.google.common.base.Optional;
 
 /**
  * Unit tests for {@code LocationResolver}.
@@ -225,19 +225,13 @@ public class LocationResolverTest {
     @Test
     public void resolveIfExistsWorkspaceLocationWithMissingFile() throws URISyntaxException {
         final Location location = new Location("project/pmd.xml", LocationContext.WORKSPACE);
-        final IProject project = mock(IProject.class);
-        final IWorkspace workspace = mock(IWorkspace.class);
-        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
-        when(project.getWorkspace()).thenReturn(workspace);
-        when(workspace.getRoot()).thenReturn(workspaceRoot);
-        when(workspaceRoot.getProject("project")).thenReturn(project);
-        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project"));
+        final IProject project = createProject("project", new URI("file:///workspace/project"));
         
         final Optional<String> result = LocationResolver.resolveIfExists(location, project);
         
         assertFalse("The location should not resolve", result.isPresent());
     }
-    
+
     /**
      * Verifies that {@link LocationResolver#resolveIfExists(Location, IProject)} does not throw an exception in a
      * workspace context if the project does not exist.
@@ -245,13 +239,7 @@ public class LocationResolverTest {
     @Test
     public void resolveIfExistsWorkspaceLocationWithMissingProject() {
         final Location location = new Location("MissingProject/pmd.xml", LocationContext.WORKSPACE);
-        final IProject project = mock(IProject.class);
-        final IWorkspace workspace = mock(IWorkspace.class);
-        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
-        when(project.getWorkspace()).thenReturn(workspace);
-        when(workspace.getRoot()).thenReturn(workspaceRoot);
-        when(workspaceRoot.getProject("MissingProject")).thenReturn(project);
-        when(project.getLocationURI()).thenReturn(null);
+        final IProject project = createProject("MissingProject", null);
         
         final Optional<String> result = LocationResolver.resolveIfExists(location, project);
         
@@ -265,13 +253,7 @@ public class LocationResolverTest {
     @Test
     public void resolveIfExistsWorkspaceLocationWithInvalidPath() throws URISyntaxException {
         final Location location = new Location("project/\u0000:", LocationContext.WORKSPACE);
-        final IProject project = mock(IProject.class);
-        final IWorkspace workspace = mock(IWorkspace.class);
-        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
-        when(project.getWorkspace()).thenReturn(workspace);
-        when(workspace.getRoot()).thenReturn(workspaceRoot);
-        when(workspaceRoot.getProject("project")).thenReturn(project);
-        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
+        final IProject project = createProject("project", new URI("file:///workspace/project/"));
         
         final Optional<String> result = LocationResolver.resolveIfExists(location, project);
         
@@ -285,13 +267,7 @@ public class LocationResolverTest {
     @Test
     public void resolveIfExistsWorkspaceLocationWithProjectNameOnly() throws URISyntaxException {
         final Location location = new Location("project", LocationContext.WORKSPACE);
-        final IProject project = mock(IProject.class);
-        final IWorkspace workspace = mock(IWorkspace.class);
-        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
-        when(project.getWorkspace()).thenReturn(workspace);
-        when(workspace.getRoot()).thenReturn(workspaceRoot);
-        when(workspaceRoot.getProject("project")).thenReturn(project);
-        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
+        final IProject project = createProject("project", new URI("file:///workspace/project/"));
         
         final Optional<String> result = LocationResolver.resolveIfExists(location, project);
         
@@ -305,13 +281,7 @@ public class LocationResolverTest {
     @Test
     public void resolveIfExistsWorkspaceLocationWithoutPath() throws URISyntaxException {
         final Location location = new Location("", LocationContext.WORKSPACE);
-        final IProject project = mock(IProject.class);
-        final IWorkspace workspace = mock(IWorkspace.class);
-        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
-        when(project.getWorkspace()).thenReturn(workspace);
-        when(workspace.getRoot()).thenReturn(workspaceRoot);
-        when(workspaceRoot.getProject("project")).thenReturn(project);
-        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
+        final IProject project = createProject("project", new URI("file:///workspace/project/"));
         
         final Optional<String> result = LocationResolver.resolveIfExists(location, project);
         
@@ -325,18 +295,23 @@ public class LocationResolverTest {
     @Test
     public void resolveWorkspaceLocation() throws URISyntaxException {
         final Location location = new Location("project/path/pmd.xml", LocationContext.WORKSPACE);
-        final IProject project = mock(IProject.class);
-        final IWorkspace workspace = mock(IWorkspace.class);
-        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
-        when(project.getWorkspace()).thenReturn(workspace);
-        when(workspace.getRoot()).thenReturn(workspaceRoot);
-        when(workspaceRoot.getProject("project")).thenReturn(project);
-        when(project.getLocationURI()).thenReturn(new URI("file:///workspace/project/"));
+        final IProject project = createProject("project", new URI("file:///workspace/project/"));
         
         final String result = LocationResolver.resolve(location, project);
         
         assertEquals("The resolved location should be the project's path with the location's path appended",
                 Paths.get("/workspace", "project", "path", "pmd.xml"), Paths.get(result));
+    }
+    
+    private static IProject createProject(final String name, final URI uri) {
+        final IProject project = mock(IProject.class);
+        final IWorkspace workspace = mock(IWorkspace.class);
+        final IWorkspaceRoot workspaceRoot = mock(IWorkspaceRoot.class);
+        when(project.getWorkspace()).thenReturn(workspace);
+        when(workspace.getRoot()).thenReturn(workspaceRoot);
+        when(workspaceRoot.getProject(name)).thenReturn(project);
+        when(project.getLocationURI()).thenReturn(uri);
+        return project;
     }
     
     /**
