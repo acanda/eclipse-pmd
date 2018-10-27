@@ -11,8 +11,6 @@
 
 package ch.acanda.eclipse.pmd;
 
-import net.sourceforge.pmd.lang.LanguageRegistry;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -23,13 +21,13 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.google.common.base.Optional;
+
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 import ch.acanda.eclipse.pmd.domain.WorkspaceModel;
 import ch.acanda.eclipse.pmd.repository.ProjectModelRepository;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
-import ch.acanda.eclipse.pmd.v07tov08.V07ToV08Converter;
-
-import com.google.common.base.Optional;
+import net.sourceforge.pmd.lang.LanguageRegistry;
 
 /**
  * @author Philip Graf
@@ -47,7 +45,6 @@ public final class PMDPlugin extends AbstractUIPlugin {
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
-        V07ToV08Converter.moveSettings(getPreferenceStore(), new ProjectModelRepository());
         initWorkspaceModel();
         initPMD();
     }
