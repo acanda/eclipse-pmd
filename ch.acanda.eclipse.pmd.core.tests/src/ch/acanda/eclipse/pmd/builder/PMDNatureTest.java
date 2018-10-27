@@ -39,16 +39,22 @@ public class PMDNatureTest {
      */
     @Test
     public void addToAddsPMDNatureToProject() throws CoreException {
-        final IProject project = mock(IProject.class);
-        final IProjectDescription description = mock(IProjectDescription.class);
-        when(project.getDescription()).thenReturn(description);
-        when(project.hasNature(PMDNature.ID)).thenReturn(false);
-        when(description.getNatureIds()).thenReturn(new String[] { "org.example.a", "org.example.b" });
+        final IProject project = createProject(false, "org.example.a", "org.example.b");
         
         PMDNature.addTo(project);
         
+        final IProjectDescription description = project.getDescription();
         verify(project, times(1)).setDescription(same(description), any(IProgressMonitor.class));
         verify(description, times(1)).setNatureIds(eq(new String[] { "org.example.a", "org.example.b", PMDNature.ID }));
+    }
+
+    private IProject createProject(final boolean hasNature, final String... natureIds) throws CoreException {
+        final IProject project = mock(IProject.class);
+        final IProjectDescription description = mock(IProjectDescription.class);
+        when(project.getDescription()).thenReturn(description);
+        when(project.hasNature(PMDNature.ID)).thenReturn(hasNature);
+        when(description.getNatureIds()).thenReturn(natureIds);
+        return project;
     }
     
     /**
@@ -56,14 +62,11 @@ public class PMDNatureTest {
      */
     @Test
     public void addToDoesNotAddPMDNatureToProject() throws CoreException {
-        final IProject project = mock(IProject.class);
-        final IProjectDescription description = mock(IProjectDescription.class);
-        when(project.getDescription()).thenReturn(description);
-        when(project.hasNature(PMDNature.ID)).thenReturn(true);
-        when(description.getNatureIds()).thenReturn(new String[] { "org.example.a", PMDNature.ID, "org.example.b" });
+        final IProject project = createProject(true, "org.example.a", PMDNature.ID, "org.example.b");
         
         PMDNature.addTo(project);
         
+        final IProjectDescription description = project.getDescription();
         verify(project, never()).setDescription(any(IProjectDescription.class), any(IProgressMonitor.class));
         verify(description, never()).setNatureIds(any(String[].class));
     }
@@ -74,14 +77,11 @@ public class PMDNatureTest {
      */
     @Test
     public void removeFromRemovesPMDNatureFromProject() throws CoreException {
-        final IProject project = mock(IProject.class);
-        final IProjectDescription description = mock(IProjectDescription.class);
-        when(project.getDescription()).thenReturn(description);
-        when(project.hasNature(PMDNature.ID)).thenReturn(true);
-        when(description.getNatureIds()).thenReturn(new String[] { "org.example.a", PMDNature.ID, "org.example.b" });
+        final IProject project = createProject(true, "org.example.a", PMDNature.ID, "org.example.b");
         
         PMDNature.removeFrom(project);
         
+        final IProjectDescription description = project.getDescription();
         verify(project, times(1)).setDescription(same(description), any(IProgressMonitor.class));
         verify(description, times(1)).setNatureIds(eq(new String[] { "org.example.a", "org.example.b" }));
     }
@@ -92,14 +92,11 @@ public class PMDNatureTest {
      */
     @Test
     public void removeFromDoesNotRemovePMDNatureFromProject() throws CoreException {
-        final IProject project = mock(IProject.class);
-        final IProjectDescription description = mock(IProjectDescription.class);
-        when(project.getDescription()).thenReturn(description);
-        when(project.hasNature(PMDNature.ID)).thenReturn(false);
-        when(description.getNatureIds()).thenReturn(new String[] { "org.example.a", "org.example.b" });
+        final IProject project = createProject(false, "org.example.a", "org.example.b");
         
         PMDNature.removeFrom(project);
         
+        final IProjectDescription description = project.getDescription();
         verify(project, never()).setDescription(any(IProjectDescription.class), any(IProgressMonitor.class));
         verify(description, never()).setNatureIds(any(String[].class));
     }
