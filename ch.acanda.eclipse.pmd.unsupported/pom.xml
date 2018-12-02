@@ -18,7 +18,6 @@
         <relativePath>../ch.acanda.eclipse.pmd</relativePath>
     </parent>
 
-    <groupId>ch.acanda.eclipse.pmd</groupId>
     <artifactId>ch.acanda.eclipse.pmd.unsupported</artifactId>
     <packaging>eclipse-plugin</packaging>
     <name>eclipse-pmd unsupported jre</name>

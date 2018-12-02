@@ -18,7 +18,6 @@
         <relativePath>../ch.acanda.eclipse.pmd</relativePath>
     </parent>
 
-    <groupId>ch.acanda.eclipse.pmd</groupId>
     <artifactId>ch.acanda.eclipse.pmd.core.feature</artifactId>
     <packaging>eclipse-feature</packaging>
     <name>eclipse-pmd core feature</name>
