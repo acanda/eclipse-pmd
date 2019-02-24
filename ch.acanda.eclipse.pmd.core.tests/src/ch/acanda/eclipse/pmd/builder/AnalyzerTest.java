@@ -168,16 +168,8 @@ public class AnalyzerTest {
      */
     @Test
     public void analyzePLSQL() {
-        final String content = "CREATE OR REPLACE PACKAGE BODY date_utilities\n"
-                + "IS\n"
-                + "FUNCTION to_date_single_parameter (p_date_string IN VARCHAR2) RETURN DATE\n"
-                + "IS\n"
-                + "BEGIN\n"
-                + "   RETURN TO_DATE(p_date_string);\n"
-                + "END to_date_single_parameter;\n"
-                + "END date_utilities;";
-        analyze(content, "UTF-8", "sql", "rulesets/plsql/dates.xml/TO_DATEWithoutDateFormat",
-                "TO_DATEWithoutDateFormat");
+        final String content = "select * from a";
+        analyze(content, "UTF-8", "sql", "category/plsql/codestyle.xml/CodeFormat", "CodeFormat");
     }
     
     /**
@@ -185,7 +177,7 @@ public class AnalyzerTest {
      */
     @Test
     public void analyzePLSQLAllRules() throws IOException {
-        analyze("select * from a", "UTF-8", "sql", getAllRuleSetRefIds("plsql"));
+        analyze("select *\n  from a", "UTF-8", "sql", getAllRuleSetRefIds("plsql"));
     }
     
     /**
