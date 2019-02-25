@@ -5,6 +5,6 @@ Bundle-SymbolicName: ch.acanda.eclipse.pmd.java.tests;singleton:=true
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Philip Graf
 Fragment-Host: ch.acanda.eclipse.pmd.java;bundle-version="1.20.0"
-Require-Bundle: org.junit;bundle-version="4.8.2"
+Require-Bundle: org.junit;bundle-version="4.12.0"
 Bundle-ClassPath: .,
  lib/mockito-all-1.10.19.jar

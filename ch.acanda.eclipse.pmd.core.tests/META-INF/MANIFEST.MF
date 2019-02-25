@@ -7,4 +7,4 @@ Bundle-Vendor: Philip Graf
 Fragment-Host: ch.acanda.eclipse.pmd.core
 Bundle-ClassPath: .,
  lib/mockito-all-1.10.19.jar
-Require-Bundle: org.junit;bundle-version="4.8.2"
+Require-Bundle: org.junit;bundle-version="4.12.0"

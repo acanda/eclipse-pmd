@@ -31,31 +31,7 @@
                 </property>
             </activation>
             <modules>
-                <module>luna</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>eclipse-luna</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>luna</value>
-                </property>
-            </activation>
-            <modules>
-                <module>luna</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>eclipse-mars</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>mars</value>
-                </property>
-            </activation>
-            <modules>
-                <module>mars</module>
+                <module>neon</module>
             </modules>
         </profile>
         <profile>

@@ -7,8 +7,6 @@ env:
     - MAVEN_OPTS="-Xmx512m"
     - DISPLAY=:99.0
   matrix:
-    - ECLIPSE_RELEASE="-Declipse-release=luna"
-    - ECLIPSE_RELEASE="-Declipse-release=mars"
     - ECLIPSE_RELEASE="-Declipse-release=neon"
     - ECLIPSE_RELEASE="-Declipse-release=oxygen"
 

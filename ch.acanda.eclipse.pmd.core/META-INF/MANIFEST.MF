@@ -5,14 +5,14 @@ Bundle-SymbolicName: ch.acanda.eclipse.pmd.core;singleton:=true
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Philip Graf
 Require-Bundle: ch.acanda.eclipse.pmd.lib;bundle-version="1.20.0",
- org.eclipse.core.resources;bundle-version="3.7.0",
- org.eclipse.core.runtime;bundle-version="3.7.0",
- org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.jface.text;bundle-version="3.7.0",
- org.eclipse.core.databinding;bundle-version="1.4.0",
- org.eclipse.core.databinding.beans;bundle-version="1.2.0",
- org.eclipse.jface.databinding;bundle-version="1.5.0",
- org.eclipse.core.databinding.property;bundle-version="1.4.0"
+ org.eclipse.core.resources;bundle-version="3.11.0",
+ org.eclipse.core.runtime;bundle-version="3.12.0",
+ org.eclipse.ui;bundle-version="3.108.0",
+ org.eclipse.jface.text;bundle-version="3.11.0",
+ org.eclipse.core.databinding;bundle-version="1.6.0",
+ org.eclipse.core.databinding.beans;bundle-version="1.3.0",
+ org.eclipse.jface.databinding;bundle-version="1.8.0",
+ org.eclipse.core.databinding.property;bundle-version="1.6.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .,
  lib/jaxen-1.1.6.jar,

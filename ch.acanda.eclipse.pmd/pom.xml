@@ -28,7 +28,7 @@
         <tycho-extras-version>${tycho-version}</tycho-extras-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
-        <eclipse-release>luna</eclipse-release>
+        <eclipse-release>neon</eclipse-release>
         <lib-path>${basedir}/lib</lib-path>
         <mockito-version>1.10.19</mockito-version>
         <guava-version>20.0</guava-version>
@@ -175,50 +175,6 @@
                 <!-- tycho-surefire-plugin needs -XstartOnFirstThread on mac os -->
                 <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
             </properties>
-        </profile>
-
-        <profile>
-            <id>eclipse-luna</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>luna</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>luna</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/releases/luna/</url>
-                </repository>
-                <repository>
-                    <id>swtbot</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
-                </repository>
-            </repositories>
-        </profile>
-
-        <profile>
-            <id>eclipse-mars</id>
-            <activation>
-                <property>
-                    <name>eclipse-release</name>
-                    <value>mars</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>mars</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/releases/mars/</url>
-                </repository>
-                <repository>
-                    <id>swtbot</id>
-                    <layout>p2</layout>
-                    <url>http://download.eclipse.org/technology/swtbot/releases/2.3.0/</url>
-                </repository>
-            </repositories>
         </profile>
 
         <profile>

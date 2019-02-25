@@ -320,8 +320,8 @@ in the Eclipse Public License, v. 2.0 are satisfied:
    </url>
 
    <requires>
-      <import feature="org.eclipse.platform" version="3.7.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.rcp" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
+      <import feature="org.eclipse.platform" version="4.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.rcp" version="4.6.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
