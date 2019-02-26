@@ -106,6 +106,18 @@
                 <module>oxygen</module>
             </modules>
         </profile>
+        <profile>
+            <id>eclipse-photon</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>photon</value>
+                </property>
+            </activation>
+            <modules>
+                <module>photon</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>
