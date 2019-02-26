@@ -221,6 +221,28 @@
             </repositories>
         </profile>
 
+        <profile>
+            <id>eclipse-photon</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>photon</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>photon</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/photon/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.7.0/</url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
 
     <developers>

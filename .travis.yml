@@ -9,6 +9,7 @@ env:
   matrix:
     - ECLIPSE_RELEASE="-Declipse-release=neon"
     - ECLIPSE_RELEASE="-Declipse-release=oxygen"
+    - ECLIPSE_RELEASE="-Declipse-release=photon"
 
 jdk: oraclejdk8
 
