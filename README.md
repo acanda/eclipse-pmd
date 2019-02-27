@@ -51,14 +51,14 @@ From now on you can simply update Eclipse with `Help` > `Check for Updates` afte
 ### Testing against different Eclipse releases
 Building eclipse-pmd with `mvn clean verify` compiles and tests it against the oldest supported release of Eclipse which is Eclipse 3.7 Indigo. To ensure eclipse-pmd also works with newer releases the Eclipse release can be set with the parameter `eclipse-release`.
 
-Compile an test against Eclipse Juno: ```mvn clean verify -Declipse-release=juno```
+Compile and test against Eclipse Juno: `mvn clean verify -Declipse-release=juno`
 
-Compile an test against Eclipse Kepler: ```mvn clean verify -Declipse-release=kepler```
+Compile and test against Eclipse Kepler: `mvn clean verify -Declipse-release=kepler`
 
-Compile an test against Eclipse Luna: ```mvn clean verify -Declipse-release=luna```
+Compile and test against Eclipse Luna: `mvn clean verify -Declipse-release=luna`
 
-Compile an test against Eclipse Mars: ```mvn clean verify -Declipse-release=mars```
+Compile and test against Eclipse Mars: `mvn clean verify -Declipse-release=mars`
 
-Compile an test against Eclipse Neon: ```mvn clean verify -Declipse-release=neon```
+Compile and test against Eclipse Neon: `mvn clean verify -Declipse-release=neon`
 
 Regardless of the chosen release, the built plug-in will always be the same as the one built without the parameter. So there isn't any advantage in building the plug-in yourself if you are using a newer Eclipse release.
