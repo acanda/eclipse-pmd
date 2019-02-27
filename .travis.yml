@@ -10,6 +10,7 @@ env:
     - ECLIPSE_RELEASE="-Declipse-release=neon"
     - ECLIPSE_RELEASE="-Declipse-release=oxygen"
     - ECLIPSE_RELEASE="-Declipse-release=photon"
+    - ECLIPSE_RELEASE="-Declipse-release=2018-09"
 
 jdk: oraclejdk8
 

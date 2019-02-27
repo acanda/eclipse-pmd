@@ -70,6 +70,18 @@
                 <module>photon</module>
             </modules>
         </profile>
+        <profile>
+            <id>eclipse-2018-09</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>2018-09</value>
+                </property>
+            </activation>
+            <modules>
+                <module>2018-09</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>
