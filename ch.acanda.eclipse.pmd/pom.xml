@@ -374,6 +374,28 @@
             </repositories>
         </profile>
 
+        <profile>
+            <id>eclipse-2018-12</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>2018-12</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>2018-12</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/2018-12/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.7.0/</url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
 
     <developers>
