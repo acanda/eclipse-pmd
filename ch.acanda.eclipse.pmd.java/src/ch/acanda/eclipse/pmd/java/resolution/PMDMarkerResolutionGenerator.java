@@ -18,9 +18,9 @@ import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator2;
 import org.osgi.framework.Version;
 
-import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
-
 import com.google.common.collect.ImmutableList;
+
+import ch.acanda.eclipse.pmd.marker.WrappingPMDMarker;
 
 /**
  * Creates resolutions for a Java PMD marker.
@@ -41,7 +41,7 @@ public class PMDMarkerResolutionGenerator implements IMarkerResolutionGenerator2
     public IMarkerResolution[] getResolutions(final IMarker marker) {
         final JavaQuickFixContext context = new JavaQuickFixContext(getCompilerCompliance(marker));
         final ImmutableList<IMarkerResolution> quickFixes = quickFixGenerator.getQuickFixes(new WrappingPMDMarker(marker), context);
-        return quickFixes.toArray(new IMarkerResolution[quickFixes.size()]);
+        return quickFixes.toArray(new IMarkerResolution[0]);
     }
 
     private Version getCompilerCompliance(final IMarker marker) {

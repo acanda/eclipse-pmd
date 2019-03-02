@@ -283,7 +283,7 @@ public class AnalyzerTest {
     }
 
     private String getAllRuleSetRefIds(final String language) throws IOException {
-        try (final InputStream in = PMD.class.getResourceAsStream("/rulesets/" + language + "/rulesets.properties")) {
+        try (InputStream in = PMD.class.getResourceAsStream("/rulesets/" + language + "/rulesets.properties")) {
             final Properties properties = new Properties();
             properties.load(in);
             return properties.getProperty("rulesets.filenames");
