@@ -14,17 +14,13 @@ package ch.acanda.eclipse.pmd.wizard;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import net.sourceforge.pmd.Rule;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.beans.BeansObservables;
-import org.eclipse.core.databinding.beans.PojoObservables;
-import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
@@ -49,6 +45,7 @@ import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.util.SelectionAdapter;
+import net.sourceforge.pmd.Rule;
 
 public class AddRuleSetConfigurationWizardPage extends WizardPage implements RuleSetWizardPage {
     private final AddRuleSetConfigurationController controller;
@@ -146,30 +143,30 @@ public class AddRuleSetConfigurationWizardPage extends WizardPage implements Rul
         return controller.createRuleSetModel();
     }
 
-    private DataBindingContext initDataBindings() {
+    @SuppressWarnings("unchecked")
+    protected DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
-        final IObservableValue locationObserveText = SWTObservables.observeDelayedValue(200,
-                SWTObservables.observeText(location, SWT.Modify));
-        final IObservableValue locationObserveValue = BeansObservables.observeValue(controller.getModel(), "location");
+        final ISWTObservableValue locationObserveText = WidgetProperties.text(SWT.Modify).observeDelayed(100, location);
+        final IObservableValue<String> locationObserveValue = BeanProperties.value("location").observe(controller.getModel());
         bindingContext.bindValue(locationObserveText, locationObserveValue, null, null);
         //
         final ObservableListContentProvider rulesContentProvider = new ObservableListContentProvider();
-        final IObservableMap rulesObserveMap = PojoObservables.observeMap(rulesContentProvider.getKnownElements(), Rule.class, "name");
+        final IObservableMap<?, ?> rulesObserveMap = PojoProperties.value(Rule.class, "name", String.class)
+                .observeDetail(rulesContentProvider.getKnownElements());
         tableViewer.setLabelProvider(new ObservableMapLabelProvider(rulesObserveMap));
         tableViewer.setContentProvider(rulesContentProvider);
         //
-        final IObservableList rulesObserveList = BeansObservables.observeList(Realm.getDefault(), controller.getModel(), "rules");
+        final IObservableList<Rule> rulesObserveList = BeanProperties.list("rules", Rule.class).observe(controller.getModel());
         tableViewer.setInput(rulesObserveList);
         //
-        final IObservableValue nameObserveTextObserveWidget = SWTObservables.observeDelayedValue(100,
-                SWTObservables.observeText(name, SWT.Modify));
-        final IObservableValue controllergetModelNameObserveValue = BeansObservables.observeValue(controller.getModel(), "name");
+        final ISWTObservableValue nameObserveTextObserveWidget = WidgetProperties.text(SWT.Modify).observeDelayed(100, name);
+        final IObservableValue<String> controllergetModelNameObserveValue = BeanProperties.value("name").observe(controller.getModel());
         bindingContext.bindValue(nameObserveTextObserveWidget, controllergetModelNameObserveValue, null, null);
         //
-        final IObservableValue observeVisibleBrowseObserveWidget = WidgetProperties.visible().observe(browse);
-        final IObservableValue browseEnabledControllergetModelObserveValue = BeanProperties.value("browseEnabled").observe(
-                controller.getModel());
+        final ISWTObservableValue observeVisibleBrowseObserveWidget = WidgetProperties.visible().observe(browse);
+        final IObservableValue<Boolean> browseEnabledControllergetModelObserveValue = BeanProperties.value("browseEnabled")
+                .observe(controller.getModel());
         bindingContext.bindValue(observeVisibleBrowseObserveWidget, browseEnabledControllergetModelObserveValue, null, null);
         //
         return bindingContext;

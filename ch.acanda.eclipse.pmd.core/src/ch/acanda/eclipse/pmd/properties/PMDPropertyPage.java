@@ -12,11 +12,12 @@
 package ch.acanda.eclipse.pmd.properties;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeansObservables;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -44,7 +45,7 @@ public class PMDPropertyPage extends PropertyPage {
     @Override
     public void setElement(final IAdaptable element) {
         super.setElement(element);
-        controller.init((IProject) element.getAdapter(IProject.class));
+        controller.init(element.getAdapter(IProject.class));
     }
 
     @Override
@@ -117,14 +118,16 @@ public class PMDPropertyPage extends PropertyPage {
     }
 
 
+    @SuppressWarnings("unchecked")
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
-        final IObservableValue btnEnablePmdForObserveSelectionObserveWidget = SWTObservables.observeSelection(enablePMDCheckbox);
-        final IObservableValue modelPMDEnabledObserveValue = BeansObservables.observeValue(controller.getModel(), "PMDEnabled");
+        final ISWTObservableValue btnEnablePmdForObserveSelectionObserveWidget = WidgetProperties.selection().observe(enablePMDCheckbox);
+        final IObservableValue<Boolean> modelPMDEnabledObserveValue = BeanProperties.value("PMDEnabled", Boolean.class)
+                .observe(controller.getModel());
         bindingContext.bindValue(btnEnablePmdForObserveSelectionObserveWidget, modelPMDEnabledObserveValue, null, null);
         //
-        final IObservableValue addObserveEnabledObserveWidget = SWTObservables.observeEnabled(addRuleSet);
+        final ISWTObservableValue addObserveEnabledObserveWidget = WidgetProperties.enabled().observe(addRuleSet);
         bindingContext.bindValue(addObserveEnabledObserveWidget, modelPMDEnabledObserveValue, null, null);
         //
         return bindingContext;

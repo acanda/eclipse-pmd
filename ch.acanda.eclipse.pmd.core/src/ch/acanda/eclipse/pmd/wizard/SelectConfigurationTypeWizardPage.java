@@ -14,6 +14,7 @@ package ch.acanda.eclipse.pmd.wizard;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -120,24 +121,25 @@ public class SelectConfigurationTypeWizardPage extends WizardPage {
         initDataBindings();
     }
 
+    @SuppressWarnings("unchecked")
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //
-        final IObservableValue workspaceTypeView = WidgetProperties.selection().observe(workspaceRadioButton);
-        final IObservableValue workspaceTypeModel = BeanProperties.value("workspaceTypeSelected").observe(controller.getModel());
+        final ISWTObservableValue workspaceTypeView = WidgetProperties.selection().observe(workspaceRadioButton);
+        final IObservableValue<Boolean> workspaceTypeModel = BeanProperties.value("workspaceTypeSelected").observe(controller.getModel());
         bindingContext.bindValue(workspaceTypeView, workspaceTypeModel, null, null);
         //
-        final IObservableValue projectTypeView = WidgetProperties.selection().observe(projectRadioButton);
-        final IObservableValue projectTypeModel = BeanProperties.value("projectTypeSelected").observe(controller.getModel());
+        final ISWTObservableValue projectTypeView = WidgetProperties.selection().observe(projectRadioButton);
+        final IObservableValue<Boolean> projectTypeModel = BeanProperties.value("projectTypeSelected").observe(controller.getModel());
         bindingContext.bindValue(projectTypeView, projectTypeModel, null, null);
         //
-        final IObservableValue fileSystemTypeView = WidgetProperties.selection().observe(fileSystemRadioButton);
-        final IObservableValue fileSystemTypeModel = BeanProperties.value("fileSystemTypeSelected").observe(controller.getModel());
+        final ISWTObservableValue fileSystemTypeView = WidgetProperties.selection().observe(fileSystemRadioButton);
+        final IObservableValue<Boolean> fileSystemTypeModel = BeanProperties.value("fileSystemTypeSelected").observe(controller.getModel());
         bindingContext.bindValue(fileSystemTypeView, fileSystemTypeModel, null, null);
         //
-        final IObservableValue observeSelectionRemoteRadioButtonObserveWidget = WidgetProperties.selection().observe(remoteRadioButton);
-        final IObservableValue remoteTypeSelectedControllergetModelObserveValue = BeanProperties.value("remoteTypeSelected").observe(
-                controller.getModel());
+        final ISWTObservableValue observeSelectionRemoteRadioButtonObserveWidget = WidgetProperties.selection().observe(remoteRadioButton);
+        final IObservableValue<Boolean> remoteTypeSelectedControllergetModelObserveValue = BeanProperties.value("remoteTypeSelected")
+                .observe(controller.getModel());
         bindingContext.bindValue(observeSelectionRemoteRadioButtonObserveWidget, remoteTypeSelectedControllergetModelObserveValue, null,
                 null);
         //
