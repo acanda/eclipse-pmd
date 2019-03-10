@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-cpp-6.15.0.jar" sourcepath="lib/pmd-cpp-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-cs-6.15.0.jar" sourcepath="lib/pmd-cs-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-fortran-6.15.0.jar" sourcepath="lib/pmd-fortran-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-go-6.15.0.jar" sourcepath="lib/pmd-go-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-java-6.15.0.jar" sourcepath="lib/pmd-java-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-javascript-6.15.0.jar" sourcepath="lib/pmd-javascript-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-jsp-6.15.0.jar" sourcepath="lib/pmd-jsp-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-matlab-6.15.0.jar" sourcepath="lib/pmd-matlab-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-objectivec-6.15.0.jar" sourcepath="lib/pmd-objectivec-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-perl-6.15.0.jar" sourcepath="lib/pmd-perl-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-php-6.15.0.jar" sourcepath="lib/pmd-php-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-plsql-6.15.0.jar" sourcepath="lib/pmd-plsql-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-python-6.15.0.jar" sourcepath="lib/pmd-python-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-ruby-6.15.0.jar" sourcepath="lib/pmd-ruby-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-scala-6.15.0.jar" sourcepath="lib/pmd-scala-6.15.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/pmd-swift-6.15.0.jar" sourcepath="lib/pmd-swift-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-vm-6.15.0.jar" sourcepath="lib/pmd-vm-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-xml-6.15.0.jar" sourcepath="lib/pmd-xml-6.15.0-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/pmd-core-6.15.0.jar" sourcepath="lib/pmd-core-6.15.0-sources.jar"/>
