@@ -181,6 +181,26 @@ public class AnalyzerTest {
     }
     
     /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Apex files.
+     */
+    @Test
+    public void analyzeApex() {
+        final String content = "public class apex {}";
+        analyze(content, "UTF-8", "cls", "category/apex/codestyle.xml/ClassNamingConventions", "ClassNamingConventions");
+    }
+    
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all Apex rules.
+     */
+    @Test
+    public void analyzeApexAllRules() throws IOException {
+        analyze("/**\n"
+                + " * @description Apex\n"
+                + " */\n"
+                + "public class Apex {}", "UTF-8", "cls", getAllRuleSetRefIds("apex"));
+    }
+    
+    /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't throw a NullPointerException
      * when the file to analyze does not have a file extension.
      */

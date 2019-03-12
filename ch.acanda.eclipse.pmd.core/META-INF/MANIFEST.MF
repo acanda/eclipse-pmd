@@ -4,8 +4,7 @@ Bundle-Name: eclipse-pmd Core
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.core;singleton:=true
 Bundle-Version: 1.20.0.qualifier
 Bundle-Vendor: Philip Graf
-Require-Bundle: ch.acanda.eclipse.pmd.lib;bundle-version="1.20.0",
- org.eclipse.core.resources;bundle-version="3.11.0",
+Require-Bundle: org.eclipse.core.resources;bundle-version="3.11.0",
  org.eclipse.core.runtime;bundle-version="3.12.0",
  org.eclipse.ui;bundle-version="3.108.0",
  org.eclipse.jface.text;bundle-version="3.11.0",
@@ -25,12 +24,15 @@ Bundle-ClassPath: .,
  lib/saxon-9.1.0.8-dom.jar,
  lib/saxon-9.1.0.8.jar,
  lib/pmd-core-6.15.0.jar,
+ lib/pmd-apex-6.15.0.jar,
+ lib/pmd-apex-jorje-6.15.0-lib.jar,
  lib/pmd-java-6.15.0.jar,
  lib/pmd-javascript-6.15.0.jar,
  lib/pmd-jsp-6.15.0.jar,
  lib/pmd-plsql-6.15.0.jar,
  lib/pmd-vm-6.15.0.jar,
- lib/pmd-xml-6.15.0.jar
+ lib/pmd-xml-6.15.0.jar,
+ lib/antlr-runtime-3.5.2.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
 Export-Package: ch.acanda.eclipse.pmd.domain,

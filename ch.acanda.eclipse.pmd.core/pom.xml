@@ -52,6 +52,23 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-apex</artifactId>
+                                    <version>${pmd-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-apex</artifactId>
+                                    <version>${pmd-version}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-apex-jorje</artifactId>
+                                    <version>${pmd-version}</version>
+                                    <classifier>lib</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd-core</artifactId>
                                     <version>${pmd-version}</version>
                                 </artifactItem>
@@ -172,6 +189,12 @@
                                     <artifactId>saxon</artifactId>
                                     <version>9.1.0.8</version>
                                     <classifier>dom</classifier>
+                                </artifactItem>
+                                <!-- Apex dependencies -->
+                                <artifactItem>
+                                    <groupId>org.antlr</groupId>
+                                    <artifactId>antlr-runtime</artifactId>
+                                    <version>3.5.2</version>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
