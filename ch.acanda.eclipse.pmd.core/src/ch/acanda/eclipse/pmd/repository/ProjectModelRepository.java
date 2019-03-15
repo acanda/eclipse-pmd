@@ -16,6 +16,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -26,7 +27,6 @@ import org.eclipse.core.runtime.CoreException;
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 
 /**
@@ -62,7 +62,7 @@ public class ProjectModelRepository {
         final IWorkspace workspace = ResourcesPlugin.getWorkspace();
         final IProject project = workspace.getRoot().getProject(projectName);
         final IFile configFile = project.getFile(PMD_CONFIG_FILENAME);
-        Optional<ProjectModel> result = Optional.absent();
+        Optional<ProjectModel> result = Optional.empty();
         if (configFile.exists()) {
             try {
                 result = Optional.of(new ProjectModelSerializer().deserialize(configFile.getContents(true), projectName));

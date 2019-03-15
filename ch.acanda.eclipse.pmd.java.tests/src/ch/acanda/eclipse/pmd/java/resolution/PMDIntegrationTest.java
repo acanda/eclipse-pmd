@@ -24,9 +24,11 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,12 +36,9 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Version;
 
-import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
-import com.google.common.collect.Iterators;
 
 import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 import ch.acanda.eclipse.pmd.marker.MarkerUtil;
@@ -160,14 +159,12 @@ public class PMDIntegrationTest {
             // handle violations that PMD does not (yet) find.
             if (!context.getReport().isEmpty()) {
                 // PMD might find more than one violation. If there is one with a matching range then the test passes.
-                final Optional<RuleViolation> violation = Iterators.tryFind(context.getReport().iterator(),
-                        new Predicate<RuleViolation>() {
-                            @Override
-                            public boolean apply(final RuleViolation violation) {
-                                final Range range = MarkerUtil.getAbsoluteRange(params.source, violation);
-                                return params.offset == range.getStart() && params.length == range.getEnd() - range.getStart();
-                            }
-                        });
+                final Optional<RuleViolation> violation = StreamSupport.stream(context.getReport().spliterator(), false)
+                        .filter(v -> {
+                            final Range range = MarkerUtil.getAbsoluteRange(params.source, v);
+                            return params.offset == range.getStart() && params.length == range.getEnd() - range.getStart();
+                        })
+                        .findAny();
                 assertTrue(testDataXml + " > " + params.name + ": couldn't find violation with expected range (offset = " + params.offset
                         + ", length = " + params.length + ")", violation.isPresent());
 
@@ -190,7 +187,7 @@ public class PMDIntegrationTest {
     }
 
     private static String getFilePrefix(final TestParameters params) {
-        return params.pmdReferenceId.transform(PMDIntegrationTest::getRuleId).or("") + '-' + params.name + '-';
+        return params.pmdReferenceId.map(PMDIntegrationTest::getRuleId).orElse("") + '-' + params.name + '-';
     }
 
     private static String getRuleId(final String pmdReferenceId) {
@@ -208,10 +205,9 @@ public class PMDIntegrationTest {
                     + " as there aren't any registered languages in the PMD language registry.",
                     languageTerseName);
         } else {
-            final String knownLanguages =
-                    LanguageRegistry.getLanguages().stream()
-                            .map(l -> l.getTerseName())
-                            .collect(Collectors.joining(", "));
+            final String knownLanguages = LanguageRegistry.getLanguages().stream()
+                    .map(l -> l.getTerseName())
+                    .collect(Collectors.joining(", "));
             msg = String.format("The language terse name '%s' is not supported by PMD. The supported language terse names are: %s.",
                     languageTerseName, knownLanguages);
         }

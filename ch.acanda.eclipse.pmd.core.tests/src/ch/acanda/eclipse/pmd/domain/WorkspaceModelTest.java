@@ -20,13 +20,12 @@ import static org.junit.Assert.assertTrue;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Optional;
 
 import org.junit.Test;
 
 import ch.acanda.eclipse.pmd.domain.DomainModel.AddElementPropertyChangeEvent;
 import ch.acanda.eclipse.pmd.domain.DomainModel.RemoveElementPropertyChangeEvent;
-
-import com.google.common.base.Optional;
 
 /**
  * Unit tests for {@link WorkspaceModel}.

@@ -27,6 +27,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.JavaCore;
@@ -44,7 +45,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
@@ -91,7 +91,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
             final Type typeArgument = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
             final Class<T> quickFixClass = (Class<T>) typeArgument;
             final IMarker marker = mock(IMarker.class);
-            when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename.orNull());
+            when(marker.getAttribute(eq("ruleName"), isA(String.class))).thenReturn(params.rulename.orElse(null));
             final String markerText = params.source.substring(params.offset, params.offset + params.length);
             if (!markerText.contains("\n")) {
                 when(marker.getAttribute(eq("markerText"), isA(String.class))).thenReturn(markerText);
@@ -135,9 +135,9 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
         astParser.setKind(ASTParser.K_COMPILATION_UNIT);
         astParser.setResolveBindings(quickFix.needsTypeResolution());
         astParser.setEnvironment(new String[0], new String[0], new String[0], true);
-        final String name = last(params.pmdReferenceId.or("QuickFixTest").split("/"));
+        final String name = last(params.pmdReferenceId.orElse("QuickFixTest").split("/"));
         astParser.setUnitName(format("{0}.java", name));
-        final String version = last(params.language.or("java 1.8").split("\\s+"));
+        final String version = last(params.language.orElse("java 1.8").split("\\s+"));
         astParser.setCompilerOptions(ImmutableMap.<String, String>builder()
                 .put(JavaCore.COMPILER_SOURCE, version)
                 .put(JavaCore.COMPILER_COMPLIANCE, version)

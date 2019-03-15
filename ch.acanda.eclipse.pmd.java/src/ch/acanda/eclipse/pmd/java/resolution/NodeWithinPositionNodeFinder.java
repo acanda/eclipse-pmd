@@ -11,11 +11,11 @@
 
 package ch.acanda.eclipse.pmd.java.resolution;
 
+import java.util.Optional;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jface.text.Position;
-
-import com.google.common.base.Optional;
 
 /**
  * Searches an AST for a node that has the provided type and lies within the provided position. If more than one node
@@ -55,7 +55,7 @@ class NodeWithinPositionNodeFinder<R extends ASTNode, N extends ASTNode> extends
     public Optional<N> findNode(final R ast) {
         node = null;
         ast.accept(this);
-        return Optional.fromNullable(node);
+        return Optional.ofNullable(node);
     }
     
 }

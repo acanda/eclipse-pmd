@@ -20,16 +20,22 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import net.sourceforge.pmd.RuleSets;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.builder.LocationResolver;
 import ch.acanda.eclipse.pmd.domain.DomainModel.AddElementPropertyChangeEvent;
 import ch.acanda.eclipse.pmd.domain.DomainModel.RemoveElementPropertyChangeEvent;
+import ch.acanda.eclipse.pmd.domain.Location;
 import ch.acanda.eclipse.pmd.domain.LocationContext;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
@@ -37,13 +43,7 @@ import ch.acanda.eclipse.pmd.domain.WorkspaceModel;
 import ch.acanda.eclipse.pmd.file.FileChangedListener;
 import ch.acanda.eclipse.pmd.file.FileWatcher;
 import ch.acanda.eclipse.pmd.file.Subscription;
-
-import com.google.common.base.Optional;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import net.sourceforge.pmd.RuleSets;
 
 /**
  * The rule set cache caches the PMD rule sets so they do not have to be rebuilt every time PMD is invoked.
@@ -82,10 +82,10 @@ public final class RuleSetsCache {
             final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectModel.getProjectName());
 
             for (final RuleSetModel ruleSetModel : projectModel.getRuleSets()) {
-                if (ruleSetModel.getLocation().getContext() != LocationContext.REMOTE) {
-                    final Optional<String> resolvedLocation = LocationResolver.resolveIfExists(ruleSetModel.getLocation(), project);
-                    if (resolvedLocation.isPresent()) {
-                        final Path file = Paths.get(resolvedLocation.get());
+                final Location location = ruleSetModel.getLocation();
+                if (location.getContext() != LocationContext.REMOTE) {
+                    LocationResolver.resolveIfExists(location, project).ifPresent(resolvedLocation -> {
+                        final Path file = Paths.get(resolvedLocation);
                         try {
                             final Subscription subscription = fileWatcher.get().subscribe(file, listener);
                             subscriptions.put(projectModel.getProjectName(), subscription);
@@ -94,7 +94,7 @@ public final class RuleSetsCache {
                                     + "Changes to this file will not be picked up for up to an hour.";
                             PMDPlugin.getDefault().warn(String.format(msg, file.toAbsolutePath()), e);
                         }
-                    }
+                    });
                 }
             }
         }
@@ -116,7 +116,7 @@ public final class RuleSetsCache {
         try {
             fileWatcher = Optional.of(new FileWatcher());
         } catch (final IOException e) {
-            fileWatcher = Optional.absent();
+            fileWatcher = Optional.empty();
         }
         return fileWatcher;
     }

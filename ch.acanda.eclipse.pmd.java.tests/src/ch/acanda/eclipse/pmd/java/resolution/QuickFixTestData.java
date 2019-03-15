@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,8 +27,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import com.google.common.base.Optional;
 
 /**
  * Reads the test data from an xml file with the following format:
@@ -135,7 +134,7 @@ public class QuickFixTestData {
 
     private static Optional<String> getOptionalValue(final NodeList elements) {
         if (elements.getLength() == 0) {
-            return Optional.absent();
+            return Optional.empty();
         }
         return Optional.of(elements.item(0).getFirstChild().getNodeValue().trim());
     }

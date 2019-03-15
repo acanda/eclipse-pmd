@@ -24,12 +24,12 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import ch.acanda.eclipse.pmd.PMDPlugin;
-
-import com.google.common.base.Optional;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
+import ch.acanda.eclipse.pmd.PMDPlugin;
 
 /**
  * Watches files and notifies registered listeners when they have changed.
@@ -55,7 +55,7 @@ public final class FileWatcher {
      */
     private final Multimap<Path, Path> watchedFiles;
 
-    private Optional<WatcherThread> watcherThread = Optional.absent();
+    private Optional<WatcherThread> watcherThread = Optional.empty();
 
     public FileWatcher() throws IOException {
         watchService = FileSystems.getDefault().newWatchService();
@@ -101,10 +101,8 @@ public final class FileWatcher {
     }
 
     private void stopWatcher() {
-        if (watcherThread.isPresent()) {
-            watcherThread.get().interrupt();
-            watcherThread = Optional.absent();
-        }
+        watcherThread.ifPresent(WatcherThread::interrupt);
+        watcherThread = Optional.empty();
     }
 
     private final class WatcherThread extends Thread {

@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.eclipse.core.filebuffers.FileBuffers;
 import org.eclipse.core.filebuffers.ITextFileBuffer;
@@ -56,8 +57,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
 import org.eclipse.ui.views.markers.WorkbenchMarkerResolution;
-
-import com.google.common.base.Optional;
 
 import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
@@ -316,7 +315,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
 
     private Optional<ICompilationUnit> getCompilationUnit(final IFile file) {
         final IJavaElement element = JavaCore.create(file);
-        return element instanceof ICompilationUnit ? Optional.of((ICompilationUnit) element) : Optional.<ICompilationUnit>absent();
+        return element instanceof ICompilationUnit ? Optional.of((ICompilationUnit) element) : Optional.empty();
     }
 
     private MarkerAnnotation getMarkerAnnotation(final IAnnotationModel annotationModel, final IMarker marker) {

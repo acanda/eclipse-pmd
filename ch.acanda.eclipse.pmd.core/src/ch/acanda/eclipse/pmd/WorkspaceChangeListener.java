@@ -11,6 +11,8 @@
 
 package ch.acanda.eclipse.pmd;
 
+import java.util.Optional;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -23,8 +25,6 @@ import org.eclipse.core.runtime.CoreException;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 import ch.acanda.eclipse.pmd.domain.WorkspaceModel;
 import ch.acanda.eclipse.pmd.repository.ProjectModelRepository;
-
-import com.google.common.base.Optional;
 
 /**
  * This listener watches the workspace for changes and updates the eclipse-pmd workspace model accordingly.
@@ -90,7 +90,7 @@ final class WorkspaceChangeListener implements IResourceChangeListener {
 
         private void addProject(final String projectName) {
             final Optional<ProjectModel> existingProjectModel = projectModelRepository.load(projectName);
-            workspaceModel.add(existingProjectModel.or(new ProjectModel(projectName)));
+            workspaceModel.add(existingProjectModel.orElseGet(() -> new ProjectModel(projectName)));
         }
 
         /**

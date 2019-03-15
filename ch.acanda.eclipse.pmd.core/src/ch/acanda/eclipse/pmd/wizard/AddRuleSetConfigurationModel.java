@@ -27,6 +27,7 @@ import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleSet;
 import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IProject;
 
@@ -38,7 +39,6 @@ import ch.acanda.eclipse.pmd.ui.model.ValidationProblem.Severity;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.model.ViewModel;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
@@ -259,11 +259,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
         } else {
             throw new IllegalStateException("Unknown location type");
         }
-        final Optional<String> resolvedLocation = LocationResolver.resolveIfExists(new Location(location, locationContext), project);
-        if (resolvedLocation.isPresent()) {
-            return Optional.of(Paths.get(resolvedLocation.get()));
-        }
-        return Optional.absent();
+        return LocationResolver.resolveIfExists(new Location(location, locationContext), project).map(Paths::get);
     }
 
     private void validateName(final ValidationResult result) {

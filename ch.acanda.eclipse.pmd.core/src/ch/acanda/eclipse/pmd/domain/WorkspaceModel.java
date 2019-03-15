@@ -13,8 +13,8 @@ package ch.acanda.eclipse.pmd.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 
 public class WorkspaceModel extends DomainModel {
@@ -45,7 +45,7 @@ public class WorkspaceModel extends DomainModel {
      * @return The project model if it was previously added otherwise {@code Optional#absent()}.
      */
     public Optional<ProjectModel> getProject(final String name) {
-        return Optional.fromNullable(projects.get(name));
+        return Optional.ofNullable(projects.get(name));
     }
 
     /**

@@ -12,8 +12,8 @@
 package ch.acanda.eclipse.pmd.java.resolution;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import java.util.Optional;
 
-import com.google.common.base.Optional;
 
 /**
  * Implementations of this interface are used to find a node of an AST which matches implementation specific criteria.

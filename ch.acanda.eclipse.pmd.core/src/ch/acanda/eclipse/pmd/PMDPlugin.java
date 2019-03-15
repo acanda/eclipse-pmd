@@ -11,6 +11,8 @@
 
 package ch.acanda.eclipse.pmd;
 
+import java.util.Optional;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -20,8 +22,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
-import com.google.common.base.Optional;
 
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 import ch.acanda.eclipse.pmd.domain.WorkspaceModel;
@@ -74,11 +74,7 @@ public final class PMDPlugin extends AbstractUIPlugin {
         final ProjectModelRepository projectModelRepository = new ProjectModelRepository();
         for (final IProject project : projects) {
             final Optional<ProjectModel> model = projectModelRepository.load(project.getName());
-            if (model.isPresent()) {
-                workspaceModel.add(model.get());
-            } else {
-                workspaceModel.add(new ProjectModel(project.getName()));
-            }
+            workspaceModel.add(model.orElseGet(() -> new ProjectModel(project.getName())));
         }
         final IResourceChangeListener workspaceChangeListener = new WorkspaceChangeListener(workspaceModel, projectModelRepository);
         ResourcesPlugin.getWorkspace().addResourceChangeListener(workspaceChangeListener, IResourceChangeEvent.POST_CHANGE);

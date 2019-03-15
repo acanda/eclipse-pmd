@@ -23,13 +23,12 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.junit.Test;
-
-import com.google.common.base.Optional;
 
 import ch.acanda.eclipse.pmd.domain.Location;
 import ch.acanda.eclipse.pmd.domain.LocationContext;

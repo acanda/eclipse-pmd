@@ -19,13 +19,12 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 
 import ch.acanda.eclipse.pmd.domain.Location;
-
-import com.google.common.base.Optional;
 
 /**
  * Utility class to resolve a {@link Location}.
@@ -104,9 +103,9 @@ public final class LocationResolver {
             if (path != null && Files.exists(path)) {
                 return Optional.of(path.toString());
             }
-            return Optional.absent();
+            return Optional.empty();
         } catch (final InvalidPathException e) {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
@@ -130,18 +129,18 @@ public final class LocationResolver {
     private static Optional<String> resolveProjectLocationIfExists(final Location location, final IProject project) {
         try {
             final Path path = Paths.get(project.getLocationURI()).resolve(toOSPath(location.getPath()));
-            return Files.exists(path) ? Optional.of(path.toString()) : Optional.<String>absent();
+            return Files.exists(path) ? Optional.of(path.toString()) : Optional.<String>empty();
         } catch (final InvalidPathException e) {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
     private static Optional<String> resolveFileSystemLocationIfExists(final Location location) {
         try {
             final Path path = Paths.get(location.getPath());
-            return Files.exists(path) ? Optional.of(path.toString()) : Optional.<String>absent();
+            return Files.exists(path) ? Optional.of(path.toString()) : Optional.<String>empty();
         } catch (final InvalidPathException e) {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
@@ -151,7 +150,7 @@ public final class LocationResolver {
             uri.toURL().openStream().close();
             return Optional.of(uri.toString());
         } catch (final URISyntaxException | IOException e) {
-            return Optional.absent();
+            return Optional.empty();
         }
     }
 
