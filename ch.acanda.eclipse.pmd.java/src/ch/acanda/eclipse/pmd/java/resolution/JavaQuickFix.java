@@ -36,7 +36,6 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -184,7 +183,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
             final IDocument document = textFileBuffer.getDocument();
             final IAnnotationModel annotationModel = textFileBuffer.getAnnotationModel();
 
-            final ASTParser astParser = ASTParser.newParser(AST.JLS8);
+            final ASTParser astParser = ASTParser.newParser(ASTUtil.getSupportedJLS().getASTLevel());
             astParser.setKind(ASTParser.K_COMPILATION_UNIT);
             astParser.setResolveBindings(needsTypeResolution());
             astParser.setSource(compilationUnit);

@@ -31,7 +31,6 @@ import java.util.Optional;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -130,7 +129,7 @@ public abstract class ASTQuickFixTestCase<T extends ASTQuickFix<? extends ASTNod
     }
 
     private CompilationUnit createAST(final org.eclipse.jface.text.Document document, final ASTQuickFix<ASTNode> quickFix) {
-        final ASTParser astParser = ASTParser.newParser(AST.JLS8);
+        final ASTParser astParser = ASTParser.newParser(ASTUtil.getSupportedJLS().getASTLevel());
         astParser.setSource(document.get().toCharArray());
         astParser.setKind(ASTParser.K_COMPILATION_UNIT);
         astParser.setResolveBindings(quickFix.needsTypeResolution());

@@ -12,6 +12,7 @@
 package ch.acanda.eclipse.pmd.java.resolution;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -125,6 +126,46 @@ public final class ASTUtil {
     @SuppressWarnings("unchecked")
     public static <T extends ASTNode> T create(final AST ast, final Class<T> nodeClass) {
         return (T) ast.createInstance(nodeClass);
+    }
+
+    /**
+     * Returns the latest java language specification supported by the eclipse compiler.
+     */
+    public static JLS getSupportedJLS() {
+        final JLS[] values = JLS.values();
+        for (int i = values.length - 1; i >= 0; i--) {
+            if (values[i].isSupported()) {
+                return values[i];
+            }
+        }
+        return JLS.JLS8;
+    }
+
+    public enum JLS {
+        JLS8(8, " 1.8"), JLS9(9, "9"), JLS10(10, "10"), JLS11(11, "11");
+
+        private final int level;
+        private final String source;
+        private final boolean isSupported;
+
+        JLS(final int level, final String source) {
+            this.level = level;
+            this.source = source;
+            isSupported = Stream.of(AST.class.getFields()).map(field -> field.getName()).anyMatch(name -> name.equals("JLS" + level));
+        }
+
+        public int getASTLevel() {
+            return level;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public boolean isSupported() {
+            return isSupported;
+        }
+
     }
 
 }
