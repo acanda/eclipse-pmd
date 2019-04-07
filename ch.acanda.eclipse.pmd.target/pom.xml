@@ -94,6 +94,18 @@
                 <module>2018-12</module>
             </modules>
         </profile>
+        <profile>
+            <id>eclipse-2019-03</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>2019-03</value>
+                </property>
+            </activation>
+            <modules>
+                <module>2019-03</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>
