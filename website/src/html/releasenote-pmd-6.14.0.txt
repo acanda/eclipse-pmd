@@ -1,0 +1,40 @@
+New and noteworthy
+
+Modified Rules
+
+    The Java rule AssignmentToNonFinalStatic (java-errorprone) will now report on each assignment made within a constructor rather than on the field declaration. This makes it easier for developers to find the offending statements.
+
+    The Java rule NoPackage (java-codestyle) will now report additionally enums and annotations that do not have a package declaration.
+
+Fixed Issues
+
+    all
+        #1515: [core] Module pmd-lang-test is missing javadoc artifact
+        #1788: [cpd] [core] Use better ClassLoader for ServiceLoader in LanguageFactory
+        #1794: [core] Ruleset Compatibility fails with excluding rules
+    go
+        #1751: [go] Parsing errors encountered with escaped backslash
+    java
+        #1532: [java] NPE with incomplete auxclasspath
+        #1691: [java] Possible Data Race in JavaTypeDefinitionSimple.getGenericType
+        #1729: [java] JavaRuleViolation loses information in className field when class has package-private access level
+    java-bestpractices
+        #1190: [java] UnusedLocalVariable/UnusedPrivateField false-positive
+        #1720: [java] UnusedImports false positive for Javadoc link with array type
+    java-codestyle
+        #1755: [java] False negative in UnnecessaryLocalBeforeReturn when splitting statements across multiple lines
+        #1782: [java] NoPackage: False Negative for enums
+    java-design
+        #1760: [java] UseObjectForClearerAPI flags private methods
+
+External Contributions
+
+    #1745: [doc] Fixed some errors in docs - 0xflotus
+    #1746: [java] Update rule to prevent UnusedImport when using JavaDoc with array type - itaigilo
+    #1752: [java] UseObjectForClearerAPI Only For Public - Björn Kautler
+    #1761: [dart] [cpd] Added CPD support for Dart - Maikel Steneker
+    #1776: [java] Show more detailed message when can’t resolve field type - Andrey Fomin
+    #1781: [java] Location change in AssignmentToNonFinalStatic - Maikel Steneker
+    #1789: [cpd] [core] Use current classloader instead of Thread’s classloader - Andreas Schmid
+    #1791: [dart] [cpd] Dart escaped string - Maikel Steneker
+
