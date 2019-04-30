@@ -1,18 +1,5 @@
 New and noteworthy
 
-CPD Suppression for Antlr-based languages
-
-ITBA students Matías Fraga, Tomi De Lucca and Lucas Soncini keep working on bringing full Antlr support to PMD. For this release, they have implemented token filtering in an equivalent way as we did for JavaCC languages, adding support for CPD suppressions through CPD-OFF and CPD-ON comments for all Antlr-based languages.
-
-This means, you can now ignore arbitrary blocks of code on:
-
-    Go
-    Kotlin
-    Swift
-
-Simply start the suppression with any comment (single or multiline) containing CPD-OFF, and resume again with a comment containing CPD-ON.
-
-More information is available in the user documentation.
 PL/SQL Grammar improvements
 
     In this release, many more parser bugs in our PL/SQL support have been fixed. This adds more complete support for UPDATE statements and subqueries and hierarchical queries in SELECT statements.
