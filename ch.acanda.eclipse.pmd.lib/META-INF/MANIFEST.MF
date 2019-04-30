@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eclipse-pmd Third Party Libraries
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.lib;singleton:=true
-Bundle-Version: 1.18.0.qualifier
+Bundle-Version: 1.19.0.qualifier
 Bundle-Vendor: Philip Graf
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: lib/guava-20.0.jar
