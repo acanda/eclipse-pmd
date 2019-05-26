@@ -68,7 +68,7 @@ public class AnalyzerTest {
     public void analyzeJavaAllRules() throws IOException {
         final String content = "/** */\n"
                 + "package a;\n"
-                + "class FooBar {\n"
+                + "public class FooBar {\n"
                 + "  /** */\n"
                 + "  public FooBar() {\n"
                 + "    baz();\n"
