@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eclipse-pmd Unsupported JRE Tests
 Bundle-SymbolicName: ch.acanda.eclipse.pmd.unsupported.tests;singleton:=true
-Bundle-Version: 1.21.0.qualifier
+Bundle-Version: 1.22.0.qualifier
 Bundle-Vendor: Philip Graf
 Fragment-Host: ch.acanda.eclipse.pmd.unsupported
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
