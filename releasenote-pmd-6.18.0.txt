@@ -1,0 +1,68 @@
+New and noteworthy
+
+Java 13 Support
+
+This release of PMD brings support for Java 13. PMD can parse Switch Expressions with the new yield statement and resolve the type of such an expression.
+
+PMD also parses Text Blocks as String literals.
+
+Note: The Switch Expressions and Text Blocks are a preview language feature of OpenJDK 13 and are not enabled by default. In order to analyze a project with PMD that uses these language features, you’ll need to enable it via the environment variable PMD_JAVA_OPTS and select the new language version 13-preview:
+
+Note: Support for the extended break statement introduced in Java 12 as a preview language feature will be removed with the next PMD version 6.19.0.
+Full support for Scala
+
+Thanks to Chris Smith PMD now fully supports Scala. Now rules for analyzing Scala code can be developed in addition to the Copy-Paste-Detection (CPD) functionality. There are no rules yet, so contributions are welcome.
+
+Additionally Scala support has been upgraded from 2.12.4 to 2.13.
+
+Modified Rules
+
+    The Java rule CloseResource (java-errorprone) now ignores by default instances of java.util.stream.Stream. These streams are AutoCloseable, but most streams are backed by collections, arrays, or generating functions, which require no special resource management. However, there are some exceptions: The stream returned by Files::lines(Path) is backed by a actual file and needs to be closed. These instances won’t be found by default by the rule anymore.
+
+Fixed Issues
+
+    all
+        #1465: [core] Stylesheet pmd-report.xslt fails to display filepath if ‘java’ in path
+        #1923: [core] Incremental analysis does not work with shortnames
+        #1983: [core] Avoid crashes with analysis cache when classpath references non-existing directories
+        #1990: [core] Incremental analysis mixes XPath rule violations
+    apex
+        #1901: [apex] Expose super type name of UserClass
+        #1942: [apex] Add best practice rule for debug statements in Apex
+    java
+        #1930: [java] Add Java 13 support
+    java-bestpractices
+        #1227: [java] UnusedFormalParameter should explain checkAll better
+        #1862: [java] New rule for MessageDigest.getInstance
+        #1952: [java] UnusedPrivateField not triggering if @Value annotation present
+    java-codestyle
+        #1951: [java] UnnecessaryFullyQualifiedName rule triggered when variable name clashes with package name
+    java-errorprone
+        #1922: [java] CloseResource possible false positive with Streams
+        #1966: [java] CloseResource false positive if Stream is passed as method parameter
+        #1967: [java] CloseResource false positive with late assignment of variable
+    plsql
+        #1933: [plsql] ParseException with cursor declared in anonymous block
+        #1935: [plsql] ParseException with SELECT INTO record defined as global variable
+        #1936: [plslq] ParseException with cursor inside procedure declaration
+        #1946: [plsql] ParseException with using TRIM inside IF statements condition
+        #1947: [plsql] ParseError - SELECT with FOR UPDATE OF
+        #1948: [plsql] ParseException with INSERT INTO using package global variables
+        #1950: [plsql] ParseException with UPDATE and package record variable
+        #1953: [plsql] ParseException with WITH in CURSOR
+
+External Contributions
+
+    #1943: [apex] Adds “debug should use logging level” best practice rule for Apex - Renato Oliveira
+    #1965: [scala] Use Scalameta for parsing - Chris Smith
+    #1970: [java] DoubleBraceInitialization: Fix example - Tobias Weimer
+    #1971: [java] 1862 - Message Digest should not be used as class field - AnthonyKot
+    #1972: [plsql] ParseError - SELECT with FOR UPDATE OF - Piotr Szymanski
+    #1974: [plsql] Fixes for referencing record type variables - Piotr Szymanski
+    #1975: [plsql] TRIM function with record type variables - Piotr Szymanski
+    #1976: [plsql] Fix for mistaking / for MultiplicativeExpression - Piotr Szymanski
+    #1977: [plsql] fix for skipping sql starting with WITH - Piotr Szymanski
+    #1986: [plsql] Fix for cursors in anonymous blocks - Piotr Szymanski
+    #1994: [core] Resolve pmd-report failure when java folder in filepath - Amish Shah
+    #2015: [java] Update doc for unused formal parameter - Amish Shah
+
