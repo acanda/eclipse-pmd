@@ -21,6 +21,7 @@
 
     <properties>
         <libPath>${basedir}/lib</libPath>
+        <pmd-scala-version>6.17.0</pmd-scala-version>
     </properties>
 
     <build>
@@ -229,12 +230,12 @@
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd-scala</artifactId>
-                                    <version>${pmd-version}</version>
+                                    <version>${pmd-scala-version}</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd-scala</artifactId>
-                                    <version>${pmd-version}</version>
+                                    <version>${pmd-scala-version}</version>
                                     <classifier>sources</classifier>
                                 </artifactItem>
                                 <artifactItem>
