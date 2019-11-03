@@ -1,0 +1,62 @@
+New and noteworthy
+
+Java Metrics
+
+    The new metric “Class Fan Out Complexity” has been added. See Java Metrics Documentation for details.
+
+Modified Rules
+
+    The Java rules InvalidLogMessageFormat and MoreThanOneLogger (java-errorprone) now both support Log4j2. Note that the rule “InvalidSlf4jMessageFormat” has been renamed to “InvalidLogMessageFormat” to reflect the fact, that it now supports more than slf4j.
+
+    The Java rule LawOfDemeter (java-design) ignores now also Builders, that are not assigned to a local variable, but just directly used within a method call chain. The method, that creates the builder needs to end with “Builder”, e.g. newBuilder() or initBuilder() works. This change fixes a couple of false positives.
+
+    The Java rule DataflowAnomalyAnalysis (java-errorprone) doesn’t check for UR anomalies (undefined and then referenced) anymore. These checks were all false-positives, since actual UR occurrences would lead to compile errors.
+
+    The java rule DoNotUseThreads (java-multithreading) has been changed to not report usages of java.lang.Runnable anymore. Just using Runnable does not automatically create a new thread. While the check for Runnable has been removed, the rule now additionally checks for usages of Executors and ExecutorService. Both create new threads, which are not managed by a J2EE server.
+
+Renamed Rules
+
+    The Java rule InvalidSlf4jMessageFormat has been renamed to InvalidLogMessageFormat since it supports now both slf4j and log4j2 message formats.
+
+Fixed Issues
+
+    core
+        #1978: [core] PMD fails on excluding unknown rules
+        #2014: [core] Making add(SourceCode sourceCode) public for alternative file systems
+        #2020: [core] Wrong deprecation warnings for unused XPath attributes
+        #2036: [core] Wrong include/exclude patterns are silently ignored
+        #2048: [core] Enable type resolution by default for XPath rules
+        #2067: [core] Build issue on Windows
+        #2068: [core] Rule loader should use the same resources loader for the ruleset
+        #2071: [ci] Add travis build on windows
+        #2072: [test][core] Not enough info in “test setup error” when numbers of lines do not match
+        #2082: [core] Incorrect logging of deprecated/renamed rules
+    java
+        #2042: [java] PMD crashes with ClassFormatError: Absent Code attribute…
+    java-bestpractices
+        #1531: [java] UnusedPrivateMethod false-positive with method result
+        #2025: [java] UnusedImports when @see / @link pattern includes a FQCN
+    java-codestyle
+        #2017: [java] UnnecessaryFullyQualifiedName triggered for inner class
+    java-design
+        #1912: [java] Metrics not computed correctly with annotations
+    java-errorprone
+        #336: [java] InvalidSlf4jMessageFormat applies to log4j2
+        #1636: [java] Stop checking UR anomalies for DataflowAnomalyAnalysis
+    java-multithreading
+        #1627: [java] DoNotUseThreads should not warn on Runnable
+    doc
+        #2058: [doc] CLI reference for -norulesetcompatibility shows a boolean default value
+
+External Contributions
+
+    #2010: [java] LawOfDemeter to support inner builder pattern - Gregor Riegler
+    #2012: [java] Fixes 336, slf4j log4j2 support - Mark Hall
+    #2032: [core] Allow adding SourceCode directly into CPD - Nathan Braun
+    #2047: [java] Fix computation of metrics with annotations - Andi Pabst
+    #2065: [java] Stop checking UR anomalies - Carlos Macasaet
+    #2068: [core] Rule loader should use the same resources loader for the ruleset - Chen Yang
+    #2070: [core] Fix renderer tests for windows builds - Saladoc
+    #2073: [test][core] Add expected and actual line of numbers to message wording - snuyanzin
+    #2076: [java] Add Metric ClassFanOutComplexity - Andi Pabst
+    #2078: [java] DoNotUseThreads should not warn on Runnable #1627 - Michael Clay
