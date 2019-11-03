@@ -1,6 +1,8 @@
 sudo: false
 
+dist: xenial
 language: java
+jdk: openjdk8
 
 env:
   global:
@@ -14,7 +16,6 @@ env:
     - ECLIPSE_RELEASE="-Declipse-release=mars"
     - ECLIPSE_RELEASE="-Declipse-release=neon"
 
-jdk: oraclejdk8
 
 cache:
   directories:
