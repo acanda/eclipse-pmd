@@ -1,5 +1,3 @@
-sudo: false
-
 dist: xenial
 language: java
 jdk: openjdk8
@@ -7,15 +5,16 @@ jdk: openjdk8
 env:
   global:
     - MAVEN_OPTS="-Xmx512m"
-    - DISPLAY=:99.0
   matrix:
-    - ECLIPSE_RELEASE=""
-    - ECLIPSE_RELEASE="-Declipse-release=juno"
-    - ECLIPSE_RELEASE="-Declipse-release=kepler"
+    - ECLIPSE_RELEASE="-PskipSWTBot"
+    - ECLIPSE_RELEASE="-Declipse-release=juno -PskipSWTBot"
+    - ECLIPSE_RELEASE="-Declipse-release=kepler -PskipSWTBot"
     - ECLIPSE_RELEASE="-Declipse-release=luna"
     - ECLIPSE_RELEASE="-Declipse-release=mars"
     - ECLIPSE_RELEASE="-Declipse-release=neon"
 
+services:
+  - xvfb
 
 cache:
   directories:
@@ -23,13 +22,4 @@ cache:
 
 install: true
 
-addons:
-  apt:
-    packages:
-      - metacity
-
-before_script:
-  - sh -e /etc/init.d/xvfb start
-  - metacity --sm-disable --replace 2> metacity.err &
-
-script: mvn clean verify -f ch.acanda.eclipse.pmd/pom.xml -B -PskipSWTBot $ECLIPSE_RELEASE
+script: mvn clean verify -f ch.acanda.eclipse.pmd/pom.xml -B $ECLIPSE_RELEASE
