@@ -19,6 +19,7 @@ import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.waits.Conditions;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.ui.internal.wizards.newresource.ResourceMessages;
 
 import ch.acanda.eclipse.pmd.swtbot.bot.PMDPropertyDialogBot;
 
@@ -26,14 +27,14 @@ import ch.acanda.eclipse.pmd.swtbot.bot.PMDPropertyDialogBot;
  * @author Philip Graf
  */
 public final class JavaProjectClient {
-    
+
     private JavaProjectClient() {
         // hide contructor of utility class
     }
 
     /**
      * Creates a Java project with the provided name.
-     * 
+     *
      * @param name The name of the Java project.
      */
     public static void createJavaProject(final String name) {
@@ -48,10 +49,10 @@ public final class JavaProjectClient {
         newProjectDialogBot.button("Finish").click();
         bot.waitUntil(Conditions.shellCloses(dialog));
     }
-    
+
     /**
      * Deletes the project with the provided name.
-     * 
+     *
      * @param name The name of the project.
      */
     public static void deleteJavaProject(final String name) {
@@ -63,10 +64,10 @@ public final class JavaProjectClient {
         dialogBot.button("OK").click();
         bot.waitUntil(Conditions.shellCloses(dialog));
     }
-    
+
     /**
      * Opens the PMD property dialog of the project with the provided name.
-     * 
+     *
      * @param name The name of the project.
      * @return A bot for the open PMD property dialog.
      */
@@ -81,7 +82,7 @@ public final class JavaProjectClient {
 
     /**
      * Creates a text file in a project.
-     * 
+     *
      * @param projectName The name of the existing project.
      * @param relativePath The path of the file including the file name, relative to the project.
      * @param content The content of the file.
@@ -89,7 +90,7 @@ public final class JavaProjectClient {
     public static void createFileInProject(final String projectName, final Path relativePath, final String content) {
         final SWTWorkbenchBot bot = new SWTWorkbenchBot();
         bot.menu("File").menu("New").menu("File").click();
-        final SWTBotShell dialog = bot.shell("New File");
+        final SWTBotShell dialog = bot.shell(ResourceMessages.FileResource_shellTitle);
         if (relativePath.getParent() != null) {
             dialog.bot().text(0).setText(projectName + "/" + relativePath.getParent().toString());
         } else {
