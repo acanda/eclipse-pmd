@@ -19,6 +19,7 @@ env:
     - ECLIPSE_RELEASE="-Declipse-release=2019-03"
     - ECLIPSE_RELEASE="-Declipse-release=2019-06"
     - ECLIPSE_RELEASE="-Declipse-release=2019-09"
+    - ECLIPSE_RELEASE="-Declipse-release=2019-12"
 
 services:
   - xvfb
