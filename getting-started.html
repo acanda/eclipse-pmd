@@ -1,161 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Eclipse PMD - Getting started</title>
+<head>
+<meta charset="utf-8" />
+<title>Eclipse PMD - Getting started</title>
 
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="css/layout.css" rel="stylesheet">
-		<link href="css/jquery.lightbox.css" rel="stylesheet">
+<link href="css/materialize.min.css" rel="stylesheet">
+<link href="css/layout.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="js/materialize.min.js"></script>
 
-		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<![endif]-->
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
 
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-37305934-1']);
-			_gaq.push(['_trackPageview']);
+  var _gaq = _gaq || [];
+  _gaq.push([ '_setAccount', 'UA-37305934-1' ]);
+  _gaq.push([ '_trackPageview' ]);
 
-			(function() {
-				var ga = document.createElement('script');
-				ga.type = 'text/javascript';
-				ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
-	</head>
-	<body>
-		<div class="navbar">
-			<div class="navbar-inner">
-				<a class="brand" href="index.html">eclipse-pmd</a>
-				<ul class="nav">
-					<li class="active">
-						<a href="getting-started.html">Get started</a>
-					</li>
-					<li>
-						<a href="changelog.html">Changelog</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+  (function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
 
-		<div class="container">
-			<h2>Install</h2>
-			
-			<h3>Eclipse Marketplace</h3>
-			The recommended way to install the plugin on Eclipse 3.7 (and later) is to drag and drop the following button into a running Eclipse workspace: 
-			<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=932046" title="Drag and drop into a running Eclipse workspace to install eclipse-pmd"> <img src="https://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png"/> </a>
+<body>
 
-			<h3>Update Site</h3>
-			<p>
-				An alternative way to install the plugin on Eclipse 3.7 (and later) is via the plugin update site <a href="http://www.acanda.ch/eclipse-pmd/release/latest">http://www.acanda.ch/eclipse-pmd/release/latest</a>.
-			</p>
-			<p>
-				<ol>
-					<li>
-						In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong>
-					</li>
-					<li>
-						Add a new installation site and use <strong>http://www.acanda.ch/eclipse-pmd/release/latest</strong> as the location.
-					</li>
-					<li>
-						Select the plugin <strong>Eclipse PMD</strong>.
-					</li>
-					<li>
-						Finish the installation by accepting the license and restarting Eclipse.
-					</li>
-				</ol>
-			</p>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper light-green">
+        <div class="container">
+          <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul class="left hide-on-med-and-down">
+            <li class="flow-text"><a href="index.html" class="logo">eclipse-pmd</a></li>
+            <li class="flow-text"><a href="getting-started.html">Get started</a></li>
+            <li class="flow-text"><a href="changelog.html">Changelog</a></li>
+            <li class="flow-text"><a href="https://github.com/acanda/eclipse-pmd/">Source</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
 
-			<h3>Offline Installation</h3>
-			<p>
-				If you do not have access to the internet you can download the plugin as a zip file and install it manually.
-			</p>
-			<p>
-				<ol>
-					<li>
-						Download the latest zip file from <a href="https://github.com/acanda/eclipse-pmd/releases">https://github.com/acanda/eclipse-pmd/releases</a> and copy it to your offline computer.
-					</li>
-					<li>
-						In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong>
-					</li>
-					<li>
-						Add a new installation site and click the button <strong>Archive...</strong> to select to zip file you downloaded.
-					</li>
-					<li>
-						Select the plugin <strong>Eclipse PMD</strong>.
-					</li>
-					<li>
-						Finish the installation by accepting the license and restarting Eclipse.
-					</li>
-				</ol>
-			</p>
+  <ul class="sidenav" id="mobile-nav">
+    <li><a href="index.html" class="light-green white-text z-depth-1">eclipse-pmd</a></li>
+    <li><a href="getting-started.html">Get started</a></li>
+    <li><a href="changelog.html">Changelog</a></li>
+    <li><a href="https://github.com/acanda/eclipse-pmd/">Source</a></li>
+  </ul>
 
-			<h2>Activate</h2>
-			<p>
-				Use the property dialog of your project(s) to activate eclipse-pmd.
-			</p>
-			<p>
-				<ol>
-					<li>
-						If you don't already have a PMD rule set then <a href="http://pmd.github.io/pmd-6.20.0/pmd_userdocs_making_rulesets.html">create a new one</a>.
-					</li>
-					<li>
-						Open the property dialog of your project.
-					</li>
-					<li>
-						Select the <strong>PMD</strong> property page.
-					</li>
-					<li>
-						Check the <strong>Enable PMD for this project</strong> checkbox.
-					</li>
-					<li>
-						Add one or more rule sets by clicking the <strong>Add...</strong> button.
-					</li>
-					<li>
-						Close the property dialog. Your project will now be analysed by PMD.
-					</li>
-					<li>
-						If you have another project where you want to activate eclipse-pmd, continue with step 2.
-					</li>
-				</ol>
-			</p>
-		</div>
+  <div class="container">
+    <h2>Install</h2>
 
-		<footer class="footer">
-			<div class="container">
-				<div class="row">
-					<div class="span4">
-						<p>
-							&copy; 2012 &ndash; 2019 Philip Graf. All Rights Reserved.
-							<br />
-							eclipse-pmd uses <a href="https://pmd.github.io/">PMD</a>.
-						</p>
-					</div>
-					<div class="span4 offset4">
-						<p>
-							Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a>
-							<br />
-							Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-		<div id="forkme">
-			<a href="https://github.com/acanda/eclipse-pmd/">Fork me on GitHub</a>
-		</div>
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/jquery.lightbox.pack.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				$('a.thumbnail').lightBox();
-			});
-		</script>
-	</body>
+    <h3>Eclipse Marketplace</h3>
+    <p>
+      The recommended way to install the plugin on Eclipse 3.7 (and later) is to drag and drop the following button into a running Eclipse
+      workspace: <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=932046"
+        title="Drag and drop into a running Eclipse workspace to install eclipse-pmd"> <img style="vertical-align: middle"
+        src="https://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png" />
+      </a>
+    </p>
+
+    <h3>Update Site</h3>
+    <p>
+      An alternative way to install the plugin on Eclipse 3.7 (and later) is via the plugin update site <a
+        href="http://www.acanda.ch/eclipse-pmd/release/latest">http://www.acanda.ch/eclipse-pmd/release/latest</a>.
+    </p>
+    <ol>
+      <li>In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong>
+      </li>
+      <li>Add a new installation site and use <strong>http://www.acanda.ch/eclipse-pmd/release/latest</strong> as the location.
+      </li>
+      <li>Select the plugin <strong>Eclipse PMD</strong>.
+      </li>
+      <li>Finish the installation by accepting the license and restarting Eclipse.</li>
+    </ol>
+
+    <h3>Offline Installation</h3>
+    <p>If you do not have access to the internet you can download the plugin as a zip file and install it manually.</p>
+    <ol>
+      <li>Download the latest zip file from <a href="https://github.com/acanda/eclipse-pmd/releases">https://github.com/acanda/eclipse-pmd/releases</a>
+        and copy it to your offline computer.
+      </li>
+      <li>In Eclipse go to <strong>Help</strong> > <strong>Install new software...</strong>
+      </li>
+      <li>Add a new installation site and click the button <strong>Archive...</strong> to select to zip file you downloaded.
+      </li>
+      <li>Select the plugin <strong>Eclipse PMD</strong>.
+      </li>
+      <li>Finish the installation by accepting the license and restarting Eclipse.</li>
+    </ol>
+
+    <h2>Activate</h2>
+    <p>Use the property dialog of your project(s) to activate eclipse-pmd.</p>
+    <ol>
+      <li>If you don't already have a PMD rule set then <a
+        href="http://pmd.github.io/pmd-6.20.0/pmd_userdocs_making_rulesets.html">create a new one</a>.
+      </li>
+      <li>Open the property dialog of your project.</li>
+      <li>Select the <strong>PMD</strong> property page.
+      </li>
+      <li>Check the <strong>Enable PMD for this project</strong> checkbox.
+      </li>
+      <li>Add one or more rule sets by clicking the <strong>Add...</strong> button.
+      </li>
+      <li>Close the property dialog. Your project will now be analysed by PMD.</li>
+      <li>If you have another project where you want to activate eclipse-pmd, continue with step 2.</li>
+    </ol>
+  </div>
+
+  <footer class="page-footer light-green">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <p class="grey-text text-lighten-4">
+            &copy; 2012 &ndash; 2020 Philip Graf. All Rights Reserved.
+            <br />
+            eclipse-pmd uses <a href="https://pmd.github.io/">PMD</a>.
+          </p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <ul>
+            <li>Github: <a href="https://github.com/acanda/eclipse-pmd/">eclipse-pmd</a></li>
+            <li>Twitter: <a href="https://twitter.com/eclipsepmd">@eclipsepmd</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
 </html>
