@@ -11,13 +11,13 @@
 
 package ch.acanda.eclipse.pmd;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.runtime.CoreException;
 
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
@@ -58,10 +58,26 @@ final class WorkspaceChangeListener implements IResourceChangeListener {
 
         @Override
         public boolean visit(final IResourceDelta delta) {
-            if (delta.getResource().getType() == IResource.PROJECT) {
+            if (delta.getResource().getType() == IResource.ROOT) {
+                return true;
+            } else if (delta.getResource().getType() == IResource.PROJECT) {
                 visitProject(delta, (IProject) delta.getResource());
+                return true;
+            } else if (delta.getResource().getType() == IResource.FILE) {
+                visitFile((IFile) delta.getResource());
+                return false;
             }
-            return delta.getResource() instanceof IWorkspaceRoot;
+            return false;
+        }
+
+        private void visitFile(final IFile file) {
+            if (ProjectModelRepository.PMD_CONFIG_FILENAME.equals(file.getProjectRelativePath().toString())) {
+                final IProject project = file.getProject();
+                removeProject(project.getName());
+                if (project.isOpen()) {
+                    addProject(project.getName());
+                }
+            }
         }
 
         private void visitProject(final IResourceDelta delta, final IProject project) {
