@@ -128,7 +128,7 @@ public class AnalyzerTest {
      */
     @Test
     public void analyzeModelicaAllRules() throws IOException {
-        analyze("model A\nend A;", "UTF-8", "mo", "category/modelica/bestpractices.xml");
+        analyze("model A\nend A;", "UTF-8", "mo", getAllRuleSetRefIds("modelica"));
     }
 
     /**
@@ -302,7 +302,7 @@ public class AnalyzerTest {
     }
 
     private String getAllRuleSetRefIds(final String language) throws IOException {
-        try (InputStream in = PMD.class.getResourceAsStream("/rulesets/" + language + "/rulesets.properties")) {
+        try (InputStream in = PMD.class.getResourceAsStream("/category/" + language + "/categories.properties")) {
             final Properties properties = new Properties();
             properties.load(in);
             return properties.getProperty("rulesets.filenames");
