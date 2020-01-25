@@ -52,7 +52,7 @@ import net.sourceforge.pmd.RuleViolation;
  * @author Philip Graf
  */
 public class AnalyzerTest {
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Java files.
      */
@@ -60,7 +60,7 @@ public class AnalyzerTest {
     public void analyzeJava() {
         analyze("class A extends Object {}", "UTF-8", "java", "rulesets/java/basic.xml/ExtendsObject", "ExtendsObject");
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all Java rules.
      */
@@ -96,7 +96,7 @@ public class AnalyzerTest {
     public void analyzeXMLAllRules() throws IOException {
         analyze("<a/>", "UTF-8", "xml", getAllRuleSetRefIds("xml"));
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze jsp files.
      */
@@ -112,7 +112,25 @@ public class AnalyzerTest {
     public void analyzeJSPAllRules() throws IOException {
         analyze("<%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>", "UTF-8", "jsp", getAllRuleSetRefIds("jsp"));
     }
-    
+
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze modelica files.
+     */
+    @Test
+    public void analyzeModelica() {
+        analyze("model A\nend B;", "UTF-8", "mo",
+                "category/modelica/bestpractices.xml/ClassStartNameEqualsEndName",
+                "ClassStartNameEqualsEndName");
+    }
+
+    /**
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all modelica rules.
+     */
+    @Test
+    public void analyzeModelicaAllRules() throws IOException {
+        analyze("model A\nend A;", "UTF-8", "mo", "category/modelica/bestpractices.xml");
+    }
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze xsl files.
      */
@@ -129,7 +147,7 @@ public class AnalyzerTest {
     public void analyzeXSLAllRules() throws IOException {
         analyze("<a/>", "UTF-8", "xsl", getAllRuleSetRefIds("xsl"));
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Ecmascript files.
      */
@@ -146,7 +164,7 @@ public class AnalyzerTest {
     public void analyzeEcmascriptAllRules() throws IOException {
         analyze("var i = 0", "UTF-8", "js", getAllRuleSetRefIds("ecmascript"));
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze Velocity files.
      */
@@ -155,7 +173,7 @@ public class AnalyzerTest {
         analyze("<script type=\"text/javascript\">$s</script>", "UTF-8", "vm", "rulesets/vm/basic.xml/NoInlineJavaScript",
                 "NoInlineJavaScript");
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all Velocity rules.
      */
@@ -163,7 +181,7 @@ public class AnalyzerTest {
     public void analyzeVelocityAllRules() throws IOException {
         analyze("<a/>", "UTF-8", "vm", getAllRuleSetRefIds("vm"));
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can analyze PLSQL files.
      */
@@ -172,7 +190,7 @@ public class AnalyzerTest {
         final String content = "select * from a";
         analyze(content, "UTF-8", "sql", "category/plsql/codestyle.xml/CodeFormat", "CodeFormat");
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} can run all PLSQL rules.
      */
@@ -180,7 +198,7 @@ public class AnalyzerTest {
     public void analyzePLSQLAllRules() throws IOException {
         analyze("select *\n  from a", "UTF-8", "sql", getAllRuleSetRefIds("plsql"));
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't throw a NullPointerException
      * when the file to analyze does not have a file extension.
@@ -189,7 +207,7 @@ public class AnalyzerTest {
     public void analyzeFileWithoutExtension() {
         analyze("Hello World", "UTF-8", null, "rulesets/java/basic.xml/ExtendsObject");
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't throw a NullPointerException
      * when trying to analyze a class file.
@@ -198,7 +216,7 @@ public class AnalyzerTest {
     public void analyzeClassFile() {
         analyze("", "UTF-8", "class", "rulesets/java/basic.xml/ExtendsObject");
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't analyze a derived file.
      */
@@ -207,7 +225,7 @@ public class AnalyzerTest {
         final IFile file = mockFile("class A extends Object {}", "UTF-8", "java", true, true);
         analyze(file, "rulesets/java/basic.xml/ExtendsObject");
     }
-    
+
     /**
      * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} doesn't analyze an inaccessible file.
      */
@@ -216,10 +234,10 @@ public class AnalyzerTest {
         final IFile file = mockFile("", "UTF-8", "java", false, false);
         analyze(file, "rulesets/java/basic.xml/ExtendsObject");
     }
-    
+
     /**
-     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} works around PMD's <a
-     * href="http://sourceforge.net/p/pmd/bugs/1076/">bug #1076</a> and reports two violations instead of only one.
+     * Verifies that {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor)} works around PMD's
+     * <a href="http://sourceforge.net/p/pmd/bugs/1076/">bug #1076</a> and reports two violations instead of only one.
      */
     @Test
     public void analyzePMDBug1076() throws UnsupportedEncodingException, CoreException {
@@ -227,7 +245,7 @@ public class AnalyzerTest {
         analyze(file, "rulesets/java/optimizations.xml/MethodArgumentCouldBeFinal",
                 "MethodArgumentCouldBeFinal", "MethodArgumentCouldBeFinal");
     }
-    
+
     /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
      * invokes {@link ViolationProcessor#annotate(IFile, Iterable) with the correct rule violations.
@@ -241,7 +259,7 @@ public class AnalyzerTest {
             throw new AssertionError("Failed to mock file", e);
         }
     }
-    
+
     /**
      * Prepares the arguments, calls {@link Analyzer#analyze(IFile, RuleSets, ViolationProcessor), and verifies that it
      * invokes {@link ViolationProcessor#annotate(IFile, Iterable) with the correct rule violations and that it invokes
@@ -252,7 +270,7 @@ public class AnalyzerTest {
             final ViolationProcessor violationProcessor = mock(ViolationProcessor.class);
             final RuleSets ruleSets = spy(new RuleSetFactory().createRuleSets(ruleSetRefId));
             new Analyzer().analyze(file, ruleSets, violationProcessor);
-            
+
             verify(violationProcessor).annotate(same(file), violations(violatedRules));
 
             final boolean isValidFile = violatedRules.length > 0;
@@ -268,7 +286,7 @@ public class AnalyzerTest {
             throw new AssertionError("Failed to annotate file", e);
         }
     }
-    
+
     private IFile mockFile(final String content, final String charset, final String fileExtension, final boolean isDerived,
             final boolean isAccessible) throws CoreException, UnsupportedEncodingException {
         final IFile file = mock(IFile.class);
@@ -284,7 +302,7 @@ public class AnalyzerTest {
     }
 
     private String getAllRuleSetRefIds(final String language) throws IOException {
-        try (final InputStream in = PMD.class.getResourceAsStream("/rulesets/" + language + "/rulesets.properties")) {
+        try (InputStream in = PMD.class.getResourceAsStream("/rulesets/" + language + "/rulesets.properties")) {
             final Properties properties = new Properties();
             properties.load(in);
             return properties.getProperty("rulesets.filenames");
@@ -296,7 +314,7 @@ public class AnalyzerTest {
     }
 
     private static class RuleViolationIteratorMatcher extends BaseMatcher<Iterable<RuleViolation>> {
-        
+
         private final Iterable<String> expectedRuleNames;
 
         public RuleViolationIteratorMatcher(final String... ruleNames) {
@@ -313,12 +331,12 @@ public class AnalyzerTest {
             }
             return false;
         }
-        
+
         @Override
         public void describeTo(final Description description) {
             description.appendText("Iterable containing the following violations " + Iterables.toString(expectedRuleNames));
         }
-        
+
         private static class RuleNameExtractor implements Function<RuleViolation, String> {
             @Override
             public String apply(final RuleViolation violation) {

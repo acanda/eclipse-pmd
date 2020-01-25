@@ -96,6 +96,17 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-modelica</artifactId>
+                                    <version>${pmd-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
+                                    <artifactId>pmd-modelica</artifactId>
+                                    <version>${pmd-version}</version>
+                                    <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.sourceforge.pmd</groupId>
                                     <artifactId>pmd-plsql</artifactId>
                                     <version>${pmd-version}</version>
                                 </artifactItem>
