@@ -37,3 +37,19 @@ footer a {
     grid-template-columns: 1fr;
   }
 }
+
+#pmd-release-notes-content h1 {
+  font-size: 2rem;
+}
+
+#pmd-release-notes-content h2 {
+  font-size: 1.695rem;
+}
+
+#pmd-release-notes-content ul {
+  padding-left: 1rem;
+}
+
+#pmd-release-notes-content li {
+  list-style-type: disc;
+}

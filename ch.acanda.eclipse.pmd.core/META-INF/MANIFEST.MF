@@ -24,13 +24,13 @@ Bundle-ClassPath: .,
  lib/xercesImpl-2.12.0.jar,
  lib/saxon-9.1.0.8-dom.jar,
  lib/saxon-9.1.0.8.jar,
- lib/pmd-core-6.20.0.jar,
- lib/pmd-java-6.20.0.jar,
- lib/pmd-javascript-6.20.0.jar,
- lib/pmd-jsp-6.20.0.jar,
- lib/pmd-plsql-6.20.0.jar,
- lib/pmd-vm-6.20.0.jar,
- lib/pmd-xml-6.20.0.jar
+ lib/pmd-core-6.21.0.jar,
+ lib/pmd-java-6.21.0.jar,
+ lib/pmd-javascript-6.21.0.jar,
+ lib/pmd-jsp-6.21.0.jar,
+ lib/pmd-plsql-6.21.0.jar,
+ lib/pmd-vm-6.21.0.jar,
+ lib/pmd-xml-6.21.0.jar
 Bundle-Activator: ch.acanda.eclipse.pmd.PMDPlugin
 Bundle-ActivationPolicy: lazy
 Export-Package: ch.acanda.eclipse.pmd.domain,
