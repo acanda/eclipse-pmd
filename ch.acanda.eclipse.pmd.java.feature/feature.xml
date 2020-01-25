@@ -2,10 +2,10 @@
 <feature
       id="ch.acanda.eclipse.pmd.java.feature"
       label="eclipse-pmd Java Support (Optional, JDT Prerequisite)"
-      version="1.25.0.qualifier"
+      version="1.26.0.qualifier"
       provider-name="Philip Graf"
       license-feature="ch.acanda.eclipse.pmd.core.feature"
-      license-feature-version="1.25.0.qualifier">
+      license-feature-version="1.26.0.qualifier">
 
    <description url="http://acanda.github.com/eclipse-pmd/">
       Provides additional functionality for Java related PMD violations:
@@ -24,7 +24,7 @@
       <import feature="org.eclipse.jdt" version="3.7.2.v20120120-1414-7z8gFcuFMP7BW5XTz0jLTnz0l9B1"/>
       <import feature="org.eclipse.rcp" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
       <import feature="org.eclipse.platform" version="3.7.2.v20120207-1839-9gF7UHPDFxGjd-PqDr2jX_4yKaumkoHTz04_q-q"/>
-      <import feature="ch.acanda.eclipse.pmd.core.feature" version="1.25.0.qualifier"/>
+      <import feature="ch.acanda.eclipse.pmd.core.feature" version="1.26.0.qualifier"/>
    </requires>
 
    <plugin
