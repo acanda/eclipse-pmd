@@ -24,7 +24,7 @@
     <url>http://acanda.github.io/eclipse-pmd/</url>
 
     <properties>
-        <tycho-version>1.5.1</tycho-version>
+        <tycho-version>1.6.0</tycho-version>
         <tycho-extras-version>${tycho-version}</tycho-extras-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
@@ -62,12 +62,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>2.6.1</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>2.10</version>
+                    <version>3.1.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.eclipse.tycho</groupId>
@@ -82,7 +82,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>1.4.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
