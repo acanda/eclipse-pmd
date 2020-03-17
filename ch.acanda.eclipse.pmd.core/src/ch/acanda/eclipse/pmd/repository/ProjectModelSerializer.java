@@ -18,18 +18,18 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import com.google.common.base.Function;
+
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Function;
 
 /**
  * <pre>
@@ -70,7 +70,7 @@ public class ProjectModelSerializer {
     static final String ATTRIBUTE_NAME_NAME = "name";
     static final String SCHEMA_VERSION = "0.8";
 
-    public static final Charset ENCODING = Charsets.UTF_8;
+    public static final Charset ENCODING = StandardCharsets.UTF_8;
 
     private static final Function<RuleSetModel, String> TO_XML_TAGS = new RuleSetConfigurationToXMLTag();
 

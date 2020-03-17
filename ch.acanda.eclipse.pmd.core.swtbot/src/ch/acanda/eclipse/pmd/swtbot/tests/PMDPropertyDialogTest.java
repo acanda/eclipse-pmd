@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -29,7 +30,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 
@@ -61,13 +61,13 @@ public final class PMDPropertyDialogTest extends GUITestCase {
     public static void createJavaProjects() throws IOException {
         JavaProjectClient.createJavaProject(PROJECT_NAME_1);
 
-        final String content = Resources.toString(PMDPropertyDialogTest.class.getResource(RULE_SET_FILE), Charsets.UTF_8);
+        final String content = Resources.toString(PMDPropertyDialogTest.class.getResource(RULE_SET_FILE), StandardCharsets.UTF_8);
         JavaProjectClient.createFileInProject(PROJECT_NAME_1, PMD_XML, content);
 
         JavaProjectClient.createJavaProject(PROJECT_NAME_2);
 
         rules = File.createTempFile(PMDPropertyDialogTest.class.getSimpleName() + "-", ".xml");
-        Files.asCharSink(rules, Charsets.UTF_8).write(content);
+        Files.asCharSink(rules, StandardCharsets.UTF_8).write(content);
     }
 
     @AfterClass

@@ -13,6 +13,7 @@ package ch.acanda.eclipse.pmd.repository;
 
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.getOnlyElement;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -32,13 +33,12 @@ import javax.xml.validation.Validator;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Predicate;
+
 import ch.acanda.eclipse.pmd.domain.Location;
 import ch.acanda.eclipse.pmd.domain.LocationContext;
 import ch.acanda.eclipse.pmd.domain.ProjectModel;
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
-
-import com.google.common.base.Charsets;
-import com.google.common.base.Predicate;
 
 /**
  * Unit tests for {@link ProjectModelSerializer}.
@@ -127,7 +127,7 @@ public final class ProjectModelSerializerTest {
      */
     @Test
     public void deserializeProjectModel() throws IOException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(Charsets.UTF_8));
+        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
@@ -142,7 +142,7 @@ public final class ProjectModelSerializerTest {
      */
     @Test
     public void deserializeProjectModelWithoutRuleSets() throws IOException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfigurationWithoutRuleSets().getBytes(Charsets.UTF_8));
+        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfigurationWithoutRuleSets().getBytes(UTF_8));
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
@@ -157,7 +157,7 @@ public final class ProjectModelSerializerTest {
      */
     @Test
     public void deserializeProjectRuleSetModel() throws IOException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(Charsets.UTF_8));
+        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
@@ -170,7 +170,7 @@ public final class ProjectModelSerializerTest {
      */
     @Test
     public void deserializeWorkspaceRuleSetModel() throws IOException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(Charsets.UTF_8));
+        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
@@ -183,7 +183,7 @@ public final class ProjectModelSerializerTest {
      */
     @Test
     public void deserializeFilesystemRuleSetModel() throws IOException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(Charsets.UTF_8));
+        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
@@ -196,7 +196,7 @@ public final class ProjectModelSerializerTest {
      */
     @Test
     public void deserializeRemoteRuleSetModel() throws IOException {
-        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(Charsets.UTF_8));
+        final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
         
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
         
