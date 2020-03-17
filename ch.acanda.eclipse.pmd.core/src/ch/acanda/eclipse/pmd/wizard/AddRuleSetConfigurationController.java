@@ -13,9 +13,6 @@ package ch.acanda.eclipse.pmd.wizard;
 
 import java.nio.file.Paths;
 
-import net.sourceforge.pmd.RuleSetFactory;
-import net.sourceforge.pmd.RuleSetNotFoundException;
-
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -26,13 +23,15 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
+import com.google.common.base.Optional;
+
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.domain.Location;
 import ch.acanda.eclipse.pmd.domain.LocationContext;
 import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 import ch.acanda.eclipse.pmd.ui.dialog.FileSelectionDialog;
-
-import com.google.common.base.Optional;
+import net.sourceforge.pmd.RuleSetNotFoundException;
+import net.sourceforge.pmd.RulesetsFactoryUtils;
 
 /**
  * Controller for the wizard to add a new rule set configuration.
@@ -90,7 +89,7 @@ final class AddRuleSetConfigurationController {
                     final IResource resource = (IResource) selection[0];
                     final String configuration = resource.getLocation().toOSString();
                     try {
-                        new RuleSetFactory().createRuleSet(configuration);
+                        RulesetsFactoryUtils.defaultFactory().createRuleSet(configuration);
                     } catch (final RuleSetNotFoundException | IllegalArgumentException e) {
                         // the rule set location is invalid
                         result = new Status(IStatus.WARNING, PMDPlugin.ID, resource.getName()

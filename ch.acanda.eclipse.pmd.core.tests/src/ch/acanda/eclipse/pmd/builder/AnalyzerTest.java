@@ -40,10 +40,10 @@ import com.google.common.collect.Lists;
 import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.Rule;
 import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.RulesetsFactoryUtils;
 
 /**
  * Unit tests for {@link Analyzer}.
@@ -267,7 +267,7 @@ public class AnalyzerTest {
     public void analyze(final IFile file, final String ruleSetRefId, final String... violatedRules) {
         try {
             final ViolationProcessor violationProcessor = mock(ViolationProcessor.class);
-            final RuleSets ruleSets = spy(new RuleSetFactory().createRuleSets(ruleSetRefId));
+            final RuleSets ruleSets = spy(RulesetsFactoryUtils.defaultFactory().createRuleSets(ruleSetRefId));
             new Analyzer().analyze(file, ruleSets, violationProcessor);
 
             verify(violationProcessor).annotate(same(file), violations(violatedRules));

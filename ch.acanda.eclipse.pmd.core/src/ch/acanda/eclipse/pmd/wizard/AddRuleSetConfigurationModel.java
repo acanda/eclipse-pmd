@@ -23,12 +23,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
 
-import net.sourceforge.pmd.Rule;
-import net.sourceforge.pmd.RuleSet;
-import net.sourceforge.pmd.RuleSetFactory;
-import net.sourceforge.pmd.RuleSetNotFoundException;
-
 import org.eclipse.core.resources.IProject;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+import com.google.common.collect.ImmutableSet;
 
 import ch.acanda.eclipse.pmd.builder.LocationResolver;
 import ch.acanda.eclipse.pmd.domain.Location;
@@ -37,12 +38,10 @@ import ch.acanda.eclipse.pmd.ui.model.ValidationProblem;
 import ch.acanda.eclipse.pmd.ui.model.ValidationProblem.Severity;
 import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 import ch.acanda.eclipse.pmd.ui.model.ViewModel;
-
-import com.google.common.base.Optional;
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-import com.google.common.collect.ImmutableSet;
+import net.sourceforge.pmd.Rule;
+import net.sourceforge.pmd.RuleSet;
+import net.sourceforge.pmd.RuleSetNotFoundException;
+import net.sourceforge.pmd.RulesetsFactoryUtils;
 
 /**
  * View model for the wizard page to add a new file system rule set configuration.
@@ -195,7 +194,7 @@ class AddRuleSetConfigurationModel extends ViewModel {
                     referenceId = validateLocalLocation(result);
                 }
                 if (referenceId != null) {
-                    ruleSet = new RuleSetFactory().createRuleSet(referenceId);
+                    ruleSet = RulesetsFactoryUtils.defaultFactory().createRuleSet(referenceId);
                     ruleSetName = ruleSet.getName();
                     rules.addAll(ruleSet.getRules());
                 }

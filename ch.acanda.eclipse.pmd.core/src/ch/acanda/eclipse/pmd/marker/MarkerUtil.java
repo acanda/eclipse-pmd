@@ -11,12 +11,6 @@
 
 package ch.acanda.eclipse.pmd.marker;
 
-import java.io.Reader;
-
-import net.sourceforge.pmd.Rule;
-import net.sourceforge.pmd.RuleViolation;
-import net.sourceforge.pmd.lang.ast.JavaCharStream;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -25,6 +19,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 
+import net.sourceforge.pmd.Rule;
+import net.sourceforge.pmd.RuleViolation;
+
 /**
  * Utility for creating, adding and removing PMD markers.
  *
@@ -32,7 +29,12 @@ import org.eclipse.jface.text.Document;
  */
 public final class MarkerUtil {
 
-    private static final int PMD_TAB_SIZE = new Tabs().size;
+    /*
+     * The tab size is used to calculate the correct start and end character for the marker. {@link
+     * RuleViolation#getBeginColumn()} and {@link RuleViolation#getEndColumn()} count a tabulator character as {@code
+     * JavaCharStream.tabSize} characters, while the marker counts a tabulator as one character.
+     */
+    private static final int PMD_TAB_SIZE = 8;
 
     private static final String MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdMarker";
     private static final String LONG_MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdLongMarker";
@@ -144,13 +146,8 @@ public final class MarkerUtil {
         private final int end;
 
         public Range(final int start, final int end) {
-            // if (start <= end) {
             this.start = start;
             this.end = end;
-            // } else {
-            // this.start = end;
-            // this.end = start;
-            // }
         }
 
         public int getStart() {
@@ -160,22 +157,6 @@ public final class MarkerUtil {
         public int getEnd() {
             return end;
         }
-    }
-
-    /**
-     * Provides access to {@link JavaCharStream#tabSize}. The tab size is used to calculate the correct start and end
-     * character for the marker. {@link RuleViolation#getBeginColumn()} and {@link RuleViolation#getEndColumn()} count a
-     * tabulator character as {@code JavaCharStream.tabSize} characters, while the marker counts a tabulator as one
-     * character.
-     */
-    private static final class Tabs extends JavaCharStream {
-
-        public int size = super.tabSize;
-
-        public Tabs() {
-            super((Reader) null);
-        }
-
     }
 
 }

@@ -29,14 +29,14 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import com.google.common.io.Resources;
+
 import ch.acanda.eclipse.pmd.swtbot.bot.AddRuleSetConfigurationWizardBot;
 import ch.acanda.eclipse.pmd.swtbot.bot.FileSelectionDialogBot;
 import ch.acanda.eclipse.pmd.swtbot.bot.PMDPropertyDialogBot;
 import ch.acanda.eclipse.pmd.swtbot.client.JavaProjectClient;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
 
 /**
  * Tests the PMD rule set functionality of the PMD property dialog.
@@ -67,7 +67,7 @@ public final class PMDPropertyDialogTest extends GUITestCase {
         JavaProjectClient.createJavaProject(PROJECT_NAME_2);
 
         rules = File.createTempFile(PMDPropertyDialogTest.class.getSimpleName() + "-", ".xml");
-        Files.write(content, rules, Charsets.UTF_8);
+        Files.asCharSink(rules, Charsets.UTF_8).write(content);
     }
 
     @AfterClass

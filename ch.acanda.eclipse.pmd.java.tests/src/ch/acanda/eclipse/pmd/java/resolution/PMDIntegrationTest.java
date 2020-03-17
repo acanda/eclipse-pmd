@@ -49,10 +49,10 @@ import net.sourceforge.pmd.PMD;
 import net.sourceforge.pmd.PMDConfiguration;
 import net.sourceforge.pmd.PMDException;
 import net.sourceforge.pmd.RuleContext;
-import net.sourceforge.pmd.RuleSetFactory;
 import net.sourceforge.pmd.RuleSetNotFoundException;
 import net.sourceforge.pmd.RuleSets;
 import net.sourceforge.pmd.RuleViolation;
+import net.sourceforge.pmd.RulesetsFactoryUtils;
 import net.sourceforge.pmd.SourceCodeProcessor;
 import net.sourceforge.pmd.lang.Language;
 import net.sourceforge.pmd.lang.LanguageRegistry;
@@ -153,7 +153,7 @@ public class PMDIntegrationTest {
             final Reader reader = new StringReader(params.source);
             final RuleContext context = PMD.newRuleContext(sourceFile.getName(), sourceFile);
             context.setLanguageVersion(languageVersion);
-            final RuleSets ruleSets = new RuleSetFactory().createRuleSets(params.pmdReferenceId.get());
+            final RuleSets ruleSets = RulesetsFactoryUtils.defaultFactory().createRuleSets(params.pmdReferenceId.get());
             new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
 
             // Only verify when PMD actually reports an error. There are a few test cases where the quick fix can
