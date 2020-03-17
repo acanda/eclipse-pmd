@@ -11,9 +11,9 @@
 
 package ch.acanda.eclipse.pmd.builder;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.same;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -30,9 +30,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -313,7 +312,7 @@ public class AnalyzerTest {
         return argThat(new RuleViolationIteratorMatcher(ruleNames));
     }
 
-    private static class RuleViolationIteratorMatcher extends BaseMatcher<Iterable<RuleViolation>> {
+    private static class RuleViolationIteratorMatcher implements ArgumentMatcher<Iterable<RuleViolation>> {
 
         private final Iterable<String> expectedRuleNames;
 
@@ -322,19 +321,9 @@ public class AnalyzerTest {
         }
 
         @Override
-        public boolean matches(final Object item) {
-            if (item instanceof Iterable) {
-                @SuppressWarnings("unchecked")
-                final Iterable<RuleViolation> violations = (Iterable<RuleViolation>) item;
-                final Iterable<String> actualRuleNames = Iterables.transform(violations, new RuleNameExtractor());
-                return Iterables.elementsEqual(expectedRuleNames, actualRuleNames);
-            }
-            return false;
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-            description.appendText("Iterable containing the following violations " + Iterables.toString(expectedRuleNames));
+        public boolean matches(final Iterable<RuleViolation> violations) {
+            final Iterable<String> actualRuleNames = Iterables.transform(violations, new RuleNameExtractor());
+            return Iterables.elementsEqual(expectedRuleNames, actualRuleNames);
         }
 
         private static class RuleNameExtractor implements Function<RuleViolation, String> {
@@ -347,6 +336,7 @@ public class AnalyzerTest {
                 return null;
             }
         }
+
 
     }
 }

@@ -6,5 +6,8 @@ Bundle-Version: 1.27.0.qualifier
 Bundle-Vendor: Philip Graf
 Fragment-Host: ch.acanda.eclipse.pmd.core
 Bundle-ClassPath: .,
- lib/mockito-all-1.10.19.jar
+ lib/mockito-core-3.3.3.jar,
+ lib/byte-buddy-1.10.5.jar,
+ lib/byte-buddy-agent-1.10.5.jar,
+ lib/objenesis-2.6.jar
 Require-Bundle: org.junit;bundle-version="4.8.2"

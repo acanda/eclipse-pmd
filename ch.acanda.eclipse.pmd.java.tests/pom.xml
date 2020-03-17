@@ -56,14 +56,29 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>org.mockito</groupId>
-                                    <artifactId>mockito-all</artifactId>
+                                    <artifactId>mockito-core</artifactId>
                                     <version>${mockito-version}</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.mockito</groupId>
-                                    <artifactId>mockito-all</artifactId>
+                                    <artifactId>mockito-core</artifactId>
                                     <version>${mockito-version}</version>
                                     <classifier>sources</classifier>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.bytebuddy</groupId>
+                                    <artifactId>byte-buddy</artifactId>
+                                    <version>${mockito-byte-buddy-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>net.bytebuddy</groupId>
+                                    <artifactId>byte-buddy-agent</artifactId>
+                                    <version>${mockito-byte-buddy-version}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.objenesis</groupId>
+                                    <artifactId>objenesis</artifactId>
+                                    <version>${mockito-objenesis-version}</version>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>

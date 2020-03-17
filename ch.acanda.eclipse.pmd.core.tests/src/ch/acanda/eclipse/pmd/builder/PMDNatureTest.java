@@ -11,9 +11,10 @@
 
 package ch.acanda.eclipse.pmd.builder;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.same;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -23,7 +24,6 @@ import static org.mockito.Mockito.when;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.junit.Test;
 
 /**
@@ -44,10 +44,10 @@ public class PMDNatureTest {
         PMDNature.addTo(project);
         
         final IProjectDescription description = project.getDescription();
-        verify(project, times(1)).setDescription(same(description), any(IProgressMonitor.class));
+        verify(project, times(1)).setDescription(same(description), isNull());
         verify(description, times(1)).setNatureIds(eq(new String[] { "org.example.a", "org.example.b", PMDNature.ID }));
     }
-
+    
     private IProject createProject(final boolean hasNature, final String... natureIds) throws CoreException {
         final IProject project = mock(IProject.class);
         final IProjectDescription description = mock(IProjectDescription.class);
@@ -67,7 +67,7 @@ public class PMDNatureTest {
         PMDNature.addTo(project);
         
         final IProjectDescription description = project.getDescription();
-        verify(project, never()).setDescription(any(IProjectDescription.class), any(IProgressMonitor.class));
+        verify(project, never()).setDescription(any(IProjectDescription.class), isNull());
         verify(description, never()).setNatureIds(any(String[].class));
     }
     
@@ -82,7 +82,7 @@ public class PMDNatureTest {
         PMDNature.removeFrom(project);
         
         final IProjectDescription description = project.getDescription();
-        verify(project, times(1)).setDescription(same(description), any(IProgressMonitor.class));
+        verify(project, times(1)).setDescription(same(description), isNull());
         verify(description, times(1)).setNatureIds(eq(new String[] { "org.example.a", "org.example.b" }));
     }
     
@@ -97,7 +97,7 @@ public class PMDNatureTest {
         PMDNature.removeFrom(project);
         
         final IProjectDescription description = project.getDescription();
-        verify(project, never()).setDescription(any(IProjectDescription.class), any(IProgressMonitor.class));
+        verify(project, never()).setDescription(any(IProjectDescription.class), isNull());
         verify(description, never()).setNatureIds(any(String[].class));
     }
     

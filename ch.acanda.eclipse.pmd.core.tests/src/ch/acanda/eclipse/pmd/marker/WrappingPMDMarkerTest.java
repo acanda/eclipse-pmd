@@ -14,9 +14,10 @@ package ch.acanda.eclipse.pmd.marker;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -97,7 +98,7 @@ public class WrappingPMDMarkerTest {
     public void getRuleId() throws CoreException {
         final IMarker marker = mock(IMarker.class);
         final String expected = "Rule E";
-        when(marker.getAttribute(eq(RULE_ID), anyString())).thenReturn(expected);
+        when(marker.getAttribute(eq(RULE_ID), isNull())).thenReturn(expected);
         final WrappingPMDMarker pmdMarker = new WrappingPMDMarker(marker);
         final String actual = pmdMarker.getRuleId();
         assertEquals("The rule id should be read from the wrapped marker", expected, actual);

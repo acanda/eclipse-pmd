@@ -30,7 +30,9 @@
         <os-jvm-flags /> <!-- see <profiles> for os specific flags -->
         <eclipse-release>indigo</eclipse-release>
         <lib-path>${basedir}/lib</lib-path>
-        <mockito-version>1.10.19</mockito-version>
+        <mockito-version>3.3.3</mockito-version>
+        <mockito-byte-buddy-version>1.10.5</mockito-byte-buddy-version>
+        <mockito-objenesis-version>2.6</mockito-objenesis-version>
         <guava-version>28.2-jre</guava-version>
         <guava-failureaccess-version>1.0.1</guava-failureaccess-version>
         <maven.compiler.target>1.7</maven.compiler.target>
