@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <!--
     This configuration file was written by the eclipse-cs plugin configuration editor
@@ -10,8 +10,10 @@
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern" value="SWTResourceManager\.java$|.*\.x(ml|sd)$"/>
+  </module>
   <module name="TreeWalker">
-    <module name="FileContentsHolder"/>
     <module name="WhitespaceAround"/>
     <module name="OperatorWrap">
       <metadata name="net.sf.eclipsecs.core.comment" value="Operator must be on new line"/>
@@ -57,9 +59,6 @@
       <property name="tokens" value="PACKAGE_DEF,IMPORT,CLASS_DEF,ENUM_DEF,INTERFACE_DEF,CTOR_DEF,METHOD_DEF,STATIC_INIT,INSTANCE_INIT"/>
       <property name="allowNoEmptyLineBetweenFields" value="true"/>
     </module>
-    <module name="LineLength">
-      <property name="max" value="140"/>
-    </module>
     <module name="ExecutableStatementCount">
       <property name="max" value="100"/>
       <property name="tokens" value="INSTANCE_INIT,STATIC_INIT,METHOD_DEF,CTOR_DEF"/>
@@ -78,18 +77,22 @@
     <module name="ParameterNumber">
       <property name="max" value="10"/>
     </module>
+    <module name="AvoidDoubleBraceInitialization"/>
+    <module name="SuppressionCommentFilter">
+      <property name="offCommentFormat" value="CHECKSTYLE OFF\: ALL"/>
+      <property name="onCommentFormat" value="CHECKSTYLE ON\: ALL"/>
+      <property name="checkC" value="false"/>
+    </module>
   </module>
   <module name="Header">
     <property name="header" value="// =====================================================================\n//\n// Copyright (C) 2012 - 2020, Philip Graf\n//\n// All rights reserved. This program and the accompanying materials\n// are made available under the terms of the Eclipse Public License v1.0\n// which accompanies this distribution, and is available at\n// http://www.eclipse.org/legal/epl-v10.html\n//\n// =====================================================================\n\n"/>
     <property name="fileExtensions" value=".java"/>
   </module>
-  <module name="SuppressionCommentFilter">
-    <property name="offCommentFormat" value="CHECKSTYLE OFF\: ALL"/>
-    <property name="onCommentFormat" value="CHECKSTYLE ON\: ALL"/>
-    <property name="checkC" value="false"/>
-  </module>
   <module name="FileTabCharacter"/>
   <module name="FileLength">
     <property name="max" value="500"/>
+  </module>
+  <module name="LineLength">
+    <property name="max" value="140"/>
   </module>
 </module>
