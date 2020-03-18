@@ -77,4 +77,6 @@ Compile an test against Eclipse 2019-09: `mvn clean verify -Declipse-release=201
 
 Compile an test against Eclipse 2019-12: `mvn clean verify -Declipse-release=2019-12`
 
+Compile an test against Eclipse 2020-03: `mvn clean verify -Declipse-release=2020-03`
+
 Regardless of the chosen release, the built plug-in will always be the same as the one built without the parameter. So there isn't any advantage in building the plug-in yourself if you are using a newer Eclipse release.

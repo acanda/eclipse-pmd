@@ -501,6 +501,28 @@
             </repositories>
         </profile>
 
+        <profile>
+            <id>eclipse-2020-03</id>
+            <activation>
+                <property>
+                    <name>eclipse-release</name>
+                    <value>2020-03</value>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>2020-03</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/releases/2020-03/</url>
+                </repository>
+                <repository>
+                    <id>swtbot</id>
+                    <layout>p2</layout>
+                    <url>http://download.eclipse.org/technology/swtbot/releases/2.8.0/</url>
+                </repository>
+            </repositories>
+        </profile>
+
     </profiles>
 
     <developers>
