@@ -31,11 +31,11 @@ import org.junit.Test;
 
 /**
  * Unit tests for {@link MarkerUtil}.
- * 
+ *
  * @author Philip Graf
  */
 public class MarkerUtilTest {
-    
+
     private static final String MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdMarker";
     private static final String LONG_MARKER_TYPE = "ch.acanda.eclipse.pmd.core.pmdLongMarker";
 
@@ -48,7 +48,7 @@ public class MarkerUtilTest {
         MarkerUtil.removeAllMarkers(file);
         verify(file).deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ZERO);
     }
-    
+
     /**
      * Verifies that {@linkMarkerUtil#removeAllMarkers(IProject)} removes all markers from a project and its files.
      */
@@ -58,7 +58,7 @@ public class MarkerUtilTest {
         MarkerUtil.removeAllMarkers(project);
         verify(project).deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_INFINITE);
     }
-    
+
     /**
      * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file.
      */
@@ -79,7 +79,7 @@ public class MarkerUtilTest {
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
-        
+
         final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object {}", violation);
 
         assertNotNull("The method must always return a marker", actual);
@@ -93,7 +93,7 @@ public class MarkerUtilTest {
         verify(actual).setAttribute("violationClassName", "ClassName");
         verify(actual).setAttribute("markerText", "Object");
     }
-    
+
     /**
      * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
      * the correct position if the content contains tabs and spaces.
@@ -115,9 +115,9 @@ public class MarkerUtilTest {
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
-        
+
         final IMarker actual = MarkerUtil.addMarker(file, "class ABC extends\tObject {}", violation);
-        
+
         assertNotNull("The method must always return a marker", actual);
         verify(file).createMarker(MARKER_TYPE);
         verify(actual).setAttribute(IMarker.MESSAGE, "message");
@@ -129,7 +129,7 @@ public class MarkerUtilTest {
         verify(actual).setAttribute("violationClassName", "ClassName");
         verify(actual).setAttribute("markerText", "Object");
     }
-    
+
     /**
      * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
      * position information set to zero if the respective arguments are negative.
@@ -151,9 +151,9 @@ public class MarkerUtilTest {
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
-        
+
         final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object {}", violation);
-        
+
         assertNotNull("The method must always return a marker", actual);
         verify(file).createMarker(MARKER_TYPE);
         verify(actual).setAttribute(IMarker.MESSAGE, "message");
@@ -165,7 +165,7 @@ public class MarkerUtilTest {
         verify(actual).setAttribute("violationClassName", "ClassName");
         verify(actual).setAttribute("markerText", "");
     }
-    
+
     /**
      * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker to the provided file with
      * position information containing the line, the character start and end position but not the marker text if the
@@ -188,9 +188,9 @@ public class MarkerUtilTest {
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
-        
+
         final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object {\n}", violation);
-        
+
         assertNotNull("The method must always return a marker", actual);
         verify(file).createMarker(LONG_MARKER_TYPE);
         verify(actual).setAttribute(IMarker.MESSAGE, "message");
@@ -202,7 +202,7 @@ public class MarkerUtilTest {
         verify(actual).setAttribute("violationClassName", "ClassName");
         verify(actual, never()).setAttribute(eq("markerText"), anyString());
     }
-    
+
     /**
      * Verifies that {@link MarkerUtil#addMarker(IFile, String, RuleViolation)} adds a marker even when the character
      * start and end positions are mixed up, i.e. {@code start > end}. For some rules, PMD creates violations where the
@@ -225,9 +225,9 @@ public class MarkerUtilTest {
         when(rule.getRuleSetName()).thenReturn("basic");
         when(rule.getName()).thenReturn("ExtendsObject");
         when(violation.getRule()).thenReturn(rule);
-        
+
         final IMarker actual = MarkerUtil.addMarker(file, "class A extends Object { }", violation);
-        
+
         assertNotNull("The method must always return a marker", actual);
         verify(file).createMarker(MARKER_TYPE);
         verify(actual).setAttribute(IMarker.MESSAGE, "message");

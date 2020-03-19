@@ -29,37 +29,38 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptyFinallyBlock"
- * >EmptyFinallyBlock</a>. It removes the empty finally block.
- * 
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptyFinallyBlock" >EmptyFinallyBlock</a>. It removes the
+ * empty finally block.
+ *
  * @author Philip Graf
  */
 public class EmptyFinallyBlockQuickFix extends ASTQuickFix<TryStatement> {
-    
+
     public EmptyFinallyBlockQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_REMOVE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Remove the finally block";
     }
-    
+
     @Override
     public String getDescription() {
         return "Removes the empty finally block.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, TryStatement> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Removes the finally block. Additionally removes the try if there are no catch blocks while keeping the try block
      * statements.
@@ -80,5 +81,5 @@ public class EmptyFinallyBlockQuickFix extends ASTQuickFix<TryStatement> {
         }
         return success;
     }
-    
+
 }

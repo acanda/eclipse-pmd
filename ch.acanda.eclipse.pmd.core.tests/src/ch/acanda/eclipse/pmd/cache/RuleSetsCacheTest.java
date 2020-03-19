@@ -31,12 +31,12 @@ import com.google.common.cache.CacheLoader;
 
 /**
  * Unit tests for {@link RuleSetsCache}.
- * 
+ *
  * @author Philip Graf
  */
 @SuppressWarnings("PMD.SignatureDeclareThrowsException")
 public final class RuleSetsCacheTest {
-    
+
     private static final String PROJECT_NAME_1 = "Foo";
     private static final String PROJECT_NAME_2 = "Bar";
 
@@ -56,14 +56,14 @@ public final class RuleSetsCacheTest {
 
         assertSame("First cache access should return rule sets from loader", RULE_SETS_FOO_1, actualRuleSets);
     }
-    
+
     /**
      * Verifies that the second cache access returns the cached rule sets.
      */
     @Test
     public void secondGetDoesNotLoad() throws Exception {
         final RuleSetsCache cache = new RuleSetsCache(getCacheLoaderMock(), getWorkspaceModel());
-        
+
         cache.getRuleSets(PROJECT_NAME_1);
         final RuleSets actualRuleSets = cache.getRuleSets(PROJECT_NAME_1);
 
@@ -83,10 +83,10 @@ public final class RuleSetsCacheTest {
         workspaceModel.getOrCreateProject(PROJECT_NAME_1).setRuleSets(Arrays.asList(ruleSetModel));
 
         final RuleSets actualRuleSets = cache.getRuleSets(PROJECT_NAME_1);
-        
+
         assertSame("Second cache access should reload rule sets", RULE_SETS_FOO_2, actualRuleSets);
     }
-    
+
     /**
      * Verifies that the second cache access loads the rule sets if the project model's rule sets have been changed
      * after the first access. In this case, the project model was added after the rule sets cache was created.
@@ -99,9 +99,9 @@ public final class RuleSetsCacheTest {
         cache.getRuleSets(PROJECT_NAME_2);
         final RuleSetModel ruleSetModel = new RuleSetModel("abc", new Location("path", LocationContext.WORKSPACE));
         workspaceModel.getOrCreateProject(PROJECT_NAME_2).setRuleSets(Arrays.asList(ruleSetModel));
-        
+
         final RuleSets actualRuleSets = cache.getRuleSets(PROJECT_NAME_2);
-        
+
         assertSame("Second cache access should reload rule sets", RULE_SETS_BAR_2, actualRuleSets);
     }
 
@@ -118,7 +118,7 @@ public final class RuleSetsCacheTest {
         workspaceModel.add(new ProjectModel(PROJECT_NAME_1));
 
         final RuleSets actualRuleSets = cache.getRuleSets(PROJECT_NAME_1);
-        
+
         assertSame("Second cache access should reload rule sets", RULE_SETS_FOO_2, actualRuleSets);
     }
 
@@ -129,25 +129,25 @@ public final class RuleSetsCacheTest {
         when(loader.load(PROJECT_NAME_2)).thenReturn(RULE_SETS_BAR_1, RULE_SETS_BAR_2);
         return loader;
     }
-    
+
     private WorkspaceModel getWorkspaceModel() {
         final WorkspaceModel workspaceModel = new WorkspaceModel();
         workspaceModel.add(new ProjectModel(PROJECT_NAME_1));
         return workspaceModel;
     }
-    
+
     private static final class TestRuleSets extends RuleSets {
-        
+
         private final String name;
-        
+
         public TestRuleSets(final String name) {
             this.name = name;
         }
-        
+
         @Override
         public String toString() {
             return name;
         }
-        
+
     }
 }

@@ -18,18 +18,7 @@ import org.eclipse.swt.widgets.Control;
  */
 public enum SWTBotID {
 
-    ENABLE_PMD,
-    ADD,
-    NAME,
-    LOCATION,
-    RULES,
-    RULESETS,
-    FILE_SYSTEM,
-    WORKSPACE,
-    PROJECT,
-    REMOTE,
-    BROWSE,
-    FILE_SELECTION_DIALOG;
+    ENABLE_PMD, ADD, NAME, LOCATION, RULES, RULESETS, FILE_SYSTEM, WORKSPACE, PROJECT, REMOTE, BROWSE, FILE_SELECTION_DIALOG;
 
     public static void set(final Control control, final SWTBotID id) {
         control.setData("org.eclipse.swtbot.widget.key", id.name());

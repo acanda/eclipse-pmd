@@ -27,39 +27,39 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/rules/java/strings.html#StringToString">StringToString</a>. It removes the
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/rules/java/strings.html#StringToString">StringToString</a>. It removes the
  * <code>.toString()</code> from <code>"foo".toString()</code> if the expression is only a part of an statement. Removes
  * the expression completely if it is the whole statement.
- * 
+ *
  * @author Philip Graf
  */
 public class StringToStringQuickFix extends ASTQuickFix<MethodInvocation> {
-    
+
     public StringToStringQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_REMOVE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Remove .toString()";
     }
-    
+
     @Override
     public String getDescription() {
         return "Removes .toString() from " + marker.getMarkerText() + "().";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, MethodInvocation> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Removes the <code>.toString()</code> from <code>"foo".toString()</code> if the expression is only a part of an
      * statement. Removes the expression completely if it is the whole statement.
@@ -76,5 +76,5 @@ public class StringToStringQuickFix extends ASTQuickFix<MethodInvocation> {
         }
         return true;
     }
-    
+
 }

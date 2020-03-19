@@ -33,14 +33,14 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 /**
  * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/design.html#EqualsNull">EqualsNull</a>. It
  * replaces {@code x.equals(null)} with {@code x == null}.
- * 
+ *
  * @author Philip Graf
  */
 public class EqualsNullQuickFix extends ASTQuickFix<MethodInvocation> {
-    
+
     private static final Pattern METHOD_INVOCATION_EXPRESSION = Pattern.compile("^(.*)\\s*\\.\\s*equals\\s*\\(\\s*null\\s*\\)$");
     private final String methodInvocationExpression;
-    
+
     public EqualsNullQuickFix(final PMDMarker marker) {
         super(marker);
         final Matcher matcher = METHOD_INVOCATION_EXPRESSION.matcher(marker.getMarkerText());
@@ -50,12 +50,12 @@ public class EqualsNullQuickFix extends ASTQuickFix<MethodInvocation> {
             methodInvocationExpression = null;
         }
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         if (methodInvocationExpression != null) {
@@ -63,7 +63,7 @@ public class EqualsNullQuickFix extends ASTQuickFix<MethodInvocation> {
         }
         return "Replace equals with ==";
     }
-    
+
     @Override
     public String getDescription() {
         if (methodInvocationExpression != null) {
@@ -71,12 +71,12 @@ public class EqualsNullQuickFix extends ASTQuickFix<MethodInvocation> {
         }
         return "Replaces equals with ==.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, MethodInvocation> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Replaces {@code x.equals(null)} with {@code x == null}.
      */
@@ -90,5 +90,5 @@ public class EqualsNullQuickFix extends ASTQuickFix<MethodInvocation> {
         ASTUtil.replace(node, infix);
         return true;
     }
-    
+
 }

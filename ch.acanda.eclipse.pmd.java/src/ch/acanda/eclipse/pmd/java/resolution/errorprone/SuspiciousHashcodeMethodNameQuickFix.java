@@ -23,38 +23,38 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/pmd-5.0.0/rules/java/naming.html#SuspiciousHashcodeMethodName"
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/pmd-5.0.0/rules/java/naming.html#SuspiciousHashcodeMethodName"
  * >SuspiciousHashcodeMethodName</a>. It renames the method to {@code hashCode}.
- * 
+ *
  * @author Philip Graf
  */
 public class SuspiciousHashcodeMethodNameQuickFix extends ASTQuickFix<MethodDeclaration> {
-    
+
     public SuspiciousHashcodeMethodNameQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Rename method to 'hashCode'";
     }
-    
+
     @Override
     public String getDescription() {
         return "Renames the method <b>hashcode()</b> to <b>hashCode()</b>.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, MethodDeclaration> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Sets the name of the method to "hashCode".
      */
@@ -63,5 +63,5 @@ public class SuspiciousHashcodeMethodNameQuickFix extends ASTQuickFix<MethodDecl
         node.getName().setIdentifier("hashCode");
         return true;
     }
-    
+
 }

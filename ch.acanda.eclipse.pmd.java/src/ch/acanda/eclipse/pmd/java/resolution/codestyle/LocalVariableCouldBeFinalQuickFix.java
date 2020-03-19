@@ -27,35 +27,35 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 /**
  * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/optimization.html#LocalVariableCouldBeFinal">
  * LocalVariableCouldBeFinalQuickFix</a>. It adds the final modifier to the variable declaration.
- * 
+ *
  * @author Philip Graf
  */
 public class LocalVariableCouldBeFinalQuickFix extends ASTQuickFix<VariableDeclarationStatement> {
-    
+
     public LocalVariableCouldBeFinalQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_ADD;
     }
-    
+
     @Override
     public String getLabel() {
         return "Add 'final' modifier";
     }
-    
+
     @Override
     public String getDescription() {
         return "Adds the <b>final</b> modifier.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, VariableDeclarationStatement> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Adds the final modifier to the variable declaration.
      */
@@ -67,5 +67,5 @@ public class LocalVariableCouldBeFinalQuickFix extends ASTQuickFix<VariableDecla
         node.modifiers().add(modifier);
         return true;
     }
-    
+
 }

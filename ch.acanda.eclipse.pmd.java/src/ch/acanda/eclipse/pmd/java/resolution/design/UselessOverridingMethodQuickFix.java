@@ -23,9 +23,9 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/rules/java/unnecessary.html#UselessOverridingMethod">UselessOverridingMethod</a>. It
- * removes the useless method.
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/rules/java/unnecessary.html#UselessOverridingMethod">UselessOverridingMethod</a>.
+ * It removes the useless method.
  *
  * @author Philip Graf
  */

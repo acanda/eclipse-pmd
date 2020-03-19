@@ -116,7 +116,6 @@ public class PMDPropertyPage extends PropertyPage {
         return controller.isValid();
     }
 
-
     private DataBindingContext initDataBindings() {
         final DataBindingContext bindingContext = new DataBindingContext();
         //

@@ -23,28 +23,27 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/rules/java/optimizations.html#RedundantFieldInitializer">
+ * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/optimizations.html#RedundantFieldInitializer">
  * RedundantFieldInitializer</a>. It removes the redundant field initializer.
- * 
+ *
  * @author Philip Graf
  */
 public class RedundantFieldInitializerQuickFix extends ASTQuickFix<VariableDeclarationFragment> {
-    
+
     public RedundantFieldInitializerQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_REMOVE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Remove redundant field initializer";
     }
-    
+
     @Override
     public String getDescription() {
         final String description;
@@ -56,7 +55,7 @@ public class RedundantFieldInitializerQuickFix extends ASTQuickFix<VariableDecla
         }
         return description;
     }
-    
+
     /**
      * Extracts the field name from the marker text. The marker text has the following format:
      * <code><i>fieldName</i> [ '[]' ] '=' <i>defaultValue<i></code>
@@ -74,12 +73,12 @@ public class RedundantFieldInitializerQuickFix extends ASTQuickFix<VariableDecla
         }
         return name.toString();
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, VariableDeclarationFragment> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Removes the redundant field initializer.
      */
@@ -88,5 +87,5 @@ public class RedundantFieldInitializerQuickFix extends ASTQuickFix<VariableDecla
         node.setInitializer(null);
         return true;
     }
-    
+
 }

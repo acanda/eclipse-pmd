@@ -105,7 +105,7 @@ final class RuleSetConfigurationTable extends Composite {
         bindingContext.bindList(tableViewerObserveMultiSelection, selectedRuleSetsObserveList, null, null);
         //
         final IObservableSet tableViewerObserveCheckedElements = ViewersObservables.observeCheckedElements(tableViewer,
-                                                                                                           RuleSetViewModel.class);
+                RuleSetViewModel.class);
         final IObservableSet activeConfigurationsObserveSet = BeansObservables.observeSet(Realm.getDefault(), model, "activeRuleSets");
         bindingContext.bindSet(tableViewerObserveCheckedElements, activeConfigurationsObserveSet, null, null);
     }

@@ -42,11 +42,11 @@ import ch.acanda.eclipse.pmd.domain.RuleSetModel;
 
 /**
  * Unit tests for {@link ProjectModelSerializer}.
- * 
+ *
  * @author Philip Graf
  */
 public final class ProjectModelSerializerTest {
-    
+
     /**
      * Verifies that {@link ProjectModelSerializer#serialize(ProjectModel)} serializes a {@link ProjectModel} correctly.
      */
@@ -55,14 +55,14 @@ public final class ProjectModelSerializerTest {
         final ProjectModel projectModel = new ProjectModel("TestProjectName");
         projectModel.setPMDEnabled(true);
         projectModel.setRuleSets(createRuleSets());
-        
+
         final String actual = new ProjectModelSerializer().serialize(projectModel);
-        
+
         final String expected = createXmlConfiguration();
         assertEquals("Serialized project model", expected, actual);
         assertValid(actual);
     }
-    
+
     /**
      * Verifies that {@link ProjectModelSerializer#serialize(ProjectModel)} serializes a {@link ProjectModel} without
      * rule sets correctly, i.e. without a {@code <rulesets>} tag.
@@ -71,9 +71,9 @@ public final class ProjectModelSerializerTest {
     public void serializeWithoutRuleSets() throws SAXException, IOException {
         final ProjectModel projectModel = new ProjectModel("TestProjectName");
         projectModel.setPMDEnabled(false);
-        
+
         final String actual = new ProjectModelSerializer().serialize(projectModel);
-        
+
         final String expected = createXmlConfigurationWithoutRuleSets();
         assertEquals("Serialized project model", expected, actual);
         assertValid(actual);
@@ -94,7 +94,7 @@ public final class ProjectModelSerializerTest {
                 + "</eclipse-pmd>";
         return expected;
     }
-    
+
     private String createXmlConfigurationWithoutRuleSets() {
         final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<eclipse-pmd xmlns=\"http://acanda.ch/eclipse-pmd/0.8\""
@@ -107,11 +107,11 @@ public final class ProjectModelSerializerTest {
 
     private Iterable<RuleSetModel> createRuleSets() {
         return Arrays.asList(new RuleSetModel("Project Rule Set", new Location("pmd.xml", LocationContext.PROJECT)),
-                             new RuleSetModel("Workspace Rule Set", new Location("Projext X/pmd.xml", LocationContext.WORKSPACE)),
-                             new RuleSetModel("Filesystem Rule Set", new Location("x:\\pmx.xml", LocationContext.FILE_SYSTEM)),
-                             new RuleSetModel("Remote Rule Set", new Location("http://example.org/pmd.xml", LocationContext.REMOTE)));
+                new RuleSetModel("Workspace Rule Set", new Location("Projext X/pmd.xml", LocationContext.WORKSPACE)),
+                new RuleSetModel("Filesystem Rule Set", new Location("x:\\pmx.xml", LocationContext.FILE_SYSTEM)),
+                new RuleSetModel("Remote Rule Set", new Location("http://example.org/pmd.xml", LocationContext.REMOTE)));
     }
-    
+
     private void assertValid(final String actual) throws SAXException, IOException {
         final SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         final Source schemaSource = new StreamSource(ProjectModelSerializerTest.class.getResourceAsStream("eclipse-pmd-0.8.xsd"));
@@ -120,7 +120,7 @@ public final class ProjectModelSerializerTest {
         final Source xmlSource = new StreamSource(new StringReader(actual));
         validator.validate(xmlSource);
     }
-    
+
     /**
      * Verifies that {@link ProjectModelSerializer#deserialize(java.io.InputStream, String)} deserializes the attributes
      * of {@link ProjectModel} correctly.
@@ -128,9 +128,9 @@ public final class ProjectModelSerializerTest {
     @Test
     public void deserializeProjectModel() throws IOException {
         final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
-        
+
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
-        
+
         assertEquals("Project name", "TestProjectName", projectModel.getProjectName());
         assertTrue("PMD should be enabled", projectModel.isPMDEnabled());
         assertEquals("Number of rule sets", 4, projectModel.getRuleSets().size());
@@ -143,14 +143,14 @@ public final class ProjectModelSerializerTest {
     @Test
     public void deserializeProjectModelWithoutRuleSets() throws IOException {
         final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfigurationWithoutRuleSets().getBytes(UTF_8));
-        
+
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
-        
+
         assertEquals("Project name", "TestProjectName", projectModel.getProjectName());
         assertFalse("PMD should be disabled", projectModel.isPMDEnabled());
         assertEquals("Number of rule sets", 0, projectModel.getRuleSets().size());
     }
-    
+
     /**
      * Verifies that {@link ProjectModelSerializer#deserialize(java.io.InputStream, String)} deserializes the attributes
      * of a project {@link RuleSetModel} correctly.
@@ -158,9 +158,9 @@ public final class ProjectModelSerializerTest {
     @Test
     public void deserializeProjectRuleSetModel() throws IOException {
         final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
-        
+
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
-        
+
         assertRuleSetModel(projectModel, LocationContext.PROJECT, "Project Rule Set", "pmd.xml");
     }
 
@@ -171,9 +171,9 @@ public final class ProjectModelSerializerTest {
     @Test
     public void deserializeWorkspaceRuleSetModel() throws IOException {
         final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
-        
+
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
-        
+
         assertRuleSetModel(projectModel, LocationContext.WORKSPACE, "Workspace Rule Set", "Projext X/pmd.xml");
     }
 
@@ -184,12 +184,12 @@ public final class ProjectModelSerializerTest {
     @Test
     public void deserializeFilesystemRuleSetModel() throws IOException {
         final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
-        
+
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
-        
+
         assertRuleSetModel(projectModel, LocationContext.FILE_SYSTEM, "Filesystem Rule Set", "x:\\pmx.xml");
     }
-    
+
     /**
      * Verifies that {@link ProjectModelSerializer#deserialize(java.io.InputStream, String)} deserializes the attributes
      * of a remote {@link RuleSetModel} correctly.
@@ -197,9 +197,9 @@ public final class ProjectModelSerializerTest {
     @Test
     public void deserializeRemoteRuleSetModel() throws IOException {
         final ByteArrayInputStream stream = new ByteArrayInputStream(createXmlConfiguration().getBytes(UTF_8));
-        
+
         final ProjectModel projectModel = new ProjectModelSerializer().deserialize(stream, "TestProjectName");
-        
+
         assertRuleSetModel(projectModel, LocationContext.REMOTE, "Remote Rule Set", "http://example.org/pmd.xml");
     }
 
@@ -208,7 +208,7 @@ public final class ProjectModelSerializerTest {
         assertEquals("Name of the " + context + " rule set", name, remoteRuleSet.getName());
         assertEquals("Path of the " + context + " rule set", path, remoteRuleSet.getLocation().getPath());
     }
-    
+
     /**
      * Extracts a rule set model from a project model depending on its location context. This method also verifies that
      * only one rule set model with the provided location context exists ({@code getOnlyElement(...)} throws an
@@ -217,20 +217,20 @@ public final class ProjectModelSerializerTest {
     private RuleSetModel extractRuleSetModel(final ProjectModel model, final LocationContext context) {
         return getOnlyElement(filter(model.getRuleSets(), new LocationContextFilter(context)));
     }
-    
+
     private static final class LocationContextFilter implements Predicate<RuleSetModel> {
 
         private final LocationContext context;
-        
+
         public LocationContextFilter(final LocationContext context) {
             this.context = context;
         }
-        
+
         @Override
         public boolean apply(final RuleSetModel model) {
             return model.getLocation().getContext() == context;
         }
-        
+
     }
 
 }

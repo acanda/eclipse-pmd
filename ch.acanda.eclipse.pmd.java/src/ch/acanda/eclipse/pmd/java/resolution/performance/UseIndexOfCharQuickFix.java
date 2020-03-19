@@ -30,38 +30,38 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/rules/java/strings.html#UseIndexOfChar">UseIndexOfChar</a>. It replaces
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/rules/java/strings.html#UseIndexOfChar">UseIndexOfChar</a>. It replaces
  * <code>s.indexOf("a")</code> with <code>s.indexOf('a')</code>.
- * 
+ *
  * @author Philip Graf
  */
 public class UseIndexOfCharQuickFix extends ASTQuickFix<MethodInvocation> {
-    
+
     public UseIndexOfCharQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Replace with String.indexOf(char)";
     }
-    
+
     @Override
     public String getDescription() {
         return "Replaces String.indexOf(String) with String.indexOf(char).";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, MethodInvocation> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Replaces the string literal <code>"a"</code> in <code>s.indexOf("a")</code> with the character literal
      * <code>'a'</code>.
@@ -79,9 +79,9 @@ public class UseIndexOfCharQuickFix extends ASTQuickFix<MethodInvocation> {
         }
         return false;
     }
-    
+
     private static String toCharValue(final String stringValue) {
         return stringValue.replace('"', '\'');
     }
-    
+
 }

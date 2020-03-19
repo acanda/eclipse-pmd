@@ -16,11 +16,11 @@ import org.eclipse.swtbot.swt.finder.waits.DefaultCondition;
 
 /**
  * This condition tests if a perspective is checked.
- * 
+ *
  * @author Philip Graf
  */
 public final class IsPerspectiveActive extends DefaultCondition {
-    
+
     private final SWTBotPerspective perspective;
 
     public IsPerspectiveActive(final SWTBotPerspective perspective) {
@@ -32,10 +32,10 @@ public final class IsPerspectiveActive extends DefaultCondition {
     public boolean test() throws Exception {
         return perspective.isActive();
     }
-    
+
     @Override
     public String getFailureMessage() {
         return "Perspective " + perspective.getLabel() + " is not active";
     }
-    
+
 }

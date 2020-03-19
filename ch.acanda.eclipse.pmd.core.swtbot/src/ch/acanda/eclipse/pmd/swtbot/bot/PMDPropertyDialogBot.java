@@ -22,11 +22,11 @@ import ch.acanda.eclipse.pmd.swtbot.SWTBotID;
 
 /**
  * The {@link PMDPropertyDialogBot} provides easy access to the {@link PMDPropertyDialog}'s widgets.
- * 
+ *
  * @author Philip Graf
  */
 public class PMDPropertyDialogBot extends DialogBot {
-    
+
     private static final String OK_KEY = "PreferencesDialog.okButtonLabel";
     private static final String OK_LABEL;
     static {
@@ -37,7 +37,7 @@ public class PMDPropertyDialogBot extends DialogBot {
     public PMDPropertyDialogBot(final Shell shell) throws WidgetNotFoundException {
         super(shell);
     }
-    
+
     @Override
     public SWTBotButton ok() {
         return bot().button(OK_LABEL);
@@ -49,14 +49,14 @@ public class PMDPropertyDialogBot extends DialogBot {
     public SWTBotButton addRuleSet() {
         return bot().buttonWithId(SWTBotID.ADD.name());
     }
-    
+
     /**
      * @return The table containing the available PMD rule sets.
      */
     public SWTBotTable ruleSets() {
         return bot().tableWithId(SWTBotID.RULESETS.name());
     }
-    
+
     public SWTBotCheckBox enablePMD() {
         return bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
     }

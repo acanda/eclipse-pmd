@@ -27,35 +27,35 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 /**
  * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/optimization.html#MethodArgumentCouldBeFinal">
  * MethodArgumentCouldBeFinalQuickFix</a>. It adds the final modifier to the method argument declaration.
- * 
+ *
  * @author Philip Graf
  */
 public class MethodArgumentCouldBeFinalQuickFix extends ASTQuickFix<SingleVariableDeclaration> {
-    
+
     public MethodArgumentCouldBeFinalQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_ADD;
     }
-    
+
     @Override
     public String getLabel() {
         return "Add 'final' modifier";
     }
-    
+
     @Override
     public String getDescription() {
         return "Adds the <b>final</b> modifier.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, SingleVariableDeclaration> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Adds the final modifier to the variable declaration.
      */
@@ -67,5 +67,5 @@ public class MethodArgumentCouldBeFinalQuickFix extends ASTQuickFix<SingleVariab
         node.modifiers().add(modifier);
         return true;
     }
-    
+
 }

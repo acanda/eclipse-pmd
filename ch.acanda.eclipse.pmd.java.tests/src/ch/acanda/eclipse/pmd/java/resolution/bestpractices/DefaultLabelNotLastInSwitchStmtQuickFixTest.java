@@ -20,18 +20,18 @@ import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 
 /**
  * Unit plug-in test for {@link DefaultLabelNotLastInSwitchStmtQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class DefaultLabelNotLastInSwitchStmtQuickFixTest extends ASTQuickFixTestCase<DefaultLabelNotLastInSwitchStmtQuickFix> {
-    
+
     public DefaultLabelNotLastInSwitchStmtQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(DefaultLabelNotLastInSwitchStmtQuickFixTest.class.getResourceAsStream("DefaultLabelNotLastInSwitchStmt.xml"));
     }
-    
+
 }

@@ -23,41 +23,42 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptyInitializer"
- * >EmptyInitializer</a>. It removes the empty initializer.
- * 
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/rules/java/empty.html#EmptyInitializer" >EmptyInitializer</a>. It removes the
+ * empty initializer.
+ *
  * @author Philip Graf
  */
 public class EmptyInitializerQuickFix extends ASTQuickFix<Initializer> {
-    
+
     public EmptyInitializerQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_REMOVE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Remove the initializer";
     }
-    
+
     @Override
     public String getDescription() {
         return "Removes the empty initializer.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, Initializer> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     @Override
     protected boolean apply(final Initializer node) {
         node.delete();
         return true;
     }
-    
+
 }

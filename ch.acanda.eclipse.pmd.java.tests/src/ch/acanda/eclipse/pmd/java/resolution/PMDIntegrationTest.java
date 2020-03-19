@@ -208,10 +208,9 @@ public class PMDIntegrationTest {
                     + " as there aren't any registered languages in the PMD language registry.",
                     languageTerseName);
         } else {
-            final String knownLanguages =
-                    LanguageRegistry.getLanguages().stream()
-                            .map(l -> l.getTerseName())
-                            .collect(Collectors.joining(", "));
+            final String knownLanguages = LanguageRegistry.getLanguages().stream()
+                    .map(l -> l.getTerseName())
+                    .collect(Collectors.joining(", "));
             msg = String.format("The language terse name '%s' is not supported by PMD. The supported language terse names are: %s.",
                     languageTerseName, knownLanguages);
         }

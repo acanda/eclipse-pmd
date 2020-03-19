@@ -20,11 +20,11 @@ import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 
 /**
  * Unit plug-in test for {@link LocalVariableCouldBeFinalQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class LocalVariableCouldBeFinalQuickFixTest extends ASTQuickFixTestCase<LocalVariableCouldBeFinalQuickFix> {
-    
+
     public LocalVariableCouldBeFinalQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }

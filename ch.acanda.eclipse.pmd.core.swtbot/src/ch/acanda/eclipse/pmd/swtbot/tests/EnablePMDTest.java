@@ -25,11 +25,11 @@ import ch.acanda.eclipse.pmd.swtbot.client.JavaProjectClient;
 
 /**
  * Tests if PMD can be enabled and disabled using the PMD property dialog.
- * 
+ *
  * @author Philip Graf
  */
 public final class EnablePMDTest extends GUITestCase {
-    
+
     private static final String PROJECT_NAME = EnablePMDTest.class.getSimpleName();
 
     @BeforeClass
@@ -47,17 +47,17 @@ public final class EnablePMDTest extends GUITestCase {
         PMDPropertyDialogBot dialog = JavaProjectClient.openPMDPropertyDialog(PROJECT_NAME);
         SWTBotCheckBox enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
         assertFalse("PMD should be disabled by default", enablePMDCheckBox.isChecked());
-        
+
         enablePMDCheckBox.select();
         dialog.ok().click();
         bot().waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses(dialog));
-        
+
         dialog = JavaProjectClient.openPMDPropertyDialog(PROJECT_NAME);
         enablePMDCheckBox = dialog.bot().checkBoxWithId(SWTBotID.ENABLE_PMD.name());
         assertTrue("PMD should be enabled", enablePMDCheckBox.isChecked());
-        
+
         dialog.ok().click();
         bot().waitUntil(org.eclipse.swtbot.swt.finder.waits.Conditions.shellCloses(dialog));
     }
-    
+
 }

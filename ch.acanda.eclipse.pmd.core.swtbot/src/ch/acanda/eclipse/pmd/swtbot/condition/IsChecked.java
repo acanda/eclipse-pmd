@@ -16,11 +16,11 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTableItem;
 
 /**
  * This condition tests if a table item is checked.
- * 
+ *
  * @author Philip Graf
  */
 public class IsChecked extends DefaultCondition {
-    
+
     private final SWTBotTableItem tableItem;
 
     public IsChecked(final SWTBotTableItem tableItem) {
@@ -32,10 +32,10 @@ public class IsChecked extends DefaultCondition {
     public boolean test() throws Exception {
         return tableItem.isChecked();
     }
-    
+
     @Override
     public String getFailureMessage() {
         return "TableItem " + tableItem.getText() + " is not checked";
     }
-    
+
 }

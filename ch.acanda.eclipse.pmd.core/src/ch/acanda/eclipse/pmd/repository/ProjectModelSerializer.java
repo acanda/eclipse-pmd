@@ -82,7 +82,7 @@ public class ProjectModelSerializer {
                 + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
                 + " xsi:schemaLocation=\"http://acanda.ch/eclipse-pmd/%2$s"
                 + " http://acanda.ch/eclipse-pmd/eclipse-pmd-%2$s.xsd\">\n",
-                      TAG_NAME_ECLIPSE_PMD, SCHEMA_VERSION);
+                TAG_NAME_ECLIPSE_PMD, SCHEMA_VERSION);
         writer.format("  <%s %s=\"%b\" />\n", TAG_NAME_ANALYSIS, ATTRIBUTE_NAME_ENABLED, model.isPMDEnabled());
         if (!model.getRuleSets().isEmpty()) {
             writer.format("  <%s>\n", TAG_NAME_RULESETS);

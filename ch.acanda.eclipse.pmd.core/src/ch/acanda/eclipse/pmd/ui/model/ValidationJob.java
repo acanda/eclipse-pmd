@@ -19,14 +19,14 @@ import org.eclipse.ui.progress.UIJob;
 
 /**
  * Validates a {@link ViewModel} asynchronously.
- * 
+ *
  * @author Philip Graf
  */
 final class ValidationJob extends Job {
-    
+
     private final ViewModel model;
     private final String propertyName;
-    
+
     ValidationJob(final ViewModel model, final String propertyName) {
         super("ValidationJob");
         this.model = model;
@@ -34,7 +34,7 @@ final class ValidationJob extends Job {
         setSystem(true);
         setUser(false);
     }
-    
+
     @Override
     protected IStatus run(final IProgressMonitor monitor) {
         monitor.beginTask("Validating...", IProgressMonitor.UNKNOWN);
@@ -54,5 +54,5 @@ final class ValidationJob extends Job {
         }
         return Status.OK_STATUS;
     }
-    
+
 }

@@ -20,18 +20,18 @@ import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 
 /**
  * Unit plug-in test for {@link ExtendsObjectQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class ExtendsObjectQuickFixTest extends ASTQuickFixTestCase<ExtendsObjectQuickFix> {
-    
+
     public ExtendsObjectQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(ExtendsObjectQuickFixTest.class.getResourceAsStream("ExtendsObject.xml"));
     }
-    
+
 }

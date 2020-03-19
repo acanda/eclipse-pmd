@@ -32,13 +32,13 @@ import com.google.common.base.Strings;
 /**
  * Repository for project models. This implementation stores the project models in configuration files named
  * {@code .eclipse-pmd} in the respective project's root folder.
- * 
+ *
  * @author Philip Graf
  */
 public class ProjectModelRepository {
-    
+
     private static final String PMD_CONFIG_FILENAME = ".eclipse-pmd";
-    
+
     public void save(final ProjectModel model) {
         checkNotNull(model, "The argument 'model' must not be null.");
         final IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -56,7 +56,7 @@ public class ProjectModelRepository {
             PMDPlugin.getDefault().error("Cannot save " + PMD_CONFIG_FILENAME + " in project " + model.getProjectName(), e);
         }
     }
-    
+
     public Optional<ProjectModel> load(final String projectName) {
         checkState(!Strings.isNullOrEmpty(projectName), "The argument 'projectName' must be a valid project name.");
         final IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -72,5 +72,5 @@ public class ProjectModelRepository {
         }
         return result;
     }
-    
+
 }

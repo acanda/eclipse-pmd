@@ -26,17 +26,17 @@ import ch.acanda.eclipse.pmd.marker.PMDMarker;
 import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/rules/java/design.html#UseNotifyAllInsteadOfNotify">UseNotifyAllInsteadOfNotify</a>.
- * It replaces {@code x.notify()} with {@code x.notifyAll()}.
- * 
+ * Quick fix for the rule <a href=
+ * "http://pmd.sourceforge.net/rules/java/design.html#UseNotifyAllInsteadOfNotify">UseNotifyAllInsteadOfNotify</a>. It
+ * replaces {@code x.notify()} with {@code x.notifyAll()}.
+ *
  * @author Philip Graf
  */
 public class UseNotifyAllInsteadOfNotifyQuickFix extends ASTQuickFix<MethodInvocation> {
-    
+
     private static final Pattern METHOD_INVOCATION_EXPRESSION = Pattern.compile("^(.*)\\s*\\.\\s*notify\\s*\\(\\s*\\)$");
     private final String methodInvocationExpression;
-    
+
     public UseNotifyAllInsteadOfNotifyQuickFix(final PMDMarker marker) {
         super(marker);
         final Matcher matcher = METHOD_INVOCATION_EXPRESSION.matcher(marker.getMarkerText());
@@ -46,12 +46,12 @@ public class UseNotifyAllInsteadOfNotifyQuickFix extends ASTQuickFix<MethodInvoc
             methodInvocationExpression = null;
         }
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         if (methodInvocationExpression != null) {
@@ -59,7 +59,7 @@ public class UseNotifyAllInsteadOfNotifyQuickFix extends ASTQuickFix<MethodInvoc
         }
         return "Replace notify() with notifyAll()";
     }
-    
+
     @Override
     public String getDescription() {
         if (methodInvocationExpression != null) {
@@ -67,12 +67,12 @@ public class UseNotifyAllInsteadOfNotifyQuickFix extends ASTQuickFix<MethodInvoc
         }
         return "Replaces notify() with notifyAll().";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, MethodInvocation> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Replaces {@code x.notify()} with {@code x.notifyAll()}.
      */
@@ -81,5 +81,5 @@ public class UseNotifyAllInsteadOfNotifyQuickFix extends ASTQuickFix<MethodInvoc
         node.getName().setIdentifier("notifyAll");
         return true;
     }
-    
+
 }

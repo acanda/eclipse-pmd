@@ -28,16 +28,16 @@ import org.junit.Test;
 
 /**
  * Unit test for {@link WrappingPMDMarker}.
- * 
+ *
  * @author Philip Graf
  */
 public class WrappingPMDMarkerTest {
-    
+
     private static final String RULE_ID = "ruleId";
 
     /**
-     * Verifies that {@link WrappingPMDMarker#isOtherWithSameRuleId(IMarker)} returns true if the argument is not the same
-     * instance but has the same rule id.
+     * Verifies that {@link WrappingPMDMarker#isOtherWithSameRuleId(IMarker)} returns true if the argument is not the
+     * same instance but has the same rule id.
      */
     @Test
     public void isOtherWithSameRuleId() {
@@ -65,8 +65,8 @@ public class WrappingPMDMarkerTest {
     }
 
     /**
-     * Verifies that {@link WrappingPMDMarker#isOtherWithSameRuleId(IMarker)} returns false if the argument has not the same
-     * rule id.
+     * Verifies that {@link WrappingPMDMarker#isOtherWithSameRuleId(IMarker)} returns false if the argument has not the
+     * same rule id.
      */
     @Test
     public void isOtherWithSameRuleIdDifferentRuleId() {
@@ -105,8 +105,8 @@ public class WrappingPMDMarkerTest {
     }
 
     /**
-     * Verifies that {@link WrappingPMDMarker#setViolationClassName(String)} sets the violation class name on the wrapped
-     * marker.
+     * Verifies that {@link WrappingPMDMarker#setViolationClassName(String)} sets the violation class name on the
+     * wrapped marker.
      */
     @Test
     public void setViolationClassName() throws CoreException {
@@ -116,9 +116,10 @@ public class WrappingPMDMarkerTest {
         pmdMarker.setViolationClassName(expected);
         verify(marker).setAttribute("violationClassName", expected);
     }
-    
+
     /**
-     * Verifies that {@link WrappingPMDMarker#getViolationClassName()} gets the violation class name from the wrapped marker.
+     * Verifies that {@link WrappingPMDMarker#getViolationClassName()} gets the violation class name from the wrapped
+     * marker.
      */
     @Test
     public void getViolationClassName() throws CoreException {
@@ -129,7 +130,7 @@ public class WrappingPMDMarkerTest {
         final String actual = pmdMarker.getViolationClassName();
         assertEquals("The rule id should be read from the wrapped marker", expected, actual);
     }
-    
+
     /**
      * Verifies that {@link WrappingPMDMarker#setLanguage(String)} sets the language on the wrapped marker.
      */

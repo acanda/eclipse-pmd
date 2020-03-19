@@ -38,7 +38,6 @@ public abstract class ASTRewriteQuickFix<T extends ASTNode> extends JavaQuickFix
         super(marker);
     }
 
-
     @Override
     protected void startFixingMarkers(final CompilationUnit ast) {
         rootTextEdit = new MultiTextEdit();

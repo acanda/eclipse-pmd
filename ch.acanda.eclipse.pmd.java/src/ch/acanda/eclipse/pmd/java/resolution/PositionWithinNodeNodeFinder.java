@@ -22,19 +22,19 @@ import com.google.common.base.Optional;
  * the criteria, the one with the largest distance to the root is returned.
  */
 class PositionWithinNodeNodeFinder<R extends ASTNode, N extends ASTNode> extends ASTVisitor implements NodeFinder<R, N> {
-    
+
     private final int start;
     private final int end;
     private final Class<? extends N>[] nodeTypes;
     private N node;
-    
+
     @SafeVarargs
     public PositionWithinNodeNodeFinder(final Position position, final Class<? extends N>... nodeTypes) {
         start = position.getOffset();
         end = start + position.getLength();
         this.nodeTypes = nodeTypes;
     }
-    
+
     @Override
     public boolean preVisit2(final ASTNode node) {
         final int nodeStart = node.getStartPosition();
@@ -50,12 +50,12 @@ class PositionWithinNodeNodeFinder<R extends ASTNode, N extends ASTNode> extends
         }
         return false;
     }
-    
+
     @Override
     public Optional<N> findNode(final R ast) {
         node = null;
         ast.accept(this);
         return Optional.fromNullable(node);
     }
-    
+
 }

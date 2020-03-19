@@ -40,8 +40,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 /**
- * Quick fix for the rule <a
- * href="http://pmd.sourceforge.net/rules/java/design.html#UseUtilityClass">UseUtilityClass</a>. It makes the class
+ * Quick fix for the rule
+ * <a href="http://pmd.sourceforge.net/rules/java/design.html#UseUtilityClass">UseUtilityClass</a>. It makes the class
  * final and adds a private constructor.
  *
  * @author Philip Graf

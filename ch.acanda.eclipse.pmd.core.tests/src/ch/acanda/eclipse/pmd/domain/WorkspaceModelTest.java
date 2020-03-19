@@ -30,11 +30,11 @@ import com.google.common.base.Optional;
 
 /**
  * Unit tests for {@link WorkspaceModel}.
- * 
+ *
  * @author Philip Graf
  */
 public class WorkspaceModelTest {
-    
+
     /**
      * Verifies that {@link WorkspaceModel#getProjects()} returns an empty set when there aren't any projects in the
      * workspace.
@@ -42,9 +42,9 @@ public class WorkspaceModelTest {
     @Test
     public void whenThereAreNoProjectsSetProjectsReturnsAnEmptySet() {
         assertTrue("When there areen't any projects, getProjects() should return an empty set",
-                   new WorkspaceModel().getProjects().isEmpty());
+                new WorkspaceModel().getProjects().isEmpty());
     }
-    
+
     /**
      * Verifies that an event is fired when adding a project model.
      */
@@ -68,7 +68,7 @@ public class WorkspaceModelTest {
 
         assertTrue("An event should be fired when adding a project model", eventFired[0]);
     }
-    
+
     /**
      * Verifies that an event is fired when removing a project model.
      */
@@ -93,7 +93,7 @@ public class WorkspaceModelTest {
 
         assertTrue("An event should be fired when removing a project model", eventFired[0]);
     }
-    
+
     /**
      * Verifies that no event is fired when removing an inexistent project model.
      */
@@ -104,10 +104,10 @@ public class WorkspaceModelTest {
         model.addPropertyChangeListener(WorkspaceModel.PROJECTS_PROPERTY, event -> eventFired[0] = true);
 
         model.remove("Bar");
-        
+
         assertFalse("An event should not be fired when removing an inexistent project model", eventFired[0]);
     }
-    
+
     /**
      * Verifies that {@link WorkspaceModel#getProject(String)} returns {@code Optional.absent()} when the requested
      * project model does not exist.
@@ -121,7 +121,7 @@ public class WorkspaceModelTest {
         assertNotNull("WorkspaceModel.getProject(...) must never return null", actual);
         assertFalse("The project model should not be present", actual.isPresent());
     }
-    
+
     /**
      * Verifies that {@link WorkspaceModel#getProject(String)} returns the requested project model.
      */
@@ -137,7 +137,7 @@ public class WorkspaceModelTest {
         assertTrue("The project model should be present", actual.isPresent());
         assertSame("WorkspaceModel.getProject(...) should return the requested project model", expected, actual.get());
     }
-    
+
     /**
      * Verifies that {@link WorkspaceModel#getOrCreateProject(String)} returns a new project model when the requested
      * project model does not yet exist.
@@ -145,14 +145,14 @@ public class WorkspaceModelTest {
     @Test
     public void getOrCreateProjectReturnsOptionalAbsentWhenProjectModelDoesNotExist() {
         final WorkspaceModel model = new WorkspaceModel();
-        
+
         final ProjectModel actual = model.getOrCreateProject("Foo");
-        
+
         assertNotNull("WorkspaceModel.getOrCreateProject(...) must never return null", actual);
         assertEquals("Project model name", "Foo", actual.getProjectName());
         assertSame("WorkspaceModel.getOrCreateProject(...) should add the created project model", actual, model.getProject("Foo").get());
     }
-    
+
     /**
      * Verifies that {@link WorkspaceModel#getOrCreateProject(String)} returns the requested project model when it
      * already exists.
@@ -162,11 +162,11 @@ public class WorkspaceModelTest {
         final WorkspaceModel model = new WorkspaceModel();
         final ProjectModel expected = new ProjectModel("Foo");
         model.add(expected);
-        
+
         final ProjectModel actual = model.getOrCreateProject(expected.getProjectName());
-        
+
         assertNotNull("WorkspaceModel.getOrCreateProject(...) must never return null", actual);
         assertSame("WorkspaceModel.getOrCreateProject(...) should return the requested project model", expected, actual);
     }
-    
+
 }

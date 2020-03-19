@@ -7,8 +7,11 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
 -->
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Test PMD Rule Set" xsi:noNamespaceSchemaLocation="http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
-    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="Test PMD Rule Set"
+    xsi:noNamespaceSchemaLocation="http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
     <description>PMD rules!</description>
     <rule ref="rulesets/java/basic.xml/ExtendsObject" />
     <rule ref="rulesets/java/basic.xml/BooleanInstantiation" />

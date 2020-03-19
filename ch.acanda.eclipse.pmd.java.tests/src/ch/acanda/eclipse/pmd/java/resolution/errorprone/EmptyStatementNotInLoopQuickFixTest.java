@@ -21,18 +21,18 @@ import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptyStatementNotInLoopQu
 
 /**
  * Unit plug-in test for {@link EmptyStatementNotInLoopQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class EmptyStatementNotInLoopQuickFixTest extends ASTQuickFixTestCase<EmptyStatementNotInLoopQuickFix> {
-    
+
     public EmptyStatementNotInLoopQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(EmptyStatementNotInLoopQuickFixTest.class.getResourceAsStream("EmptyStatementNotInLoop.xml"));
     }
-    
+
 }

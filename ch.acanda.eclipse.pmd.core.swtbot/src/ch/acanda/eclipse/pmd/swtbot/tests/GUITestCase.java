@@ -25,9 +25,9 @@ import org.junit.BeforeClass;
  * @author Philip Graf
  */
 public class GUITestCase {
-    
+
     private final SWTWorkbenchBot bot;
-    
+
     protected GUITestCase() {
         bot = new SWTWorkbenchBot();
     }
@@ -45,7 +45,7 @@ public class GUITestCase {
         final SWTWorkbenchBot workbenchBot = new SWTWorkbenchBot();
         workbenchBot.resetWorkbench();
     }
-    
+
     @After
     public void closeAllDialogs() {
         bot.closeAllShells();
@@ -66,7 +66,7 @@ public class GUITestCase {
             workbenchBot.waitUntil(isPerspectiveActive(javaPerspective));
         }
     }
-    
+
     protected SWTWorkbenchBot bot() {
         return bot;
     }

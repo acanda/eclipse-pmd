@@ -21,18 +21,18 @@ import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptySwitchStatementsQuic
 
 /**
  * Unit plug-in test for {@link EmptySwitchStatementsQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class EmptySwitchStatementsQuickFixTest extends ASTQuickFixTestCase<EmptySwitchStatementsQuickFix> {
-    
+
     public EmptySwitchStatementsQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(EmptySwitchStatementsQuickFixTest.class.getResourceAsStream("EmptySwitchStatements.xml"));
     }
-    
+
 }

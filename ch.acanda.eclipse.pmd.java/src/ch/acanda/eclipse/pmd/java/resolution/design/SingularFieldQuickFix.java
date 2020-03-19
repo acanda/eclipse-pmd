@@ -44,35 +44,35 @@ import com.google.common.base.Optional;
 /**
  * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/design.html#SingularField">SingularField</a>.
  * It replaces the field with a local variable.
- * 
+ *
  * @author Philip Graf
  */
 public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclarationFragment> {
-    
+
     public SingularFieldQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Replace with a local variable";
     }
-    
+
     @Override
     public String getDescription() {
         return "Replaces the field with a local variable.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, VariableDeclarationFragment> getNodeFinder(final Position position) {
         return Finders.nodeWithinPosition(getNodeType(), position);
     }
-    
+
     /**
      * Replaces the field declaration with a local variable declaration.
      */
@@ -87,7 +87,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         }
         return assignment.isPresent();
     }
-    
+
     /**
      * Replaces the assignment with a variable declaration. If the assignment is the only one in the block for this
      * variable, the final modifier is added to the declaration.
@@ -95,11 +95,11 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
     @SuppressWarnings("unchecked")
     private void replaceAssignment(final VariableDeclarationFragment node, final Assignment assignment, final boolean finalDeclaration) {
         final FieldDeclaration fieldDeclaration = (FieldDeclaration) node.getParent();
-        final VariableDeclarationStatement declaration =
-                (VariableDeclarationStatement) node.getAST().createInstance(VariableDeclarationStatement.class);
+        final VariableDeclarationStatement declaration = (VariableDeclarationStatement) node.getAST()
+                .createInstance(VariableDeclarationStatement.class);
         declaration.setType(ASTUtil.copy(fieldDeclaration.getType()));
-        final VariableDeclarationFragment fragment =
-                (VariableDeclarationFragment) node.getAST().createInstance(VariableDeclarationFragment.class);
+        final VariableDeclarationFragment fragment = (VariableDeclarationFragment) node.getAST()
+                .createInstance(VariableDeclarationFragment.class);
         fragment.setName(ASTUtil.copy(node.getName()));
         fragment.setInitializer(ASTUtil.copy(assignment.getRightHandSide()));
         declaration.fragments().add(fragment);
@@ -110,7 +110,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         }
         ASTUtil.replace(assignment.getParent(), declaration);
     }
-    
+
     /**
      * Updates the field declaration. If the replaced field was the only fragment, the entire field declaration is
      * removed. Otherwise the field declaration stays and only the respective fragment is removed.
@@ -129,12 +129,12 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
             fieldDeclaration.delete();
         }
     }
-    
+
     /**
      * Finds the assignment that is replaced with a local variable declaration.
      */
     private final class AssignmentNodeFinder extends ASTVisitor implements NodeFinder<ASTNode, Assignment> {
-        
+
         private final String fieldName;
         /**
          * A shadowing block contains a local variable declaration with the same name as the field. Assignments within
@@ -145,18 +145,18 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
         private final Set<Block> shadowingBlocks = new HashSet<>();
         private Optional<Assignment> searchResult = Optional.absent();
         private boolean moreThanOneAssignment;
-        
+
         AssignmentNodeFinder(final String fieldName) {
             super(false);
             this.fieldName = fieldName;
         }
-        
+
         @Override
         public Optional<Assignment> findNode(final ASTNode node) {
             node.accept(this);
             return searchResult;
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")
         public boolean visit(final VariableDeclarationStatement node) {
@@ -169,12 +169,12 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
             }
             return false;
         }
-        
+
         @Override
         public void endVisit(final Block node) {
             shadowingBlocks.remove(node);
         }
-        
+
         @Override
         public boolean visit(final Assignment assignment) {
             if (shadowingBlocks.isEmpty()) {
@@ -187,7 +187,7 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
             }
             return false;
         }
-        
+
         private void checkName(final Assignment assignment, final SimpleName variableName) {
             if (fieldName.equals(variableName.getIdentifier())) {
                 if (!searchResult.isPresent()) {
@@ -197,10 +197,10 @@ public final class SingularFieldQuickFix extends ASTQuickFix<VariableDeclaration
                 }
             }
         }
-        
+
         public boolean hasMoreThanOneAssignment() {
             return moreThanOneAssignment;
         }
-        
+
     }
 }

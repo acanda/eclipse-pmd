@@ -76,4 +76,3 @@ public class ProjectModel extends DomainModel {
     }
 
 }
-

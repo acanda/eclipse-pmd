@@ -31,40 +31,40 @@ import ch.acanda.eclipse.pmd.ui.util.PMDPluginImages;
 /**
  * Quick fix for the rule <a href="http://pmd.sourceforge.net/rules/java/design.html#DefaultLabelNotLastInSwitchStmt">
  * DefaultLabelNotLastInSwitchStmt</a>. It moves the default case to the last position.
- * 
+ *
  * @author Philip Graf
  */
 public class DefaultLabelNotLastInSwitchStmtQuickFix extends ASTQuickFix<SwitchStatement> {
-    
+
     /**
      * The expression of the default label is {@code null}.
      */
     private final static Expression DEFAULT_LABEL = null;
-    
+
     public DefaultLabelNotLastInSwitchStmtQuickFix(final PMDMarker marker) {
         super(marker);
     }
-    
+
     @Override
     protected ImageDescriptor getImageDescriptor() {
         return PMDPluginImages.QUICKFIX_CHANGE;
     }
-    
+
     @Override
     public String getLabel() {
         return "Move 'default:' to the end";
     }
-    
+
     @Override
     public String getDescription() {
         return "Moves the default label to the end of the switch cases.";
     }
-    
+
     @Override
     protected NodeFinder<CompilationUnit, SwitchStatement> getNodeFinder(final Position position) {
         return Finders.positionWithinNode(position, getNodeType());
     }
-    
+
     /**
      * Moves the default case to the last position. The default case includes the default {@code SwitchCase} and all
      * following statements up to the next {@code SwitchCase}.
@@ -91,5 +91,5 @@ public class DefaultLabelNotLastInSwitchStmtQuickFix extends ASTQuickFix<SwitchS
         statements.addAll(defaultCaseStatements);
         return true;
     }
-    
+
 }

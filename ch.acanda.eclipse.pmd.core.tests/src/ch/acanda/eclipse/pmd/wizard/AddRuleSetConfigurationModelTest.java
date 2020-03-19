@@ -33,14 +33,14 @@ import ch.acanda.eclipse.pmd.ui.model.ValidationResult;
 
 /**
  * Tests the PMD rule set functionality of the PMD property dialog.
- * 
+ *
  * @author Philip Graf
  */
 public class AddRuleSetConfigurationModelTest {
-    
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
-    
+
     /**
      * Verifies that a rule set configuration in a project outside of the workspace does not produce an error in the
      * "Add Rule Set Configuration" wizard.
@@ -48,7 +48,7 @@ public class AddRuleSetConfigurationModelTest {
     @Test
     public void validateWorkspaceConfigurationWithProjectOutsideWorkspace() throws IOException {
         final Path ruleSetFile = createRuleSetFile();
-        
+
         final IProject project = mock(IProject.class);
         final IWorkspace workspace = mock(IWorkspace.class);
         final IWorkspaceRoot root = mock(IWorkspaceRoot.class);
@@ -56,22 +56,22 @@ public class AddRuleSetConfigurationModelTest {
         when(workspace.getRoot()).thenReturn(root);
         when(root.getProject(anyString())).thenReturn(project);
         when(project.getLocationURI()).thenReturn(ruleSetFile.getParent().toUri());
-        
+
         final AddRuleSetConfigurationModel model = new AddRuleSetConfigurationModel(project);
         model.setWorkspaceTypeSelected(true);
         model.setName("X");
         model.setLocation("ProjectX/" + ruleSetFile.getName(ruleSetFile.getNameCount() - 1));
         final ValidationResult validationResult = new ValidationResult();
-        
+
         model.validate(AddRuleSetConfigurationModel.LOCATION, validationResult);
-        
+
         if (validationResult.hasErrors()) {
             final String msg = "The validation should not result in any errors "
                     + "if the project is located outside the workspace. First error: ";
             fail(msg + validationResult.getFirstErrorMessage());
         }
     }
-    
+
     public Path createRuleSetFile() throws IOException {
         final Path ruleSetFile = folder.newFile("AddRuleSetConfigurationModelTest.xml").toPath();
         try (final InputStream in = AddRuleSetConfigurationModelTest.class.getResourceAsStream("AddRuleSetConfigurationModelTest.xml")) {
@@ -79,5 +79,5 @@ public class AddRuleSetConfigurationModelTest {
         }
         return ruleSetFile;
     }
-    
+
 }

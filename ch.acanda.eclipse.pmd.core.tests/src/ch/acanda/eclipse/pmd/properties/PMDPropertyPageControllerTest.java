@@ -27,11 +27,11 @@ import ch.acanda.eclipse.pmd.properties.PMDPropertyPageViewModel.RuleSetViewMode
 
 /**
  * Unit tests for {@link PMDPropertyPageController}.
- * 
+ *
  * @author Philip Graf
  */
 public class PMDPropertyPageControllerTest {
-    
+
     /**
      * Verifies that {@link PMDPropertyPageController#removeSelectedConfigurations()} updates the view model correctly.
      */
@@ -39,7 +39,7 @@ public class PMDPropertyPageControllerTest {
     public void removeSelectedConfigurations() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
         final PMDPropertyPageViewModel model = createModel(controller, 1, 3);
-        
+
         controller.removeSelectedConfigurations();
 
         assertEquals("ruleSets", "[A, D]", toNameString(model.getRuleSets()));
@@ -55,9 +55,9 @@ public class PMDPropertyPageControllerTest {
     public void removeSelectedConfigurationsWithoutSelection() {
         final PMDPropertyPageController controller = new PMDPropertyPageController();
         final PMDPropertyPageViewModel model = createModel(controller, 0, 0);
-        
+
         controller.removeSelectedConfigurations();
-        
+
         assertEquals("ruleSets", "[A, B, C, D]", toNameString(model.getRuleSets()));
         assertEquals("activeRuleSets", "[A, B]", toNameString(model.getActiveRuleSets()));
         assertEquals("selectedRuleSets", "[]", toNameString(model.getSelectedRuleSets()));
@@ -73,7 +73,7 @@ public class PMDPropertyPageControllerTest {
         model.setSelectedRuleSets(ruleSets.subList(from, to));
         return model;
     }
-    
+
     /**
      * Returns a string representation of the provided rule sets iterable containing its element's names.
      */
@@ -92,5 +92,5 @@ public class PMDPropertyPageControllerTest {
                 new RuleSetViewModel("C", "C-Type", "C-Location", true, "C-LocationToolTip"),
                 new RuleSetViewModel("D", "D-Type", "D-Location", false, "D-LocationToolTip"));
     }
-    
+
 }

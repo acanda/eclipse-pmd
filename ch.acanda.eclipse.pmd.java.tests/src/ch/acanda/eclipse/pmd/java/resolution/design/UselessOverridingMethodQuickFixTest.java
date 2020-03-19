@@ -20,11 +20,11 @@ import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 
 /**
  * Unit plug-in test for {@link UselessOverridingMethodQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class UselessOverridingMethodQuickFixTest extends ASTQuickFixTestCase<UselessOverridingMethodQuickFix> {
-    
+
     public UselessOverridingMethodQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }

@@ -19,7 +19,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 
 /**
  * Provides easy access to standard widgets of a dialog, e.g. the OK or Cancel buttons.
- * 
+ *
  * @author Philip Graf
  */
 public class DialogBot extends SWTBotShell {
@@ -41,12 +41,12 @@ public class DialogBot extends SWTBotShell {
     public SWTBotButton cancel() {
         return bot().button("Cancel");
     }
-    
+
     /**
      * Waits until this dialog closes. Note: this method does not close the dialog.
      */
     public void waitUntilClosed() {
         bot().waitUntil(Conditions.shellCloses(this));
     }
-    
+
 }

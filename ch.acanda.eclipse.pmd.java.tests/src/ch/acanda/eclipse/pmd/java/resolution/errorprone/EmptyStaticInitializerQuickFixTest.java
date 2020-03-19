@@ -21,18 +21,18 @@ import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptyStaticInitializerQui
 
 /**
  * Unit plug-in test for {@link EmptyStaticInitializerQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class EmptyStaticInitializerQuickFixTest extends ASTQuickFixTestCase<EmptyStaticInitializerQuickFix> {
-    
+
     public EmptyStaticInitializerQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(EmptyStaticInitializerQuickFixTest.class.getResourceAsStream("EmptyStaticInitializer.xml"));
     }
-    
+
 }

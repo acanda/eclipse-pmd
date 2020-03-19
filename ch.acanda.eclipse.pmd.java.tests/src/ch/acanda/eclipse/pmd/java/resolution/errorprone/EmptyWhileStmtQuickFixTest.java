@@ -21,18 +21,18 @@ import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptyWhileStmtQuickFix;
 
 /**
  * Unit plug-in test for {@link EmptyWhileStmtQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class EmptyWhileStmtQuickFixTest extends ASTQuickFixTestCase<EmptyWhileStmtQuickFix> {
-    
+
     public EmptyWhileStmtQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(EmptyWhileStmtQuickFixTest.class.getResourceAsStream("EmptyWhileStmt.xml"));
     }
-    
+
 }

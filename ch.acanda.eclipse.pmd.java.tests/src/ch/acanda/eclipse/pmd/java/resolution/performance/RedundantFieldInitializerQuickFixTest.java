@@ -20,11 +20,11 @@ import ch.acanda.eclipse.pmd.java.resolution.QuickFixTestData.TestParameters;
 
 /**
  * Unit plug-in test for {@link RedundantFieldInitializerQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class RedundantFieldInitializerQuickFixTest extends ASTQuickFixTestCase<RedundantFieldInitializerQuickFix> {
-    
+
     public RedundantFieldInitializerQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }

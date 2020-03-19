@@ -45,7 +45,7 @@ final class RuleSetConfigurationToXMLTag implements Function<RuleSetModel, Strin
         final String ref = escaper.escape(nullToEmpty(config.getLocation().getPath()));
         final String refcontext = getContext(config);
         return String.format(Locale.ENGLISH, "<%s %s=\"%s\" %s=\"%s\" %s=\"%s\" />",
-                             TAG_NAME_RULESET, ATTRIBUTE_NAME_NAME, name, ATTRIBUTE_NAME_REF, ref, ATTRIBUTE_NAME_REFCONTEXT, refcontext);
+                TAG_NAME_RULESET, ATTRIBUTE_NAME_NAME, name, ATTRIBUTE_NAME_REF, ref, ATTRIBUTE_NAME_REFCONTEXT, refcontext);
     }
 
     private String getContext(final RuleSetModel ruleSet) {

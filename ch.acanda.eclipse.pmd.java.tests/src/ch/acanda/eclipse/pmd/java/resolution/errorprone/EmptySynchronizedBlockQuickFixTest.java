@@ -21,18 +21,18 @@ import ch.acanda.eclipse.pmd.java.resolution.emptycode.EmptySynchronizedBlockQui
 
 /**
  * Unit plug-in test for {@link EmptySynchronizedBlockQuickFix}.
- * 
+ *
  * @author Philip Graf
  */
 public class EmptySynchronizedBlockQuickFixTest extends ASTQuickFixTestCase<EmptySynchronizedBlockQuickFix> {
-    
+
     public EmptySynchronizedBlockQuickFixTest(final TestParameters parameters) {
         super(parameters);
     }
-    
+
     @Parameters
     public static Collection<Object[]> getTestData() {
         return createTestData(EmptySynchronizedBlockQuickFixTest.class.getResourceAsStream("EmptySynchronizedBlock.xml"));
     }
-    
+
 }

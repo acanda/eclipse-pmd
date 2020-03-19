@@ -40,9 +40,9 @@ public final class PMDPropertyPageModelTransformer {
      * "Type" column of the table in the PMD property page.
      */
     private static final ImmutableBiMap<LocationContext, String> CONTEXT_TYPE_MAP = ImmutableBiMap.of(WORKSPACE, "Workspace",
-                                                                                                      PROJECT, "Project",
-                                                                                                      FILE_SYSTEM, "File System",
-                                                                                                      REMOTE, "Remote");
+            PROJECT, "Project",
+            FILE_SYSTEM, "File System",
+            REMOTE, "Remote");
 
     /**
      * Transforms a rule set view model to a rule set domain model.
