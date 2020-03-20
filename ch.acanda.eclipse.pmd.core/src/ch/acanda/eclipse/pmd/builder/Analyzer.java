@@ -14,6 +14,7 @@ package ch.acanda.eclipse.pmd.builder;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -69,15 +70,16 @@ public final class Analyzer {
     private Iterable<RuleViolation> runPMD(final IFile file, final RuleSets ruleSets) {
         try {
             if (isValidFile(file, ruleSets)) {
-                final Language language = LANGUAGES.get(file.getFileExtension().toLowerCase());
+                final Language language = LANGUAGES.get(file.getFileExtension().toLowerCase(Locale.ROOT));
                 if (isValidLanguage(language)) {
                     final PMDConfiguration configuration = new PMDConfiguration();
-                    final InputStreamReader reader = new InputStreamReader(file.getContents(), file.getCharset());
-                    final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
-                    context.setLanguageVersion(language.getDefaultVersion());
-                    context.setIgnoreExceptions(false);
-                    new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
-                    return ImmutableList.copyOf(context.getReport().iterator());
+                    try (InputStreamReader reader = new InputStreamReader(file.getContents(), file.getCharset())) {
+                        final RuleContext context = PMD.newRuleContext(file.getName(), file.getRawLocation().toFile());
+                        context.setLanguageVersion(language.getDefaultVersion());
+                        context.setIgnoreExceptions(false);
+                        new SourceCodeProcessor(configuration).processSourceCode(reader, ruleSets, context);
+                        return ImmutableList.copyOf(context.getReport().iterator());
+                    }
                 }
             }
         } catch (CoreException | IOException e) {

@@ -95,7 +95,6 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
      * problems of the same type all at once.
      */
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public IMarker[] findOtherMarkers(final IMarker[] markers) {
         final IMarker[] result;
         if (markers.length > 1) {
@@ -108,7 +107,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
             if (otherMarkers.isEmpty()) {
                 result = NO_OTHER_MARKERS;
             } else {
-                result = otherMarkers.toArray(new IMarker[otherMarkers.size()]);
+                result = otherMarkers.toArray(new IMarker[0]);
             }
         } else {
             result = NO_OTHER_MARKERS;
@@ -132,7 +131,7 @@ public abstract class JavaQuickFix<T extends ASTNode> extends WorkbenchMarkerRes
     /**
      * @return A map grouping the markers by their file.
      */
-    private Map<IFile, List<IMarker>> createMarkerMap(final IMarker[] markers) {
+    private Map<IFile, List<IMarker>> createMarkerMap(final IMarker... markers) {
         final Map<IFile, List<IMarker>> markerMap = new HashMap<>();
         for (final IMarker marker : markers) {
             final IResource resource = marker.getResource();

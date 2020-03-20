@@ -11,6 +11,8 @@
 
 package ch.acanda.eclipse.pmd.marker;
 
+import java.util.Locale;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -91,7 +93,7 @@ public final class MarkerUtil {
     }
 
     public static String createRuleId(final Rule rule) {
-        return rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase() + "." + rule.getName();
+        return rule.getLanguage().getTerseName() + "." + rule.getRuleSetName().toLowerCase(Locale.ROOT) + "." + rule.getName();
     }
 
     public static Range getAbsoluteRange(final String content, final RuleViolation violation) {

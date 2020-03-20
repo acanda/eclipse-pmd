@@ -120,7 +120,7 @@ public class PMDIntegrationTest {
     public static Collection<Object[]> getTestData() {
         final Builder<Object[]> testData = ImmutableList.builder();
         for (final String tests : TEST_DATA_XML) {
-            try (final InputStream stream = QuickFixTestData.class.getResourceAsStream(tests)) {
+            try (InputStream stream = QuickFixTestData.class.getResourceAsStream(tests)) {
                 assertNotNull("Test data file " + tests + " not found.", stream);
                 final Collection<TestParameters> data = QuickFixTestData.createTestData(stream);
                 for (final TestParameters params : data) {

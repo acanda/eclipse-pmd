@@ -19,9 +19,9 @@ import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 
-import ch.acanda.eclipse.pmd.marker.MarkerUtil;
-
 import com.google.common.collect.Lists;
+
+import ch.acanda.eclipse.pmd.marker.MarkerUtil;
 
 /**
  * Project nature of projects that have PMD enabled.
@@ -39,8 +39,8 @@ public class PMDNature implements IProjectNature {
         final IProjectDescription desc = project.getDescription();
         final ICommand[] commands = desc.getBuildSpec();
 
-        for (int i = 0; i < commands.length; ++i) {
-            if (commands[i].getBuilderName().equals(PMDBuilder.ID)) {
+        for (final ICommand command : commands) {
+            if (command.getBuilderName().equals(PMDBuilder.ID)) {
                 return;
             }
         }
@@ -89,7 +89,7 @@ public class PMDNature implements IProjectNature {
             final IProjectDescription description = project.getDescription();
             final ArrayList<String> natureIds = Lists.newArrayList(description.getNatureIds());
             natureIds.add(ID);
-            description.setNatureIds(natureIds.toArray(new String[natureIds.size()]));
+            description.setNatureIds(natureIds.toArray(new String[0]));
             project.setDescription(description, null);
             MarkerUtil.removeAllMarkers(project);
         }
@@ -103,7 +103,7 @@ public class PMDNature implements IProjectNature {
             final IProjectDescription description = project.getDescription();
             final ArrayList<String> natureIds = Lists.newArrayList(description.getNatureIds());
             natureIds.remove(ID);
-            description.setNatureIds(natureIds.toArray(new String[natureIds.size()]));
+            description.setNatureIds(natureIds.toArray(new String[0]));
             project.setDescription(description, null);
             MarkerUtil.removeAllMarkers(project);
         }

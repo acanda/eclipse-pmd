@@ -68,6 +68,12 @@
         <exclude name="ShortClassName" />
         <exclude name="AvoidFieldNameMatchingMethodName" />
         <exclude name="AbstractNaming" />
+        <exclude name="ClassNamingConventions" />
+    </rule>
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions">
+        <properties>
+            <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]+" />
+        </properties>
     </rule>
 
     <rule ref="rulesets/java/optimizations.xml">

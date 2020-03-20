@@ -74,7 +74,7 @@ public class AddRuleSetConfigurationModelTest {
 
     public Path createRuleSetFile() throws IOException {
         final Path ruleSetFile = folder.newFile("AddRuleSetConfigurationModelTest.xml").toPath();
-        try (final InputStream in = AddRuleSetConfigurationModelTest.class.getResourceAsStream("AddRuleSetConfigurationModelTest.xml")) {
+        try (InputStream in = AddRuleSetConfigurationModelTest.class.getResourceAsStream("AddRuleSetConfigurationModelTest.xml")) {
             Files.copy(in, ruleSetFile, StandardCopyOption.REPLACE_EXISTING);
         }
         return ruleSetFile;

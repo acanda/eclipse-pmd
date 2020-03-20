@@ -80,7 +80,7 @@ public final class ProjectModelSerializerTest {
     }
 
     private String createXmlConfiguration() {
-        final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<eclipse-pmd xmlns=\"http://acanda.ch/eclipse-pmd/0.8\""
                 + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
                 + " xsi:schemaLocation=\"http://acanda.ch/eclipse-pmd/0.8 http://acanda.ch/eclipse-pmd/eclipse-pmd-0.8.xsd\">\n"
@@ -92,17 +92,15 @@ public final class ProjectModelSerializerTest {
                 + "    <ruleset name=\"Remote Rule Set\" ref=\"http://example.org/pmd.xml\" refcontext=\"remote\" />\n"
                 + "  </rulesets>\n"
                 + "</eclipse-pmd>";
-        return expected;
     }
 
     private String createXmlConfigurationWithoutRuleSets() {
-        final String expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                 + "<eclipse-pmd xmlns=\"http://acanda.ch/eclipse-pmd/0.8\""
                 + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
                 + " xsi:schemaLocation=\"http://acanda.ch/eclipse-pmd/0.8 http://acanda.ch/eclipse-pmd/eclipse-pmd-0.8.xsd\">\n"
                 + "  <analysis enabled=\"false\" />\n"
                 + "</eclipse-pmd>";
-        return expected;
     }
 
     private Iterable<RuleSetModel> createRuleSets() {

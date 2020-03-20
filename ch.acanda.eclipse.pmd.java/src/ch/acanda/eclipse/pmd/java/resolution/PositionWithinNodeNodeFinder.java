@@ -29,6 +29,7 @@ class PositionWithinNodeNodeFinder<R extends ASTNode, N extends ASTNode> extends
     private N node;
 
     @SafeVarargs
+    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
     public PositionWithinNodeNodeFinder(final Position position, final Class<? extends N>... nodeTypes) {
         start = position.getOffset();
         end = start + position.getLength();
