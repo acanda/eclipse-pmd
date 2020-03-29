@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import ch.acanda.eclipse.pmd.PMDPlugin;
 import ch.acanda.eclipse.pmd.cache.RuleSetsCache;
 import ch.acanda.eclipse.pmd.cache.RuleSetsCacheLoader;
+import ch.acanda.eclipse.pmd.marker.MarkerUtil;
 import net.sourceforge.pmd.RuleSets;
 
 /**
@@ -41,6 +42,11 @@ public class PMDBuilder extends IncrementalProjectBuilder {
     public static final String ID = "ch.acanda.eclipse.pmd.builder.PMDBuilder";
 
     private static final RuleSetsCache CACHE = new RuleSetsCache(new RuleSetsCacheLoader(), PMDPlugin.getDefault().getWorkspaceModel());
+
+    @Override
+    protected void clean(final IProgressMonitor monitor) throws CoreException {
+        MarkerUtil.removeAllMarkers(getProject());
+    }
 
     @Override
     @SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
