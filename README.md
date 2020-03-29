@@ -1,3 +1,5 @@
+:warning: The repository of eclipse-pmd has been moved to https://github.com/eclipse-pmd/eclipse-pmd. This repository has been archived and is not in use anymore.
+
 # eclipse-pmd
 The eclipse-pmd plug-in integrates the well-known source code analyzer PMD into the Eclipse IDE.
 
